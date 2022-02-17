@@ -1,0 +1,42 @@
+/code/tools/clion-2021.3.1/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/code/tools/clion-2021.3.1/bin/ninja/linux/ninja -G Ninja /code/dev/MonkeyMaya_com/Source/Game
+-- The C compiler identification is GNU 9.3.0
+-- The CXX compiler identification is GNU 9.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+CMake Error at CMakeLists.txt:29 (find_package):
+  By not providing "FindUrho3D.cmake" in CMAKE_MODULE_PATH this project has
+  asked CMake to find a package configuration file provided by "Urho3D", but
+  CMake did not find one.
+
+  Could not find a package configuration file provided by "Urho3D" with any
+  of the following names:
+
+    Urho3DConfig.cmake
+    urho3d-config.cmake
+
+  Add the installation prefix of "Urho3D" to CMAKE_PREFIX_PATH or set
+  "Urho3D_DIR" to a directory containing one of the above files.  If "Urho3D"
+  provides a separate development package or SDK, be sure it has been
+  installed.
+
+
+CMake Warning (dev) in CMakeLists.txt:
+  No cmake_minimum_required command is present.  A line of code such as
+
+    cmake_minimum_required(VERSION 3.21)
+
+  should be added at the top of the file.  The version specified may be lower
+  if you wish to support older CMake versions for this project.  For more
+  information run "cmake --help-policy CMP0000".
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- Configuring incomplete, errors occurred!
+See also "/code/dev/MonkeyMaya_com/Source/Game/cmake-build-debug/CMakeFiles/CMakeOutput.log".

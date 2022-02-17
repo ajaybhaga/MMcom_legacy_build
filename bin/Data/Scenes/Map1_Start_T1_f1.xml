@@ -1,0 +1,334 @@
+<?xml version="1.0"?>
+<scene id="1">
+	<attribute name="Name" value="" />
+	<attribute name="Time Scale" value="1" />
+	<attribute name="Smoothing Constant" value="50" />
+	<attribute name="Snap Threshold" value="5" />
+	<attribute name="Elapsed Time" value="4.98494" />
+	<attribute name="Next Replicated Node ID" value="30" />
+	<attribute name="Next Replicated Component ID" value="35" />
+	<attribute name="Next Local Node ID" value="16777219" />
+	<attribute name="Next Local Component ID" value="16777252" />
+	<attribute name="Variables" />
+	<attribute name="Variable Names" value="" />
+	<component type="Octree" id="1" />
+	<component type="DebugRenderer" id="2" />
+	<component type="PhysicsWorld" id="23" />
+	<node id="2">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="0 0 0" />
+		<attribute name="Rotation" value="1 0 0 0" />
+		<attribute name="Scale" value="1 1 1" />
+		<attribute name="Variables" />
+		<node id="3">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="track1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="-400.307 -157.677 403.2" />
+			<attribute name="Rotation" value="0.5 -0.5 0.5 -0.5" />
+			<attribute name="Scale" value="140 140 140" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="5">
+				<attribute name="Model" value="Model;Models/Tracks/Models/race_obj_way_33.mdl" />
+				<attribute name="Material" value="Material;Materials/lambert2.xml" />
+			</component>
+			<component type="RigidBody" id="24">
+				<attribute name="Physics Rotation" value="-0.5 0.5 -0.5 0.5" />
+				<attribute name="Physics Position" value="-400.307 -157.677 403.2" />
+			</component>
+			<component type="CollisionShape" id="25" />
+			<node id="6">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-1.71147 1.64275 2.2777" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+				<component type="Light" id="7">
+					<attribute name="Radius" value="2000" />
+					<attribute name="Length" value="3000" />
+					<attribute name="Range" value="3000" />
+					<attribute name="Light Shape Texture" value="TextureCube;" />
+				</component>
+			</node>
+			<node id="13">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="0.0577731 2.8608 1.1686" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+				<component type="Light" id="15">
+					<attribute name="Radius" value="2000" />
+					<attribute name="Length" value="3000" />
+					<attribute name="Range" value="300" />
+					<attribute name="Light Shape Texture" value="TextureCube;" />
+				</component>
+			</node>
+		</node>
+		<node id="7">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="7.6724 153.681 85.0787" />
+			<attribute name="Rotation" value="0.709878 0 -0.704325 0" />
+			<attribute name="Scale" value="500 500 500" />
+			<attribute name="Variables" />
+			<node id="9">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="start_starA" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-0.0874691 0.116018 0.0265893" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+				<component type="StaticModel" id="11">
+					<attribute name="Model" value="Model;Models/AssetPack/starfish_T.mdl" />
+					<attribute name="Material" value="Material;Materials/ORANGE YELLOW.xml" />
+				</component>
+			</node>
+			<node id="11">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-0.170219 -0.0554345 0.0047698" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="19">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="start_starB" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-4.36585 -0.0516927 0.17069" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+				<component type="StaticModel" id="21">
+					<attribute name="Model" value="Model;Models/AssetPack/starfish_T.mdl" />
+					<attribute name="Material" value="Material;Materials/ORANGE YELLOW.xml" />
+				</component>
+			</node>
+		</node>
+		<node id="12">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="4.61913 165.988 -0.00915527" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+		</node>
+		<node id="14">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pylon1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="32.7084 -134.8 -28.3951" />
+			<attribute name="Rotation" value="0.960464 0 -0.278404 0" />
+			<attribute name="Scale" value="14 14 14" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16">
+				<attribute name="Model" value="Model;Models/AssetPack/barrel-empty.mdl" />
+				<attribute name="Material" value="Material;Materials/LOWPOLY-COLORS.xml" />
+			</component>
+		</node>
+		<node id="15">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pylon2" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="32.7084 -139.955 -0.00915527" />
+			<attribute name="Rotation" value="0.5 -0.5 0.5 -0.5" />
+			<attribute name="Scale" value="14 14 14" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="17">
+				<attribute name="Model" value="Model;Models/AssetPack/barrel-empty.mdl" />
+				<attribute name="Material" value="Material;Materials/LOWPOLY-COLORS.xml" />
+			</component>
+		</node>
+		<node id="16">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pylon3" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="32.7084 -139.955 -13.5542" />
+			<attribute name="Rotation" value="0.5 -0.5 0.5 -0.5" />
+			<attribute name="Scale" value="14 14 14" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="18">
+				<attribute name="Model" value="Model;Models/AssetPack/barrel-empty.mdl" />
+				<attribute name="Material" value="Material;Materials/LOWPOLY-COLORS.xml" />
+			</component>
+		</node>
+		<node id="17">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="cactus1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="-305.326 -154.106 -3.73025" />
+			<attribute name="Rotation" value="0.610046 -0.450964 0.357554 -0.544639" />
+			<attribute name="Scale" value="80 80 80" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="19">
+				<attribute name="Model" value="Model;Models/AssetPack/cactus-big.mdl" />
+				<attribute name="Material" value="Material;Materials/LOWPOLY-COLORS.xml" />
+			</component>
+		</node>
+		<node id="18">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="tree1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="253.26 -133.733 -3.73025" />
+			<attribute name="Rotation" value="0.707107 0 0 -0.707107" />
+			<attribute name="Scale" value="60 60 60" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="20">
+				<attribute name="Model" value="Model;Models/AssetPack/tree-tall.mdl" />
+				<attribute name="Material" value="Material;Materials/LOWPOLY-COLORS.xml" />
+			</component>
+		</node>
+		<node id="20">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="tree2" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="253.26 -133.733 -183.012" />
+			<attribute name="Rotation" value="0.648459 -0.12886 0.281958 -0.695266" />
+			<attribute name="Scale" value="60 60 60" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="26">
+				<attribute name="Model" value="Model;Models/AssetPack/tree-tall.mdl" />
+				<attribute name="Material" value="Material;Materials/LOWPOLY-COLORS.xml" />
+			</component>
+		</node>
+		<node id="21">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="flower1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="243.112 -144.013 -63.1053" />
+			<attribute name="Rotation" value="0.683013 -0.183013 0.183013 -0.683013" />
+			<attribute name="Scale" value="80 80 80" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="27">
+				<attribute name="Model" value="Model;Models/AssetPack/flower03.mdl" />
+				<attribute name="Material" value="Material;Materials/LOWPOLY-COLORS.xml" />
+			</component>
+		</node>
+		<node id="22">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="guidepost1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="-382.448 -174.203 -118.114" />
+			<attribute name="Rotation" value="0.684182 -0.0883784 0.178598 -0.701561" />
+			<attribute name="Scale" value="90 90 90" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="28">
+				<attribute name="Model" value="Model;Models/AssetPack/guidepost.mdl" />
+				<attribute name="Material" value="Material;Materials/LOWPOLY-COLORS.xml" />
+			</component>
+		</node>
+		<node id="23">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="MM-logo" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="-432.718 -151.537 -55.6707" />
+			<attribute name="Rotation" value="0.707076 -0.00604704 0.00604697 -0.707086" />
+			<attribute name="Scale" value="240 240 240" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="29">
+				<attribute name="Model" value="Model;Models/logo/Models/mm_logo.mdl" />
+				<attribute name="Material" value="Material;" />
+				<attribute name="Is Occluder" value="true" />
+			</component>
+		</node>
+		<node id="24">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="flag1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="100.615 -148.467 -186.211" />
+			<attribute name="Rotation" value="0.683013 -0.183013 0.183013 -0.683012" />
+			<attribute name="Scale" value="30 30 30" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="30">
+				<attribute name="Model" value="Model;Models/AssetPack/castle-flag.mdl" />
+				<attribute name="Material" value="Material;Models/AssetPack/Materials/ORANGE YELLOW.xml" />
+			</component>
+		</node>
+		<node id="25">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="758.996 -122.253 18.6221" />
+			<attribute name="Rotation" value="0.707107 0 0 -0.707107" />
+			<attribute name="Scale" value="100 100 100" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="31">
+				<attribute name="Model" value="Model;Models/AssetPack/water-tower.mdl" />
+				<attribute name="Material" value="Material;Materials/LOWPOLY-COLORS.xml" />
+			</component>
+		</node>
+		<node id="26">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="-2.35258 309.69 86.2007" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+		</node>
+		<node id="5">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="88.824 -159.41 403.2" />
+			<attribute name="Rotation" value="0.707107 0 0 -0.707107" />
+			<attribute name="Scale" value="30 30 30" />
+			<attribute name="Variables" />
+			<component type="Light" id="6">
+				<attribute name="Radius" value="2000" />
+				<attribute name="Length" value="5000" />
+				<attribute name="Range" value="3000" />
+				<attribute name="Light Shape Texture" value="TextureCube;" />
+			</component>
+		</node>
+		<node id="27">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="mushroom1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="243.112 -144.013 35.6389" />
+			<attribute name="Rotation" value="0.683013 -0.183013 0.183013 -0.683013" />
+			<attribute name="Scale" value="80 80 80" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="32">
+				<attribute name="Model" value="Model;Models/AssetPack/mushroom-boletus.mdl" />
+				<attribute name="Material" value="Material;Materials/LOWPOLY-COLORS.xml" />
+			</component>
+		</node>
+		<node id="28">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="mushroom3" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="276.709 -144.013 151.052" />
+			<attribute name="Rotation" value="0.706686 -0.0250482 0.0244317 -0.706662" />
+			<attribute name="Scale" value="80 80 80" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="33">
+				<attribute name="Model" value="Model;Models/AssetPack/mushroom-toadstool.mdl" />
+				<attribute name="Material" value="Material;Materials/LOWPOLY-COLORS.xml" />
+			</component>
+		</node>
+		<node id="29">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="mushroom2" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="243.112 -144.013 97.8503" />
+			<attribute name="Rotation" value="0.683013 -0.183013 0.183013 -0.683013" />
+			<attribute name="Scale" value="80 80 80" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="34">
+				<attribute name="Model" value="Model;Models/AssetPack/mushroom-green.mdl" />
+				<attribute name="Material" value="Material;Materials/LOWPOLY-COLORS.xml" />
+			</component>
+		</node>
+	</node>
+</scene>

@@ -1,0 +1,2299 @@
+<?xml version="1.0"?>
+<scene id="1">
+	<attribute name="Name" value="" />
+	<attribute name="Time Scale" value="1" />
+	<attribute name="Smoothing Constant" value="50" />
+	<attribute name="Snap Threshold" value="5" />
+	<attribute name="Elapsed Time" value="66.6245" />
+	<attribute name="Next Replicated Node ID" value="247" />
+	<attribute name="Next Replicated Component ID" value="255" />
+	<attribute name="Next Local Node ID" value="16777227" />
+	<attribute name="Next Local Component ID" value="16777338" />
+	<attribute name="Variables" />
+	<attribute name="Variable Names" value="" />
+	<component type="Octree" id="1" />
+	<component type="DebugRenderer" id="2" />
+	<component type="PhysicsWorld" id="23" />
+	<component type="CSP_Server" id="16777336" />
+	<component type="StaticModel" id="254">
+		<attribute name="Model" value="Model;Models/Sphere.mdl" />
+		<attribute name="Material" value="Material;" />
+	</component>
+	<node id="2">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="0 0 0" />
+		<attribute name="Rotation" value="1 0 0 0" />
+		<attribute name="Scale" value="1 1 1" />
+		<attribute name="Variables" />
+		<node id="3">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="track1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 -500 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="100 100 100" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="5">
+				<attribute name="Model" value="Model;Models/Tracks/MountainRoad/V6/Models/TrackLand.mdl" />
+				<attribute name="Material" value="Material;Materials/mountain_roads.001.xml;Materials/rocks_1.xml;Materials/mountain_roads.xml;Materials/grass_texture.xml" />
+			</component>
+			<component type="RigidBody" id="24">
+				<attribute name="Physics Position" value="0 -500 0" />
+				<attribute name="Collision Layer" value="2" />
+			</component>
+			<component type="CollisionShape" id="25">
+				<attribute name="Shape Type" value="TriangleMesh" />
+				<attribute name="Model" value="Model;Models/Tracks/MountainRoad/V6/Models/TrackLand.mdl" />
+			</component>
+			<node id="5">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="2.10962 -600 -0" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+				<component type="Light" id="6">
+					<attribute name="Radius" value="2000" />
+					<attribute name="Length" value="5000" />
+					<attribute name="Range" value="3000" />
+					<attribute name="Light Shape Texture" value="TextureCube;" />
+				</component>
+			</node>
+			<node id="6">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="0.057773 11.1084 -140.04" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+				<component type="Light" id="7">
+					<attribute name="Radius" value="2000" />
+					<attribute name="Length" value="3000" />
+					<attribute name="Range" value="3000" />
+					<attribute name="Light Shape Texture" value="TextureCube;" />
+				</component>
+			</node>
+			<node id="13">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="0.404311 5.05192 2.50615" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+				<component type="Light" id="15">
+					<attribute name="Brightness Multiplier" value="4" />
+					<attribute name="Radius" value="20000" />
+					<attribute name="Length" value="30000" />
+					<attribute name="Range" value="30000" />
+					<attribute name="Light Shape Texture" value="TextureCube;" />
+				</component>
+			</node>
+		</node>
+		<node id="7">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="7.6724 153.681 85.0787" />
+			<attribute name="Rotation" value="0.709878 0 -0.704325 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<node id="9">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="start_starA" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-9.5763 -23.0759 -32.2903" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="100 100 100" />
+				<attribute name="Variables" />
+				<component type="StaticModel" id="11">
+					<attribute name="Model" value="Model;Models/AssetPack/starfish_T.mdl" />
+					<attribute name="Material" value="Material;Materials/ORANGE YELLOW.xml" />
+				</component>
+			</node>
+			<node id="28">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="start_starB" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-270.573 17.6051 -33.166" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="100 100 100" />
+				<attribute name="Variables" />
+				<component type="StaticModel" id="38">
+					<attribute name="Model" value="Model;Models/AssetPack/starfish_T.mdl" />
+					<attribute name="Material" value="Material;Materials/ORANGE YELLOW.xml" />
+				</component>
+			</node>
+		</node>
+		<node id="12">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="4.61913 165.988 -0.00915527" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+		</node>
+		<node id="18">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="tree1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="244.442 -74.1017 -3.73025" />
+			<attribute name="Rotation" value="0.707107 0 0 -0.707107" />
+			<attribute name="Scale" value="60 60 60" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="20">
+				<attribute name="Model" value="Model;Models/AssetPack/tree-tall.mdl" />
+				<attribute name="Material" value="Material;Materials/LOWPOLY-COLORS.xml" />
+			</component>
+		</node>
+		<node id="20">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="tree2" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="253.26 -133.733 -183.012" />
+			<attribute name="Rotation" value="0.648459 -0.12886 0.281958 -0.695266" />
+			<attribute name="Scale" value="60 60 60" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="26">
+				<attribute name="Model" value="Model;Models/AssetPack/tree-tall.mdl" />
+				<attribute name="Material" value="Material;Materials/LOWPOLY-COLORS.xml" />
+			</component>
+		</node>
+		<node id="21">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="flower1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="243.112 -144.013 -63.1053" />
+			<attribute name="Rotation" value="0.683013 -0.183013 0.183013 -0.683013" />
+			<attribute name="Scale" value="80 80 80" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="27">
+				<attribute name="Model" value="Model;Models/AssetPack/flower03.mdl" />
+				<attribute name="Material" value="Material;Materials/LOWPOLY-COLORS.xml" />
+			</component>
+		</node>
+		<node id="23">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="MM-logo" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="-520.748 45.4999 121.206" />
+			<attribute name="Rotation" value="0.705217 -0.051664 0.051664 -0.705217" />
+			<attribute name="Scale" value="240 240 240" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="29">
+				<attribute name="Model" value="Model;Models/logo/Models/mm_logo.mdl" />
+				<attribute name="Material" value="Material;" />
+				<attribute name="Is Occluder" value="true" />
+			</component>
+		</node>
+		<node id="29">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="BillB1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="296.235 794.626 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="40">
+				<attribute name="Model" value="Model;Models/Objects/Models/BillboardStand.mdl" />
+				<attribute name="Material" value="Material;Materials/Metal.xml;Materials/Material.001.xml" />
+			</component>
+		</node>
+		<node id="30">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="BillB2" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="287.035 794.626 -600" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="41">
+				<attribute name="Model" value="Model;Models/Objects/Models/BillboardStand.mdl" />
+				<attribute name="Material" value="Material;Materials/Metal.xml;Materials/Material.001.xml" />
+			</component>
+		</node>
+		<node id="31">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="BillB3" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="287.035 794.626 -1200" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="42">
+				<attribute name="Model" value="Model;Models/Objects/Models/BillboardStand.mdl" />
+				<attribute name="Material" value="Material;Materials/Metal.xml;Materials/Material.001.xml" />
+			</component>
+		</node>
+		<node id="32">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="SteerSpline" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="SplinePath" id="132">
+				<attribute name="Speed" value="3" />
+				<attribute name="Control Points">
+					<variant type="Int" value="43" />
+					<variant type="Int" value="127" />
+					<variant type="Int" value="123" />
+					<variant type="Int" value="124" />
+					<variant type="Int" value="125" />
+					<variant type="Int" value="126" />
+					<variant type="Int" value="128" />
+					<variant type="Int" value="129" />
+					<variant type="Int" value="130" />
+					<variant type="Int" value="131" />
+					<variant type="Int" value="132" />
+					<variant type="Int" value="133" />
+					<variant type="Int" value="134" />
+					<variant type="Int" value="135" />
+					<variant type="Int" value="136" />
+					<variant type="Int" value="137" />
+					<variant type="Int" value="138" />
+					<variant type="Int" value="139" />
+					<variant type="Int" value="140" />
+					<variant type="Int" value="141" />
+					<variant type="Int" value="142" />
+					<variant type="Int" value="143" />
+					<variant type="Int" value="144" />
+					<variant type="Int" value="145" />
+					<variant type="Int" value="146" />
+					<variant type="Int" value="147" />
+					<variant type="Int" value="148" />
+					<variant type="Int" value="149" />
+					<variant type="Int" value="150" />
+					<variant type="Int" value="151" />
+					<variant type="Int" value="153" />
+					<variant type="Int" value="154" />
+					<variant type="Int" value="155" />
+					<variant type="Int" value="156" />
+					<variant type="Int" value="157" />
+					<variant type="Int" value="158" />
+					<variant type="Int" value="159" />
+					<variant type="Int" value="160" />
+					<variant type="Int" value="161" />
+					<variant type="Int" value="162" />
+					<variant type="Int" value="163" />
+					<variant type="Int" value="164" />
+					<variant type="Int" value="165" />
+					<variant type="Int" value="166" />
+				</attribute>
+			</component>
+			<node id="127">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="1466.72 -263.335 -340.623" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="123">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="1661.95 -264.452 485.676" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="124">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="1668.92 -264.452 413.478" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="125">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="1683.33 -264.452 231.46" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="126">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="1647.44 -263.335 104.002" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="128">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="1386.82 -244.791 -303.944" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="129">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="1326.29 -216.761 -222.187" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="130">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="1139.31 -200.203 -33.8235" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="131">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="1061.37 -200.203 -67.6054" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="132">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="965.242 -200.203 -200.626" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="133">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="872.693 -155.544 -342.053" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="134">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="753.551 -155.544 -282.466" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="135">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="729.267 -155.544 -141.473" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="136">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="747.818 -155.544 48.9108" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="137">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="403.611 -142.281 371.458" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="138">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="248.884 -142.281 416.486" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="139">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="115.683 -123.178 416.486" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="140">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="16.1205 -123.178 384.031" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="141">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="16.1205 -123.178 384.031" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="142">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-95.729 -123.178 216.31" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="143">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-146.777 -123.178 -26.7545" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="144">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-136.863 -123.178 -286.684" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="145">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-40.32 -123.178 -457.318" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="146">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="119.777 -123.178 -647.242" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="147">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="191.348 -123.178 -742.162" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="148">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="298.373 -123.178 -795.824" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="149">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="407.603 -123.178 -746.572" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="150">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="480.458 -123.178 -634.524" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="151">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="503.085 -123.178 -484.499" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="153">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="478.23 104.438 -365.423" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="154">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="447.19 104.438 -225.446" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="155">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="311.552 104.438 77.41" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="156">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="153.864 104.438 222.734" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="157">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="26.2205 104.438 95.6961" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="158">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="26.2205 104.438 -28.4978" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="159">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="26.2205 104.438 -410.124" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="160">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-63.687 104.438 -530.273" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="161">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-152.154 104.438 -548.364" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="162">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-220.465 104.438 -507.765" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="163">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-284.643 104.438 -452.053" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="164">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-333.63 104.438 -358.335" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="165">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-338.495 179.126 -57.5255" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+			<node id="166">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-391.846 179.126 117.749" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+		</node>
+	</node>
+	<node id="167">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Zone" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="0 0 0" />
+		<attribute name="Rotation" value="1 0 0 0" />
+		<attribute name="Scale" value="1 1 1" />
+		<attribute name="Variables" />
+		<component type="Zone" id="133">
+			<attribute name="Bounding Box Min" value="-60000 -60000 -60000" />
+			<attribute name="Bounding Box Max" value="60000 60000 60000" />
+			<attribute name="Ambient Color" value="0.15 0.15 0.15 1" />
+			<attribute name="Fog Color" value="0.5 0.5 0.7 1" />
+			<attribute name="Fog Start" value="700" />
+			<attribute name="Fog End" value="58000" />
+		</component>
+	</node>
+	<node id="168">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="ai-0" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="38.7786 -767.048 0" />
+		<attribute name="Rotation" value="1 0 0 0" />
+		<attribute name="Scale" value="1 1 1" />
+		<attribute name="Variables" />
+		<component type="NetworkActor" id="134">
+			<attribute name="Name" value="ai-0-vehicle" />
+			<attribute name="Color Index" value="38" />
+			<attribute name="Position" value="48.759 110.083 122.065" />
+		</component>
+		<component type="RigidBody" id="135">
+			<attribute name="Physics Position" value="38.7786 -767.233 0" />
+			<attribute name="Mass" value="90" />
+			<attribute name="Friction" value="1" />
+			<attribute name="Linear Velocity" value="5.95549e-16 -14.2347 0" />
+			<attribute name="Linear Damping" value="0.5" />
+			<attribute name="Angular Damping" value="0.5" />
+		</component>
+		<component type="CollisionShape" id="136">
+			<attribute name="Shape Type" value="Sphere" />
+		</component>
+		<component type="Light" id="137">
+			<attribute name="Color" value="1 0.5 1 1" />
+			<attribute name="Range" value="3" />
+			<attribute name="Light Shape Texture" value="TextureCube;" />
+		</component>
+		<node id="169">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Marker" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 72 -4" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="24 24 24" />
+			<attribute name="Variables" />
+		</node>
+	</node>
+	<node id="170">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="ai-0-vehicle" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="48.7976 110.086 122.016" />
+		<attribute name="Rotation" value="0.0741672 -0.00206832 0.995861 0.0525021" />
+		<attribute name="Scale" value="0.4 0.35 0.4" />
+		<attribute name="Variables" />
+		<component type="Vehicle" id="138">
+			<attribute name="Name" value="Client1" />
+			<attribute name="Name" value="Client1" />
+		</component>
+		<component type="RaycastVehicleBase" id="139">
+			<attribute name="Wheel data">
+				<variant type="Int" value="4" />
+				<variant type="Int" value="173" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="true" />
+				<variant type="Float" value="-0.999999" />
+				<variant type="Vector3" value="-4.3 -2.2 14.68" />
+				<variant type="Quaternion" value="1 0 0 -0" />
+				<variant type="Float" value="0.89" />
+				<variant type="Float" value="6.188" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="47.0858 105.294 106.126" />
+				<variant type="Vector3" value="0.0223287 0.993019 0.115819" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+				<variant type="Int" value="175" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="true" />
+				<variant type="Float" value="-0.999999" />
+				<variant type="Vector3" value="4.3 -2.2 14.68" />
+				<variant type="Quaternion" value="-4.37114e-08 0 -0 1" />
+				<variant type="Float" value="0.89" />
+				<variant type="Float" value="6.188" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="47.0858 105.294 106.126" />
+				<variant type="Vector3" value="0.0223287 0.993019 0.115819" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+				<variant type="Int" value="177" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="false" />
+				<variant type="Float" value="0" />
+				<variant type="Vector3" value="-4.3 -2.2 -7.08" />
+				<variant type="Quaternion" value="1 0 0 -0" />
+				<variant type="Float" value="0.89" />
+				<variant type="Float" value="6.188" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="52.0854 103.006 128.868" />
+				<variant type="Vector3" value="0.0283945 0.996625 0.0770259" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+				<variant type="Int" value="179" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="false" />
+				<variant type="Float" value="0" />
+				<variant type="Vector3" value="4.3 -2.2 -7.08" />
+				<variant type="Quaternion" value="-4.37114e-08 0 -0 1" />
+				<variant type="Float" value="0.89" />
+				<variant type="Float" value="6.188" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="43.5934 103.352 127.518" />
+				<variant type="Vector3" value="0.0283945 0.996625 0.0770259" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+			</attribute>
+		</component>
+		<component type="RigidBody" id="140">
+			<attribute name="Physics Rotation" value="0.0806293 -0.00199234 0.995362 0.0524324" />
+			<attribute name="Physics Position" value="48.8972 110.096 121.89" />
+			<attribute name="Mass" value="425" />
+			<attribute name="Linear Velocity" value="7.82823 0.879539 -9.54731" />
+			<attribute name="Angular Velocity" value="-0.00355504 -1.01239 -0.0642364" />
+			<attribute name="Linear Damping" value="0.12" />
+			<attribute name="Angular Damping" value="0.3" />
+			<attribute name="Collision Layer" value="2" />
+		</component>
+		<component type="CollisionShape" id="142">
+			<attribute name="Size" value="32.76 11.0292 85.2768" />
+		</component>
+		<component type="SoundSource3D" id="153">
+			<attribute name="Frequency" value="22800.2" />
+			<attribute name="Gain" value="0.7" />
+			<attribute name="Near Distance" value="1" />
+			<attribute name="Far Distance" value="30" />
+			<attribute name="Rolloff Factor" value="0.1" />
+		</component>
+		<component type="SoundSource3D" id="154">
+			<attribute name="Sound" value="Sound;Offroad/Sounds/skid-gravel.ogg" />
+			<attribute name="Frequency" value="61740" />
+			<attribute name="Gain" value="0.4" />
+			<attribute name="Is Playing" value="true" />
+			<attribute name="Play Position" value="39958852" />
+			<attribute name="Near Distance" value="1" />
+			<attribute name="Far Distance" value="30" />
+			<attribute name="Rolloff Factor" value="0.1" />
+		</component>
+		<component type="SoundSource3D" id="155">
+			<attribute name="Sound" value="Sound;Offroad/Sounds/shocks-impact.ogg" />
+			<attribute name="Frequency" value="44100" />
+			<attribute name="Gain" value="0.7" />
+			<attribute name="Near Distance" value="1" />
+			<attribute name="Far Distance" value="30" />
+			<attribute name="Rolloff Factor" value="0.1" />
+		</component>
+		<node id="171">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Model" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 9 -15" />
+			<attribute name="Rotation" value="0.5 -0.5 0.5 -0.5" />
+			<attribute name="Scale" value="0.2 0.2 0.2" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="141">
+				<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Jeep.mdl" />
+				<attribute name="Material" value="Material;Materials/Palette.xml" />
+				<attribute name="Cast Shadows" value="true" />
+			</component>
+			<node id="172">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="Model" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-14 -220 0" />
+				<attribute name="Rotation" value="4.24047e-08 -1.06077e-08 -0.970108 -0.242675" />
+				<attribute name="Scale" value="0.4 0.4 0.4" />
+				<attribute name="Variables" />
+				<component type="StaticModel" id="143">
+					<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Turrent.mdl" />
+					<attribute name="Material" value="Material;Materials/Palette.xml" />
+					<attribute name="Cast Shadows" value="true" />
+				</component>
+			</node>
+		</node>
+		<node id="181">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Lights" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 25 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="Light" id="152">
+				<attribute name="Brightness Multiplier" value="0.248094" />
+				<attribute name="Range" value="140" />
+				<attribute name="Light Shape Texture" value="TextureCube;" />
+				<attribute name="Cast Shadows" value="true" />
+			</component>
+		</node>
+		<node id="182">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Actor FloatText" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 17.1 -15.75" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="18 18 18" />
+			<attribute name="Variables" />
+			<component type="Text3D" id="156">
+				<attribute name="Font" value="Font;Fonts/m6x11.ttf" />
+				<attribute name="Font Size" value="16" />
+				<attribute name="Text" value="ai-0" />
+				<attribute name="Face Camera Mode" value="Rotate XYZ" />
+				<attribute name="Width" value="31" />
+				<attribute name="Color" value="0.301961 0.23 1 1" />
+				<attribute name="Top Left Color" value="0.301961 0.23 1 1" />
+				<attribute name="Top Right Color" value="0.301961 0.23 1 1" />
+				<attribute name="Bottom Left Color" value="0.301961 0.23 1 1" />
+				<attribute name="Bottom Right Color" value="0.301961 0.23 1 1" />
+			</component>
+		</node>
+	</node>
+	<node id="173">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="55.2484 108.872 107.927" />
+		<attribute name="Rotation" value="0.540782 0.0493714 0.839685 0.00676745" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="144">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="175">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="46.7431 108.904 106.655" />
+		<attribute name="Rotation" value="0.175201 0.821232 -0.16529 0.517264" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="146">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="177">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="52.0384 106.619 129.331" />
+		<attribute name="Rotation" value="0.0246223 -0.0699914 0.307518 0.948645" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="148">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="179">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="43.5294 106.958 128.091" />
+		<attribute name="Rotation" value="-0.439019 0.895409 0.031002 0.0674086" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="150">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="183">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="ai-1" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="23.8918 -767.048 0" />
+		<attribute name="Rotation" value="1 0 0 0" />
+		<attribute name="Scale" value="1 1 1" />
+		<attribute name="Variables" />
+		<component type="NetworkActor" id="157">
+			<attribute name="Name" value="ai-1-vehicle" />
+			<attribute name="Color Index" value="99" />
+			<attribute name="Position" value="127.314 108.616 124.452" />
+		</component>
+		<component type="RigidBody" id="158">
+			<attribute name="Physics Position" value="23.8918 -767.233 0" />
+			<attribute name="Mass" value="90" />
+			<attribute name="Friction" value="1" />
+			<attribute name="Linear Velocity" value="3.66922e-16 -14.2347 0" />
+			<attribute name="Linear Damping" value="0.5" />
+			<attribute name="Angular Damping" value="0.5" />
+		</component>
+		<component type="CollisionShape" id="159">
+			<attribute name="Shape Type" value="Sphere" />
+		</component>
+		<component type="Light" id="160">
+			<attribute name="Color" value="0.5 1 0.5 1" />
+			<attribute name="Range" value="3" />
+			<attribute name="Light Shape Texture" value="TextureCube;" />
+		</component>
+		<node id="184">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Marker" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 72 -4" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="24 24 24" />
+			<attribute name="Variables" />
+		</node>
+	</node>
+	<node id="185">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="ai-1-vehicle" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="127.363 108.615 124.441" />
+		<attribute name="Rotation" value="0.680561 0.0133258 0.732437 0.0139498" />
+		<attribute name="Scale" value="0.4 0.35 0.4" />
+		<attribute name="Variables" />
+		<component type="Vehicle" id="161">
+			<attribute name="Name" value="Client1" />
+			<attribute name="Name" value="Client1" />
+		</component>
+		<component type="RaycastVehicleBase" id="162">
+			<attribute name="Wheel data">
+				<variant type="Int" value="4" />
+				<variant type="Int" value="188" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="true" />
+				<variant type="Float" value="0.999999" />
+				<variant type="Vector3" value="-4.3 -2.2 14.68" />
+				<variant type="Quaternion" value="1 0 0 -0" />
+				<variant type="Float" value="1" />
+				<variant type="Float" value="1.47498" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="142.482 102.124 127.185" />
+				<variant type="Vector3" value="0.00786616 0.999635 0.0258493" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+				<variant type="Int" value="190" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="true" />
+				<variant type="Float" value="0.999999" />
+				<variant type="Vector3" value="4.3 -2.2 14.68" />
+				<variant type="Quaternion" value="-4.37114e-08 0 -0 1" />
+				<variant type="Float" value="1" />
+				<variant type="Float" value="1.47498" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="141.748 102.462 118.623" />
+				<variant type="Vector3" value="0.0100693 0.99279 0.119446" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+				<variant type="Int" value="192" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="false" />
+				<variant type="Float" value="0" />
+				<variant type="Vector3" value="-4.3 -2.2 -7.08" />
+				<variant type="Quaternion" value="1 0 0 -0" />
+				<variant type="Float" value="1" />
+				<variant type="Float" value="1.47498" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="120.802 102.247 129.05" />
+				<variant type="Vector3" value="0.00786616 0.999635 0.0258493" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+				<variant type="Int" value="194" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="false" />
+				<variant type="Float" value="0" />
+				<variant type="Vector3" value="4.3 -2.2 -7.08" />
+				<variant type="Quaternion" value="-4.37114e-08 0 -0 1" />
+				<variant type="Float" value="1" />
+				<variant type="Float" value="1.47498" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="120.067 102.474 120.484" />
+				<variant type="Vector3" value="0.00786616 0.999635 0.0258493" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+			</attribute>
+		</component>
+		<component type="RigidBody" id="163">
+			<attribute name="Physics Rotation" value="0.676099 0.0135384 0.736539 0.0147304" />
+			<attribute name="Physics Position" value="127.489 108.614 124.412" />
+			<attribute name="Mass" value="425" />
+			<attribute name="Linear Velocity" value="9.70413 0.12774 -2.30903" />
+			<attribute name="Angular Velocity" value="0.119696 0.929453 0.0741663" />
+			<attribute name="Linear Damping" value="0.12" />
+			<attribute name="Angular Damping" value="0.3" />
+			<attribute name="Collision Layer" value="2" />
+		</component>
+		<component type="CollisionShape" id="165">
+			<attribute name="Size" value="32.76 11.0292 85.2768" />
+		</component>
+		<component type="SoundSource3D" id="176">
+			<attribute name="Frequency" value="18262.8" />
+			<attribute name="Gain" value="0.7" />
+			<attribute name="Near Distance" value="1" />
+			<attribute name="Far Distance" value="30" />
+			<attribute name="Rolloff Factor" value="0.1" />
+		</component>
+		<component type="SoundSource3D" id="177">
+			<attribute name="Sound" value="Sound;Offroad/Sounds/skid-gravel.ogg" />
+			<attribute name="Frequency" value="61740" />
+			<attribute name="Gain" value="0.4" />
+			<attribute name="Near Distance" value="1" />
+			<attribute name="Far Distance" value="30" />
+			<attribute name="Rolloff Factor" value="0.1" />
+		</component>
+		<component type="SoundSource3D" id="178">
+			<attribute name="Sound" value="Sound;Offroad/Sounds/shocks-impact.ogg" />
+			<attribute name="Frequency" value="44100" />
+			<attribute name="Gain" value="0.7" />
+			<attribute name="Near Distance" value="1" />
+			<attribute name="Far Distance" value="30" />
+			<attribute name="Rolloff Factor" value="0.1" />
+		</component>
+		<node id="186">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Model" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 9 -15" />
+			<attribute name="Rotation" value="0.5 -0.5 0.5 -0.5" />
+			<attribute name="Scale" value="0.2 0.2 0.2" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="164">
+				<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Jeep.mdl" />
+				<attribute name="Material" value="Material;Materials/Palette.xml" />
+				<attribute name="Cast Shadows" value="true" />
+			</component>
+			<node id="187">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="Model" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-14 -220 0" />
+				<attribute name="Rotation" value="4.24047e-08 -1.06077e-08 -0.970108 -0.242675" />
+				<attribute name="Scale" value="0.4 0.4 0.4" />
+				<attribute name="Variables" />
+				<component type="StaticModel" id="166">
+					<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Turrent.mdl" />
+					<attribute name="Material" value="Material;Materials/Palette.xml" />
+					<attribute name="Cast Shadows" value="true" />
+				</component>
+			</node>
+		</node>
+		<node id="196">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Lights" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 25 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="Light" id="175">
+				<attribute name="Brightness Multiplier" value="0.238523" />
+				<attribute name="Range" value="140" />
+				<attribute name="Light Shape Texture" value="TextureCube;" />
+				<attribute name="Cast Shadows" value="true" />
+			</component>
+		</node>
+		<node id="197">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Actor FloatText" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 17.1 -15.75" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="18 18 18" />
+			<attribute name="Variables" />
+			<component type="Text3D" id="179">
+				<attribute name="Font" value="Font;Fonts/m6x11.ttf" />
+				<attribute name="Font Size" value="16" />
+				<attribute name="Text" value="ai-1" />
+				<attribute name="Face Camera Mode" value="Rotate XYZ" />
+				<attribute name="Width" value="31" />
+				<attribute name="Color" value="0.301961 0.23 1 1" />
+				<attribute name="Top Left Color" value="0.301961 0.23 1 1" />
+				<attribute name="Top Right Color" value="0.301961 0.23 1 1" />
+				<attribute name="Bottom Left Color" value="0.301961 0.23 1 1" />
+				<attribute name="Bottom Right Color" value="0.301961 0.23 1 1" />
+			</component>
+		</node>
+	</node>
+	<node id="188">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="142.317 105.752 127.545" />
+		<attribute name="Rotation" value="0.246147 0.00144981 0.968682 0.0326324" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="167">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="190">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="141.687 106.078 118.974" />
+		<attribute name="Rotation" value="-0.896161 -0.369195 0.231124 -0.0846869" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="169">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="192">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="120.616 105.899 129.147" />
+		<attribute name="Rotation" value="0.613383 0.295131 0.671903 -0.291899" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="171">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="194">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="119.985 106.114 120.572" />
+		<attribute name="Rotation" value="-0.277946 0.677794 0.233752 0.639297" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="173">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="198">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="ai-2" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="7.57358 -767.048 0" />
+		<attribute name="Rotation" value="1 0 0 0" />
+		<attribute name="Scale" value="1 1 1" />
+		<attribute name="Variables" />
+		<component type="NetworkActor" id="180">
+			<attribute name="Name" value="ai-2-vehicle" />
+			<attribute name="Color Index" value="9" />
+			<attribute name="Position" value="163.148 -101.871 402.323" />
+		</component>
+		<component type="RigidBody" id="181">
+			<attribute name="Physics Position" value="7.57358 -767.233 0" />
+			<attribute name="Mass" value="90" />
+			<attribute name="Friction" value="1" />
+			<attribute name="Linear Velocity" value="1.16508e-16 -14.2347 0" />
+			<attribute name="Linear Damping" value="0.5" />
+			<attribute name="Angular Damping" value="0.5" />
+		</component>
+		<component type="CollisionShape" id="182">
+			<attribute name="Shape Type" value="Sphere" />
+		</component>
+		<component type="Light" id="183">
+			<attribute name="Color" value="0.5 0.5 0.5 1" />
+			<attribute name="Range" value="3" />
+			<attribute name="Light Shape Texture" value="TextureCube;" />
+		</component>
+		<node id="199">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Marker" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 72 -4" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="24 24 24" />
+			<attribute name="Variables" />
+		</node>
+	</node>
+	<node id="200">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="ai-2-vehicle" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="163.172 -101.88 402.388" />
+		<attribute name="Rotation" value="0.0496429 -0.501958 0.0181225 0.863276" />
+		<attribute name="Scale" value="0.4 0.35 0.4" />
+		<attribute name="Variables" />
+		<component type="Vehicle" id="184">
+			<attribute name="Name" value="Client1" />
+			<attribute name="Name" value="Client1" />
+		</component>
+		<component type="RaycastVehicleBase" id="185">
+			<attribute name="Wheel data">
+				<variant type="Int" value="4" />
+				<variant type="Int" value="203" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="true" />
+				<variant type="Float" value="0.999999" />
+				<variant type="Vector3" value="-4.3 -2.2 14.68" />
+				<variant type="Quaternion" value="1 0 0 -0" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="13.5506" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="153.261 -94.5864 413.618" />
+				<variant type="Vector3" value="-0.0974174 -0.995176 -0.0116445" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+				<variant type="Int" value="205" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="true" />
+				<variant type="Float" value="0.999999" />
+				<variant type="Vector3" value="4.3 -2.2 14.68" />
+				<variant type="Quaternion" value="-4.37114e-08 0 -0 1" />
+				<variant type="Float" value="0.522005" />
+				<variant type="Float" value="13.5506" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="149.041 -94.0859 406.141" />
+				<variant type="Vector3" value="-0.0974174 -0.995176 -0.0116445" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+				<variant type="Int" value="207" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="false" />
+				<variant type="Float" value="0" />
+				<variant type="Vector3" value="-4.3 -2.2 -7.08" />
+				<variant type="Quaternion" value="1 0 0 -0" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="13.5506" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="172.103 -96.3051 402.87" />
+				<variant type="Vector3" value="-0.0974174 -0.995176 -0.0116445" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+				<variant type="Int" value="209" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="false" />
+				<variant type="Float" value="0" />
+				<variant type="Vector3" value="4.3 -2.2 -7.08" />
+				<variant type="Quaternion" value="-4.37114e-08 0 -0 1" />
+				<variant type="Float" value="0.550004" />
+				<variant type="Float" value="13.5506" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="167.883 -95.8046 395.393" />
+				<variant type="Vector3" value="-0.0974174 -0.995176 -0.0116445" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+			</attribute>
+		</component>
+		<component type="RigidBody" id="186">
+			<attribute name="Physics Rotation" value="0.0450755 -0.502647 0.0195052 0.863095" />
+			<attribute name="Physics Position" value="163.235 -101.905 402.554" />
+			<attribute name="Mass" value="425" />
+			<attribute name="Linear Velocity" value="4.82643 -1.85179 12.7382" />
+			<attribute name="Angular Velocity" value="-0.54152 -0.0821064 0.499814" />
+			<attribute name="Linear Damping" value="0.12" />
+			<attribute name="Angular Damping" value="0.3" />
+			<attribute name="Collision Layer" value="2" />
+		</component>
+		<component type="CollisionShape" id="188">
+			<attribute name="Size" value="32.76 11.0292 85.2768" />
+		</component>
+		<component type="SoundSource3D" id="199">
+			<attribute name="Frequency" value="25480.9" />
+			<attribute name="Gain" value="0.7" />
+			<attribute name="Near Distance" value="1" />
+			<attribute name="Far Distance" value="30" />
+			<attribute name="Rolloff Factor" value="0.1" />
+		</component>
+		<component type="SoundSource3D" id="200">
+			<attribute name="Sound" value="Sound;Offroad/Sounds/skid-gravel.ogg" />
+			<attribute name="Frequency" value="61740" />
+			<attribute name="Gain" value="0.4" />
+			<attribute name="Near Distance" value="1" />
+			<attribute name="Far Distance" value="30" />
+			<attribute name="Rolloff Factor" value="0.1" />
+		</component>
+		<component type="SoundSource3D" id="201">
+			<attribute name="Sound" value="Sound;Offroad/Sounds/shocks-impact.ogg" />
+			<attribute name="Frequency" value="44100" />
+			<attribute name="Gain" value="0.7" />
+			<attribute name="Near Distance" value="1" />
+			<attribute name="Far Distance" value="30" />
+			<attribute name="Rolloff Factor" value="0.1" />
+		</component>
+		<node id="201">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Model" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 9 -15" />
+			<attribute name="Rotation" value="0.5 -0.5 0.5 -0.5" />
+			<attribute name="Scale" value="0.2 0.2 0.2" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="187">
+				<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Jeep.mdl" />
+				<attribute name="Material" value="Material;Materials/Palette.xml" />
+				<attribute name="Cast Shadows" value="true" />
+			</component>
+			<node id="202">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="Model" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-14 -220 0" />
+				<attribute name="Rotation" value="4.24047e-08 -1.06077e-08 -0.970108 -0.242675" />
+				<attribute name="Scale" value="0.4 0.4 0.4" />
+				<attribute name="Variables" />
+				<component type="StaticModel" id="189">
+					<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Turrent.mdl" />
+					<attribute name="Material" value="Material;Materials/Palette.xml" />
+					<attribute name="Cast Shadows" value="true" />
+				</component>
+			</node>
+		</node>
+		<node id="211">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Lights" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 25 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="Light" id="198">
+				<attribute name="Brightness Multiplier" value="0.253749" />
+				<attribute name="Range" value="140" />
+				<attribute name="Light Shape Texture" value="TextureCube;" />
+				<attribute name="Cast Shadows" value="true" />
+			</component>
+		</node>
+		<node id="212">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Actor FloatText" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 17.1 -15.75" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="18 18 18" />
+			<attribute name="Variables" />
+			<component type="Text3D" id="202">
+				<attribute name="Font" value="Font;Fonts/m6x11.ttf" />
+				<attribute name="Font Size" value="16" />
+				<attribute name="Text" value="ai-2" />
+				<attribute name="Face Camera Mode" value="Rotate XYZ" />
+				<attribute name="Width" value="31" />
+				<attribute name="Color" value="0.301961 0.23 1 1" />
+				<attribute name="Top Left Color" value="0.301961 0.23 1 1" />
+				<attribute name="Top Right Color" value="0.301961 0.23 1 1" />
+				<attribute name="Bottom Left Color" value="0.301961 0.23 1 1" />
+				<attribute name="Bottom Right Color" value="0.301961 0.23 1 1" />
+			</component>
+		</node>
+	</node>
+	<node id="203">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="152.879 -98.1955 413.447" />
+		<attribute name="Rotation" value="0.562696 -0.643867 0.354952 0.377911" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="190">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="205">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="148.655 -97.6148 405.978" />
+		<attribute name="Rotation" value="0.268705 0.443402 -0.41667 0.746711" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="192">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="207">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="171.698 -99.9608 402.667" />
+		<attribute name="Rotation" value="0.337538 0.374826 0.625808 -0.594927" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="194">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="209">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="167.474 -99.3802 395.198" />
+		<attribute name="Rotation" value="0.0262278 0.863068 -0.0543541 0.50147" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="196">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="213">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="ai-3" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="-7.42416 -767.048 0" />
+		<attribute name="Rotation" value="1 0 0 0" />
+		<attribute name="Scale" value="1 1 1" />
+		<attribute name="Variables" />
+		<component type="NetworkActor" id="203">
+			<attribute name="Name" value="ai-3-vehicle" />
+			<attribute name="Color Index" value="74" />
+			<attribute name="Position" value="115.516 116.238 49.2394" />
+		</component>
+		<component type="RigidBody" id="204">
+			<attribute name="Physics Position" value="-7.42416 -767.233 0" />
+			<attribute name="Mass" value="90" />
+			<attribute name="Friction" value="1" />
+			<attribute name="Linear Velocity" value="-1.14213e-16 -14.2347 0" />
+			<attribute name="Linear Damping" value="0.5" />
+			<attribute name="Angular Damping" value="0.5" />
+		</component>
+		<component type="CollisionShape" id="205">
+			<attribute name="Shape Type" value="Sphere" />
+		</component>
+		<component type="Light" id="206">
+			<attribute name="Color" value="0.5 1 0.5 1" />
+			<attribute name="Range" value="3" />
+			<attribute name="Light Shape Texture" value="TextureCube;" />
+		</component>
+		<node id="214">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Marker" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 72 -4" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="24 24 24" />
+			<attribute name="Variables" />
+		</node>
+	</node>
+	<node id="215">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="ai-3-vehicle" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="115.511 116.242 49.1982" />
+		<attribute name="Rotation" value="0.0903331 0.0428141 0.994144 0.0410379" />
+		<attribute name="Scale" value="0.4 0.35 0.4" />
+		<attribute name="Variables" />
+		<component type="Vehicle" id="207">
+			<attribute name="Name" value="Client1" />
+			<attribute name="Name" value="Client1" />
+		</component>
+		<component type="RaycastVehicleBase" id="208">
+			<attribute name="Wheel data">
+				<variant type="Int" value="4" />
+				<variant type="Int" value="218" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="true" />
+				<variant type="Float" value="0.999999" />
+				<variant type="Vector3" value="-4.3 -2.2 14.68" />
+				<variant type="Quaternion" value="1 0 0 -0" />
+				<variant type="Float" value="1" />
+				<variant type="Float" value="2.41207" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="121.723 110.604 34.7998" />
+				<variant type="Vector3" value="0.0530113 0.996011 0.0717691" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+				<variant type="Int" value="220" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="true" />
+				<variant type="Float" value="0.999999" />
+				<variant type="Vector3" value="4.3 -2.2 14.68" />
+				<variant type="Quaternion" value="-4.37114e-08 0 -0 1" />
+				<variant type="Float" value="1" />
+				<variant type="Float" value="2.41207" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="121.723 110.604 34.7998" />
+				<variant type="Vector3" value="0.0530113 0.996011 0.0717691" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+				<variant type="Int" value="222" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="false" />
+				<variant type="Float" value="0" />
+				<variant type="Vector3" value="-4.3 -2.2 -7.08" />
+				<variant type="Quaternion" value="1 0 0 -0" />
+				<variant type="Float" value="1" />
+				<variant type="Float" value="2.41207" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="118.038 109.258 56.2051" />
+				<variant type="Vector3" value="0.0530113 0.996011 0.0717691" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+				<variant type="Int" value="224" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="false" />
+				<variant type="Float" value="0" />
+				<variant type="Vector3" value="4.3 -2.2 -7.08" />
+				<variant type="Quaternion" value="-4.37114e-08 0 -0 1" />
+				<variant type="Float" value="1" />
+				<variant type="Float" value="2.41207" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="109.571 109.811 54.779" />
+				<variant type="Vector3" value="0.0530113 0.996011 0.0717691" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+			</attribute>
+		</component>
+		<component type="RigidBody" id="209">
+			<attribute name="Physics Rotation" value="0.0838707 0.0429526 0.994694 0.0412931" />
+			<attribute name="Physics Position" value="115.5 116.251 49.0924" />
+			<attribute name="Mass" value="425" />
+			<attribute name="Linear Velocity" value="-1.02043 0.865228 -8.14332" />
+			<attribute name="Angular Velocity" value="0.0812111 1.00858 0.0264854" />
+			<attribute name="Linear Damping" value="0.12" />
+			<attribute name="Angular Damping" value="0.3" />
+			<attribute name="Collision Layer" value="2" />
+		</component>
+		<component type="CollisionShape" id="211">
+			<attribute name="Size" value="32.76 11.0292 85.2768" />
+		</component>
+		<component type="SoundSource3D" id="222">
+			<attribute name="Frequency" value="15143.5" />
+			<attribute name="Gain" value="0.7" />
+			<attribute name="Near Distance" value="1" />
+			<attribute name="Far Distance" value="30" />
+			<attribute name="Rolloff Factor" value="0.1" />
+		</component>
+		<component type="SoundSource3D" id="223">
+			<attribute name="Sound" value="Sound;Offroad/Sounds/skid-gravel.ogg" />
+			<attribute name="Frequency" value="61740" />
+			<attribute name="Gain" value="0.4" />
+			<attribute name="Near Distance" value="1" />
+			<attribute name="Far Distance" value="30" />
+			<attribute name="Rolloff Factor" value="0.1" />
+		</component>
+		<component type="SoundSource3D" id="224">
+			<attribute name="Sound" value="Sound;Offroad/Sounds/shocks-impact.ogg" />
+			<attribute name="Frequency" value="44100" />
+			<attribute name="Gain" value="0.7" />
+			<attribute name="Near Distance" value="1" />
+			<attribute name="Far Distance" value="30" />
+			<attribute name="Rolloff Factor" value="0.1" />
+		</component>
+		<node id="216">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Model" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 9 -15" />
+			<attribute name="Rotation" value="0.5 -0.5 0.5 -0.5" />
+			<attribute name="Scale" value="0.2 0.2 0.2" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="210">
+				<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Jeep.mdl" />
+				<attribute name="Material" value="Material;Materials/Palette.xml" />
+				<attribute name="Cast Shadows" value="true" />
+			</component>
+			<node id="217">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="Model" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-14 -220 0" />
+				<attribute name="Rotation" value="4.24047e-08 -1.06077e-08 -0.970108 -0.242675" />
+				<attribute name="Scale" value="0.4 0.4 0.4" />
+				<attribute name="Variables" />
+				<component type="StaticModel" id="212">
+					<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Turrent.mdl" />
+					<attribute name="Material" value="Material;Materials/Palette.xml" />
+					<attribute name="Cast Shadows" value="true" />
+				</component>
+			</node>
+		</node>
+		<node id="226">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Lights" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 25 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="Light" id="221">
+				<attribute name="Brightness Multiplier" value="0.231943" />
+				<attribute name="Range" value="140" />
+				<attribute name="Light Shape Texture" value="TextureCube;" />
+				<attribute name="Cast Shadows" value="true" />
+			</component>
+		</node>
+		<node id="227">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Actor FloatText" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 17.1 -15.75" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="18 18 18" />
+			<attribute name="Variables" />
+			<component type="Text3D" id="225">
+				<attribute name="Font" value="Font;Fonts/m6x11.ttf" />
+				<attribute name="Font Size" value="16" />
+				<attribute name="Text" value="ai-3" />
+				<attribute name="Face Camera Mode" value="Rotate XYZ" />
+				<attribute name="Width" value="31" />
+				<attribute name="Color" value="0.301961 0.23 1 1" />
+				<attribute name="Top Left Color" value="0.301961 0.23 1 1" />
+				<attribute name="Top Right Color" value="0.301961 0.23 1 1" />
+				<attribute name="Bottom Left Color" value="0.301961 0.23 1 1" />
+				<attribute name="Bottom Right Color" value="0.301961 0.23 1 1" />
+			</component>
+		</node>
+	</node>
+	<node id="218">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="122.2 114.192 35.3183" />
+		<attribute name="Rotation" value="0.105986 0.383365 -0.25917 0.88013" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="213">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="220">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="113.771 114.988 33.8039" />
+		<attribute name="Rotation" value="0.381375 0.834477 0.171331 -0.358954" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="215">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="222">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="118.237 112.87 56.6755" />
+		<attribute name="Rotation" value="0.0876072 -0.0481465 0.548958 0.82985" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="217">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="224">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="109.79 113.425 55.1394" />
+		<attribute name="Rotation" value="-0.547907 0.830545 0.00991103 0.099473" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="219">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="228">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="ai-4" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="-22.7037 -767.048 0" />
+		<attribute name="Rotation" value="1 0 0 0" />
+		<attribute name="Scale" value="1 1 1" />
+		<attribute name="Variables" />
+		<component type="NetworkActor" id="226">
+			<attribute name="Name" value="ai-4-vehicle" />
+			<attribute name="Color Index" value="29" />
+			<attribute name="Position" value="74.5043 126.467 -45.0288" />
+		</component>
+		<component type="RigidBody" id="227">
+			<attribute name="Physics Position" value="-22.7037 -767.233 0" />
+			<attribute name="Mass" value="90" />
+			<attribute name="Friction" value="1" />
+			<attribute name="Linear Velocity" value="-3.48676e-16 -14.2347 0" />
+			<attribute name="Linear Damping" value="0.5" />
+			<attribute name="Angular Damping" value="0.5" />
+		</component>
+		<component type="CollisionShape" id="228">
+			<attribute name="Shape Type" value="Sphere" />
+		</component>
+		<component type="Light" id="229">
+			<attribute name="Color" value="0.5 1 0.5 1" />
+			<attribute name="Range" value="3" />
+			<attribute name="Light Shape Texture" value="TextureCube;" />
+		</component>
+		<node id="229">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Marker" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 72 -4" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="24 24 24" />
+			<attribute name="Variables" />
+		</node>
+	</node>
+	<node id="230">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="ai-4-vehicle" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="74.5223 126.461 -44.9795" />
+		<attribute name="Rotation" value="0.999148 0.032333 -0.0162897 -0.0198223" />
+		<attribute name="Scale" value="0.4 0.35 0.4" />
+		<attribute name="Variables" />
+		<component type="Vehicle" id="230">
+			<attribute name="Name" value="Client1" />
+			<attribute name="Name" value="Client1" />
+		</component>
+		<component type="RaycastVehicleBase" id="231">
+			<attribute name="Wheel data">
+				<variant type="Int" value="4" />
+				<variant type="Int" value="233" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="true" />
+				<variant type="Float" value="0.999999" />
+				<variant type="Vector3" value="-4.3 -2.2 14.68" />
+				<variant type="Quaternion" value="1 0 0 -0" />
+				<variant type="Float" value="0.89" />
+				<variant type="Float" value="4.07903" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="69.7257 119.321 -30.7001" />
+				<variant type="Vector3" value="0.0521823 0.994273 0.0932609" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+				<variant type="Int" value="235" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="true" />
+				<variant type="Float" value="0.999999" />
+				<variant type="Vector3" value="4.3 -2.2 14.68" />
+				<variant type="Quaternion" value="-4.37114e-08 0 -0 1" />
+				<variant type="Float" value="0.89" />
+				<variant type="Float" value="4.07903" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="69.7257 119.321 -30.7001" />
+				<variant type="Vector3" value="0.0521823 0.994273 0.0932609" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+				<variant type="Int" value="237" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="false" />
+				<variant type="Float" value="0" />
+				<variant type="Vector3" value="-4.3 -2.2 -7.08" />
+				<variant type="Quaternion" value="1 0 0 -0" />
+				<variant type="Float" value="0.89" />
+				<variant type="Float" value="4.07903" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="70.1909 121.028 -52.3903" />
+				<variant type="Vector3" value="0.0691926 0.995318 0.0674884" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+				<variant type="Int" value="239" />
+				<variant type="Vector3" value="0 -1 0" />
+				<variant type="Vector3" value="-1 0 0" />
+				<variant type="Float" value="0.6" />
+				<variant type="Float" value="3.64" />
+				<variant type="Bool" value="false" />
+				<variant type="Float" value="0" />
+				<variant type="Vector3" value="4.3 -2.2 -7.08" />
+				<variant type="Quaternion" value="-4.37114e-08 0 -0 1" />
+				<variant type="Float" value="0.89" />
+				<variant type="Float" value="4.07903" />
+				<variant type="Bool" value="false" />
+				<variant type="Vector3" value="78.7726 120.422 -52.2501" />
+				<variant type="Vector3" value="0.0691926 0.995318 0.0674884" />
+				<variant type="Float" value="18" />
+				<variant type="Float" value="6000" />
+				<variant type="Float" value="2" />
+				<variant type="Float" value="4" />
+				<variant type="Float" value="370" />
+				<variant type="Float" value="0.12" />
+				<variant type="Float" value="1000" />
+				<variant type="Float" value="0" />
+				<variant type="Float" value="1" />
+			</attribute>
+		</component>
+		<component type="RigidBody" id="232">
+			<attribute name="Physics Rotation" value="0.999242 0.0323314 -0.00980117 -0.0193204" />
+			<attribute name="Physics Position" value="74.5695 126.446 -44.8538" />
+			<attribute name="Mass" value="425" />
+			<attribute name="Linear Velocity" value="3.87139 -0.909368 9.57496" />
+			<attribute name="Angular Velocity" value="0.0238396 1.01344 0.110751" />
+			<attribute name="Linear Damping" value="0.12" />
+			<attribute name="Angular Damping" value="0.3" />
+			<attribute name="Collision Layer" value="2" />
+		</component>
+		<component type="CollisionShape" id="234">
+			<attribute name="Size" value="32.76 11.0292 85.2768" />
+		</component>
+		<component type="SoundSource3D" id="245">
+			<attribute name="Frequency" value="19273.2" />
+			<attribute name="Gain" value="0.7" />
+			<attribute name="Near Distance" value="1" />
+			<attribute name="Far Distance" value="30" />
+			<attribute name="Rolloff Factor" value="0.1" />
+		</component>
+		<component type="SoundSource3D" id="246">
+			<attribute name="Sound" value="Sound;Offroad/Sounds/skid-gravel.ogg" />
+			<attribute name="Frequency" value="61740" />
+			<attribute name="Gain" value="0.4" />
+			<attribute name="Is Playing" value="true" />
+			<attribute name="Play Position" value="41043860" />
+			<attribute name="Near Distance" value="1" />
+			<attribute name="Far Distance" value="30" />
+			<attribute name="Rolloff Factor" value="0.1" />
+		</component>
+		<component type="SoundSource3D" id="247">
+			<attribute name="Sound" value="Sound;Offroad/Sounds/shocks-impact.ogg" />
+			<attribute name="Frequency" value="44100" />
+			<attribute name="Gain" value="0.7" />
+			<attribute name="Near Distance" value="1" />
+			<attribute name="Far Distance" value="30" />
+			<attribute name="Rolloff Factor" value="0.1" />
+		</component>
+		<node id="231">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Model" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 9 -15" />
+			<attribute name="Rotation" value="0.5 -0.5 0.5 -0.5" />
+			<attribute name="Scale" value="0.2 0.2 0.2" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="233">
+				<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Jeep.mdl" />
+				<attribute name="Material" value="Material;Materials/Palette.xml" />
+				<attribute name="Cast Shadows" value="true" />
+			</component>
+			<node id="232">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="Model" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-14 -220 0" />
+				<attribute name="Rotation" value="4.24047e-08 -1.06077e-08 -0.970108 -0.242675" />
+				<attribute name="Scale" value="0.4 0.4 0.4" />
+				<attribute name="Variables" />
+				<component type="StaticModel" id="235">
+					<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Turrent.mdl" />
+					<attribute name="Material" value="Material;Materials/Palette.xml" />
+					<attribute name="Cast Shadows" value="true" />
+				</component>
+			</node>
+		</node>
+		<node id="241">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Lights" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 25 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="Light" id="244">
+				<attribute name="Brightness Multiplier" value="0.240654" />
+				<attribute name="Range" value="140" />
+				<attribute name="Light Shape Texture" value="TextureCube;" />
+				<attribute name="Cast Shadows" value="true" />
+			</component>
+		</node>
+		<node id="242">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Actor FloatText" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 17.1 -15.75" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="18 18 18" />
+			<attribute name="Variables" />
+			<component type="Text3D" id="248">
+				<attribute name="Font" value="Font;Fonts/m6x11.ttf" />
+				<attribute name="Font Size" value="16" />
+				<attribute name="Text" value="ai-4" />
+				<attribute name="Face Camera Mode" value="Rotate XYZ" />
+				<attribute name="Width" value="31" />
+				<attribute name="Color" value="0.301961 0.23 1 1" />
+				<attribute name="Top Left Color" value="0.301961 0.23 1 1" />
+				<attribute name="Top Right Color" value="0.301961 0.23 1 1" />
+				<attribute name="Bottom Left Color" value="0.301961 0.23 1 1" />
+				<attribute name="Bottom Right Color" value="0.301961 0.23 1 1" />
+			</component>
+		</node>
+	</node>
+	<node id="233">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="69.6261 122.976 -30.6506" />
+		<attribute name="Rotation" value="0.765112 0.445684 0.410317 -0.218197" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="236">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="235">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="78.2148 122.627 -30.3816" />
+		<attribute name="Rotation" value="0.452604 0.105449 -0.86949 0.167386" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="238">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="237">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="70.3742 124.677 -52.3333" />
+		<attribute name="Rotation" value="0.998281 0.052696 -0.0166904 -0.019486" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="240">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="239">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Wheel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="78.9525 124.059 -52.082" />
+		<attribute name="Rotation" value="-0.00827049 -0.0242874 -0.946593 0.321408" />
+		<attribute name="Scale" value="0.0833333 0.1 0.1" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="242">
+			<attribute name="Model" value="Model;Models/Vehicles/SetA/Models/Wheels_4.mdl" />
+			<attribute name="Material" value="Material;Materials/Palette.xml" />
+			<attribute name="Cast Shadows" value="true" />
+		</component>
+	</node>
+	<node id="243">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="actor-SERVER" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="-40.1162 -767.048 0" />
+		<attribute name="Rotation" value="1 0 0 0" />
+		<attribute name="Scale" value="1 1 1" />
+		<attribute name="Variables" />
+		<component type="NetworkActor" id="249">
+			<attribute name="Name" value="actor-SERVER" />
+			<attribute name="Color Index" value="99" />
+			<attribute name="Position" value="0 -6 0" />
+		</component>
+		<component type="RigidBody" id="250">
+			<attribute name="Physics Position" value="-40.1162 -767.233 0" />
+			<attribute name="Mass" value="90" />
+			<attribute name="Friction" value="1" />
+			<attribute name="Linear Velocity" value="-6.16091e-16 -14.2347 0" />
+			<attribute name="Linear Damping" value="0.5" />
+			<attribute name="Angular Damping" value="0.5" />
+		</component>
+		<component type="CollisionShape" id="251">
+			<attribute name="Shape Type" value="Sphere" />
+		</component>
+		<component type="Light" id="252">
+			<attribute name="Color" value="1 1 0.5 1" />
+			<attribute name="Range" value="3" />
+			<attribute name="Light Shape Texture" value="TextureCube;" />
+		</component>
+		<node id="244">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Marker" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 72 -4" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="24 24 24" />
+			<attribute name="Variables" />
+		</node>
+		<node id="245">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="camera_actor-server" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 3000 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+		</node>
+	</node>
+	<node id="16777226">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="Camera" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="225.036 -110.284 443.242" />
+		<attribute name="Rotation" value="-0.472787 0.02672 0.879368 0.0496982" />
+		<attribute name="Scale" value="1 1 1" />
+		<attribute name="Variables" />
+		<component type="Camera" id="16777337">
+			<attribute name="Far Clip" value="48000" />
+			<attribute name="Aspect Ratio" value="1.40625" />
+		</component>
+	</node>
+	<node id="246">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="CamTargetMarker" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="1 0 0" />
+		<attribute name="Rotation" value="1 0 0 0" />
+		<attribute name="Scale" value="38 38 38" />
+		<attribute name="Variables" />
+		<component type="StaticModel" id="253">
+			<attribute name="Model" value="Model;Models/Sphere.mdl" />
+			<attribute name="Material" value="Material;" />
+		</component>
+	</node>
+</scene>

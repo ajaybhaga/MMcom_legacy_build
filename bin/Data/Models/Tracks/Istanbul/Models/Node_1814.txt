@@ -1,0 +1,1 @@
+Materials/lorry_trailer_b_material.xml

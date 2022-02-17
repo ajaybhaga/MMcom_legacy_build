@@ -1,0 +1,1 @@
+Materials/core_camscaffold_material.xml

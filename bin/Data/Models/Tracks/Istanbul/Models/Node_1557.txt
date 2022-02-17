@@ -1,0 +1,1 @@
+Materials/lightpole_lrg_e_01_material.xml

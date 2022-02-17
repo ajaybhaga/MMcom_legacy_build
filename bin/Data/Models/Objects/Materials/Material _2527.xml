@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<material>
+	<technique name="Techniques/Diff.xml" />
+	<texture name="Textures/Tileable_metal_scratch_rust_texture.jpg" unit="diffuse" />
+	<parameter name="MatDiffColor" value="0.627451 0.627451 0.627451 1" />
+	<parameter name="MatSpecColor" value="0.476471 0.476471 0.476471 50" />
+</material>

@@ -1,0 +1,7 @@
+/cmake-build-debug/
+/android/urho3d-lib/.cxx/
+/android/urho3d-lib/build/
+/android/launcher-app/build/
+/android/launcher-app/.cxx/
+/build/intermediates/lint-cache/
+/.gradle/

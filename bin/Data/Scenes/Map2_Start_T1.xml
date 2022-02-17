@@ -1,0 +1,248 @@
+<?xml version="1.0"?>
+<scene id="1">
+	<attribute name="Name" value="" />
+	<attribute name="Time Scale" value="1" />
+	<attribute name="Smoothing Constant" value="50" />
+	<attribute name="Snap Threshold" value="5" />
+	<attribute name="Elapsed Time" value="8.737" />
+	<attribute name="Next Replicated Node ID" value="167" />
+	<attribute name="Next Replicated Component ID" value="133" />
+	<attribute name="Next Local Node ID" value="16777227" />
+	<attribute name="Next Local Component ID" value="16777348" />
+	<attribute name="Variables" />
+	<attribute name="Variable Names" value="" />
+	<component type="Octree" id="1" />
+	<component type="DebugRenderer" id="2" />
+	<component type="PhysicsWorld" id="23" />
+	<node id="2">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="0 0 0" />
+		<attribute name="Rotation" value="1 0 0 0" />
+		<attribute name="Scale" value="1 1 1" />
+		<attribute name="Variables" />
+		<node id="3">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="track1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="0.707107 0 0 -0.707107" />
+			<attribute name="Scale" value="100 100 100" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="5">
+				<attribute name="Model" value="Model;Models/Tracks/V6/Models/race_obj_way_33.mdl" />
+				<attribute name="Material" value="Material;Materials/lambert2.xml" />
+			</component>
+			<component type="RigidBody" id="24">
+				<attribute name="Physics Rotation" value="0.707107 0 0 -0.707107" />
+			</component>
+			<component type="CollisionShape" id="25" />
+			<node id="5">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="2.10962 -600 -0" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+				<component type="Light" id="6">
+					<attribute name="Radius" value="2000" />
+					<attribute name="Length" value="5000" />
+					<attribute name="Range" value="3000" />
+					<attribute name="Light Shape Texture" value="TextureCube;" />
+				</component>
+			</node>
+			<node id="6">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="0.057773 11.1084 -140.04" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+				<component type="Light" id="7">
+					<attribute name="Radius" value="2000" />
+					<attribute name="Length" value="3000" />
+					<attribute name="Range" value="3000" />
+					<attribute name="Light Shape Texture" value="TextureCube;" />
+				</component>
+			</node>
+			<node id="13">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="0.404311 5.05192 2.50615" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+				<component type="Light" id="15">
+					<attribute name="Brightness Multiplier" value="4" />
+					<attribute name="Radius" value="20000" />
+					<attribute name="Length" value="30000" />
+					<attribute name="Range" value="30000" />
+					<attribute name="Light Shape Texture" value="TextureCube;" />
+				</component>
+			</node>
+		</node>
+		<node id="7">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="7.6724 153.681 85.0787" />
+			<attribute name="Rotation" value="0.709878 0 -0.704325 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<node id="9">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="start_starA" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-9.5763 -23.0759 -32.2903" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="100 100 100" />
+				<attribute name="Variables" />
+				<component type="StaticModel" id="11">
+					<attribute name="Model" value="Model;Models/AssetPack/starfish_T.mdl" />
+					<attribute name="Material" value="Material;Materials/ORANGE YELLOW.xml" />
+				</component>
+			</node>
+			<node id="28">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="start_starB" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-270.573 17.6051 -33.166" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="100 100 100" />
+				<attribute name="Variables" />
+				<component type="StaticModel" id="38">
+					<attribute name="Model" value="Model;Models/AssetPack/starfish_T.mdl" />
+					<attribute name="Material" value="Material;Materials/ORANGE YELLOW.xml" />
+				</component>
+			</node>
+		</node>
+		<node id="12">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="4.61913 165.988 -0.00915527" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+		</node>
+		<node id="18">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="tree1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="244.442 -74.1017 -3.73025" />
+			<attribute name="Rotation" value="0.707107 0 0 -0.707107" />
+			<attribute name="Scale" value="60 60 60" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="20">
+				<attribute name="Model" value="Model;Models/AssetPack/tree-tall.mdl" />
+				<attribute name="Material" value="Material;Materials/LOWPOLY-COLORS.xml" />
+			</component>
+		</node>
+		<node id="20">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="tree2" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="253.26 -133.733 -183.012" />
+			<attribute name="Rotation" value="0.648459 -0.12886 0.281958 -0.695266" />
+			<attribute name="Scale" value="60 60 60" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="26">
+				<attribute name="Model" value="Model;Models/AssetPack/tree-tall.mdl" />
+				<attribute name="Material" value="Material;Materials/LOWPOLY-COLORS.xml" />
+			</component>
+		</node>
+		<node id="21">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="flower1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="243.112 -144.013 -63.1053" />
+			<attribute name="Rotation" value="0.683013 -0.183013 0.183013 -0.683013" />
+			<attribute name="Scale" value="80 80 80" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="27">
+				<attribute name="Model" value="Model;Models/AssetPack/flower03.mdl" />
+				<attribute name="Material" value="Material;Materials/LOWPOLY-COLORS.xml" />
+			</component>
+		</node>
+		<node id="23">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="MM-logo" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="-520.748 45.4999 121.206" />
+			<attribute name="Rotation" value="0.705217 -0.051664 0.051664 -0.705217" />
+			<attribute name="Scale" value="240 240 240" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="29">
+				<attribute name="Model" value="Model;Models/logo/Models/mm_logo.mdl" />
+				<attribute name="Material" value="Material;" />
+				<attribute name="Is Occluder" value="true" />
+			</component>
+		</node>
+		<node id="29">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="BillB1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="296.235 794.626 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="40">
+				<attribute name="Model" value="Model;Models/Objects/Models/BillboardStand.mdl" />
+				<attribute name="Material" value="Material;Materials/Metal.xml;Materials/Material.001.xml" />
+			</component>
+		</node>
+		<node id="30">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="BillB2" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="287.035 794.626 -600" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="41">
+				<attribute name="Model" value="Model;Models/Objects/Models/BillboardStand.mdl" />
+				<attribute name="Material" value="Material;Materials/Metal.xml;Materials/Material.001.xml" />
+			</component>
+		</node>
+		<node id="31">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="BillB3" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="287.035 794.626 -1200" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="42">
+				<attribute name="Model" value="Model;Models/Objects/Models/BillboardStand.mdl" />
+				<attribute name="Material" value="Material;Materials/Metal.xml;Materials/Material.001.xml" />
+			</component>
+		</node>
+		<node id="32">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="SteerSpline" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="SplinePath" id="132">
+				<attribute name="Control Points">
+					<variant type="Int" value="0" />
+				</attribute>
+			</component>
+			<node id="127">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="SteerMark" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="1466.72 -263.335 -340.623" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+			</node>
+		</node>
+	</node>
+</scene>
