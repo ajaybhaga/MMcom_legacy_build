@@ -74,7 +74,7 @@ bool GameController::CreateController()
     {
         // remove the default screen joystick created in the Sample::InitTouchInput() fn.
         //**note** this would not be required if you don't inherit your app from the Sample class
-        //RemoveScreenJoystick();
+        RemoveScreenJoystick();
 
         // and create our own
         XMLFile *layout = cache->GetResource<XMLFile>("ScreenJoystick/ScreenJoystick.xml");

@@ -2978,13 +2978,13 @@ Button *MayaScape::CreateButton(const String &text, int width) {
 
     Button *button = buttonContainer_->CreateChild<Button>();
     button->SetStyleAuto();
-    button->SetFixedHeight(40);
+    button->SetFixedHeight(120);
     button->SetFixedWidth(width);
     //button->SetHeight(5);
 
     Text *buttonText = button->CreateChild<Text>();
     buttonText->SetName("text");
-    buttonText->SetFont(font, 24);
+    buttonText->SetFont(font, 72);
     buttonText->SetAlignment(HA_CENTER, VA_CENTER);
     buttonText->SetText(text);
 
