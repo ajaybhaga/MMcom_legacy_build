@@ -2876,8 +2876,9 @@ void MayaScape::CreateUI() {
     versionText_->SetFont(cache->GetResource<Font>("Fonts/CompassGold.ttf"), 36);
     versionText_->SetColor(Color::WHITE);
     // Position the text relative to the screen center
-    versionText_->SetHorizontalAlignment(HA_CENTER);
-    versionText_->SetPosition(15, 700);
+    //versionText_->SetHorizontalAlignment(HA_CENTER);
+    versionText_->SetAlignment(HA_CENTER, VA_TOP);
+    versionText_->SetPosition(0, 10);
     // Hide once connected
     versionText_->SetVisible(true);
 
@@ -3388,9 +3389,9 @@ void MayaScape::HandleConnect(StringHash eventType, VariantMap &eventData) {
         //UpdateUIState(true);
         started_ = true;
         // Set logo sprite alignment
-        logoSprite_->SetAlignment(HA_CENTER, VA_BOTTOM);
-        logoSprite_->SetPosition(-400, -3);
-        logoSprite_->SetScale(0.25f);
+        logoSprite_->SetAlignment(HA_RIGHT, VA_TOP);
+        logoSprite_->SetPosition(-15, 200);
+        logoSprite_->SetScale(0.33f);
 
         // Make logo not fully opaque to show the scene underneath
         logoSprite_->SetOpacity(0.5f);
@@ -3402,7 +3403,9 @@ void MayaScape::HandleConnect(StringHash eventType, VariantMap &eventData) {
 
         String playerText = "Logged in as: " + String(clientName_.CString());
         instructionsText_->SetText(playerText);
-        instructionsText_->SetPosition(0, 730);
+        //instructionsText_->SetPosition(0, 730);
+        instructionsText_->SetAlignment(HA_CENTER, VA_BOTTOM);
+        instructionsText_->SetPosition(0, -20);
 
 
 
@@ -3462,9 +3465,10 @@ void MayaScape::HandleStartServer(StringHash eventType, VariantMap &eventData) {
     started_ = true;
 
     // Set logo sprite alignment
-    logoSprite_->SetAlignment(HA_CENTER, VA_BOTTOM);
-    logoSprite_->SetPosition(-400, -3);
-    logoSprite_->SetScale(0.25f);
+    logoSprite_->SetAlignment(HA_RIGHT, VA_TOP);
+    logoSprite_->SetPosition(-15, 180);
+    logoSprite_->SetScale(0.33f);
+
 
     // Make logo not fully opaque to show the scene underneath
     logoSprite_->SetOpacity(0.5f);
@@ -4226,8 +4230,8 @@ void MayaScape::CreateClientUI() {
     for (int i = 0; i < NUM_RADIO_TRACK_FIELDS; i++) {
         radioText_[i] = ui->GetRoot()->CreateChild<Text>("RadioTrackListText");
 
-        radioText_[i]->SetAlignment(HA_RIGHT, VA_BOTTOM);
-        radioText_[i]->SetPosition(-20.0f, -60 + (i * 26));
+        radioText_[i]->SetAlignment(HA_RIGHT, VA_TOP);
+        radioText_[i]->SetPosition(-20.0f, 20 + (i * 26));
         radioText_[i]->SetVisible(true);
 
         radioText_[i]->SetFont(font2, 22);
