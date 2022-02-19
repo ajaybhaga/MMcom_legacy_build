@@ -1,24 +1,3 @@
-//
-// Copyright (c) 2008-2018 the Urho3D project.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-//
 /*
   __   __
  /  \/  \
@@ -162,7 +141,9 @@
 #include "../../Urho3D/Input/Controls.h"
 #include "../../Urho3D/Scene/SplinePath.h"
 #include <MayaScape/Constants.h>
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 
 //#define CSP_DEBUG
@@ -181,8 +162,28 @@ const int MSG_NODE_ERROR = 156;
 //#define GAME_SERVER_ADDRESS "localhost"
 //#define GAME_SERVER_ADDRESS "www.monkeymaya.com"
 
+std::vector<std::string> bzRadioTracksArtistName = {
+        "Bhagatriks",
+        "Bhagatriks",
+        "Bhagatriks",
+        "Bhagatriks",
+        "Bhagatriks",
+        "Bhagatriks",
+        "Bhagatriks"
+};
 
-std::vector<std::string> bzRadioTracks = {
+std::vector<std::string> bzRadioTracksArtistLink = {
+        "IG: @bhagatriks",
+        "IG: @bhagatriks",
+        "IG: @bhagatriks",
+        "IG: @bhagatriks",
+        "IG: @bhagatriks",
+        "IG: @bhagatriks",
+        "IG: @bhagatriks"
+};
+
+
+std::vector<std::string> bzRadioTracksTrackName = {
         "BZradio/110-walk-away.ogg",
         "BZradio/100-miami-ride.ogg",
         "BZradio/105-hotsun-lp.ogg",
@@ -198,6 +199,8 @@ std::vector<std::string> driveAudioEffect = {
         "drive/102991590-car-skid-tires-dirt-without-en.wav",
         "drive/000788417-vintage-army-jeep.wav"
 };
+
+int currTrack_ = 0;
 
 
 /// [AB] STABILITY NOTES //
@@ -453,10 +456,10 @@ void MayaScape::UpdateUIState(bool state) {
             rpmBarBkgP1Sprite_->SetVisible(state);
             velBarP1Sprite_->SetVisible(state);
             velBarBkgP1Sprite_->SetVisible(state);
-            miniMapP1Sprite_->SetVisible(state);
-            miniMapWPSprite_->SetVisible(state);
-            miniMapBkgSprite_->SetVisible(state);
-            markerMapBkgSprite_->SetVisible(state);
+            //miniMapP1Sprite_->SetVisible(state);
+            //miniMapWPSprite_->SetVisible(state);
+            //miniMapBkgSprite_->SetVisible(state);
+            //markerMapBkgSprite_->SetVisible(state);
             steerWheelSprite_->SetVisible(state);
 
 
@@ -473,6 +476,12 @@ void MayaScape::UpdateUIState(bool state) {
             for (int i = 0; i < NUM_DEBUG_FIELDS; i++) {
                 debugText_[i]->SetVisible(state);
             }
+
+            // Radio text
+            for (int i = 0; i < NUM_RADIO_TRACK_FIELDS; i++) {
+                radioText_[i]->SetVisible(state);
+            }
+
 
             packetsIn_->SetVisible(state);
             packetsOut_->SetVisible(state);
@@ -599,17 +608,9 @@ void MayaScape::HandleClientSceneLoaded(StringHash eventType, VariantMap& eventD
         // Start engine
         PlaySoundEffectGlobal(driveAudioEffect[SOUND_FX_ENGINE_START].c_str());
 
-
-        bkgMusicPlaying_ = true;
         // you can set master volumes for the different kinds if sounds, 40% for music
         GetSubsystem<Audio>()->SetMasterGain(SOUND_MUSIC, 0.4);
         GetSubsystem<Audio>()->SetMasterGain(SOUND_EFFECT, 0.6);
-
-        if (bkgMusic_) {
-            //PlaySoundEffectGlobal("BAY-r1-mono.wav");
-            int r = Random(0, bzRadioTracks.size()+1);
-            PlayMusic(bzRadioTracks[r].c_str());
-        }
 
     }
 
@@ -1033,6 +1034,39 @@ void MayaScape::HandleLoginListRefresh(StringHash eventType, VariantMap &eventDa
     }
 }
 
+// CLIENT CODE
+void MayaScape::HandleRadioTrackNext(StringHash eventType, VariantMap &eventData) {
+
+    // CLIENT CODE
+
+    auto *network = GetSubsystem<Network>();
+    Connection *serverConnection = network->GetServerConnection();
+
+    // Next track on the radio
+    if (eventType == E_RADIOTRACKNEXT) {
+        URHO3D_LOGINFOF("HandleRadioTrackNext -> eventType: %l -> E_RADIOTRACKNEXT", eventType.Value());
+        String trackArtist = eventData[RadioTrackNext::P_TRACKARTIST].GetString();
+        String trackArtistLink = eventData[RadioTrackNext::P_LINKARTIST].GetString();
+        String trackName = eventData[RadioTrackNext::P_TRACKNAME].GetString();
+
+        if (bkgMusic_) {
+            bkgMusicPlaying_ = true;
+            PlayMusic(trackName);
+            RadioTrack track;
+            track.trackName = trackName;
+            track.artistName = trackArtist;
+            track.artistLink = trackArtistLink;
+            radioTrackInfoQueue_.Push(track);
+
+            //PlaySoundEffectGlobal("BAY-r1-mono.wav");
+            //int r = Random(0, bzRadioTracks.size()+1);
+            //PlayMusic(bzRadioTracks[r].c_str());
+
+        }
+    }
+}
+
+
 
 void MayaScape::HandleNetworkUpdateSent(StringHash eventType, VariantMap& eventData)
 {
@@ -1419,6 +1453,7 @@ void MayaScape::HandleRenderUpdate(StringHash eventType, VariantMap &eventData) 
 
                      // Only show once vehicle is activated
 
+                     /*
                      // Calculate mini map position
                      Vector3 shiftedRange =
                              startPos + Vector3(mapSize / 2, mapSize / 2, mapSize / 2);
@@ -1452,7 +1487,7 @@ void MayaScape::HandleRenderUpdate(StringHash eventType, VariantMap &eventData) 
               */
                      // Calculate mini map position for waypoint
                      //  shiftedRange = Vector3(wpPosX, 0.0f, wpPosZ) + Vector3(mapSize / 2, mapSize / 2, mapSize / 2);
-
+/*
                      // 1600+1600
                      xRange = (shiftedRange.x_ / mapSize) * miniMapWidth;
                      zRange = (shiftedRange.z_ / mapSize) * miniMapHeight;
@@ -1465,7 +1500,7 @@ void MayaScape::HandleRenderUpdate(StringHash eventType, VariantMap &eventData) 
                      //    miniMapP1Sprite_->SetPosition(Vector2(776.0f-16.0f, 300.0f));
                      miniMapWPSprite_->SetPosition(Vector2(miniMapWPX - xRange, miniMapWPY - zRange));
                      //    miniMapWPSprite_->SetRotation(vehicleRot_.YawAngle());
-
+*/
 
 
 
@@ -1896,6 +1931,21 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
     // On client
     if (!isServer_) {
 
+        int k = 0;
+        if (!radioTrackQueue_.Empty()) {
+
+            RadioTrack currTrack = radioTrackInfoQueue_[0];
+            radioText_[k]->SetText(String("Artist: ") + String(currTrack.artistName));
+            k++;
+
+            radioText_[k]->SetText(String("") + String(currTrack.artistLink));
+            k++;
+
+            radioText_[k]->SetText(String("") + String(currTrack.trackName));
+            k++;
+        }
+        else
+            radioText_[k]->SetText(String("Waiting for next track..."));
     }
 
     float deltaSum;
@@ -2680,14 +2730,29 @@ void MayaScape::PlaySoundEffect(const String &soundName) {
 
 
 void MayaScape::PlayMusic(const String &soundName) {
+    // CLIENT CODE
+
+    // Play music on client
 
     auto *cache = GetSubsystem<ResourceCache>();
-    auto *source = scene_->CreateComponent<SoundSource3D>(REPLICATED);
+    SoundSource3D *source = scene_->CreateComponent<SoundSource3D>(LOCAL);
 
     source->SetNearDistance(1);  // distance up to where the volume is 100%
     source->SetFarDistance(6000);  // distance from where the volume is at 0%
     source->SetSoundType(SOUND_MUSIC);
 
+    // If existing tracks are in the queue, stop them
+    if (!radioTrackQueue_.Empty()) {
+        for (int i = 0; i < radioTrackQueue_.Size(); i++) {
+            if (radioTrackQueue_[i]->IsPlaying()) radioTrackQueue_[i]->Stop();
+        }
+    }
+
+    // Store track
+    radioTrackQueue_.Push(source);
+
+
+    // Play latest track
     auto *sound = cache->GetResource<Sound>("Sounds/" + soundName);
     if (sound != nullptr) {
         source->SetAutoRemoveMode(REMOVE_COMPONENT);
@@ -3536,6 +3601,9 @@ void MayaScape::StartMultiplayerGameSession()
 
         // Register the remote event 'playerspawned'
         network->RegisterRemoteEvent(E_PLAYERSPAWNED);
+
+        // Register the remote event
+        network->RegisterRemoteEvent(E_RADIOTRACKNEXT);
     }
         // if we are running a client
     else if (network->GetServerConnection())
@@ -3549,6 +3617,11 @@ void MayaScape::StartMultiplayerGameSession()
         network->RegisterRemoteEvent(E_PLAYERLOADED);
         // Subscribe for the remote event 'player loaded'
         SubscribeToEvent(E_PLAYERLOADED, URHO3D_HANDLER(MayaScape, HandlePlayerLoaded));
+
+        // Register the remote event
+        network->RegisterRemoteEvent(E_RADIOTRACKNEXT);
+        // Subscribe for the remote event 'player loaded'
+        SubscribeToEvent(E_RADIOTRACKNEXT, URHO3D_HANDLER(MayaScape, HandleRadioTrackNext));
 
     }
 
@@ -3761,8 +3834,8 @@ void MayaScape::HandleClientIdentity(StringHash eventType, VariantMap& eventData
     loginList_.Push(username);
 
     // Send remote event
-    connection->SendRemoteEvent(E_PLAYERSPAWNED, true);
-
+    connection->SendRemoteEvent(E_PLAYERSPAWNED, true); // Player spawn
+    server->SendRadioTrackNextMsg(connection, bzRadioTracksArtistName[currTrack_].c_str(), bzRadioTracksArtistLink[currTrack_].c_str(), bzRadioTracksTrackName[currTrack_].c_str()); // Radio track
 }
 
 void MayaScape::HandleSceneUpdate(StringHash eventType, VariantMap &eventData) {
@@ -3850,6 +3923,7 @@ void MayaScape::CreateClientUI() {
     // Set the default UI style and font
     //ui->GetRoot()->SetDefaultStyle(cache->GetResource<XMLFile>("UI/DefaultStyle.xml"));
     auto *font = cache->GetResource<Font>(INGAME_FONT2);
+    auto *font2 = cache->GetResource<Font>(INGAME_FONT);
 
     // Get powerbar texture
     Texture2D *powerBarTexture = cache->GetResource<Texture2D>("Textures/powerbar.png");
@@ -3923,10 +3997,10 @@ void MayaScape::CreateClientUI() {
     rpmBarBkgP1Sprite_ = ui->GetRoot()->CreateChild<Sprite>();
     velBarP1Sprite_ = ui->GetRoot()->CreateChild<Sprite>();
     velBarBkgP1Sprite_ = ui->GetRoot()->CreateChild<Sprite>();
-    miniMapP1Sprite_ = ui->GetRoot()->CreateChild<Sprite>();
-    miniMapWPSprite_ = ui->GetRoot()->CreateChild<Sprite>();
-    miniMapBkgSprite_ = ui->GetRoot()->CreateChild<Sprite>();
-    markerMapBkgSprite_ = ui->GetRoot()->CreateChild<Sprite>();
+    //miniMapP1Sprite_ = ui->GetRoot()->CreateChild<Sprite>();
+    //miniMapWPSprite_ = ui->GetRoot()->CreateChild<Sprite>();
+    //miniMapBkgSprite_ = ui->GetRoot()->CreateChild<Sprite>();
+    //markerMapBkgSprite_ = ui->GetRoot()->CreateChild<Sprite>();
     steerWheelSprite_ = ui->GetRoot()->CreateChild<Sprite>();
 
 
@@ -3937,10 +4011,10 @@ void MayaScape::CreateClientUI() {
     rpmBarBkgP1Sprite_->SetTexture(rpmBarBkgTexture);
     velBarP1Sprite_->SetTexture(velBarTexture);
     velBarBkgP1Sprite_->SetTexture(rpmBarBkgTexture);
-    miniMapP1Sprite_->SetTexture(miniMapP1Texture);
-    miniMapWPSprite_->SetTexture(miniMapWPTexture);
-    miniMapBkgSprite_->SetTexture(miniMapBkgTexture);
-    markerMapBkgSprite_->SetTexture(markerMapBkgTexture);
+    //miniMapP1Sprite_->SetTexture(miniMapP1Texture);
+    //miniMapWPSprite_->SetTexture(miniMapWPTexture);
+    //miniMapBkgSprite_->SetTexture(miniMapBkgTexture);
+    //markerMapBkgSprite_->SetTexture(markerMapBkgTexture);
     steerWheelSprite_->SetTexture(steerWheelTexture);
 
     float textOverlap = 245.0f;
@@ -4052,6 +4126,7 @@ void MayaScape::CreateClientUI() {
        float miniMapP1X = 776.0f+45.0f;
        float miniMapP1Y = 300.0f-15.0f;
 
+       /*
     miniMapP1Sprite_->SetScale(0.4);//256.0f / textureWidth);
     miniMapP1Sprite_->SetSize(textureWidth, textureHeight);
     miniMapP1Sprite_->SetHotSpot(textureWidth / 2, textureHeight / 2);
@@ -4097,10 +4172,12 @@ void MayaScape::CreateClientUI() {
     // Set a low priority so that other UI elements can be drawn on top
     miniMapBkgSprite_->SetPriority(-100);
 
-    miniMapP1Sprite_->SetVisible(true);
-    miniMapWPSprite_->SetVisible(true);
-    miniMapBkgSprite_->SetVisible(true);
-
+    //miniMapP1Sprite_->SetVisible(true);
+    //miniMapWPSprite_->SetVisible(true);
+    //miniMapBkgSprite_->SetVisible(true);
+    miniMapP1Sprite_->SetVisible(false);
+    miniMapWPSprite_->SetVisible(false);
+    miniMapBkgSprite_->SetVisible(false);
 
     textureWidth = markerMapBkgTexture->GetWidth();
     textureHeight = markerMapBkgTexture->GetHeight();
@@ -4115,7 +4192,7 @@ void MayaScape::CreateClientUI() {
     miniMapBkgSprite_->SetPriority(-100);
     markerMapBkgSprite_->SetVisible(true);
 
-
+*/
     textureWidth = steerWheelTexture->GetWidth();
     textureHeight = steerWheelTexture->GetHeight();
 
@@ -4144,6 +4221,26 @@ void MayaScape::CreateClientUI() {
         debugData1.append("-");
         debugText_[i]->SetText(debugData1.c_str());
     }
+
+    // Music radio track text
+    for (int i = 0; i < NUM_RADIO_TRACK_FIELDS; i++) {
+        radioText_[i] = ui->GetRoot()->CreateChild<Text>("RadioTrackListText");
+
+        radioText_[i]->SetAlignment(HA_RIGHT, VA_BOTTOM);
+        radioText_[i]->SetPosition(-20.0f, -60 + (i * 26));
+        radioText_[i]->SetVisible(true);
+
+        radioText_[i]->SetFont(font2, 22);
+        radioText_[i]->SetTextEffect(TE_SHADOW);
+        radioText_[i]->SetVisible(true);
+        std::string debugData1;
+        debugData1.append("-");
+        radioText_[i]->SetText(debugData1.c_str());
+    }
+
+
+
+
 }
 
 void MayaScape::DestroyPlayer(Connection *connection) {
@@ -4407,6 +4504,7 @@ void MayaScape::InitiateGameMap(Scene *scene) {
     // Set the default UI style and font
     //ui->GetRoot()->SetDefaultStyle(cache->GetResource<XMLFile>("UI/DefaultStyle.xml"));
     auto *font = cache->GetResource<Font>(INGAME_FONT2);
+    auto *font2 = cache->GetResource<Font>(INGAME_FONT);
 
 /*
     // Create a directional light with shadows

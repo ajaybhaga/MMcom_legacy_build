@@ -84,6 +84,14 @@ URHO3D_EVENT(E_PLAYERSTATE, ClientPlayerState)
 }
 
 
+URHO3D_EVENT(E_RADIOTRACKNEXT, RadioTrackNext)
+{
+    URHO3D_PARAM(P_TRACKARTIST, trackArtist); // String of artist name
+    URHO3D_PARAM(P_LINKARTIST, trackArtistLink); // String of artist link
+    URHO3D_PARAM(P_TRACKNAME, trackName); // String of track name
+}
+
+
 //=============================================================================
 //=============================================================================
 class Server : public Object
@@ -111,6 +119,10 @@ public:
     Vector<String> GetAgents() {
         return aiBotLoginList_;
     }
+
+    void SendRadioTrackNextMsg(Connection* connection, String trackArtist, String trackArtistLink, String trackName);
+
+
 
 protected:
     void SubscribeToEvents();

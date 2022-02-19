@@ -168,6 +168,19 @@ void Server::SendLoginListRefreshMsg(Connection* connection)
 }
 
 
+// SERVER: Send clients next radio track
+void Server::SendRadioTrackNextMsg(Connection* connection, String trackArtist, String trackArtistLink, String trackName)
+{
+    using namespace RadioTrackNext;
+
+    // Send the event forward
+    VariantMap &newEventData = GetEventDataMap();
+    newEventData[P_TRACKARTIST] = trackArtist;
+    newEventData[P_LINKARTIST] = trackArtistLink;
+    newEventData[P_TRACKNAME] = trackName;
+    connection->SendRemoteEvent(E_RADIOTRACKNEXT, true, newEventData);
+}
+
 // SERVER: Manage incoming clients
 void Server::HandleClientIdentity(StringHash eventType, VariantMap& eventData)
 {
