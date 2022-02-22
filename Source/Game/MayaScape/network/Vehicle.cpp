@@ -122,7 +122,9 @@ Vehicle::Vehicle(Context* context)
     engineForce_ = 0.0f;
     brakingForce_ = 50.0f;
     vehicleSteering_ = 0.0f;
-    wheelRadius_ = 3.64f;
+    //wheelRadius_ = 3.64f;
+//    wheelRadius_ = 0.1456f;
+    wheelRadius_ = 1.456f;
     suspensionRestLength_ = 0.6f;
     wheelWidth_ = 0.8f;
     suspensionStiffness_ = 18.0f;
@@ -982,8 +984,6 @@ void Vehicle::Init(Node* node) {
 
                     ///node_->SetScale(Vector3(0.2f,0.2f,0.2f));
                     //adjNode->SetScale(Vector3(0.2f,0.2f,0.2f));
-                    node_->SetScale(Vector3(1,1,1));
-                    //node_->SetScale(Vector3(scaleF, scaleF, scaleF));
                     adjNode->SetScale(Vector3(scaleF, scaleF, scaleF));
 /*                    v3BoxExtents.x_ *= 3.0f;
                     v3BoxExtents.y_ *= 1.3f;
@@ -1009,7 +1009,7 @@ void Vehicle::Init(Node* node) {
                     //adjNode3->SetRotation(Quaternion(0.0f, -180.0f, -90.0f));
                     hullObjectTurrent_->SetModel(cache->GetResource<Model>("Models/Vehicles/SetA/Models/Turrent.mdl"));
                     hullObjectTurrent_->ApplyMaterialList("Models/Vehicles/SetA/Models/Turrent.txt");
-                    adjNode->SetPosition(Vector3(node_->GetPosition().x_, node_->GetPosition().y_+9.0f, node_->GetPosition().z_-5.0f-forwardWeightOffset));
+                    adjNode->SetPosition(Vector3(node_->GetPosition().x_, node_->GetPosition().y_+2.3f, node_->GetPosition().z_-forwardWeightOffset-4.0f));
                     adjNode2->SetPosition(Vector3(-14.0f, -220.0f, 0.0f));
                     adjNode2->SetScale(Vector3(0.4f, 0.4f, 0.4f));
 
@@ -1025,11 +1025,12 @@ void Vehicle::Init(Node* node) {
 
                     //connectionHeight = -4.74f;
                     //connectionHeight = -4.2f;
-                    connectionHeight = -2.2f;
+                    connectionHeight = -0.4f;//-2.2f;
                     //wheelSpace = 2.4f;
-                    wheelSpace = 2.4f*scaleF;
+                    wheelSpace = 14.1f*scaleF;
                     // chassis width -> 35 * 20% -> 7
-                    wheelX = ((7 / 2.0f) + wheelWidth_);
+                    //wheelX = ((7 / 2.0f) + wheelWidth_);
+                    wheelX = ((2.6f / 2.0f) + wheelWidth_);
 
                 } else if (carType == 7) {
                     v3BoxExtents.x_ *= 15.0f;
