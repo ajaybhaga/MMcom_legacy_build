@@ -766,10 +766,12 @@ void Vehicle::Create() {
 }
 
 void Vehicle::SetTurrentAngle(float angle) {
+    if (!hullObjectTurrent_) return;
     hullObjectTurrent_->GetNode()->SetRotation(Quaternion(angle, 180.0f, 0.0f));
 }
 
 float Vehicle::GetTurrentAngle() {
+    if (!hullObjectTurrent_) return 0;
     return hullObjectTurrent_->GetNode()->GetRotation().EulerAngles().x_;
 }
 
@@ -847,7 +849,7 @@ void Vehicle::Init(Node* node) {
 
 ///code/dev/MonkeyMaya_com/bin/Data/Models/Vehicles/Offroad
         //int carType = Random(0,3);
-        //int carType = Random(3,6);
+        //int carType = Random(3,6); // Toy Jeeps
         //int carType = Random(5,12);
         //int carType = 11;//Random(8,9); police
 
@@ -975,11 +977,24 @@ void Vehicle::Init(Node* node) {
 
 */
 
-                    node_->SetScale(Vector3(0.2f,0.2f,0.2f));
-                    adjNode->SetScale(Vector3(0.2f,0.2f,0.2f));
-                    v3BoxExtents.x_ *= 3.0f;
+                    float scaleF = 0.1f;
+                    float scaleF2 = 0.4f;
+
+                    ///node_->SetScale(Vector3(0.2f,0.2f,0.2f));
+                    //adjNode->SetScale(Vector3(0.2f,0.2f,0.2f));
+                    node_->SetScale(Vector3(1,1,1));
+                    //node_->SetScale(Vector3(scaleF, scaleF, scaleF));
+                    adjNode->SetScale(Vector3(scaleF, scaleF, scaleF));
+/*                    v3BoxExtents.x_ *= 3.0f;
                     v3BoxExtents.y_ *= 1.3f;
                     v3BoxExtents.z_ *= 2.82f;
+*
+ */
+
+
+                    v3BoxExtents.x_ *= 3.0f*scaleF2;
+                    v3BoxExtents.y_ *= 1.3f*scaleF2;
+                    v3BoxExtents.z_ *= 2.82f*scaleF2;
 
                     hullObject->SetModel(cache->GetResource<Model>("Models/Vehicles/SetA/Models/Jeep.mdl"));
                     hullObject->ApplyMaterialList("Models/Vehicles/SetA/Models/Jeep.txt");
@@ -994,7 +1009,7 @@ void Vehicle::Init(Node* node) {
                     //adjNode3->SetRotation(Quaternion(0.0f, -180.0f, -90.0f));
                     hullObjectTurrent_->SetModel(cache->GetResource<Model>("Models/Vehicles/SetA/Models/Turrent.mdl"));
                     hullObjectTurrent_->ApplyMaterialList("Models/Vehicles/SetA/Models/Turrent.txt");
-                    adjNode->SetPosition(Vector3(node_->GetPosition().x_, node_->GetPosition().y_+9.0f, node_->GetPosition().z_-15.0f-forwardWeightOffset));
+                    adjNode->SetPosition(Vector3(node_->GetPosition().x_, node_->GetPosition().y_+9.0f, node_->GetPosition().z_-5.0f-forwardWeightOffset));
                     adjNode2->SetPosition(Vector3(-14.0f, -220.0f, 0.0f));
                     adjNode2->SetScale(Vector3(0.4f, 0.4f, 0.4f));
 
@@ -1007,12 +1022,14 @@ void Vehicle::Init(Node* node) {
                     // apply to x
                     adjNode2->SetRotation(Quaternion(-90.0f, 180.0f, 0.0f));
 
+
                     //connectionHeight = -4.74f;
                     //connectionHeight = -4.2f;
                     connectionHeight = -2.2f;
-                    wheelSpace = 3.6f;
+                    //wheelSpace = 2.4f;
+                    wheelSpace = 2.4f*scaleF;
                     // chassis width -> 35 * 20% -> 7
-                    wheelX = (7 / 2.0f) + wheelWidth_;
+                    wheelX = ((7 / 2.0f) + wheelWidth_);
 
                 } else if (carType == 7) {
                     v3BoxExtents.x_ *= 15.0f;
@@ -1151,6 +1168,7 @@ void Vehicle::Init(Node* node) {
             switch (carType) {
                 case 0 ... 5: {
                     scale = 3.3f;
+                    //scale = 0.132f; //SetScale(Vector3(0.04f,0.04f,0.04f))
                     Model *tireModel = cache->GetResource<Model>("Models/Vehicles/Offroad/Models/wheel-fl.mdl");
                     pWheel->SetModel(tireModel);
                     pWheel->ApplyMaterialList("Models/Vehicles/Offroad/Models/wheel-fl.txt");
@@ -1164,7 +1182,8 @@ void Vehicle::Init(Node* node) {
                 }
 
                 case 6 ... 11: {
-                    scale = 0.1f;
+                    //scale = 0.1f;
+                    scale = 0.04f; //SetScale(Vector3(0.04f,0.04f,0.04f))
                     Model *tireModel = cache->GetResource<Model>("Models/Vehicles/SetA/Models/Wheels_4.mdl");
                     pWheel->SetModel(tireModel);
                     pWheel->ApplyMaterialList("Models/Vehicles/SetA/Models/Wheels_4.txt");

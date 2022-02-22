@@ -2664,7 +2664,8 @@ void MayaScape::ReloadScene(bool reInit) {
 
  auto *cache = GetSubsystem<ResourceCache>();
  //String filename = "Map1_Start_T1";
- String filename = "Map2_Start_T1";
+/// String filename = "Map2_Start_T1";
+    String filename = "Map3_Start_T1";
 
 
  XMLFile *f = cache->GetResource<XMLFile>("Scenes/" + filename + ".xml");
