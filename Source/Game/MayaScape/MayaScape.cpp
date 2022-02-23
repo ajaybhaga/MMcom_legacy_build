@@ -237,7 +237,8 @@ MayaScape::MayaScape(Context *context) :
         starAMarker_(Vector3(0,0,0)),
         starBMarker_(Vector3(0,0,0)),
         starAMarkerSet_(false),
-        starBMarkerSet_(false)
+        starBMarkerSet_(false),
+        levelLoading_(false)
 {
 
 }
@@ -1582,6 +1583,7 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
 
     ticks += timeStep;
 
+    if (levelLoading_) return; // Skip on loading
 
 
     HandleUpdateParticlePool(timeStep);
@@ -2253,179 +2255,195 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
             }
 
             int numCamModes = aiActorMap_.Size(); // One cam for each ai actor
-            camMode_ = camMode_ % numCamModes;
-            if (camMode_ < 0) camMode_ = numCamModes-1;
-            switch (camMode_) {
-                case 0: {
+            if (numCamModes > 0) {
+                camMode_ = camMode_ % numCamModes;
+                if (camMode_ < 0) camMode_ = numCamModes - 1;
+                switch (camMode_) {
+                    case 0: {
 
-                    // SERVER: LAST CLIENT JOINED PLAYER CAM
+                        // SERVER: LAST CLIENT JOINED PLAYER CAM
 
-                    // camMode = 0 (last joined player cam)
+                        // camMode = 0 (last joined player cam)
 
-                    if (lastConnection_) {
-                        // Camera Positioning
-                        // Raycast camera collision
-                        if (actorMap_[lastConnection_]) {
-                            auto *actor = dynamic_cast<NetworkActor *>(actorMap_[lastConnection_].Get());
-                            if (actor) {
-                                if (actor->vehicle_) {
-                                    String username = actor->GetUserName();
-                                    float botSpeedKm = round(abs(actor->vehicle_->GetRaycastVehicle()->GetSpeedKm()));
-                                    // Back wheel points forward
-                                    Quaternion forward = actor->vehicle_->GetNode()->GetRotation();
+                        if (lastConnection_) {
+                            // Camera Positioning
+                            // Raycast camera collision
+                            if (actorMap_[lastConnection_]) {
+                                auto *actor = dynamic_cast<NetworkActor *>(actorMap_[lastConnection_].Get());
+                                if (actor) {
+                                    if (actor->vehicle_) {
+                                        String username = actor->GetUserName();
+                                        float botSpeedKm = round(
+                                                abs(actor->vehicle_->GetRaycastVehicle()->GetSpeedKm()));
+                                        // Back wheel points forward
+                                        Quaternion forward = actor->vehicle_->GetNode()->GetRotation();
 
 
-                                    //float bodyVel = EvolutionManager::getInstance()->getAgents()[camMode_ -1]->getActor()->vehicle_->GetBody()->GetLinearVelocity().Length();
-                                    botSpeedKm = Clamp(botSpeedKm, 1.0f, 2000.0f);
+                                        //float bodyVel = EvolutionManager::getInstance()->getAgents()[camMode_ -1]->getActor()->vehicle_->GetBody()->GetLinearVelocity().Length();
+                                        botSpeedKm = Clamp(botSpeedKm, 1.0f, 2000.0f);
 
-                                    float velMult = 8.0f;
+                                        float velMult = 8.0f;
 
-                                    // Zoom up on body velocity increase
-                                    Vector3 cameraTargetPos =
-                                            actor->vehicle_->GetBody()->GetPosition() + forward*Vector3(actor->vehicle_->GetBody()->GetLinearVelocity().Length()*velMult, (actor->vehicle_->GetNode()->GetPosition().y_+CAMERA_RAY_DISTANCE_LIMIT+12.0f)+(botSpeedKm*2.7), actor->vehicle_->GetBody()->GetLinearVelocity().Length()*velMult)*0.9f;
+                                        // Zoom up on body velocity increase
+                                        Vector3 cameraTargetPos =
+                                                actor->vehicle_->GetBody()->GetPosition() + forward *
+                                                                                            Vector3(actor->vehicle_->GetBody()->GetLinearVelocity().Length() *
+                                                                                                    velMult,
+                                                                                                    (actor->vehicle_->GetNode()->GetPosition().y_ +
+                                                                                                     CAMERA_RAY_DISTANCE_LIMIT +
+                                                                                                     12.0f) +
+                                                                                                    (botSpeedKm * 2.7),
+                                                                                                    actor->vehicle_->GetBody()->GetLinearVelocity().Length() *
+                                                                                                    velMult) * 0.9f;
                                         Vector3 cameraStartPos = serverCam_->GetNode()->GetPosition();
 
-                                    // Raycast camera against static objects (physics collision mask 2)
-                                    // and move it closer to the vehicle if something in between
-                                    Ray cameraRay(cameraStartPos, cameraTargetPos - cameraStartPos);
-                                    float cameraRayLength = (cameraTargetPos - cameraStartPos).Length();
-                                    PhysicsRaycastResult result;
+                                        // Raycast camera against static objects (physics collision mask 2)
+                                        // and move it closer to the vehicle if something in between
+                                        Ray cameraRay(cameraStartPos, cameraTargetPos - cameraStartPos);
+                                        float cameraRayLength = (cameraTargetPos - cameraStartPos).Length();
+                                        PhysicsRaycastResult result;
 
-                                    bool stopMove = false;
-                                    // Adjust camera up to ray length
-                                    if (cameraRayLength < CAMERA_RAY_DISTANCE_LIMIT) {
-                                        stopMove = true;
-                                    }
-
-                                    if (cameraRayLength < 10.0f) {
-                                        scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result, cameraRay,
-                                                                                            cameraRayLength,
-                                                                                            NETWORKACTOR_COL_LAYER);
-                                    } else {
-                                        scene_->GetComponent<PhysicsWorld>()->RaycastSingleSegmented(result,
-                                                                                                     cameraRay,
-                                                                                                     cameraRayLength,
-                                                                                                     NETWORKACTOR_COL_LAYER);
-                                    }
-                                    if (result.body_)
-                                        cameraTargetPos =
-                                                cameraStartPos +
-                                                cameraRay.direction_ * (result.distance_ - 0.5f);
-
-
-                                    // Set camera position and orientation
-                                    float w1;
-                                    float w2;
-
-                                    if (stopMove) {
-                                        w1 = 1.0f; // hold position
-                                        w2 = 0.0f;
-                                    } else {
-                                        w1 = 0.97;
-                                        w2 = 0.03;
-                                    }
-
-                                    Vector3 weightedSum =
-                                            serverCam_->GetNode()->GetPosition() * w1 + cameraTargetPos * w2;
-
-                                    // Calculate camera distance
-                                    serverCam_->GetNode()->SetPosition(weightedSum);
-                                    serverCam_->GetNode()->LookAt(actor->vehicle_->GetBody()->GetPosition());
-
-                                }
-                            }
-                        }
-                    } // End of Server: Move Camera (Player Cam)
-                     else {
-                        // Heli cam
-                        serverCam_->GetNode()->SetRotation(Quaternion(90.0f, 0.0f, 0.0f));
-                        serverCam_->GetNode()->SetPosition(heliCamView_);
-                    }
-                }
-                    break;
-                case 1 ... 1000:
-                {
-                 // Server: Move Camera
-
-                    // AI bot cam
-
-                    if (!camPosList.Empty()) {
-
-                        // Raycast camera collision
-                        if (aiActorMap_[camMode_-1]) {
-                            auto *actor = dynamic_cast<NetworkActor *>(aiActorMap_[camMode_ - 1].Get());
-                            if (actor) {
-                                if (actor->vehicle_) {
-                                    String username = actor->GetUserName();
-                                    float botSpeedKm = round(abs(actor->vehicle_->GetRaycastVehicle()->GetSpeedKm()));
-                                    // Back wheel points forward
-                                    Quaternion forward = actor->vehicle_->GetNode()->GetRotation();
-
-
-                                    //float bodyVel = EvolutionManager::getInstance()->getAgents()[camMode_ -1]->getActor()->vehicle_->GetBody()->GetLinearVelocity().Length();
-                                    botSpeedKm = Clamp(botSpeedKm, 1.0f, 2000.0f);
-
-                                    /// Update spline path
-                                    SplinePath* steerSplinePath = scene_->GetComponent<SplinePath>(true);
-                                    if (steerSplinePath) {
-                                        // Found steer spline
-
-                                        using namespace Update;
-                                        // Take the frame time step, which is stored as a float
-                                        float timeStep = eventData[P_TIMESTEP].GetFloat();
-
-
-                                        // Loop back to start
-                                        if (steerSplinePath->IsFinished()) {steerSplinePath->Reset(); }
-
-
-                                        if (!steerSplinePath->GetControlledNode())
-                                            steerSplinePath->SetControlledNode(splineModel_->GetNode());
-
-
-                                        DebugRenderer *dbgRenderer = scene_->GetComponent<DebugRenderer>(true);
-
-                                        // Set the steering once
-                                        if (!actor->isSteerSet()) {
-                                            if (steerSplinePath->getControlPoints().Size() > 3) {
-                                                Vector3 center = steerSplinePath->getControlPoints()[actor->vehicle_->getSteerIndex()]->GetWorldPosition();
-                                                actor->SetTarget(center);
-                                                actor->setSteerSet(true);
-                                                //actor->vehicle_->setDesiredSteer()
-                                            }
+                                        bool stopMove = false;
+                                        // Adjust camera up to ray length
+                                        if (cameraRayLength < CAMERA_RAY_DISTANCE_LIMIT) {
+                                            stopMove = true;
                                         }
 
+                                        if (cameraRayLength < 10.0f) {
+                                            scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result, cameraRay,
+                                                                                                cameraRayLength,
+                                                                                                NETWORKACTOR_COL_LAYER);
+                                        } else {
+                                            scene_->GetComponent<PhysicsWorld>()->RaycastSingleSegmented(result,
+                                                                                                         cameraRay,
+                                                                                                         cameraRayLength,
+                                                                                                         NETWORKACTOR_COL_LAYER);
+                                        }
+                                        if (result.body_)
+                                            cameraTargetPos =
+                                                    cameraStartPos +
+                                                    cameraRay.direction_ * (result.distance_ - 0.5f);
 
-                                        if (actor->isSteerSet()) {
-                                            dbgRenderer->AddLine(actor->GetPosition(), actor->getToTarget(), Color(1.0f, 0.0, 0.0));
+
+                                        // Set camera position and orientation
+                                        float w1;
+                                        float w2;
+
+                                        if (stopMove) {
+                                            w1 = 1.0f; // hold position
+                                            w2 = 0.0f;
+                                        } else {
+                                            w1 = 0.97;
+                                            w2 = 0.03;
+                                        }
+
+                                        Vector3 weightedSum =
+                                                serverCam_->GetNode()->GetPosition() * w1 + cameraTargetPos * w2;
+
+                                        // Calculate camera distance
+                                        serverCam_->GetNode()->SetPosition(weightedSum);
+                                        serverCam_->GetNode()->LookAt(actor->vehicle_->GetBody()->GetPosition());
+
+                                    }
+                                }
+                            }
+                        } // End of Server: Move Camera (Player Cam)
+                        else {
+                            // Heli cam
+                            serverCam_->GetNode()->SetRotation(Quaternion(90.0f, 0.0f, 0.0f));
+                            serverCam_->GetNode()->SetPosition(heliCamView_);
+                        }
+                    }
+                        break;
+                    case 1 ... 1000: {
+                        // Server: Move Camera
+
+                        // AI bot cam
+
+                        if (!camPosList.Empty()) {
+
+                            // Raycast camera collision
+                            if (aiActorMap_[camMode_ - 1]) {
+                                auto *actor = dynamic_cast<NetworkActor *>(aiActorMap_[camMode_ - 1].Get());
+                                if (actor) {
+                                    if (actor->vehicle_) {
+                                        String username = actor->GetUserName();
+                                        float botSpeedKm = round(
+                                                abs(actor->vehicle_->GetRaycastVehicle()->GetSpeedKm()));
+                                        // Back wheel points forward
+                                        Quaternion forward = actor->vehicle_->GetNode()->GetRotation();
 
 
-                                            // Towards steer waypoint
-                                            Vector3 towardsWaypt = (actor->GetPosition()-actor->getToTarget()).Normalized();
+                                        //float bodyVel = EvolutionManager::getInstance()->getAgents()[camMode_ -1]->getActor()->vehicle_->GetBody()->GetLinearVelocity().Length();
+                                        botSpeedKm = Clamp(botSpeedKm, 1.0f, 2000.0f);
+
+                                        /// Update spline path
+                                        SplinePath *steerSplinePath = scene_->GetComponent<SplinePath>(true);
+                                        if (steerSplinePath) {
+                                            // Found steer spline
+
+                                            using namespace Update;
+                                            // Take the frame time step, which is stored as a float
+                                            float timeStep = eventData[P_TIMESTEP].GetFloat();
 
 
-                                            // Project towardsWaypt on vehicle steer vector (-1 left -> +1 right)
+                                            // Loop back to start
+                                            if (steerSplinePath->IsFinished()) { steerSplinePath->Reset(); }
 
-                                            // Calculate distance to waypoint
-  //                                          Vector3 v = vehicle_->GetNode()->GetPosition() - toTarget_;// + Vector3(-1500,0,-1500);
+
+                                            if (!steerSplinePath->GetControlledNode())
+                                                steerSplinePath->SetControlledNode(splineModel_->GetNode());
+
+
+                                            DebugRenderer *dbgRenderer = scene_->GetComponent<DebugRenderer>(true);
+
+                                            // Set the steering once
+                                            if (!actor->isSteerSet()) {
+                                                if (steerSplinePath->getControlPoints().Size() > 3) {
+                                                    Vector3 center = steerSplinePath->getControlPoints()[actor->vehicle_->getSteerIndex()]->GetWorldPosition();
+                                                    actor->SetTarget(center);
+                                                    actor->setSteerSet(true);
+                                                    //actor->vehicle_->setDesiredSteer()
+                                                }
+                                            }
+
+
+                                            if (actor->isSteerSet()) {
+                                                dbgRenderer->AddLine(actor->GetPosition(), actor->getToTarget(),
+                                                                     Color(1.0f, 0.0, 0.0));
+
+
+                                                // Towards steer waypoint
+                                                Vector3 towardsWaypt = (actor->GetPosition() -
+                                                                        actor->getToTarget()).Normalized();
+
+
+                                                // Project towardsWaypt on vehicle steer vector (-1 left -> +1 right)
+
+                                                // Calculate distance to waypoint
+                                                //                                          Vector3 v = vehicle_->GetNode()->GetPosition() - toTarget_;// + Vector3(-1500,0,-1500);
 //                                            float steering = v.Normalized().DotProduct((vehicle_->GetNode()->GetDirection()))+0.4f;
 
 
-                                            float steerProj = towardsWaypt.DotProduct(actor->vehicle_->GetNode()->GetDirection());
-                                            actor->vehicle_->setDesiredSteer(steerProj);
+                                                float steerProj = towardsWaypt.DotProduct(
+                                                        actor->vehicle_->GetNode()->GetDirection());
+                                                actor->vehicle_->setDesiredSteer(steerProj);
 
-                                            dbgRenderer->AddLine(actor->GetPosition(), actor->GetPosition()+towardsWaypt*actor->vehicle_->getDesiredSteer()*50.0f, Color(0.0f, 1.0, 0.0));
+                                                dbgRenderer->AddLine(actor->GetPosition(), actor->GetPosition() +
+                                                                                           towardsWaypt *
+                                                                                           actor->vehicle_->getDesiredSteer() *
+                                                                                           50.0f,
+                                                                     Color(0.0f, 1.0, 0.0));
 
 
+                                            }
 
-                                        }
+                                            //steerPath->DrawDebugGeometry(dbgRenderer, true);
+                                            // steerSplinePath->DrawDebugGeometry(dbgRenderer, true);
 
-                                        //steerPath->DrawDebugGeometry(dbgRenderer, true);
-                                       // steerSplinePath->DrawDebugGeometry(dbgRenderer, true);
+                                            if (steerSplinePath->getControlPoints().Size() > 3) {
 
-                                        if (steerSplinePath->getControlPoints().Size() > 3) {
-
-                                           /// for (int i = 0; i < steerSplinePath->getControlPoints().Size() - 1; i++) {
+                                                /// for (int i = 0; i < steerSplinePath->getControlPoints().Size() - 1; i++) {
                                                 //Vector3 firstMark =
                                                 //Vector3 secondMark = steerPath->getControlPoints()[i]->GetWorldPosition() + steerPath->getControlPoints()[i]->Get
                                                 //                                            StaticModel* model;
@@ -2433,10 +2451,10 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
 //                                                model = steerPath->getControlPoints()[i]->GetComponent<StaticModel>(true);
                                                 //                                              model2 = steerPath->getControlPoints()[i+1]->GetComponent<StaticModel>(true);
                                                 //Vector3 center = actor->vehicle_->GetRaycastVehicle()->GetNode()->GetPosition();
-                                               // Vector3 center2 = steerSplinePath->getControlPoints()[0]->GetWorldPosition();
+                                                // Vector3 center2 = steerSplinePath->getControlPoints()[0]->GetWorldPosition();
 
 
-                                             //   dbgRenderer->AddLine(center, center2, Color(1.0f, 0.0, 0.0));
+                                                //   dbgRenderer->AddLine(center, center2, Color(1.0f, 0.0, 0.0));
                                                 //dbgRenderer->AddLine(steerPath->GetPoint(0.1), steerPath->GetPoint(0.2), Color(0.0f, 1.0, 0.0));
                                                 //dbgRenderer->AddLine(steerPath->GetPoint(0.2), steerPath->GetPoint(0.3), Color(0.0f, 0.0, 1.0));
 
@@ -2445,8 +2463,8 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
 
 
 //                                            }
+                                            }
                                         }
-                                    }
 
                                         /*
                                         // Move time segment
@@ -2455,139 +2473,139 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
 
 
 
-                                    float velMult = 1.0f;
+                                        float velMult = 1.0f;
 
-                                    // Zoom up on body velocity increase
+                                        // Zoom up on body velocity increase
 /*                                    Vector3 cameraTargetPos =
                                             camPosList[camMode_ - 1] + forward*Vector3(actor->vehicle_->GetBody()->GetLinearVelocity().Length()*velMult, (actor->vehicle_->GetNode()->GetPosition().y_+CAMERA_RAY_DISTANCE_LIMIT+12.0f)+(botSpeedKm*2.7), actor->vehicle_->GetBody()->GetLinearVelocity().Length()*velMult)*0.9f;
 */
-                                    Vector3 cameraTargetPos =
-                                            camPosList[camMode_ - 1] + forward*Vector3(1,140.0f,1)*0.9f;
-                                    //actor->vehicle_->GetBody()->GetLinearVelocity().Length()*velMult, actor->vehicle_->GetNode()->GetPosition().y_+(botSpeedKm*1.0), actor->vehicle_->GetBody()->GetLinearVelocity().Length()*velMult
-                                    Vector3 cameraStartPos = serverCam_->GetNode()->GetPosition();
+                                        Vector3 cameraTargetPos =
+                                                camPosList[camMode_ - 1] + forward * Vector3(1, 140.0f, 1) * 0.9f;
+                                        //actor->vehicle_->GetBody()->GetLinearVelocity().Length()*velMult, actor->vehicle_->GetNode()->GetPosition().y_+(botSpeedKm*1.0), actor->vehicle_->GetBody()->GetLinearVelocity().Length()*velMult
+                                        Vector3 cameraStartPos = serverCam_->GetNode()->GetPosition();
 
-                                    // Raycast camera against static objects (physics collision mask 2)
-                                    // and move it closer to the vehicle if something in between
-                                    Ray cameraRay(cameraStartPos, cameraTargetPos - cameraStartPos);
-                                    float cameraRayLength = (cameraTargetPos - cameraStartPos).Length();
-                                    PhysicsRaycastResult result;
+                                        // Raycast camera against static objects (physics collision mask 2)
+                                        // and move it closer to the vehicle if something in between
+                                        Ray cameraRay(cameraStartPos, cameraTargetPos - cameraStartPos);
+                                        float cameraRayLength = (cameraTargetPos - cameraStartPos).Length();
+                                        PhysicsRaycastResult result;
 
-                                    bool stopMove = false;
-                                    // Adjust camera up to ray length
-                                    if (cameraRayLength < CAMERA_RAY_DISTANCE_LIMIT) {
-                                        stopMove = true;
+                                        bool stopMove = false;
+                                        // Adjust camera up to ray length
+                                        if (cameraRayLength < CAMERA_RAY_DISTANCE_LIMIT) {
+                                            stopMove = true;
+                                        }
+
+                                        if (cameraRayLength < 10.0f) {
+                                            scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result, cameraRay,
+                                                                                                cameraRayLength,
+                                                                                                NETWORKACTOR_COL_LAYER);
+                                        } else {
+                                            scene_->GetComponent<PhysicsWorld>()->RaycastSingleSegmented(result,
+                                                                                                         cameraRay,
+                                                                                                         cameraRayLength,
+                                                                                                         NETWORKACTOR_COL_LAYER);
+                                        }
+                                        if (result.body_)
+                                            cameraTargetPos =
+                                                    cameraStartPos +
+                                                    cameraRay.direction_ * (result.distance_ - 0.5f);
+
+
+                                        // Set camera position and orientation
+                                        float w1;
+                                        float w2;
+
+                                        if (stopMove) {
+                                            w1 = 1.0f; // hold position
+                                            w2 = 0.0f;
+                                        } else {
+                                            w1 = 0.97;
+                                            w2 = 0.03;
+                                        }
+
+                                        Vector3 weightedSum =
+                                                serverCam_->GetNode()->GetPosition() * w1 + cameraTargetPos * w2;
+
+                                        // Calculate camera distance
+                                        serverCam_->GetNode()->SetPosition(weightedSum);
+                                        serverCam_->GetNode()->LookAt(camPosList[camMode_ - 1]);
+
                                     }
-
-                                    if (cameraRayLength < 10.0f) {
-                                        scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result, cameraRay,
-                                                                                            cameraRayLength,
-                                                                                            NETWORKACTOR_COL_LAYER);
-                                    } else {
-                                        scene_->GetComponent<PhysicsWorld>()->RaycastSingleSegmented(result,
-                                                                                                     cameraRay,
-                                                                                                     cameraRayLength,
-                                                                                                     NETWORKACTOR_COL_LAYER);
-                                    }
-                                    if (result.body_)
-                                        cameraTargetPos =
-                                                cameraStartPos +
-                                                cameraRay.direction_ * (result.distance_ - 0.5f);
-
-
-                                    // Set camera position and orientation
-                                    float w1;
-                                    float w2;
-
-                                    if (stopMove) {
-                                        w1 = 1.0f; // hold position
-                                        w2 = 0.0f;
-                                    } else {
-                                        w1 = 0.97;
-                                        w2 = 0.03;
-                                    }
-
-                                    Vector3 weightedSum =
-                                            serverCam_->GetNode()->GetPosition() * w1 + cameraTargetPos * w2;
-
-                                    // Calculate camera distance
-                                    serverCam_->GetNode()->SetPosition(weightedSum);
-                                    serverCam_->GetNode()->LookAt(camPosList[camMode_ - 1]);
-
                                 }
+                            } // End of Server: Move Camera
+
+                            // Update per-BOT info
+
+                            // FFN
+                            int aIndex = camMode_ - 1;
+
+                            Genotype *genotype = EvolutionManager::getInstance()->getAgents()[aIndex]->genotype;
+                            // Retrieve parameters for genotype
+                            std::vector<float> parameters = genotype->getParameterCopy();
+
+                            // Set weights to parameter values
+                            for (int p = 0; p < genotype->getParameterCount(); p++) {
+                                //EvolutionManager::getInstance()->getAgents()[i]->ffn->layers[k]->weights[i][j] = parameters[p];
+
+                                // Server-side view
+                                Sprite *sprite = ffnBotSprite_.Find(p)->second_;
+                                int width = 16;
+                                int height = 10;
+
+                                float ix = (p % width) * width;
+                                float iy = (p / width) * height;
+                                // Set logo sprite size
+                                sprite->SetAlignment(HA_LEFT, VA_TOP);
+                                sprite->SetPosition(Vector2(800.0f + ix, 10.0f + iy));
+                                sprite->SetScale(0.3f);
+                                sprite->SetOpacity(0.9f);
+                                // Set a low priority so that other UI elements can be drawn on top
+                                sprite->SetPriority(-100);
+                                sprite->SetVisible(true);
+
+                                sprite->SetColor(Color(Vector3(parameters[p], parameters[p], parameters[p])));
+
+
                             }
-                        } // End of Server: Move Camera
-
-                        // Update per-BOT info
-
-                        // FFN
-                        int aIndex = camMode_-1;
-
-                        Genotype *genotype = EvolutionManager::getInstance()->getAgents()[aIndex]->genotype;
-                        // Retrieve parameters for genotype
-                        std::vector<float> parameters = genotype->getParameterCopy();
-
-                        // Set weights to parameter values
-                        for (int p = 0; p < genotype->getParameterCount(); p++) {
-                            //EvolutionManager::getInstance()->getAgents()[i]->ffn->layers[k]->weights[i][j] = parameters[p];
-
-                            // Server-side view
-                            Sprite *sprite = ffnBotSprite_.Find(p)->second_;
-                            int width = 16;
-                            int height = 10;
-
-                            float ix = (p % width) * width;
-                            float iy = (p / width) * height;
-                            // Set logo sprite size
-                            sprite->SetAlignment(HA_LEFT, VA_TOP);
-                            sprite->SetPosition(Vector2(800.0f + ix, 10.0f + iy));
-                            sprite->SetScale(0.3f);
-                            sprite->SetOpacity(0.9f);
-                            // Set a low priority so that other UI elements can be drawn on top
-                            sprite->SetPriority(-100);
-                            sprite->SetVisible(true);
-
-                            sprite->SetColor(Color(Vector3(parameters[p], parameters[p], parameters[p])));
 
 
-                        }
+                            // Show BOT control inputs
+                            float steerInput = EvolutionManager::getInstance()->getAgentControllers()[aIndex]->movement->getSteerInput();
+                            float accInput = EvolutionManager::getInstance()->getAgentControllers()[aIndex]->movement->getAccelInput();
+                            float action = EvolutionManager::getInstance()->getAgentControllers()[aIndex]->movement->getAction();
+                            float accLimit = 1.0f;
 
+                            steerWheelBotSprite_->SetPosition(Vector2(1000, 200));
+                            steerWheelBotSprite_->SetScale(0.2f);
+                            steerWheelBotSprite_->SetRotation((steerInput) * 360.0f);
+                            steerWheelBotSprite_->SetVisible(true);
 
-                        // Show BOT control inputs
-                        float steerInput = EvolutionManager::getInstance()->getAgentControllers()[aIndex]->movement->getSteerInput();
-                        float accInput = EvolutionManager::getInstance()->getAgentControllers()[aIndex]->movement->getAccelInput();
-                        float action = EvolutionManager::getInstance()->getAgentControllers()[aIndex]->movement->getAction();
-                        float accLimit = 1.0f;
+                            velBarBotSprite_->SetPosition(Vector2(900, 100));
+                            velBarBotSprite_->SetVisible(true);
 
-                        steerWheelBotSprite_->SetPosition(Vector2(1000, 200));
-                        steerWheelBotSprite_->SetScale(0.2f);
-                        steerWheelBotSprite_->SetRotation((steerInput) * 360.0f);
-                        steerWheelBotSprite_->SetVisible(true);
+                            if (accInput > 0) {
+                                IntVector2 v = velBarBkgBotSprite_->GetSize();
+                                int power = int(((accInput) / accLimit) * (float) v.x_);
+                                velBarBotSprite_->SetSize(power, v.y_);
+                                velBarBotSprite_->SetScale(0.3f);
+                            } else {
+                                IntVector2 v = velBarBkgBotSprite_->GetSize();
+                                int power = int(((-accInput) / -accLimit) * (float) v.x_);
+                                velBarBotSprite_->SetSize(power, v.y_);
+                                velBarBotSprite_->SetScale(0.3f);
+                            }
 
-                        velBarBotSprite_->SetPosition(Vector2(900, 100));
-                        velBarBotSprite_->SetVisible(true);
+                            velBarBkgBotSprite_->SetPosition(Vector2(900, 100));
+                            velBarBkgBotSprite_->SetVisible(true);
+                            velBarBkgBotSprite_->SetScale(0.3f);
 
-                        if (accInput > 0) {
-                            IntVector2 v = velBarBkgBotSprite_->GetSize();
-                            int power = int(((accInput) / accLimit) * (float) v.x_);
-                            velBarBotSprite_->SetSize(power, v.y_);
-                            velBarBotSprite_->SetScale(0.3f);
-                        } else {
-                            IntVector2 v = velBarBkgBotSprite_->GetSize();
-                            int power = int(((-accInput) / -accLimit) * (float) v.x_);
-                            velBarBotSprite_->SetSize(power, v.y_);
-                            velBarBotSprite_->SetScale(0.3f);
-                        }
-
-                        velBarBkgBotSprite_->SetPosition(Vector2(900, 100));
-                        velBarBkgBotSprite_->SetVisible(true);
-                        velBarBkgBotSprite_->SetScale(0.3f);
-
-                        /*
-                        // Update player powerbar
-                        IntVector2 v = powerBarBkgP1Sprite_->GetSize();
-                        int power = int(((life) / 100.0f) * (float) v.x_);
-                        powerBarP1Sprite_->SetSize(power, v.y_);
-*/
+                            /*
+                            // Update player powerbar
+                            IntVector2 v = powerBarBkgP1Sprite_->GetSize();
+                            int power = int(((life) / 100.0f) * (float) v.x_);
+                            powerBarP1Sprite_->SetSize(power, v.y_);
+    */
                             /*
                              *
                              *  // Construct FFN from genotype
@@ -2609,9 +2627,10 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                              *
                              */
 
+                        }
                     }
+                        break;
                 }
-                    break;
             }
 
 
@@ -2661,28 +2680,26 @@ void MayaScape::HandlePostRenderUpdate(StringHash eventType, VariantMap &eventDa
 void MayaScape::HandleEndRendering(StringHash eventType, VariantMap &eventData) {
 
     Graphics *graphics = GetSubsystem<Graphics>();
+    auto *cache = GetSubsystem<ResourceCache>();
 
-/*
-    float progress = eventData[P_PROGRESS].GetFloat();
-    int loadedNode = eventData[P_LOADEDNODES].GetInt();
-    int totalNodes = eventData[P_TOTALNODES].GetInt();
-    int loadedResources = eventData[P_LOADEDRESOURCES].GetInt();
-    int totalResources = eventData[P_TOTALRESOURCES].GetInt();
-*/
-/*
-    String progressStr = ToString("progress=%d%%", (int)(progress * 100.0f)) +
-                         ToString("\nnodes: %d/%d", loadedNode, totalNodes) +
-                         ToString("\nresources: %d/%d", loadedResources, totalResources);
-*/
-    String progressStr = String(Round(scene_->GetAsyncProgress()*100.0f));
+    if (levelLoading_) {
+        if (scene_->GetAsyncProgress() == 1.0f) {
 
-    int sticks = Round(scene_->GetAsyncProgress()*(float)10);
-    String progressBar = "";
-    for (int i = 0; i < sticks; i++) {
-        progressBar += "|";
+            // ASYNC MAP LOAD COMPLETE
+            levelLoading_  = false;
+
+        }
+        String progressStr = String("Loading map: ") + String(Round(scene_->GetAsyncProgress() * 100.0f));
+
+        int sticks = Round(scene_->GetAsyncProgress() * (float) 20);
+        String progressBar = "";
+        for (int i = 0; i < sticks; i++) {
+            progressBar += "|";
+        }
+        progressText_->SetText(progressStr + String("% ") + progressBar);
     }
-    progressText_->SetText(progressStr + String("% ") + progressBar);
 
+    progressText_->SetVisible(levelLoading_);
 }
 
 void MayaScape::ReloadScene(bool reInit) {
@@ -2789,8 +2806,8 @@ void MayaScape::ReloadScene(bool reInit) {
        }
 
        // setup for async loading
-       scene_->SetAsyncLoadingMs(3);
-       levelText_->SetText(String("cur level:\n") + "Level_" + String(id));
+       //scene_->SetAsyncLoadingMs(3);
+       levelLoading_ = true;
    }
 
    void MayaScape::PlaySoundEffect(const String &soundName) {
@@ -3003,6 +3020,7 @@ void MayaScape::CreateUI() {
     // Hide until connected
     instructionsText_->SetVisible(false);
 
+    /*
     levelText_ = ui->GetRoot()->CreateChild<Text>();
     levelText_->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 12);
     levelText_->SetTextAlignment(HA_CENTER);
@@ -3014,13 +3032,15 @@ void MayaScape::CreateUI() {
     triggerText_->SetTextAlignment(HA_CENTER);
     triggerText_->SetColor(Color::CYAN);
     triggerText_->SetPosition(graphics->GetWidth() - 250, 10);
-
+*/
     progressText_ = ui->GetRoot()->CreateChild<Text>();
-    progressText_->SetFont(cache->GetResource<Font>(INGAME_FONT2), 20);
+    progressText_->SetFont(cache->GetResource<Font>(INGAME_FONT), 21);
     progressText_->SetTextAlignment(HA_CENTER);
-    progressText_->SetColor(Color::CYAN);
+    progressText_->SetColor(Color::YELLOW);
+    progressText_->SetVerticalAlignment(VA_CENTER);
     progressText_->SetHorizontalAlignment(HA_CENTER);
-    progressText_->SetPosition(0, 10);
+    progressText_->SetPosition(0, 0);
+    progressText_->SetVisible(false);
 
 
     int hudTextCount = 4;
@@ -3041,7 +3061,7 @@ void MayaScape::CreateUI() {
 
     buttonContainer_ = root->CreateChild<UIElement>();
     buttonContainer_->SetFixedSize(1800, 600);
-    buttonContainer_->SetPosition(490, 480);
+    buttonContainer_->SetPosition(490, 340);
     buttonContainer_->SetHorizontalAlignment((HA_CENTER));
     buttonContainer_->SetLayoutMode(LM_VERTICAL);
     buttonContainer_->SetLayoutSpacing(10.0);
@@ -3049,10 +3069,9 @@ void MayaScape::CreateUI() {
     textEdit_->SetStyleAuto();
     textEdit_->SetVisible(false);
 
-    playButton_ = CreateButton("Play", 800);
-    disconnectButton_ = CreateButton("Disconnect", 800);
-    startServerButton_ = CreateButton("Start Server", 800);
-    exitButton_ = CreateButton("Exit", 800);
+    playButton_ = CreateButton("PLAY", 800);
+    startServerButton_ = CreateButton("START SERVER", 800);
+    exitButton_ = CreateButton("EXIT", 800);
 
 
 /*
@@ -3154,17 +3173,17 @@ void MayaScape::ChangeDebugHudText() {
 
 Button *MayaScape::CreateButton(const String &text, int width) {
     ResourceCache *cache = GetSubsystem<ResourceCache>();
-    Font *font = cache->GetResource<Font>(INGAME_FONT2);
+    Font *font = cache->GetResource<Font>(INGAME_FONT);
 
     Button *button = buttonContainer_->CreateChild<Button>();
     button->SetStyleAuto();
-    button->SetFixedHeight(120);
+    button->SetFixedHeight(110);
     button->SetFixedWidth(width);
     //button->SetHeight(5);
 
     Text *buttonText = button->CreateChild<Text>();
     buttonText->SetName("text");
-    buttonText->SetFont(font, 72);
+    buttonText->SetFont(font, 40);
     buttonText->SetAlignment(HA_CENTER, VA_CENTER);
     buttonText->SetText(text);
 
@@ -3178,14 +3197,6 @@ void MayaScape::UpdateButtons() {
 
 
     playButton_->SetVisible(!serverConnection && !serverRunning);
-    // Show and hide buttons so that eg. Connect and Disconnect are never shown at the same time
-    disconnectButton_->SetVisible(serverConnection || serverRunning);
-    Text *discText = disconnectButton_->GetChildStaticCast<Text>(String("text"));
-    if (serverConnection) {
-        discText->SetText("Client Disconnect");
-    } else if (serverRunning) {
-        discText->SetText("Server Disconnect");
-    }
     startServerButton_->SetVisible(!serverConnection && !serverRunning);
     exitButton_->SetVisible(!serverConnection && !serverRunning);
 
@@ -3574,12 +3585,50 @@ void MayaScape::HandleLoadProgress(StringHash eventType, VariantMap& eventData)
 
 void MayaScape::HandleLevelLoaded(StringHash eventType, VariantMap& eventData)
 {
+    ResourceCache *cache = GetSubsystem<ResourceCache>();
     using namespace AsyncLevelLoadFinished;
     nextLevel_ = (Node*)eventData[P_NODE].GetVoidPtr();
 
     // register triggers from new level node and clear loading flag
     NodeRegisterLoadTriggers(nextLevel_);
     levelLoadPending_.Clear();
+
+
+    scene_->StopAsyncLoading();
+
+    // Initiate game map for multiplayer game
+    InitiateGameMap(scene_);
+    // Spawn the player to server itself
+    SpawnPlayer();
+
+    // Start in game mode
+    UpdateUIState(true);
+
+    // Attach agent bot list to server (for login list)
+    Vector<String> botList;
+    // Build bot list
+    for (int i = 0; i < EvolutionManager::getInstance()->getAgents().size(); i++) {
+        String botName = EvolutionManager::getInstance()->getNetworkActors()[i]->GetUserName();
+        botList.Push(botName);
+    }
+    Server *server = GetSubsystem<Server>();
+    server->SetAgents(botList);
+
+    // Create sphere for camera target
+    camTargetNode_ = scene_->CreateChild("CamTargetMarker");
+    camTargetNode_->SetScale(38.0f);
+    camTargetNode_->SetPosition(flyTargetCam_);
+
+    // model
+    StaticModel* ballModel = camTargetNode_->GetOrCreateComponent<StaticModel>();
+    ballModel->SetModel(cache->GetResource<Model>("Models/Sphere.mdl"));
+    //ballModel->SetCastShadows(true);
+
+
+    // spline model
+    splineModel_ = scene_->GetOrCreateComponent<StaticModel>();
+    splineModel_->SetModel(cache->GetResource<Model>("Models/Sphere.mdl"));
+
 }
 
 void MayaScape::HandleConnectionFailed(StringHash eventType, VariantMap &eventData) {
@@ -3760,9 +3809,6 @@ void MayaScape::HandleStartServer(StringHash eventType, VariantMap &eventData) {
     network->SetUpdateFps(30);
 
 
-    // Start in game mode
-    UpdateUIState(true);
-
 
     LoadLevel(3);
 
@@ -3823,38 +3869,6 @@ void MayaScape::StartMultiplayerGameSession()
     // If we are running a server
     if (network->IsServerRunning())
     {
-        // Initiate game map for multiplayer game
-        InitiateGameMap(scene_);
-        // Spawn the player to server itself
-        SpawnPlayer();
-
-        // Attach agent bot list to server (for login list)
-        Vector<String> botList;
-        // Build bot list
-        for (int i = 0; i < EvolutionManager::getInstance()->getAgents().size(); i++) {
-            String botName = EvolutionManager::getInstance()->getNetworkActors()[i]->GetUserName();
-            botList.Push(botName);
-        }
-        Server *server = GetSubsystem<Server>();
-        server->SetAgents(botList);
-
-        // Create sphere for camera target
-        camTargetNode_ = scene_->CreateChild("CamTargetMarker");
-        camTargetNode_->SetScale(38.0f);
-        camTargetNode_->SetPosition(flyTargetCam_);
-
-        // model
-        StaticModel* ballModel = camTargetNode_->GetOrCreateComponent<StaticModel>();
-        ballModel->SetModel(cache->GetResource<Model>("Models/Sphere.mdl"));
-        //ballModel->SetCastShadows(true);
-
-
-        // spline model
-        splineModel_ = scene_->GetOrCreateComponent<StaticModel>();
-        splineModel_->SetModel(cache->GetResource<Model>("Models/Sphere.mdl"));
-
-
-
 
 
         // Subscribe for the newcomer recognition

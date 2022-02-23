@@ -294,6 +294,7 @@ private:
     WeakPtr<Node> nextLevel_;
     String        levelPathName_;
     String        levelLoadPending_;
+    bool          levelLoading_;
 
     WeakPtr<Text> levelText_;
     WeakPtr<Text> triggerText_;
