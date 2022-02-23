@@ -190,6 +190,8 @@ private:
     void HandlePostUpdate(StringHash eventType, VariantMap& eventData);
     /// Handle the post render update event.
     void HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData);
+    // Final render before back buffer flip
+    void HandleEndRendering(StringHash eventType, VariantMap &eventData);
     void HandleJoystickHatMove(StringHash eventType, VariantMap &eventData);
     /// Handle the end rendering event.
     void HandleSceneRendered(StringHash eventType, VariantMap& eventData);

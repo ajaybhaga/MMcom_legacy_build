@@ -588,6 +588,7 @@ bool Scene::InstantiateXMLAsync(const XMLElement& source, const Vector3& positio
 
     asyncLoading_ = true;
     asyncProgress_.xmlFile_ = source.GetFile();
+    asyncProgress_.xmlElement_ = source;
     asyncProgress_.mode_ = loadMode;
     asyncProgress_.loadedNodes_ = asyncProgress_.totalNodes_ = asyncProgress_.loadedResources_ = asyncProgress_.totalResources_ = 0;
     asyncProgress_.resources_.Clear();

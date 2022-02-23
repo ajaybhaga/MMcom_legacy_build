@@ -623,6 +623,8 @@ void MayaScape::SubscribeToEvents() {
     //SubscribeToEvent(textEdit_, E_TEXTFINISHED, URHO3D_HANDLER(MayaScape, HandleSend));
 //    SubscribeToEvent(sendButton_, E_RELEASED, URHO3D_HANDLER(MayaScape, HandleSend));
 
+    SubscribeToEvent(E_ENDRENDERING, URHO3D_HANDLER(MayaScape, HandleEndRendering));
+
     // Subscribe to log messages so that we can pipe them to the chat window
     SubscribeToEvent(E_LOGMESSAGE, URHO3D_HANDLER(MayaScape, HandleLogMessage));
 
@@ -2656,6 +2658,32 @@ void MayaScape::HandlePostRenderUpdate(StringHash eventType, VariantMap &eventDa
 
 }
 
+void MayaScape::HandleEndRendering(StringHash eventType, VariantMap &eventData) {
+
+    Graphics *graphics = GetSubsystem<Graphics>();
+
+/*
+    float progress = eventData[P_PROGRESS].GetFloat();
+    int loadedNode = eventData[P_LOADEDNODES].GetInt();
+    int totalNodes = eventData[P_TOTALNODES].GetInt();
+    int loadedResources = eventData[P_LOADEDRESOURCES].GetInt();
+    int totalResources = eventData[P_TOTALRESOURCES].GetInt();
+*/
+/*
+    String progressStr = ToString("progress=%d%%", (int)(progress * 100.0f)) +
+                         ToString("\nnodes: %d/%d", loadedNode, totalNodes) +
+                         ToString("\nresources: %d/%d", loadedResources, totalResources);
+*/
+    String progressStr = String(Round(scene_->GetAsyncProgress()*100.0f));
+
+    int sticks = Round(scene_->GetAsyncProgress()*(float)10);
+    String progressBar = "";
+    for (int i = 0; i < sticks; i++) {
+        progressBar += "|";
+    }
+    progressText_->SetText(progressStr + String("% ") + progressBar);
+
+}
 
 void MayaScape::ReloadScene(bool reInit) {
   // LOAD MAP
@@ -2671,6 +2699,10 @@ void MayaScape::ReloadScene(bool reInit) {
         // sub
         SubscribeToEvent(E_ASYNCLOADPROGRESS, URHO3D_HANDLER(MayaScape, HandleLoadProgress));
         SubscribeToEvent(E_ASYNCLEVELOADFINISHED, URHO3D_HANDLER(MayaScape, HandleLevelLoaded));
+
+
+
+
 
 
     levelPathName_= "Scenes/Async/";
@@ -2984,7 +3016,7 @@ void MayaScape::CreateUI() {
     triggerText_->SetPosition(graphics->GetWidth() - 250, 10);
 
     progressText_ = ui->GetRoot()->CreateChild<Text>();
-    progressText_->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 12);
+    progressText_->SetFont(cache->GetResource<Font>(INGAME_FONT2), 20);
     progressText_->SetTextAlignment(HA_CENTER);
     progressText_->SetColor(Color::CYAN);
     progressText_->SetHorizontalAlignment(HA_CENTER);
