@@ -355,9 +355,6 @@ void MayaScape::Start() {
     // Create empty scene
     CreateEmptyScene(context_);
 
-    // Load base scene
-    ReloadScene(true);
-
     // Start in menu mode
     //UpdateUIState(false);
 
@@ -2661,72 +2658,137 @@ void MayaScape::HandlePostRenderUpdate(StringHash eventType, VariantMap &eventDa
 
 
 void MayaScape::ReloadScene(bool reInit) {
+  // LOAD MAP
 
  auto *cache = GetSubsystem<ResourceCache>();
  //String filename = "Map1_Start_T1";
 /// String filename = "Map2_Start_T1";
-    String filename = "Map3_Start_T1";
 
 
- XMLFile *f = cache->GetResource<XMLFile>("Scenes/" + filename + ".xml");
- //loadFile(context_, cache + "Data/Scenes/" + filename + ".xml",
- if (f) {
-     //          FILE_READ);
-     scene_->LoadXML(f->GetRoot());
- }
+// LOAD BASE
+
+ //////////
+        // sub
+        SubscribeToEvent(E_ASYNCLOADPROGRESS, URHO3D_HANDLER(MayaScape, HandleLoadProgress));
+        SubscribeToEvent(E_ASYNCLEVELOADFINISHED, URHO3D_HANDLER(MayaScape, HandleLevelLoaded));
 
 
- // Post map load
-
-    /// Update spline path
-    Node* steerSpline = scene_->GetChild("SteerSpline", "true");
-    PODVector<Node*> steerMarks;
-    steerSpline->GetChildren(steerMarks);
-
-    splineSize_ = steerMarks.Size();
-
-    /// Update spline path
-    SplinePath* steerSplinePath = scene_->GetComponent<SplinePath>(true);
-    if (steerSplinePath) {
-        // Found steer spline
-        for (int i = 0; i < steerMarks.Size(); i++) {
-            steerSplinePath->AddControlPoint(steerMarks[i]);
-        }
-
-        steerSplinePath->SetSpeed(3.0f);
-        //botSplinePath_->SetControlledNode(bot_);[/code]
+    levelPathName_= "Scenes/Async/";
+       // load scene
+//       XMLFile *xmlLevel = cache->GetResource<XMLFile>(levelPathName_ + "base.xml");
+//    XMLFile *xmlLevel = cache->GetResource<XMLFile>(levelPathName_ + filename + ".xml");
+//       scene_->LoadXML(xmlLevel->GetRoot());
+    XMLFile *xmlLevel = cache->GetResource<XMLFile>("Scenes/base.xml");
+    /*XMLFile *xmlLevel = cache->GetResource<XMLFile>("Scenes/" + filename + ".xml");
+    //loadFile(context_, cache + "Data/Scenes/" + filename + ".xml",
+     */
+    if (xmlLevel) {
+        scene_->LoadXML(xmlLevel->GetRoot());
     }
 
-    }//Map1_Start_T1.xml
+    /////////
 
-void MayaScape::PlaySoundEffect(const String &soundName) {
 
+    // Post map load
 /*
-    if (sndFxPlay_[soundName]) {
-        float f = sndFxPlay_[soundName];
-        if (f > 5.0f) {
-            sndFxPlay_.Erase(soundName);
-        } else {
-            // Skip play
-            return;
-        }
-    }
+       /// Update spline path
+       Node* steerSpline = scene_->GetChild("SteerSpline", "true");
+       PODVector<Node*> steerMarks;
+       steerSpline->GetChildren(steerMarks);
 
-    // TOOD: Hash map based on soundname -> playing
-    Pair<String, float> p = Pair<String, float>(soundName, 0);
-    sndFxPlay_.Insert(p);
+       splineSize_ = steerMarks.Size();
 
-    auto *cache = GetSubsystem<ResourceCache>();
-    auto *sound = cache->GetResource<Sound>("Sounds/" + soundName);
+       /// Update spline path
+       SplinePath* steerSplinePath = scene_->GetComponent<SplinePath>(true);
+       if (steerSplinePath) {
+           // Found steer spline
+           for (int i = 0; i < steerMarks.Size(); i++) {
+               steerSplinePath->AddControlPoint(steerMarks[i]);
+           }
 
-    auto *source = scene_->CreateComponent<SoundSource3D>(LOCAL);
-    source->SetNearDistance(1);  // distance up to where the volume is 100%
-    source->SetFarDistance(1550);  // distance from where the volume is at 0%
-    source->SetSoundType(SOUND_EFFECT);
-    if (sound != nullptr) {
-        source->SetAutoRemoveMode(REMOVE_COMPONENT);
-        source->Play(sound);
-    }*/
+           steerSplinePath->SetSpeed(3.0f);
+           //botSplinePath_->SetControlledNode(bot_);[/code]
+       }*/
+
+   }//Map1_Start_T1.xml
+
+
+   void MayaScape::LoadLevel(int id) {
+       auto *cache = GetSubsystem<ResourceCache>();
+       levelPathName_= "Scenes/Async/";
+
+       // remove any existing level
+       if (nextLevel_)
+       {
+           nextLevel_->Remove();
+           nextLevel_ = NULL;
+       }
+
+
+
+       //String filename = "Map3_Start_T1";
+       String filename = "Map" + String(id) + "_Start_T1";
+
+       // async load
+//    String levelPathFile = levelPathName_ + loadLevel + String(".xml");
+       String loadLevel = filename;
+       String levelPathFile = levelPathName_ + loadLevel + String(".xml");
+
+       URHO3D_LOGINFO("cache file " + levelPathFile);
+       XMLFile *xmlLevel  = cache->GetResource<XMLFile>(levelPathFile);
+
+       if (xmlLevel) {
+           SceneResolver resolver;
+           Node *tmpNode = scene_->CreateTemporaryChild();
+
+           URHO3D_LOGINFO("LoadXML loading " + levelPathFile);
+           if (tmpNode->LoadXML(xmlLevel->GetRoot(), resolver, false)) {
+               URHO3D_LOGINFO("Async loading " + levelPathFile);
+               if (scene_->InstantiateXMLAsync(xmlLevel->GetRoot(), tmpNode->GetWorldPosition(),
+                                               tmpNode->GetWorldRotation())) {
+                   // prevent the trigger to reload while already loading
+                   levelLoadPending_ = levelPathFile;
+                   progressText_->SetText("");
+               } else {
+                   URHO3D_LOGERROR("InstantiateXMLAsync failed to init, level=" + levelPathFile);
+               }
+           }
+
+       }
+
+       // setup for async loading
+       scene_->SetAsyncLoadingMs(3);
+       levelText_->SetText(String("cur level:\n") + "Level_" + String(id));
+   }
+
+   void MayaScape::PlaySoundEffect(const String &soundName) {
+
+   /*
+       if (sndFxPlay_[soundName]) {
+           float f = sndFxPlay_[soundName];
+           if (f > 5.0f) {
+               sndFxPlay_.Erase(soundName);
+           } else {
+               // Skip play
+               return;
+           }
+       }
+
+       // TOOD: Hash map based on soundname -> playing
+       Pair<String, float> p = Pair<String, float>(soundName, 0);
+       sndFxPlay_.Insert(p);
+
+       auto *cache = GetSubsystem<ResourceCache>();
+       auto *sound = cache->GetResource<Sound>("Sounds/" + soundName);
+
+       auto *source = scene_->CreateComponent<SoundSource3D>(LOCAL);
+       source->SetNearDistance(1);  // distance up to where the volume is 100%
+       source->SetFarDistance(1550);  // distance from where the volume is at 0%
+       source->SetSoundType(SOUND_EFFECT);
+       if (sound != nullptr) {
+           source->SetAutoRemoveMode(REMOVE_COMPONENT);
+           source->Play(sound);
+       }*/
 }
 
 
@@ -2908,6 +2970,25 @@ void MayaScape::CreateUI() {
     instructionsText_->SetPosition(0, 550);
     // Hide until connected
     instructionsText_->SetVisible(false);
+
+    levelText_ = ui->GetRoot()->CreateChild<Text>();
+    levelText_->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 12);
+    levelText_->SetTextAlignment(HA_CENTER);
+    levelText_->SetColor(Color::CYAN);
+    levelText_->SetPosition(graphics->GetWidth() - 100, 10);
+
+    triggerText_ = ui->GetRoot()->CreateChild<Text>();
+    triggerText_->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 12);
+    triggerText_->SetTextAlignment(HA_CENTER);
+    triggerText_->SetColor(Color::CYAN);
+    triggerText_->SetPosition(graphics->GetWidth() - 250, 10);
+
+    progressText_ = ui->GetRoot()->CreateChild<Text>();
+    progressText_->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 12);
+    progressText_->SetTextAlignment(HA_CENTER);
+    progressText_->SetColor(Color::CYAN);
+    progressText_->SetHorizontalAlignment(HA_CENTER);
+    progressText_->SetPosition(0, 10);
 
 
     int hudTextCount = 4;
@@ -3328,6 +3409,147 @@ void MayaScape::MoveCamera(float timeStep) {
 
 
 
+void MayaScape::NodeRegisterLoadTriggers(Node *node)
+{
+    if (node)
+    {
+        PODVector<Node*> result;
+        node->GetChildrenWithTag(result, "levelLoadTrigger", true);
+
+        for ( unsigned i = 0; i < result.Size(); ++i )
+        {
+            SubscribeToEvent(result[i], E_NODECOLLISIONSTART, URHO3D_HANDLER(MayaScape, HandleLoadTriggerEntered));
+        }
+    }
+    else
+    {
+        URHO3D_LOGERROR("NodeRegisterLoadTriggers - node is NULL.");
+    }
+}
+
+void MayaScape::HandleLoadTriggerEntered(StringHash eventType, VariantMap& eventData)
+{
+    using namespace NodeCollisionStart;
+
+    // prevent the trigger to reload while already loading
+    if (!levelLoadPending_.Empty())
+    {
+        return;
+    }
+
+    Node *node = ((RigidBody*)eventData[P_BODY].GetVoidPtr())->GetNode();
+    StringVector tagVec = node->GetTags();
+    String levelName;
+    String loadLevel;
+
+    // get trigger tags
+    for ( unsigned i = 0; i < tagVec.Size(); ++i )
+    {
+        if (tagVec[i].StartsWith("levelName="))
+        {
+            const unsigned nameLen = String("levelName=").Length();
+            levelName = tagVec[i].Substring(nameLen, tagVec[i].Length() - nameLen);
+        }
+        else if (tagVec[i].StartsWith("loadLevel="))
+        {
+            const unsigned loadLen = String("loadLevel=").Length();
+            loadLevel = tagVec[i].Substring(loadLen, tagVec[i].Length() - loadLen);
+        }
+    }
+
+    if (!levelName.Empty() && !loadLevel.Empty())
+    {
+        levelText_->SetText(String("cur level:\n") + levelName);
+        triggerText_->SetText(String("trig info:\n") + "level=" + levelName + "\nload =" + loadLevel);
+
+        String curLevelName = curLevel_?curLevel_->GetName():String::EMPTY;
+        String loadLevelName = nextLevel_?nextLevel_->GetName():String::EMPTY;
+
+        if (curLevelName != levelName)
+        {
+            // swap nodes
+            if (curLevelName == loadLevel && loadLevelName == levelName)
+            {
+                Node *tmpNode = curLevel_;
+                curLevel_ = nextLevel_;
+                nextLevel_ = tmpNode;
+            }
+            else
+            {
+                URHO3D_LOGERROR("Trigger level and load names out of sequence.");
+            }
+        }
+        else if (loadLevelName != loadLevel)
+        {
+            // remove any existing level
+            if (nextLevel_)
+            {
+                nextLevel_->Remove();
+                nextLevel_ = NULL;
+            }
+
+            // async load
+            ResourceCache* cache = GetSubsystem<ResourceCache>();
+            String levelPathFile = levelPathName_ + loadLevel + String(".xml");
+            URHO3D_LOGINFO("cache file " + levelPathFile);
+            XMLFile *xmlLevel = cache->GetResource<XMLFile>(levelPathFile);
+
+            if (xmlLevel)
+            {
+                SceneResolver resolver;
+                Node *tmpNode = scene_->CreateTemporaryChild();
+
+                URHO3D_LOGINFO("LoadXML loading " + levelPathFile);
+                if (tmpNode->LoadXML(xmlLevel->GetRoot(), resolver, false))
+                {
+                    URHO3D_LOGINFO("Async loading " + levelPathFile);
+                    if (scene_->InstantiateXMLAsync(xmlLevel->GetRoot(), tmpNode->GetWorldPosition(), tmpNode->GetWorldRotation()))
+                    {
+                        // prevent the trigger to reload while already loading
+                        levelLoadPending_ = levelPathFile;
+                        progressText_->SetText("");
+                    }
+                    else
+                    {
+                        URHO3D_LOGERROR("InstantiateXMLAsync failed to init, level=" + levelPathFile);
+                    }
+                }
+            }
+            else
+            {
+                URHO3D_LOGERROR("Load level file= " + levelPathFile + " not found!");
+            }
+        }
+    }
+}
+
+void MayaScape::HandleLoadProgress(StringHash eventType, VariantMap& eventData)
+{
+    using namespace AsyncLoadProgress;
+
+    float progress = eventData[P_PROGRESS].GetFloat();
+    int loadedNode = eventData[P_LOADEDNODES].GetInt();
+    int totalNodes = eventData[P_TOTALNODES].GetInt();
+    int loadedResources = eventData[P_LOADEDRESOURCES].GetInt();
+    int totalResources = eventData[P_TOTALRESOURCES].GetInt();
+
+    String progressStr = ToString("progress=%d%%", (int)(progress * 100.0f)) +
+                         ToString("\nnodes: %d/%d", loadedNode, totalNodes) +
+                         ToString("\nresources: %d/%d", loadedResources, totalResources);
+
+    progressText_->SetText(progressStr);
+}
+
+void MayaScape::HandleLevelLoaded(StringHash eventType, VariantMap& eventData)
+{
+    using namespace AsyncLevelLoadFinished;
+    nextLevel_ = (Node*)eventData[P_NODE].GetVoidPtr();
+
+    // register triggers from new level node and clear loading flag
+    NodeRegisterLoadTriggers(nextLevel_);
+    levelLoadPending_.Clear();
+}
+
 void MayaScape::HandleConnectionFailed(StringHash eventType, VariantMap &eventData) {
     URHO3D_LOGINFO("Connection to server failed!");
     InitMsgWindow("Connection failure", "Connection to server failed!");
@@ -3452,6 +3674,10 @@ void MayaScape::HandleStartServer(StringHash eventType, VariantMap &eventData) {
         engine_->Exit();
     }
 
+    // Load base scene
+    ReloadScene(true);
+
+
     // Setup Client-Side Prediction
     cspServer_ = scene_->CreateComponent<CSP_Server>(LOCAL);
     cspServer_->updateInterval_ = 1.f / 1.f;
@@ -3505,6 +3731,8 @@ void MayaScape::HandleStartServer(StringHash eventType, VariantMap &eventData) {
     // Start in game mode
     UpdateUIState(true);
 
+
+    LoadLevel(3);
 
 }
 
@@ -4973,9 +5201,9 @@ void MayaScape::InitiateGameMap(Scene *scene) {
         RigidBody *body = track1Node->GetComponent<RigidBody>(REPLICATED);
         body->SetCollisionLayer(2);
         CollisionShape *trackColShape_ = track1Node->GetComponent<CollisionShape>(REPLICATED);
-        trackColShape_->SetTriangleMesh(model->GetModel(), 0);
+       // trackColShape_->SetTriangleMesh(model->GetModel(), 0);
 
-        //        trackColShape_->SetConvexHull(model);
+//                trackColShape_->SetConvexHull(model->GetModel());
     }
 
     // Spawn the ai bot players

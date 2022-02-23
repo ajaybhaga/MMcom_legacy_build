@@ -18039,7 +18039,7 @@ template <class T> void RegisterMembers_Scene(asIScriptEngine* engine, const cha
     engine->RegisterObjectMethod(className, "void SetVarNamesAttr(const String&in)", AS_METHODPR(T, SetVarNamesAttr, (const String&), void), AS_CALL_THISCALL);
 
     // void Scene::StopAsyncLoading()
-    engine->RegisterObjectMethod(className, "void StopAsyncLoading()", AS_METHODPR(T, StopAsyncLoading, (), void), AS_CALL_THISCALL);
+    engine->RegisterObjectMethod(className, "void StopAsyncLoading(bool)", AS_METHODPR(T, StopAsyncLoading, (bool), void), AS_CALL_THISCALL);
 
     // void Scene::UnregisterAllVars()
     engine->RegisterObjectMethod(className, "void UnregisterAllVars()", AS_METHODPR(T, UnregisterAllVars, (), void), AS_CALL_THISCALL);

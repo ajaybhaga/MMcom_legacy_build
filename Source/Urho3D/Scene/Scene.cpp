@@ -170,6 +170,7 @@ bool Scene::LoadXML(const XMLElement& source)
 
     // Load the whole scene, then perform post-load if successfully loaded
     // Note: the scene filename and checksum can not be set, as we only used an XML element
+//    if (Node::LoadXML(source,setInstanceDefault))
     if (Node::LoadXML(source))
     {
         FinishLoading(nullptr);
@@ -187,6 +188,7 @@ bool Scene::LoadJSON(const JSONValue& source)
 
     // Load the whole scene, then perform post-load if successfully loaded
     // Note: the scene filename and checksum can not be set, as we only used an XML element
+//    if (Node::LoadJSON(source, setInstanceDefault))
     if (Node::LoadJSON(source))
     {
         FinishLoading(nullptr);
@@ -513,7 +515,7 @@ bool Scene::LoadAsyncJSON(File* file, LoadMode mode)
     return true;
 }
 
-void Scene::StopAsyncLoading()
+void Scene::StopAsyncLoading(bool reset)
 {
     asyncLoading_ = false;
     asyncProgress_.file_.Reset();
@@ -522,7 +524,13 @@ void Scene::StopAsyncLoading()
     asyncProgress_.xmlElement_ = XMLElement::EMPTY;
     asyncProgress_.jsonIndex_ = 0;
     asyncProgress_.resources_.Clear();
-    resolver_.Reset();
+    if (reset)
+        resolver_.Reset();
+
+    // instantiateAsync
+    asyncProgress_.rootNode_ = NULL;
+    asyncProgress_.instantiateAsync_ = false;
+    asyncProgress_.resolver_.Reset();
 }
 
 Node* Scene::Instantiate(Deserializer& source, const Vector3& position, const Quaternion& rotation, CreateMode mode)
@@ -569,6 +577,72 @@ Node* Scene::InstantiateXML(const XMLElement& source, const Vector3& position, c
         node->Remove();
         return nullptr;
     }
+}
+
+bool Scene::InstantiateXMLAsync(const XMLElement& source, const Vector3& position, const Quaternion& rotation, CreateMode mode, LoadMode loadMode)
+{
+    URHO3D_PROFILE(InstantiateXMLAync);
+
+    // don't clear scene_'s resolver
+    StopAsyncLoading(false);
+
+    asyncLoading_ = true;
+    asyncProgress_.xmlFile_ = source.GetFile();
+    asyncProgress_.mode_ = loadMode;
+    asyncProgress_.loadedNodes_ = asyncProgress_.totalNodes_ = asyncProgress_.loadedResources_ = asyncProgress_.totalResources_ = 0;
+    asyncProgress_.resources_.Clear();
+
+    asyncProgress_.createMode_ = mode;
+    asyncProgress_.instantiateAsync_ = true;
+
+    if (loadMode > LOAD_RESOURCES_ONLY)
+    {
+        XMLElement rootElement = source;
+
+        // Preload resources if appropriate
+        if (loadMode != LOAD_SCENE)
+        {
+            URHO3D_PROFILE(FindResourcesToPreload);
+
+            PreloadResourcesXML(rootElement);
+        }
+
+        unsigned nodeID = rootElement.GetUInt("id");
+        asyncProgress_.rootNode_ = CreateChild(0, asyncProgress_.createMode_);
+        asyncProgress_.resolver_.AddNode(nodeID, asyncProgress_.rootNode_);
+        asyncProgress_.rootNode_->SetTransform(position, rotation);
+
+        // Load the root level components first
+        if (!asyncProgress_.rootNode_->LoadXML(rootElement, asyncProgress_.resolver_, false, true, asyncProgress_.createMode_))
+        {
+            StopAsyncLoading(false);
+            asyncProgress_.rootNode_->Remove();
+            return false;
+        }
+
+        // Then prepare for loading all root level child nodes in the async update
+        // **NOTE** 1st node is loaded, setup for the next node
+        asyncProgress_.loadedNodes_ = 1;
+        asyncProgress_.totalNodes_ = 1;
+        XMLElement childNodeElement = rootElement.GetChild("node");
+        asyncProgress_.xmlElement_ = childNodeElement;
+
+        // Count the amount of child nodes
+        while (childNodeElement)
+        {
+            ++asyncProgress_.totalNodes_;
+            childNodeElement = childNodeElement.GetNext("node");
+        }
+    }
+    else
+    {
+        URHO3D_PROFILE(FindResourcesToPreload);
+
+        URHO3D_LOGINFO("InstantiateXMLAync - preloading resources");
+        PreloadResourcesXML(source);
+    }
+
+    return true;
 }
 
 Node* Scene::InstantiateJSON(const JSONValue& source, const Vector3& position, const Quaternion& rotation, CreateMode mode)
@@ -763,7 +837,7 @@ void Scene::Update(float timeStep)
     {
         UpdateAsyncLoading();
         // If only preloading resources, scene update can continue
-        if (asyncProgress_.mode_ > LOAD_RESOURCES_ONLY)
+        if (asyncProgress_.mode_ > LOAD_RESOURCES_ONLY && !asyncProgress_.instantiateAsync_)
             return;
     }
 
@@ -1203,6 +1277,16 @@ void Scene::UpdateAsyncLoading()
             return;
         }
 
+        if (asyncProgress_.instantiateAsync_)
+        {
+            unsigned nodeID = asyncProgress_.xmlElement_.GetUInt("id");
+            Node* newNode = asyncProgress_.rootNode_->CreateChild(0, ((asyncProgress_.createMode_ == REPLICATED) && nodeID < FIRST_LOCAL_ID) ? REPLICATED : LOCAL);
+
+            asyncProgress_.resolver_.AddNode(nodeID, newNode);
+            newNode->LoadXML(asyncProgress_.xmlElement_, asyncProgress_.resolver_, true, true, asyncProgress_.createMode_);
+            asyncProgress_.xmlElement_ = asyncProgress_.xmlElement_.GetNext("node");
+        }
+
 
         // Read one child node with its full sub-hierarchy either from binary, JSON, or XML
         /// \todo Works poorly in scenes where one root-level child node contains all content
@@ -1242,7 +1326,7 @@ void Scene::UpdateAsyncLoading()
     using namespace AsyncLoadProgress;
 
     VariantMap& eventData = GetEventDataMap();
-    eventData[P_SCENE] = this;
+    eventData[P_SCENE] = (!asyncProgress_.instantiateAsync_)?(Node*)this:asyncProgress_.rootNode_;
     eventData[P_PROGRESS] = GetAsyncProgress();
     eventData[P_LOADEDNODES] = asyncProgress_.loadedNodes_;
     eventData[P_TOTALNODES] = asyncProgress_.totalNodes_;
@@ -1255,18 +1339,43 @@ void Scene::FinishAsyncLoading()
 {
     if (asyncProgress_.mode_ > LOAD_RESOURCES_ONLY)
     {
-        resolver_.Resolve();
-        ApplyAttributes();
-        FinishLoading(asyncProgress_.file_);
+        if (!asyncProgress_.instantiateAsync_)
+        {
+            resolver_.Resolve();
+            ApplyAttributes();
+            FinishLoading(asyncProgress_.file_);
+        }
+        else
+        {
+            asyncProgress_.resolver_.Resolve();
+            asyncProgress_.rootNode_->ApplyAttributes();
+        }
     }
 
-    StopAsyncLoading();
+    if (!asyncProgress_.instantiateAsync_)
+    {
+        StopAsyncLoading();
 
-    using namespace AsyncLoadFinished;
+        using namespace AsyncLoadFinished;
+
+        VariantMap& eventData = GetEventDataMap();
+        eventData[P_SCENE] = this;
+        SendEvent(E_ASYNCLOADFINISHED, eventData);
+    }
+    else
+    {
+        SendInstatiateAsyncFinished();
+        StopAsyncLoading(false);
+    }
+}
+
+void Scene::SendInstatiateAsyncFinished()
+{
+    using namespace AsyncLevelLoadFinished;
 
     VariantMap& eventData = GetEventDataMap();
-    eventData[P_SCENE] = this;
-    SendEvent(E_ASYNCLOADFINISHED, eventData);
+    eventData[P_NODE] = asyncProgress_.rootNode_;
+    SendEvent(E_ASYNCLEVELOADFINISHED, eventData);
 }
 
 void Scene::FinishLoading(Deserializer* source)

@@ -110,6 +110,14 @@ URHO3D_EVENT(E_ASYNCLOADFINISHED, AsyncLoadFinished)
     URHO3D_PARAM(P_SCENE, Scene);                  // Scene pointer
 }
 
+
+/// Asynchronous level loading finished.
+URHO3D_EVENT(E_ASYNCLEVELOADFINISHED, AsyncLevelLoadFinished)
+{
+    URHO3D_PARAM(P_NODE, Node);                  // level pointer
+}
+
+
 /// A child node has been added to a parent node.
 URHO3D_EVENT(E_NODEADDED, NodeAdded)
 {

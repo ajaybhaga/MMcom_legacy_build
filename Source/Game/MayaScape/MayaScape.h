@@ -212,6 +212,12 @@ private:
     void HandleNetworkUpdateSent(StringHash eventType, VariantMap& eventData);
     void HandleUpdateParticlePool(float timeStep);
 
+    // Async loading functions
+    void NodeRegisterLoadTriggers(Node *node);
+    void HandleLoadTriggerEntered(StringHash eventType, VariantMap& eventData);
+    void HandleLoadProgress(StringHash eventType, VariantMap& eventData);
+    void HandleLevelLoaded(StringHash eventType, VariantMap& eventData);
+
     void ShowChatText(const String& row);
 
     // Creates ////
@@ -242,6 +248,7 @@ private:
 
     /// Handle reloading the scene.
     void ReloadScene(bool reInit);
+    void LoadLevel(int id);
     void PlaySoundEffect(const String& soundName);
     void PlaySoundEffectGlobal(const String& soundName);
     void PlayMusic(const String &soundName);
@@ -279,6 +286,16 @@ private:
     String clientName_;
     Vector<SoundSource3D*> radioTrackQueue_;
     Vector<RadioTrack> radioTrackInfoQueue_;
+
+    // Async level loading
+    WeakPtr<Node> curLevel_;
+    WeakPtr<Node> nextLevel_;
+    String        levelPathName_;
+    String        levelLoadPending_;
+
+    WeakPtr<Text> levelText_;
+    WeakPtr<Text> triggerText_;
+    WeakPtr<Text> progressText_;
 
     // Network Actor Hash Maps
     HashMap<Connection*, WeakPtr<ClientObj>> actorMap_;

@@ -81,6 +81,12 @@ struct AsyncProgress
     unsigned loadedNodes_;
     /// Total root-level nodes.
     unsigned totalNodes_;
+
+    /// Async level loading
+    WeakPtr<Node> rootNode_;
+    CreateMode createMode_;
+    bool instantiateAsync_;
+    SceneResolver resolver_;
 };
 
 /// Root scene node, represents the whole scene.
@@ -105,17 +111,17 @@ public:
     static void RegisterObject(Context* context);
 
     /// Load from binary data. Removes all existing child nodes and components first. Return true if successful.
-    bool Load(Deserializer& source) override;
+    virtual bool Load(Deserializer& source);
     /// Save to binary data. Return true if successful.
     bool Save(Serializer& dest) const override;
     /// Load from XML data. Removes all existing child nodes and components first. Return true if successful.
-    bool LoadXML(const XMLElement& source) override;
+    virtual bool LoadXML(const XMLElement& source);
     /// Load from JSON data. Removes all existing child nodes and components first. Return true if successful.
-    bool LoadJSON(const JSONValue& source) override;
+    virtual bool LoadJSON(const JSONValue& source);
     /// Mark for attribute check on the next network update.
-    void MarkNetworkUpdate() override;
+    virtual void MarkNetworkUpdate();
     /// Add a replication state that is tracking this scene.
-    void AddReplicationState(NodeReplicationState* state) override;
+    virtual void AddReplicationState(NodeReplicationState* state);
 
     /// Load from an XML file. Return true if successful.
     bool LoadXML(Deserializer& source);
@@ -132,12 +138,15 @@ public:
     /// Load from a JSON file asynchronously. Return true if started successfully. The LOAD_RESOURCES_ONLY mode can also be used to preload resources from object prefab files.
     bool LoadAsyncJSON(File* file, LoadMode mode = LOAD_SCENE_AND_RESOURCES);
     /// Stop asynchronous loading.
-    void StopAsyncLoading();
+    void StopAsyncLoading(bool reset=true);
     /// Instantiate scene content from binary data. Return root node if successful.
     Node* Instantiate(Deserializer& source, const Vector3& position, const Quaternion& rotation, CreateMode mode = REPLICATED);
     /// Instantiate scene content from XML data. Return root node if successful.
     Node* InstantiateXML
         (const XMLElement& source, const Vector3& position, const Quaternion& rotation, CreateMode mode = REPLICATED);
+    // instantiateAsync
+    bool InstantiateXMLAsync(const XMLElement& source, const Vector3& position, const Quaternion& rotation,
+                            CreateMode modee = REPLICATED, LoadMode loadMode = LOAD_SCENE_AND_RESOURCES);
     /// Instantiate scene content from XML data. Return root node if successful.
     Node* InstantiateXML(Deserializer& source, const Vector3& position, const Quaternion& rotation, CreateMode mode = REPLICATED);
     /// Instantiate scene content from JSON data. Return root node if successful.
@@ -190,7 +199,7 @@ public:
 
     /// Return whether an asynchronous loading operation is in progress.
     /// @property
-    bool IsAsyncLoading() const { return asyncLoading_; }
+    bool IsAsyncLoading() const { return (asyncLoading_ && !asyncProgress_.instantiateAsync_); }
 
     /// Return asynchronous loading progress between 0.0 and 1.0, or 1.0 if not in progress.
     /// @property
@@ -294,6 +303,7 @@ private:
     void FinishAsyncLoading();
     /// Finish loading. Sets the scene filename and checksum.
     void FinishLoading(Deserializer* source);
+    void SendInstatiateAsyncFinished();
     /// Finish saving. Sets the scene filename and checksum.
     void FinishSaving(Serializer* dest) const;
     /// Preload resources from a binary scene or object prefab file.
