@@ -193,7 +193,10 @@ private:
     // Final render before back buffer flip
     void HandleEndRendering(StringHash eventType, VariantMap &eventData);
     // Resource loaded
+    // Server
     void HandleResourceBackgroundLoaded(StringHash eventType, VariantMap& eventData);
+    // Client
+    void HandleResourceReloadFinished(StringHash eventType, VariantMap& eventData);
 
     void HandleJoystickHatMove(StringHash eventType, VariantMap &eventData);
     /// Handle the end rendering event.

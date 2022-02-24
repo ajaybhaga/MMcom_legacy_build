@@ -6,4 +6,4 @@ export PATH=$ANDROID_NDK/toolchains/x86_64-4.9/prebuilt/linux-x86_64/bin:$ANDROI
 export URHO3D_LIB_TYPE=SHARED 
 
 script/dockerized.sh android ./gradlew :android:launcher-app:clean
-script/dockerized.sh android ./gradlew :android:launcher-app:build
+script/dockerized.sh android ./gradlew :android:launcher-app:build --info --stacktrace "$@"

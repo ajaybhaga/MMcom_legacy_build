@@ -80,7 +80,7 @@ else
 fi
 if [[ $use_podman ]] || ( [[ $(d version -f '{{.Client.Version}}') =~ ^([0-9]+)\.0*([0-9]+)\. ]] && (( BASH_REMATCH[1] * 100 + BASH_REMATCH[2] >= 1809 )) ); then
     # podman or newer Docker client
-    d run $interactive -t --rm -h fishtank $run_option \
+    d run -m 4g $interactive -t --rm -h fishtank $run_option \
         -e HOST_UID="$(id -u)" -e HOST_GID="$(id -g)" -e PROJECT_DIR="$PROJECT_DIR" \
         --env-file "$SCRIPT_DIR/.env-file" \
         --mount type=bind,source="$PROJECT_DIR",target="$PROJECT_DIR" \
@@ -88,7 +88,7 @@ if [[ $use_podman ]] || ( [[ $(d version -f '{{.Client.Version}}') =~ ^([0-9]+)\
         $dbe_image "$@"
 else
     # Fallback workaround on older Docker CLI version
-    d run $interactive -t --rm -h fishtank \
+    d run -m 4g $interactive -t --rm -h fishtank \
         -e HOST_UID="$(id -u)" -e HOST_GID="$(id -g)" -e PROJECT_DIR="$PROJECT_DIR" \
         --env-file <(perl -ne 'chomp; print "$_\n" if defined $ENV{$_}' "$SCRIPT_DIR/.env-file") \
         --mount type=bind,source="$PROJECT_DIR",target="$PROJECT_DIR" \

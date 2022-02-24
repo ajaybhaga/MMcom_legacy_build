@@ -602,6 +602,28 @@ void MayaScape::HandleResourceBackgroundLoaded(StringHash eventType, VariantMap&
     progressResText_->SetVisible(levelLoading_);
 }
 
+
+void MayaScape::HandleResourceReloadFinished(StringHash eventType, VariantMap& eventData) {
+
+    using namespace ResourceBackgroundLoaded;
+
+    String progressStr = String("Loading: ") + String(Round(scene_->GetAsyncProgress() * 100.0f));
+
+    int sticks = Round(scene_->GetAsyncProgress() * (float) 40);
+    String progressBar = "";
+    for (int i = 0; i < sticks; i++) {
+        progressBar += "|";
+    }
+    progressText_->SetText(progressBar);
+
+
+    auto* resource = static_cast<Resource*>(eventData[P_RESOURCE].GetPtr());
+    String resourceName = resource->GetName();
+    progressResText_->SetText(progressStr + String("% ") + resourceName);
+    progressResText_->SetVisible(levelLoading_);
+}
+
+
 void MayaScape::HandleClientSceneLoaded(StringHash eventType, VariantMap& eventData)
 {
     // SERVER CODE
@@ -648,8 +670,25 @@ void MayaScape::SubscribeToEvents() {
     // Last chance to update before back buffer flip
     SubscribeToEvent(E_ENDRENDERING, URHO3D_HANDLER(MayaScape, HandleEndRendering));
 
-    //
+    // Server asset loading
     SubscribeToEvent(E_RESOURCEBACKGROUNDLOADED, URHO3D_HANDLER(MayaScape, HandleResourceBackgroundLoaded));
+
+    // Client asset loading
+    SubscribeToEvent(E_RELOADFINISHED, URHO3D_HANDLER(MayaScape, HandleResourceReloadFinished));
+
+/*
+/// Resource reloading started.
+    URHO3D_EVENT(E_RELOADSTARTED, ReloadStarted)
+    {
+    }
+
+/// Resource reloading finished successfully.
+    URHO3D_EVENT(E_RELOADFINISHED, ReloadFinished)
+    {
+    }
+  */
+
+
 
     // Subscribe to log messages so that we can pipe them to the chat window
     SubscribeToEvent(E_LOGMESSAGE, URHO3D_HANDLER(MayaScape, HandleLogMessage));
