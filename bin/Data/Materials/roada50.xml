@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<material>
+	<technique name="Techniques/Diff.xml" />
+	<texture name="Textures/tree01.dds" unit="diffuse" />
+	<parameter name="MatDiffColor" value="0.8 0.8 0.8 1" />
+	<parameter name="MatSpecColor" value="0.313726 0.313726 0.313726 50" />
+</material>
