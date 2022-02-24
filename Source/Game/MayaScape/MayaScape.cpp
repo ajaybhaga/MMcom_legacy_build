@@ -598,7 +598,7 @@ void MayaScape::HandleResourceBackgroundLoaded(StringHash eventType, VariantMap&
 
     auto* resource = static_cast<Resource*>(eventData[P_RESOURCE].GetPtr());
     String resourceName = resource->GetName();
-    progressResText_->SetText(progressStr + String("% -> ") + resourceName);
+    progressResText_->SetText(progressStr + String("% ") + resourceName);
     progressResText_->SetVisible(levelLoading_);
 }
 
