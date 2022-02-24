@@ -611,6 +611,12 @@ Resource* ResourceCache::GetResource(StringHash type, const String& name, bool s
     URHO3D_LOGDEBUG("Loading resource " + sanitatedName);
     resource->SetName(sanitatedName);
 
+    // AB
+        VariantMap &eventData = GetEventDataMap();
+        eventData[LoadAttempt::P_RESOURCENAME] = sanitatedName;
+        // E_LOADATTEMPT
+        SendEvent(E_LOADATTEMPT, eventData);
+
     if (!resource->Load(*(file.Get())))
     {
         // Error should already been logged by corresponding resource descendant class
@@ -625,6 +631,13 @@ Resource* ResourceCache::GetResource(StringHash type, const String& name, bool s
 
         if (!returnFailedResources_)
             return nullptr;
+    } else {
+        // AB
+        using namespace LoadSucceed;
+        VariantMap& eventData = GetEventDataMap();
+        eventData[P_RESOURCENAME] = sanitatedName;
+        // E_LOADSUCCEED
+        SendEvent(E_LOADSUCCEED, eventData);
     }
 
     // Store to cache

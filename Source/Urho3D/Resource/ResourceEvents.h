@@ -49,6 +49,21 @@ URHO3D_EVENT(E_FILECHANGED, FileChanged)
     URHO3D_PARAM(P_RESOURCENAME, ResourceName);            // String
 }
 
+// AB
+/// Resource loading succeed.
+URHO3D_EVENT(E_LOADSUCCEED, LoadSucceed)
+{
+    URHO3D_PARAM(P_RESOURCENAME, ResourceName);            // String
+}
+
+
+// AB
+/// Resource loading attempt.
+URHO3D_EVENT(E_LOADATTEMPT, LoadAttempt)
+{
+    URHO3D_PARAM(P_RESOURCENAME, ResourceName);            // String
+}
+
 /// Resource loading failed.
 URHO3D_EVENT(E_LOADFAILED, LoadFailed)
 {

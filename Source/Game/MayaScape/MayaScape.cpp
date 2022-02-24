@@ -603,13 +603,13 @@ void MayaScape::HandleResourceBackgroundLoaded(StringHash eventType, VariantMap&
 }
 
 
-void MayaScape::HandleResourceReloadFinished(StringHash eventType, VariantMap& eventData) {
+void MayaScape::HandleClientResourceLoadAttempt(StringHash eventType, VariantMap& eventData) {
 
-    using namespace ResourceBackgroundLoaded;
+    using namespace LoadSucceed;
 
-    String progressStr = String("Loading: ") + String(Round(scene_->GetAsyncProgress() * 100.0f));
+    String progressStr = String("Load: ") + String(Round(0 * 100.0f));
 
-    int sticks = Round(scene_->GetAsyncProgress() * (float) 40);
+    int sticks = Round(0 * (float) 40);
     String progressBar = "";
     for (int i = 0; i < sticks; i++) {
         progressBar += "|";
@@ -617,11 +617,47 @@ void MayaScape::HandleResourceReloadFinished(StringHash eventType, VariantMap& e
     progressText_->SetText(progressBar);
 
 
-    auto* resource = static_cast<Resource*>(eventData[P_RESOURCE].GetPtr());
-    String resourceName = resource->GetName();
+    String resourceName = eventData[P_RESOURCENAME].GetString();
+    //String resourceName = resource->GetName();
     progressResText_->SetText(progressStr + String("% ") + resourceName);
-    progressResText_->SetVisible(levelLoading_);
+    progressText_->SetVisible(true);
+    progressResText_->SetVisible(true);
+
+
+    if (clientLevelLoading_)
+    // Show updated frame
+    engine_->RunFrame();
+
 }
+
+void MayaScape::HandleClientResourceLoadFinished(StringHash eventType, VariantMap& eventData) {
+
+    using namespace LoadSucceed;
+
+    String progressStr = String("Finished: ") + String(Round(1 * 100.0f));
+
+    int sticks = Round(1 * (float) 40);
+    String progressBar = "";
+    for (int i = 0; i < sticks; i++) {
+        progressBar += "|";
+    }
+    progressText_->SetText(progressBar);
+
+
+    String resourceName = eventData[P_RESOURCENAME].GetString();
+    //String resourceName = resource->GetName();
+    progressResText_->SetText(progressStr + String("% ") + resourceName);
+    progressText_->SetVisible(true);
+    progressResText_->SetVisible(true);
+
+
+    if (clientLevelLoading_)
+        // Show updated frame
+        engine_->RunFrame();
+
+
+}
+
 
 
 void MayaScape::HandleClientSceneLoaded(StringHash eventType, VariantMap& eventData)
@@ -674,7 +710,10 @@ void MayaScape::SubscribeToEvents() {
     SubscribeToEvent(E_RESOURCEBACKGROUNDLOADED, URHO3D_HANDLER(MayaScape, HandleResourceBackgroundLoaded));
 
     // Client asset loading
-    SubscribeToEvent(E_RELOADFINISHED, URHO3D_HANDLER(MayaScape, HandleResourceReloadFinished));
+    SubscribeToEvent(E_LOADSUCCEED, URHO3D_HANDLER(MayaScape, HandleClientResourceLoadFinished));
+    SubscribeToEvent(E_LOADATTEMPT, URHO3D_HANDLER(MayaScape, HandleClientResourceLoadAttempt));
+
+
 
 /*
 /// Resource reloading started.
@@ -856,6 +895,10 @@ void MayaScape::HandleAI(float timeStep) {
 }
 
 void MayaScape::HandlePhysicsPreStep(StringHash eventType, VariantMap &eventData) {
+
+    // Skip on loading
+    if (levelLoading_) return;
+    if (clientLevelLoading_) return;
 
     const float MOVE_TORQUE = 3.0f;
 
@@ -1647,7 +1690,9 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
 
     ticks += timeStep;
 
-    if (levelLoading_) return; // Skip on loading
+    // Skip on loading
+    if (levelLoading_) return;
+    if (clientLevelLoading_) return;
 
 
     HandleUpdateParticlePool(timeStep);
@@ -2190,6 +2235,10 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
 }
 
 void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
+
+    // Skip on loading
+    if (levelLoading_) return;
+    if (clientLevelLoading_) return;
 
 
     if (started_) {
@@ -2739,6 +2788,10 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
 
 void MayaScape::HandlePostRenderUpdate(StringHash eventType, VariantMap &eventData) {
 
+    // Skip on loading
+    if (levelLoading_) return;
+    if (clientLevelLoading_) return;
+
 }
 
 void MayaScape::HandleEndRendering(StringHash eventType, VariantMap &eventData) {
@@ -2762,8 +2815,10 @@ void MayaScape::HandleEndRendering(StringHash eventType, VariantMap &eventData) 
         progressText_->SetText(progressBar);
     }
 
-    progressText_->SetVisible(levelLoading_);
-    progressResText_->SetVisible(levelLoading_);
+    if (!clientLevelLoading_) {
+        progressText_->SetVisible(levelLoading_);
+        progressResText_->SetVisible(levelLoading_);
+    }
 }
 
 void MayaScape::ReloadScene(bool reInit) {
@@ -3881,8 +3936,7 @@ void MayaScape::HandleStartServer(StringHash eventType, VariantMap &eventData) {
     Network *network = GetSubsystem<Network>();
     network->SetUpdateFps(30);
 
-
-
+    // Server load level
     LoadLevel(3);
 
 }
@@ -4240,6 +4294,8 @@ SharedPtr<Node> MayaScape::SpawnPlayer() {
 }
 
 void MayaScape::CreateClientUI() {
+    clientLevelLoading_ = true;
+
     ResourceCache *cache = GetSubsystem<ResourceCache>();
     auto *graphics = GetSubsystem<Graphics>();
 
@@ -5488,6 +5544,8 @@ void MayaScape::HandlePlayerRespawned(StringHash eventType, VariantMap& eventDat
 
 
     InitiateViewport(context_, scene_, clientCam_);
+
+    clientLevelLoading_ = false;
 }
 
 void MayaScape::HandlePlayerLoaded(StringHash eventType, VariantMap &eventData) {

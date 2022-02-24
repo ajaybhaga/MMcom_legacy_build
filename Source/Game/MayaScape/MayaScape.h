@@ -196,7 +196,8 @@ private:
     // Server
     void HandleResourceBackgroundLoaded(StringHash eventType, VariantMap& eventData);
     // Client
-    void HandleResourceReloadFinished(StringHash eventType, VariantMap& eventData);
+    void HandleClientResourceLoadFinished(StringHash eventType, VariantMap& eventData);
+    void HandleClientResourceLoadAttempt(StringHash eventType, VariantMap& eventData);
 
     void HandleJoystickHatMove(StringHash eventType, VariantMap &eventData);
     /// Handle the end rendering event.
@@ -300,7 +301,8 @@ private:
     WeakPtr<Node> nextLevel_;
     String        levelPathName_;
     String        levelLoadPending_;
-    bool          levelLoading_;
+    bool          levelLoading_; // Server level load
+    bool          clientLevelLoading_; // Client level load
 
     WeakPtr<Text> levelText_;
     WeakPtr<Text> triggerText_;
