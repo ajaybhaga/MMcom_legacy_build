@@ -38,6 +38,7 @@
 				<attribute name="Physics Position" value="1 -67.89 1" />
 			</component>
 			<component type="CollisionShape" id="25">
+				<attribute name="Shape Type" value="TriangleMesh" />
 				<attribute name="Model" value="Model;Models/Akagi-conv/Models/akagi-track.mdl" />
 			</component>
 			<node id="5">
