@@ -192,6 +192,9 @@ private:
     void HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData);
     // Final render before back buffer flip
     void HandleEndRendering(StringHash eventType, VariantMap &eventData);
+    // Resource loaded
+    void HandleResourceBackgroundLoaded(StringHash eventType, VariantMap& eventData);
+
     void HandleJoystickHatMove(StringHash eventType, VariantMap &eventData);
     /// Handle the end rendering event.
     void HandleSceneRendered(StringHash eventType, VariantMap& eventData);
@@ -299,6 +302,7 @@ private:
     WeakPtr<Text> levelText_;
     WeakPtr<Text> triggerText_;
     WeakPtr<Text> progressText_;
+    WeakPtr<Text> progressResText_;
 
     // Network Actor Hash Maps
     HashMap<Connection*, WeakPtr<ClientObj>> actorMap_;

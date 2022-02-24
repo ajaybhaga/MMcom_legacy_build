@@ -140,6 +140,7 @@
 #include "boids.h"
 #include "../../Urho3D/Input/Controls.h"
 #include "../../Urho3D/Scene/SplinePath.h"
+#include "../../Urho3D/Resource/ResourceEvents.h"
 #include <MayaScape/Constants.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -581,6 +582,26 @@ bool MayaScape::Raycast(Camera* pCamera, float maxDistance, Vector3& hitPos, Dra
     return false;
 }
 
+void MayaScape::HandleResourceBackgroundLoaded(StringHash eventType, VariantMap& eventData) {
+
+    using namespace ResourceBackgroundLoaded;
+
+    String progressStr = String("Loading: ") + String(Round(scene_->GetAsyncProgress() * 100.0f));
+
+    int sticks = Round(scene_->GetAsyncProgress() * (float) 40);
+    String progressBar = "";
+    for (int i = 0; i < sticks; i++) {
+        progressBar += "|";
+    }
+    progressText_->SetText(progressBar);
+
+
+    auto* resource = static_cast<Resource*>(eventData[P_RESOURCE].GetPtr());
+    String resourceName = resource->GetName();
+    progressResText_->SetText(progressStr + String("% -> ") + resourceName);
+    progressResText_->SetVisible(levelLoading_);
+}
+
 void MayaScape::HandleClientSceneLoaded(StringHash eventType, VariantMap& eventData)
 {
     // SERVER CODE
@@ -624,7 +645,11 @@ void MayaScape::SubscribeToEvents() {
     //SubscribeToEvent(textEdit_, E_TEXTFINISHED, URHO3D_HANDLER(MayaScape, HandleSend));
 //    SubscribeToEvent(sendButton_, E_RELEASED, URHO3D_HANDLER(MayaScape, HandleSend));
 
+    // Last chance to update before back buffer flip
     SubscribeToEvent(E_ENDRENDERING, URHO3D_HANDLER(MayaScape, HandleEndRendering));
+
+    //
+    SubscribeToEvent(E_RESOURCEBACKGROUNDLOADED, URHO3D_HANDLER(MayaScape, HandleResourceBackgroundLoaded));
 
     // Subscribe to log messages so that we can pipe them to the chat window
     SubscribeToEvent(E_LOGMESSAGE, URHO3D_HANDLER(MayaScape, HandleLogMessage));
@@ -2689,17 +2714,17 @@ void MayaScape::HandleEndRendering(StringHash eventType, VariantMap &eventData) 
             levelLoading_  = false;
 
         }
-        String progressStr = String("Loading map: ") + String(Round(scene_->GetAsyncProgress() * 100.0f));
 
         int sticks = Round(scene_->GetAsyncProgress() * (float) 20);
         String progressBar = "";
         for (int i = 0; i < sticks; i++) {
             progressBar += "|";
         }
-        progressText_->SetText(progressStr + String("% ") + progressBar);
+        progressText_->SetText(progressBar);
     }
 
     progressText_->SetVisible(levelLoading_);
+    progressResText_->SetVisible(levelLoading_);
 }
 
 void MayaScape::ReloadScene(bool reInit) {
@@ -3036,11 +3061,20 @@ void MayaScape::CreateUI() {
     progressText_ = ui->GetRoot()->CreateChild<Text>();
     progressText_->SetFont(cache->GetResource<Font>(INGAME_FONT), 21);
     progressText_->SetTextAlignment(HA_CENTER);
-    progressText_->SetColor(Color::YELLOW);
+    progressText_->SetColor(Color::GREEN);
     progressText_->SetVerticalAlignment(VA_CENTER);
     progressText_->SetHorizontalAlignment(HA_CENTER);
     progressText_->SetPosition(0, 0);
     progressText_->SetVisible(false);
+
+    progressResText_ = ui->GetRoot()->CreateChild<Text>();
+    progressResText_->SetFont(cache->GetResource<Font>(INGAME_FONT), 15);
+    progressResText_->SetTextAlignment(HA_CENTER);
+    progressResText_->SetColor(Color::GRAY);
+    progressResText_->SetVerticalAlignment(VA_CENTER);
+    progressResText_->SetHorizontalAlignment(HA_CENTER);
+    progressResText_->SetPosition(0, 30);
+    progressResText_->SetVisible(false);
 
 
     int hudTextCount = 4;
@@ -3580,7 +3614,7 @@ void MayaScape::HandleLoadProgress(StringHash eventType, VariantMap& eventData)
                          ToString("\nnodes: %d/%d", loadedNode, totalNodes) +
                          ToString("\nresources: %d/%d", loadedResources, totalResources);
 
-    progressText_->SetText(progressStr);
+    //progressText_->SetText(progressStr);
 }
 
 void MayaScape::HandleLevelLoaded(StringHash eventType, VariantMap& eventData)
