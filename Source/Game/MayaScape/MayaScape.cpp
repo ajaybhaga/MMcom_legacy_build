@@ -682,9 +682,6 @@ void MayaScape::HandleClientSceneLoaded(StringHash eventType, VariantMap& eventD
         SoundListener *listener = actorMap_[client]->GetNode()->CreateComponent<SoundListener>(REPLICATED);
         GetSubsystem<Audio>()->SetListener(listener);
 
-        // Start engine
-        PlaySoundEffectGlobal(driveAudioEffect[SOUND_FX_ENGINE_START].c_str());
-
         // you can set master volumes for the different kinds if sounds, 40% for music
         GetSubsystem<Audio>()->SetMasterGain(SOUND_MUSIC, 0.4);
         GetSubsystem<Audio>()->SetMasterGain(SOUND_EFFECT, 0.6);
@@ -3022,6 +3019,22 @@ void MayaScape::PlaySoundEffectGlobal(const String &soundName) {
     }
 }
 
+
+void MayaScape::PlaySoundEffectLocal(const String &soundName) {
+
+    auto *cache = GetSubsystem<ResourceCache>();
+    auto *source = scene_->CreateComponent<SoundSource3D>(LOCAL);
+
+    source->SetNearDistance(1);  // distance up to where the volume is 100%
+    source->SetFarDistance(6000);  // distance from where the volume is at 0%
+    source->SetSoundType(SOUND_EFFECT);
+
+    auto *sound = cache->GetResource<Sound>("Sounds/" + soundName);
+    if (sound != nullptr) {
+        source->SetAutoRemoveMode(REMOVE_COMPONENT);
+        source->Play(sound);
+    }
+}
 
 void MayaScape::HandlePlayButton(StringHash eventType, VariantMap &eventData) {
 
@@ -5567,6 +5580,9 @@ void MayaScape::HandlePlayerRespawned(StringHash eventType, VariantMap& eventDat
     InitiateViewport(context_, scene_, clientCam_);
 
     clientLevelLoading_ = false;
+
+    // Start engine
+    PlaySoundEffectLocal(driveAudioEffect[SOUND_FX_ENGINE_START].c_str());
 }
 
 void MayaScape::HandlePlayerLoaded(StringHash eventType, VariantMap &eventData) {

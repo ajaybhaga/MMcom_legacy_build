@@ -48,7 +48,7 @@
 #define SOUND_FX_ENGINE_BRAKE 3
 #define SOUND_FX_ENGINE_ENGINE 4
 
-#define CAM_RAYCAST_TIME_WAIT 0.6f
+#define CAM_RAYCAST_TIME_WAIT 0.02f
 
 
 namespace Urho3D {
@@ -262,7 +262,9 @@ private:
     void LoadLevel(int id);
     void PlaySoundEffect(const String& soundName);
     void PlaySoundEffectGlobal(const String& soundName);
+    void PlaySoundEffectLocal(const String& soundName);
     void PlayMusic(const String &soundName);
+
 
     HashMap<String, float> sndFxPlay_;
 
