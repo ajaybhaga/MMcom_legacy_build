@@ -75,7 +75,7 @@ private:
     bool hit = false;
     long lastHit = 0;
 
-    long lastRaycast = 0;
+    float lastRaycast = 0;
 
 
 };

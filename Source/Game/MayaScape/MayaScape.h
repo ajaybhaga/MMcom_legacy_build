@@ -48,6 +48,8 @@
 #define SOUND_FX_ENGINE_BRAKE 3
 #define SOUND_FX_ENGINE_ENGINE 4
 
+#define CAM_RAYCAST_TIME_WAIT 0.6f
+
 
 namespace Urho3D {
 
@@ -349,6 +351,7 @@ private:
     float camZoom_;
 
     int camMode_;
+    float lastCamRaycast = 0; // Last camera raycast
 
     Vector3 heliCamView_; // Helicopter view
 
