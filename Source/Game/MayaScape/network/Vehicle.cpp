@@ -130,11 +130,15 @@ Vehicle::Vehicle(Context* context)
     suspensionStiffness_ = 18.0f;
     suspensionDamping_ = 2.0f;
     suspensionCompression_ = 4.0f;
-    wheelFriction_ = 370.0f;
+//    wheelFriction_ = 370.0f;
+    wheelFriction_ = 480.0f;
     rollInfluence_ = 0.12f;
     emittersCreated = false;
 
-    m_fmaxEngineForce = 2000.0f;//5400.0f;//950.f;
+    // Working
+    //m_fmaxEngineForce = 2000.0f;//5400.0f;//950.f;
+    m_fmaxEngineForce = 4200.0f;//5400.0f;//950.f;
+
     m_fmaxBreakingForce = 800.f;
 
     m_fVehicleSteering = 0.0f;
@@ -1656,7 +1660,8 @@ void Vehicle::ApplyDownwardForce()
 
         // Apply normal force relative to vehicle
         // small arbitrary multiplier
-        const float velocityMultiplyer = 0.92f;
+        //const float velocityMultiplyer = 0.92f;
+        const float velocityMultiplyer = 1.12f;
         //const float velocityMultiplyer = 1.24f;
         Vector3 downNormal = node_->GetUp() * -1.0f;
         float velocityMag = raycastVehicle_->GetBody()->GetLinearVelocity().LengthSquared() * velocityMultiplyer;
