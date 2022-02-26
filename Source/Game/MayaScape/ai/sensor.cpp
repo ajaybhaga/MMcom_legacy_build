@@ -29,8 +29,10 @@ void Sensor::start() {
     show();
 }
 
-void Sensor::update() {
+void Sensor::update(float timeStep) {
 
+    // Update timers
+    lastRaycast += timeStep;
 
     NetworkActor *actor = EvolutionManager::getInstance()->getNetworkActors()[agentIndex];
     Scene *scene_ = EvolutionManager::getInstance()->getNetworkActors()[agentIndex]->GetScene();
@@ -120,60 +122,68 @@ void Sensor::update() {
 
         }*/
 
-        if (scene_) {
-            if (scene_->GetComponent<PhysicsWorld>()) {
-                if (sensorRayLength == 0) sensorRayLength = sensorStretch;
 
-                if (sensorRayLength < 10) {
-                    scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result, sensorRay, sensorRayLength, 2);
-                } else {
-                    // Faster performance on more than 10 metres raycast
-                    scene_->GetComponent<PhysicsWorld>()->RaycastSingleSegmented(result, sensorRay, sensorRayLength, 2);
-                }
-                if (result.body_) {
-                    // Set hit sensor
-                    setHit(true);
-                   /* URHO3D_LOGINFOF("[Agent %d] %s -> Sensor::update: -> direction [%f,%f,%f] -> Hit Distance -> %f",
-                                    agentIndex, name.CString(),
-                                    this->direction.x_, this->direction.y_, this->direction.z_, result.distance_);
-*/
 
-                    if (dbgRenderer) {
-                        // SHOW HIT
-                   //     dbgRenderer->AddLine(result.position_, result.position_ + (result.normal_ * result.distance_),
-                   //                          Color(1.0f, 1.0, 1.0));
+        // Wait for ray cast time
+        if (lastRaycast > RAYCAST_TIME_WAIT) {
+            if (scene_) {
+                if (scene_->GetComponent<PhysicsWorld>()) {
+                    if (sensorRayLength == 0) sensorRayLength = sensorStretch;
 
-                        hitDistance = result.distance_;
+                    if (sensorRayLength < 10) {
+                        scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result, sensorRay, sensorRayLength, 2);
+                    } else {
+                        // Faster performance on more than 10 metres raycast
+                        scene_->GetComponent<PhysicsWorld>()->RaycastSingleSegmented(result, sensorRay, sensorRayLength,
+                                                                                     1.0f);
+                    }
+                    // Reset timer for new ray cast
+                    lastRaycast = 0;
+                    if (result.body_) {
+                        // Set hit sensor
+                        setHit(true);
+                        /* URHO3D_LOGINFOF("[Agent %d] %s -> Sensor::update: -> direction [%f,%f,%f] -> Hit Distance -> %f",
+                                         agentIndex, name.CString(),
+                                         this->direction.x_, this->direction.y_, this->direction.z_, result.distance_);
+     */
+
+                        if (dbgRenderer) {
+                            // SHOW HIT
+                            //     dbgRenderer->AddLine(result.position_, result.position_ + (result.normal_ * result.distance_),
+                            //                          Color(1.0f, 1.0, 1.0));
+
+                            hitDistance = result.distance_;
+                        }
+
+
+                    } else {
+
+                        // NO HIT
+                        /* URHO3D_LOGINFOF("%s -> Sensor::update: -> direction [%f,%f,%f] -> Hit Distance -> NO HIT.",
+                                         name.CString(),
+                                         this->direction.x_, this->direction.y_, this->direction.z_);*/
                     }
 
-
-                } else {
-
-                // NO HIT
-                   /* URHO3D_LOGINFOF("%s -> Sensor::update: -> direction [%f,%f,%f] -> Hit Distance -> NO HIT.",
-                                    name.CString(),
-                                    this->direction.x_, this->direction.y_, this->direction.z_);*/
-                }
-
-                // SENSOR SYSTEM
-                // FORWARD
-                // LEFT [
-                // DOWN [0, 1, 0]
+                    // SENSOR SYSTEM
+                    // FORWARD
+                    // LEFT [
+                    // DOWN [0, 1, 0]
 
 
 
 
-                if (hitDistance < MIN_DIST) {
-                    hitDistance = MIN_DIST;
-                }
+                    if (hitDistance < MIN_DIST) {
+                        hitDistance = MIN_DIST;
+                    }
 
-                // Transform to percent of max distance
-                this->output = hitDistance;
+                    // Transform to percent of max distance
+                    this->output = hitDistance;
 
-                // Set position of sensor target (adjusted based on hit)
+                    // Set position of sensor target (adjusted based on hit)
 //    this->target = this->center + (this->direction * hitDistance);
-                // Set position of sensor target (fixed)
-                //this->target = this->center + (this->direction * 1.0f);
+                    // Set position of sensor target (fixed)
+                    //this->target = this->center + (this->direction * 1.0f);
+                }
             }
         }
     }

@@ -141,7 +141,7 @@ void AgentController::update(float duration) {
 
     // Load 4 sensors data into ffn input
     for (int i = 0; i < sensors.size(); i++) {
-        sensors[i].update();
+        sensors[i].update(duration);
         ffnInput[i] = sensors[i].output;
     }
 

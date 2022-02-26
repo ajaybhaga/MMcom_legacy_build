@@ -14,6 +14,8 @@
 
 using namespace Urho3D;
 
+#define RAYCAST_TIME_WAIT 2.0f
+
 // Class representing a sensor reading the distance to the nearest obstacle in a specified direction.
 class Sensor {
 public:
@@ -21,7 +23,7 @@ public:
     ~Sensor();
 
     void start();
-    void update();
+    void update(float timeStep);
     void hide();
     void show();
 
@@ -72,6 +74,8 @@ private:
 
     bool hit = false;
     long lastHit = 0;
+
+    long lastRaycast = 0;
 
 
 };
