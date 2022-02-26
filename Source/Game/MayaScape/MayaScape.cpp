@@ -157,8 +157,8 @@ const int MSG_NODE_ERROR = 156;
 #define INGAME_FONT2 "Fonts/SinsGold.ttf"
 
 //#define GAME_SERVER_ADDRESS "10.0.2.2" // android server address
-//#define GAME_SERVER_ADDRESS "192.168.4.58" // neko
-#define GAME_SERVER_ADDRESS "192.168.4.77" // lady
+#define GAME_SERVER_ADDRESS "192.168.4.58" // neko
+//#define GAME_SERVER_ADDRESS "192.168.4.77" // lady
 // At-home local server
 //#define GAME_SERVER_ADDRESS "localhost"
 //#define GAME_SERVER_ADDRESS "www.monkeymaya.com"
@@ -3478,6 +3478,54 @@ void MayaScape::MoveCamera(float timeStep) {
 
                             // NetworkActor (Player) cam
 
+//////
+
+                            // Physics update has completed. Position camera behind vehicle
+                            vehicleRot_ = SmoothStepAngle(vehicleRot_, vehicleNode->GetRotation(), timeStep * rotLerpRate);
+                            Quaternion dir(vehicleRot_.YawAngle(), Vector3::UP);
+                            dir = dir * Quaternion(yaw_, Vector3::UP);
+                            dir = dir * Quaternion(pitch_, Vector3::RIGHT);
+
+                            Vector3 vehiclePos = vehicleNode->GetPosition();
+                            float curDist = (vehiclePos - targetCameraPos_).Length();
+
+                            curDist = SpringDamping(curDist, CLIENT_CAMERA_DISTANCE, springVelocity_, damping, maxVel, timeStep);
+                            targetCameraPos_ = vehiclePos - dir * Vector3(0.0f, 0.0f, curDist);
+
+                            Vector3 cameraTargetPos = targetCameraPos_;
+                            Vector3 cameraStartPos = vehiclePos;
+
+                            // Raycast camera against static objects (physics collision mask 2)
+                            // and move it closer to the vehicle if something in between
+                            Ray cameraRay(cameraStartPos, cameraTargetPos - cameraStartPos);
+                            float cameraRayLength = (cameraTargetPos - cameraStartPos).Length();
+                            PhysicsRaycastResult result;
+                            //scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result, cameraRay, cameraRayLength, 2);
+
+                            if (cameraRayLength < 10.0f) {
+                                scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result,
+                                                                                    cameraRay,
+                                                                                    cameraRayLength,
+                                                                                    NETWORKACTOR_COL_LAYER);
+                            } else {
+                                scene_->GetComponent<PhysicsWorld>()->RaycastSingleSegmented(result,
+                                                                                             cameraRay,
+                                                                                             cameraRayLength,
+                                                                                             NETWORKACTOR_COL_LAYER);
+                            }
+
+
+                            if (result.body_)
+                                cameraTargetPos = cameraStartPos + cameraRay.direction_ * (result.distance_ - 0.5f);
+
+                            //cameraNode_->SetPosition(cameraTargetPos);
+                            //cameraNode_->SetRotation(dir);
+                            clientCam_->GetNode()->SetPosition(cameraTargetPos);
+                            clientCam_->GetNode()->SetRotation(dir);
+                            //clientCam_->GetNode()->LookAt(dir);
+
+                            /////
+
 
                             // Raycast camera collision
 
@@ -3489,7 +3537,7 @@ void MayaScape::MoveCamera(float timeStep) {
                             botSpeed = Clamp(botSpeed, 1.0f, 2000.0f);
 
                             float velMult = 3.0f;
-
+/*
                             // Zoom up on body velocity increase
                             Vector3 cameraTargetPos =
                                     startPos + forward*Vector3(body->GetLinearVelocity().Length()*velMult, 0, body->GetLinearVelocity().Length()*velMult)*0.9f;
@@ -3547,7 +3595,7 @@ void MayaScape::MoveCamera(float timeStep) {
                                         cameraTargetPos * w2;
                                 clientCam_->GetNode()->SetPosition(weightedSum);
                                 clientCam_->GetNode()->LookAt(startPos);
-                            }
+                            }*/
 
                         }
                     }
@@ -4806,6 +4854,17 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
     connection->SendServerUpdate();
 
     cspServer_->snapshot.addNode(networkActorNode);
+
+
+
+
+
+    // smooth step
+    vehicleRot_ = vehicleNode->GetRotation();
+    Quaternion dir(vehicleRot_.YawAngle(), Vector3::UP);
+    dir = dir * Quaternion(0, Vector3::UP);
+    dir = dir * Quaternion(0, Vector3::RIGHT);
+    targetCameraPos_ = vehicleNode->GetPosition() - dir * Vector3(0.0f, 0.0f, CLIENT_CAMERA_DISTANCE);
 
     return networkActorNode;
 }
