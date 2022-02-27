@@ -299,6 +299,12 @@ protected:
     // wheel contacts
     int numWheels_ = 0;
     int numWheelContacts_ = 0;
+    Vector<int> wheelContactBuffer_;
+    float wheelContactTime_ = 0;
+public:
+    float getWheelContactTime() const;
+
+protected:
 
 
     bool isBraking_;

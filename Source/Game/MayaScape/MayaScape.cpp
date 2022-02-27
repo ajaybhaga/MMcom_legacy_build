@@ -1752,6 +1752,7 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
 
         int wheelsContactNum = 0;
         float noWheelContactTime = 0;
+        float wheelContactTime = 0;
         Vector<int> wheelContact;
         float turrentAngle = 0;
 
@@ -1782,6 +1783,14 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
                             rot = actor->vehicle_->GetNode()->GetRotation();
 
                             wheelsContactNum = actor->vehicle_->GetRaycastVehicle()->getNumWheelsPrevContact();
+                            wheelContactTime = actor->vehicle_->getWheelContactTime();
+
+                            if (wheelContactTime == 0) {
+                                wheelsContactNum = 0;
+                            } else {
+                                // Wheel contact
+                                int a = 0;
+                            }
 
                             turrentAngle = actor->vehicle_->GetTurrentAngle();
 
@@ -1842,7 +1851,7 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
             debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
             debugText_[k]->SetVisible(true);
-            debugText_[k]->SetText(String("noWheelContactTime -> ") + String(noWheelContactTime));
+            debugText_[k]->SetText(String("wheelContactTime -> ") + String(wheelContactTime));
 
             k++;
             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);

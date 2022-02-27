@@ -274,6 +274,9 @@ void RaycastVehicleBase::Init()
     hullBody_ = node_->GetOrCreateComponent<RigidBody>();
     Scene* scene = GetScene();
     vehicleData_->Init(scene, hullBody_, IsEnabledEffective(), coordinateSystem_);
+    m_numWheelsContact = 0;
+    m_numWheelsPrevContact = 0;
+    m_noWheelContactTime = 0;
 }
 
 void RaycastVehicleBase::FixedUpdate(float timeStep)

@@ -355,6 +355,28 @@ void Vehicle::FixedUpdate(float timeStep)
 
         // Set numbers of wheels in contact (this parameter drives others)
         numWheelContacts_ = vehicle->getNumWheelsContact();
+        // Push contacts into buffer
+        wheelContactBuffer_.Push(numWheelContacts_);
+
+
+        int contactSum = 0;
+        int windowSize = Min(6, wheelContactBuffer_.Size());
+        for (int i = 0; i < windowSize; i++) {
+            int contactNum = wheelContactBuffer_[i];
+            contactSum += contactNum;
+            // TODO: Not getting stable contact
+        }
+        float contactAvg = contactSum / wheelContactBuffer_.Size();
+
+        if (contactAvg > 0) {
+            wheelContactTime_ += timeStep;
+        } else {
+            wheelContactTime_ = 0;
+        }
+
+        if (wheelContactBuffer_.Size() > 15) {
+            wheelContactBuffer_.Erase(10, 5);
+        }
 
         ApplyDownwardForce();
 
@@ -1684,6 +1706,7 @@ void Vehicle::ApplyDownwardForce()
         Vector3 normWheel3 = -raycastVehicle_->GetContactNormal(3);
 
 
+
         float pushMag = 10.0f + raycastVehicle_->GetBody()->GetLinearVelocity().LengthSquared() * 20.0f + raycastVehicle_->GetRPM()*10.0f;
         pushMag = Clamp( pushMag, MIN_DOWN_FORCE, MAX_DOWN_FORCE );
 
@@ -1714,10 +1737,16 @@ void Vehicle::ApplyDownwardForce()
 
 */
 
-        // Front wheels - hood force
-   /*     raycastVehicle_->GetBody()->ApplyForce(normWheel0*pushMag, normPosWheel0);
-        raycastVehicle_->GetBody()->ApplyForce(normWheel1*pushMag, normPosWheel1);
-*/
+        // Apply hard down force after wheel contact time is stable
+        if (wheelContactTime_ > 1.0f) {
+            // Front wheels - hood force
+            raycastVehicle_->GetBody()->ApplyForce(force * 3, normPosWheel0);
+            raycastVehicle_->GetBody()->ApplyForce(force * 3, normPosWheel1);
+            //raycastVehicle_->GetBody()->ApplyForce(force, normPosWheel2);
+            //raycastVehicle_->GetBody()->ApplyForce(force, normPosWheel3);
+
+        }
+
     }
 }
 
@@ -1868,4 +1897,8 @@ Node *Vehicle::getActorNode() const {
 
 void Vehicle::setActorNode(Node *actorNode) {
     actorNode_ = actorNode;
+}
+
+float Vehicle::getWheelContactTime() const {
+    return wheelContactTime_;
 }
