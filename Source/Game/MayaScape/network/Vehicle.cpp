@@ -136,8 +136,8 @@ Vehicle::Vehicle(Context* context)
     emittersCreated = false;
 
     // Working
-    //m_fmaxEngineForce = 2000.0f;//5400.0f;//950.f;
-    m_fmaxEngineForce = 4200.0f;//5400.0f;//950.f;
+    m_fmaxEngineForce = 2000.0f;//5400.0f;//950.f;
+  //  m_fmaxEngineForce = 4200.0f;//5400.0f;//950.f;
 
     m_fmaxBreakingForce = 800.f;
 
@@ -354,13 +354,15 @@ void Vehicle::FixedUpdate(float timeStep)
         }
 
         // Set numbers of wheels in contact (this parameter drives others)
-        numWheelContacts_ = vehicle->getNumWheelsContact();
+        numWheelContacts_ = cnt; //vehicle->getNumWheelsContact();
+
+//        wheelContactBuffer_.Clear();
         // Push contacts into buffer
         wheelContactBuffer_.Push(numWheelContacts_);
 
 
         int contactSum = 0;
-        int windowSize = Min(6, wheelContactBuffer_.Size());
+        int windowSize = Min(4, wheelContactBuffer_.Size());
         for (int i = 0; i < windowSize; i++) {
             int contactNum = wheelContactBuffer_[i];
             contactSum += contactNum;
@@ -371,11 +373,15 @@ void Vehicle::FixedUpdate(float timeStep)
         if (contactAvg > 0) {
             wheelContactTime_ += timeStep;
         } else {
-            wheelContactTime_ = 0;
+
+            if (contactAvg < 0.00001f) {
+                wheelContactTime_ = 0;
+            }
         }
 
-        if (wheelContactBuffer_.Size() > 15) {
-            wheelContactBuffer_.Erase(10, 5);
+        if (wheelContactBuffer_.Size() > 6) {
+            wheelContactBuffer_.Resize(2);
+            //wheelContactBuffer_.Clear();
         }
 
         ApplyDownwardForce();
@@ -1740,8 +1746,8 @@ void Vehicle::ApplyDownwardForce()
         // Apply hard down force after wheel contact time is stable
         if (wheelContactTime_ > 1.0f) {
             // Front wheels - hood force
-            raycastVehicle_->GetBody()->ApplyForce(force * 3, normPosWheel0);
-            raycastVehicle_->GetBody()->ApplyForce(force * 3, normPosWheel1);
+            raycastVehicle_->GetBody()->ApplyForce(force * 1, normPosWheel0);
+            raycastVehicle_->GetBody()->ApplyForce(force * 1, normPosWheel1);
             //raycastVehicle_->GetBody()->ApplyForce(force, normPosWheel2);
             //raycastVehicle_->GetBody()->ApplyForce(force, normPosWheel3);
 

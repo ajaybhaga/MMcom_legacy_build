@@ -1785,13 +1785,6 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
                             wheelsContactNum = actor->vehicle_->GetRaycastVehicle()->getNumWheelsPrevContact();
                             wheelContactTime = actor->vehicle_->getWheelContactTime();
 
-                            if (wheelContactTime == 0) {
-                                wheelsContactNum = 0;
-                            } else {
-                                // Wheel contact
-                                int a = 0;
-                            }
-
                             turrentAngle = actor->vehicle_->GetTurrentAngle();
 
                         }
