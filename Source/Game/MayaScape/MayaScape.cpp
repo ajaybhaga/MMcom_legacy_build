@@ -441,6 +441,7 @@ void MayaScape::UpdateUIState(bool state) {
 
     // Do the opposite for menu
     versionText_->SetVisible(!state);
+    gameNameText_->SetVisible(!state);
     //studioText_->SetVisible(!state);
    // instructionsText_->SetVisible(!state);
   //  hudText_->SetVisible(!state);
@@ -3172,7 +3173,7 @@ void MayaScape::CreateUI() {
     versionText2_->SetVisible(true);
 
     // Construct the instructions text element
-    auto gameNameText_ = ui->GetRoot()->CreateChild<Text>();
+    gameNameText_ = ui->GetRoot()->CreateChild<Text>();
     gameNameText_->SetText(GAME_NAME);
     gameNameText_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 60);
     gameNameText_->SetColor(Color::GRAY);
@@ -4828,7 +4829,7 @@ void MayaScape::CreateClientUI() {
         radioText_[i]->SetAlignment(HA_RIGHT, VA_TOP);
         radioText_[i]->SetPosition(-20.0f, 20 + (i * 20));
         radioText_[i]->SetVisible(true);
-        radioText_[i]->SetColor(Color(181/255.0f, 219/255.0f, 0));
+        radioText_[i]->SetColor(Color(181/255.0f, 219/255.0f, 0.3));
         radioText_[i]->SetFont(font4, 19);
         radioText_[i]->SetTextEffect(TE_SHADOW);
         radioText_[i]->SetVisible(true);

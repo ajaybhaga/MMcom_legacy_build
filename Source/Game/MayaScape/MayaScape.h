@@ -376,6 +376,7 @@ private:
 
     SharedPtr<Text> versionText_;
     SharedPtr<Text> studioText_;
+    SharedPtr<Text> gameNameText_;
 
     SharedPtr<Text> healthText_;
     SharedPtr<Text> healthProgBarText_;
