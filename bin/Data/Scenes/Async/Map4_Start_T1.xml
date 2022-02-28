@@ -102,7 +102,7 @@
 				<attribute name="Tags">
 					<string value="levelLoadTrigger" />
 				</attribute>
-				<attribute name="Position" value="26.5262 293.101 -1837.91" />
+				<attribute name="Position" value="26.5269 292.483 -1837.91" />
 				<attribute name="Rotation" value="1 0 0 0" />
 				<attribute name="Scale" value="100 100 100" />
 				<attribute name="Variables" />
@@ -115,7 +115,7 @@
 				<attribute name="Is Enabled" value="true" />
 				<attribute name="Name" value="start_starB" />
 				<attribute name="Tags" />
-				<attribute name="Position" value="635.464 361.061 -1818.06" />
+				<attribute name="Position" value="635.752 290.856 -1819.38" />
 				<attribute name="Rotation" value="1 0 0 0" />
 				<attribute name="Scale" value="100 100 100" />
 				<attribute name="Variables" />
@@ -362,7 +362,7 @@
 			<attribute name="Is Enabled" value="true" />
 			<attribute name="Name" value="MM-logo" />
 			<attribute name="Tags" />
-			<attribute name="Position" value="1762.15 368.846 -1290" />
+			<attribute name="Position" value="1655.91 465.183 -642.456" />
 			<attribute name="Rotation" value="0.701836 0.0861746 -0.0861746 -0.701836" />
 			<attribute name="Scale" value="240 240 240" />
 			<attribute name="Variables" />

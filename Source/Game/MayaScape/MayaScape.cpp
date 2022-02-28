@@ -1266,7 +1266,7 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
         // Get vehicle attributes
         // Max engine force and rpm
 
-        float maxRPM = 35000.0f;//9000.0f;
+        float maxRPM = 25000.0f;//9000.0f;
         float clampedRPM = rpm;
         if (clampedRPM > maxRPM) {
             clampedRPM = maxRPM;
@@ -2354,7 +2354,6 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                         if (actor->vehicle_->GetRaycastVehicle()) {
                                             float rpm = actor->vehicle_->GetCurrentRPM();
                                             newEventData[P_RPM] = rpm;
-
                                             newEventData[P_VELOCITY] = actor->vehicle_->GetRaycastVehicle()->GetSpeedKm();
                                             newEventData[P_STEER] = actor->GetVehicle()->GetSteering();
 
@@ -4600,12 +4599,12 @@ void MayaScape::CreateClientUI() {
 
     powerBarProgBarText_ = ui->GetRoot()->CreateChild<Text>("powerBarText");
     powerBarProgBarText_->SetAlignment(HA_LEFT, VA_TOP);
-    powerBarProgBarText_->SetPosition(90.0f, 23.0);
-    powerBarProgBarText_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 30);
+    powerBarProgBarText_->SetPosition(90.0f, 14.0);
+    powerBarProgBarText_->SetFont(cache->GetResource<Font>(INGAME_FONT), 30);
     powerBarProgBarText_->SetTextEffect(TE_SHADOW);
     powerBarProgBarText_->SetText(String(""));
     powerBarProgBarText_->SetVisible(true);
-    powerBarProgBarText_->SetColor(Color(1,1,0.0));
+    powerBarProgBarText_->SetColor(Color(1,1,0.4));
 
     int textureWidth;
     int textureHeight;
@@ -4644,12 +4643,13 @@ void MayaScape::CreateClientUI() {
 
     rpmBarProgBarText_ = ui->GetRoot()->CreateChild<Text>("rpmBarText");
     rpmBarProgBarText_->SetAlignment(HA_LEFT, VA_TOP);
-    rpmBarProgBarText_->SetPosition(90.0f, 122.5);
-    rpmBarProgBarText_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 30);
+    rpmBarProgBarText_->SetPosition(90.0f, 113);
+    rpmBarProgBarText_->SetFont(cache->GetResource<Font>(INGAME_FONT), 30);
     rpmBarProgBarText_->SetTextEffect(TE_SHADOW);
     rpmBarProgBarText_->SetText(String(""));
     rpmBarProgBarText_->SetVisible(true);
-    rpmBarProgBarText_->SetColor(Color(0.1,0.2,0.3));
+    rpmBarProgBarText_->SetColor(Color(5/255.0f,173/255.0f,219/255.0f));
+//    5, 173, 219
 
 
     textureWidth = rpmBarTexture->GetWidth();
@@ -4686,8 +4686,8 @@ void MayaScape::CreateClientUI() {
 
     velBarProgBarText_ = ui->GetRoot()->CreateChild<Text>("rpmBarText");
     velBarProgBarText_->SetAlignment(HA_LEFT, VA_TOP);
-    velBarProgBarText_->SetPosition(90.0f, 72.5);
-    velBarProgBarText_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 30);
+    velBarProgBarText_->SetPosition(90.0f, 65);
+    velBarProgBarText_->SetFont(cache->GetResource<Font>(INGAME_FONT), 30);
     velBarProgBarText_->SetTextEffect(TE_SHADOW);
     velBarProgBarText_->SetText(String(""));
     velBarProgBarText_->SetVisible(true);
