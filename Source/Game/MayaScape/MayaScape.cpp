@@ -4060,7 +4060,8 @@ void MayaScape::HandleStartServer(StringHash eventType, VariantMap &eventData) {
     network->SetUpdateFps(30);
 
     // Server load level
-    LoadLevel(3);
+    //LoadLevel(3);
+    LoadLevel(4);
 
 }
 
