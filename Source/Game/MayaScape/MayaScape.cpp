@@ -1285,7 +1285,8 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
 
 
 
-        float maxSpeed = 400.0f; // 400 km
+        //float maxSpeed = 400.0f; // 400 km
+        float maxSpeed = 400.0f; // to limit properly
         float clampedSpeed = velocity; // velocity is storing skid
         if (clampedSpeed > maxSpeed) {
             clampedSpeed = maxSpeed;
@@ -1294,6 +1295,38 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
         v = velBarBkgP1Sprite_->GetSize();
         int velocity = (((maxSpeed-clampedSpeed) / maxSpeed) * v.x_);
         velBarP1Sprite_->SetSize(velocity, v.y_);
+
+        // Set text progress bars
+        int sticks = 0;
+        String progressBar = "";
+
+
+        sticks = Round(rpm * (float) 25);
+        progressBar = "";
+        for (int i = 0; i < sticks; i++) {
+            progressBar += "|";
+        }
+        rpmBarProgBarText_->SetText(progressBar);
+
+
+        float vel = (clampedSpeed / maxSpeed);
+        sticks = Round(vel * (float) 25);
+        progressBar = "";
+        for (int i = 0; i < sticks; i++) {
+            progressBar += "|";
+        }
+        velBarProgBarText_->SetText(progressBar);
+
+
+        sticks = Round((life/100.0f) * (float) 25);
+        progressBar = "";
+        for (int i = 0; i < sticks; i++) {
+            progressBar += "|";
+        }
+        powerBarProgBarText_->SetText(progressBar);
+
+
+
 
     }
 
@@ -2427,7 +2460,6 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                             bool stopMove = false;
                                             // Adjust camera up to ray length
                                             if (cameraRayLength < CAMERA_RAY_DISTANCE_LIMIT) {
-                                                stopMove = true;
                                             }
 
                                             if (cameraRayLength < 10.0f) {
@@ -2875,27 +2907,6 @@ void MayaScape::ReloadScene(bool reInit) {
     /////////
 
 
-    // Post map load
-/*
-       /// Update spline path
-       Node* steerSpline = scene_->GetChild("SteerSpline", "true");
-       PODVector<Node*> steerMarks;
-       steerSpline->GetChildren(steerMarks);
-
-       splineSize_ = steerMarks.Size();
-
-       /// Update spline path
-       SplinePath* steerSplinePath = scene_->GetComponent<SplinePath>(true);
-       if (steerSplinePath) {
-           // Found steer spline
-           for (int i = 0; i < steerMarks.Size(); i++) {
-               steerSplinePath->AddControlPoint(steerMarks[i]);
-           }
-
-           steerSplinePath->SetSpeed(3.0f);
-           //botSplinePath_->SetControlledNode(bot_);[/code]
-       }*/
-
    }//Map1_Start_T1.xml
 
 
@@ -2941,6 +2952,8 @@ void MayaScape::ReloadScene(bool reInit) {
            }
 
        }
+
+
 
        // setup for async loading
        //scene_->SetAsyncLoadingMs(3);
@@ -3880,6 +3893,28 @@ void MayaScape::HandleLevelLoaded(StringHash eventType, VariantMap& eventData)
     splineModel_ = scene_->GetOrCreateComponent<StaticModel>();
     splineModel_->SetModel(cache->GetResource<Model>("Models/Sphere.mdl"));
 
+    // Post map load
+
+    /// Update spline path
+    Node* steerSpline = scene_->GetChild("SteerSpline", "true");
+    PODVector<Node*> steerMarks;
+    steerSpline->GetChildren(steerMarks);
+
+    splineSize_ = steerMarks.Size();
+
+    /// Update spline path
+    SplinePath* steerSplinePath = scene_->GetComponent<SplinePath>(true);
+    if (steerSplinePath) {
+        // Found steer spline
+        for (int i = 0; i < steerMarks.Size(); i++) {
+            steerSplinePath->AddControlPoint(steerMarks[i]);
+        }
+
+        steerSplinePath->SetSpeed(3.0f);
+        //botSplinePath_->SetControlledNode(bot_);[/code]
+    }
+
+
 }
 
 void MayaScape::HandleConnectionFailed(StringHash eventType, VariantMap &eventData) {
@@ -4556,11 +4591,21 @@ void MayaScape::CreateClientUI() {
 
     powerBarText_ = ui->GetRoot()->CreateChild<Text>("powerBarText");
     powerBarText_->SetAlignment(HA_LEFT, VA_TOP);
-    powerBarText_->SetPosition(40.0f, 23.0);
-    powerBarText_->SetFont(cache->GetResource<Font>(INGAME_FONT), 16);
+    powerBarText_->SetPosition(10.0f, 23.0);
+    powerBarText_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 16);
     powerBarText_->SetTextEffect(TE_SHADOW);
     powerBarText_->SetText(String("HEALTH"));
     powerBarText_->SetVisible(true);
+
+
+    powerBarProgBarText_ = ui->GetRoot()->CreateChild<Text>("powerBarText");
+    powerBarProgBarText_->SetAlignment(HA_LEFT, VA_TOP);
+    powerBarProgBarText_->SetPosition(90.0f, 23.0);
+    powerBarProgBarText_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 30);
+    powerBarProgBarText_->SetTextEffect(TE_SHADOW);
+    powerBarProgBarText_->SetText(String(""));
+    powerBarProgBarText_->SetVisible(true);
+    powerBarProgBarText_->SetColor(Color(1,1,0.0));
 
     int textureWidth;
     int textureHeight;
@@ -4586,16 +4631,25 @@ void MayaScape::CreateClientUI() {
     // Set a low priority so that other UI elements can be drawn on top
     powerBarBkgP1Sprite_->SetPriority(-100);
 
-    powerBarP1Sprite_->SetVisible(true);
-    powerBarBkgP1Sprite_->SetVisible(true);
+    powerBarP1Sprite_->SetVisible(false);
+    powerBarBkgP1Sprite_->SetVisible(false);
 
     rpmBarText_ = ui->GetRoot()->CreateChild<Text>("rpmBarText");
     rpmBarText_->SetAlignment(HA_LEFT, VA_TOP);
-    rpmBarText_->SetPosition(40.0f, 122.5);
-    rpmBarText_->SetFont(cache->GetResource<Font>(INGAME_FONT), 16);
+    rpmBarText_->SetPosition(10.0f, 122.5);
+    rpmBarText_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 16);
     rpmBarText_->SetTextEffect(TE_SHADOW);
     rpmBarText_->SetText(String("RPM"));
     rpmBarText_->SetVisible(true);
+
+    rpmBarProgBarText_ = ui->GetRoot()->CreateChild<Text>("rpmBarText");
+    rpmBarProgBarText_->SetAlignment(HA_LEFT, VA_TOP);
+    rpmBarProgBarText_->SetPosition(90.0f, 122.5);
+    rpmBarProgBarText_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 30);
+    rpmBarProgBarText_->SetTextEffect(TE_SHADOW);
+    rpmBarProgBarText_->SetText(String(""));
+    rpmBarProgBarText_->SetVisible(true);
+    rpmBarProgBarText_->SetColor(Color(0.1,0.2,0.3));
 
 
     textureWidth = rpmBarTexture->GetWidth();
@@ -4619,16 +4673,26 @@ void MayaScape::CreateClientUI() {
     // Set a low priority so that other UI elements can be drawn on top
     rpmBarBkgP1Sprite_->SetPriority(-100);
 
-    rpmBarP1Sprite_->SetVisible(true);
-    rpmBarBkgP1Sprite_->SetVisible(true);
+    rpmBarP1Sprite_->SetVisible(false);
+    rpmBarBkgP1Sprite_->SetVisible(false);
 
     velBarText_ = ui->GetRoot()->CreateChild<Text>("velBarText");
     velBarText_->SetAlignment(HA_LEFT, VA_TOP);
-    velBarText_->SetPosition(40.0f, 72.5);
-    velBarText_->SetFont(cache->GetResource<Font>(INGAME_FONT), 16);
+    velBarText_->SetPosition(10.0f, 72.5);
+    velBarText_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 16);
     velBarText_->SetTextEffect(TE_SHADOW);
     velBarText_->SetText(String("SPEED"));
     velBarText_->SetVisible(true);
+
+    velBarProgBarText_ = ui->GetRoot()->CreateChild<Text>("rpmBarText");
+    velBarProgBarText_->SetAlignment(HA_LEFT, VA_TOP);
+    velBarProgBarText_->SetPosition(90.0f, 72.5);
+    velBarProgBarText_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 30);
+    velBarProgBarText_->SetTextEffect(TE_SHADOW);
+    velBarProgBarText_->SetText(String(""));
+    velBarProgBarText_->SetVisible(true);
+    velBarProgBarText_->SetColor(Color(0.7,0.1,1));
+
 
     textureWidth = rpmBarTexture->GetWidth();
     textureHeight = rpmBarTexture->GetHeight();
@@ -4651,8 +4715,8 @@ void MayaScape::CreateClientUI() {
     // Set a low priority so that other UI elements can be drawn on top
     velBarBkgP1Sprite_->SetPriority(-100);
 
-    velBarP1Sprite_->SetVisible(true);
-    velBarBkgP1Sprite_->SetVisible(true);
+    velBarP1Sprite_->SetVisible(false);
+    velBarBkgP1Sprite_->SetVisible(false);
 
 
     textureWidth = miniMapP1Texture->GetWidth();

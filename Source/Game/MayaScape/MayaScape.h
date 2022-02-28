@@ -378,9 +378,13 @@ private:
     SharedPtr<Text> studioText_;
 
     SharedPtr<Text> healthText_;
+    SharedPtr<Text> healthProgBarText_;
     SharedPtr<Text> powerBarText_;
+    SharedPtr<Text> powerBarProgBarText_;
     SharedPtr<Text> rpmBarText_;
+    SharedPtr<Text> rpmBarProgBarText_;
     SharedPtr<Text> velBarText_;
+    SharedPtr<Text> velBarProgBarText_;
 
 
     /// Strings printed so far.
