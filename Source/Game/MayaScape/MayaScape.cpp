@@ -155,6 +155,10 @@ const int MSG_NODE_ERROR = 156;
 
 #define INGAME_FONT "Fonts/m6x11.ttf"
 #define INGAME_FONT2 "Fonts/SinsGold.ttf"
+#define INGAME_FONT3 "Fonts/RulerGold.ttf"
+#define INGAME_FONT4 "Fonts/HopeGold.ttf"
+
+
 
 //#define GAME_SERVER_ADDRESS "10.0.2.2" // android server address
 #define GAME_SERVER_ADDRESS "192.168.4.58" // neko
@@ -3134,14 +3138,47 @@ void MayaScape::CreateUI() {
     // Construct the instructions text element
     versionText_ = ui->GetRoot()->CreateChild<Text>();
     versionText_->SetText(STUDIO_VERSION);
-    versionText_->SetFont(cache->GetResource<Font>("Fonts/CompassGold.ttf"), 36);
-    versionText_->SetColor(Color::WHITE);
+    versionText_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 25);
+    versionText_->SetColor(Color::YELLOW);
+
+    auto versionText2_ = ui->GetRoot()->CreateChild<Text>();
+    versionText2_->SetText(STUDIO_VERSION);
+    versionText2_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 25);
+    versionText2_->SetColor(Color::GRAY);
+
+
+    // Construct the instructions text element
+    auto gameNameText_ = ui->GetRoot()->CreateChild<Text>();
+    gameNameText_->SetText(GAME_NAME);
+    gameNameText_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 60);
+    gameNameText_->SetColor(Color::WHITE);
+    // Position the text relative to the screen center
+    gameNameText_->SetAlignment(HA_CENTER, VA_TOP);
+    gameNameText_->SetPosition(0, 70);
+    gameNameText_->SetVisible(true);
+
+    gameNameText_ = ui->GetRoot()->CreateChild<Text>();
+    gameNameText_->SetText(GAME_NAME);
+    gameNameText_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 60);
+    gameNameText_->SetColor(Color::GRAY);
+    // Position the text relative to the screen center
+    gameNameText_->SetAlignment(HA_CENTER, VA_TOP);
+    gameNameText_->SetPosition(0, 68);
+    gameNameText_->SetVisible(true);
+
+
+
     // Position the text relative to the screen center
     //versionText_->SetHorizontalAlignment(HA_CENTER);
     versionText_->SetAlignment(HA_CENTER, VA_TOP);
     versionText_->SetPosition(0, 10);
     // Hide once connected
     versionText_->SetVisible(true);
+
+    versionText2_->SetAlignment(HA_CENTER, VA_TOP);
+    versionText2_->SetPosition(0, 8);
+    // Hide once connected
+    versionText2_->SetVisible(true);
 
     /*studioText_ = ui->GetRoot()->CreateChild<Text>();
     studioText_->SetText(STUDIO_VERSION);

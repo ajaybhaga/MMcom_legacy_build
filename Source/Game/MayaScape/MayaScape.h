@@ -39,7 +39,7 @@
 
 #define APP_VERSION "MayaScape v1.0c"
 #define STUDIO_VERSION "Monkey Maya Studios"
-
+#define GAME_NAME "MayaScape"
 
 // Sound fx mappings
 #define SOUND_FX_ENGINE_START 0
