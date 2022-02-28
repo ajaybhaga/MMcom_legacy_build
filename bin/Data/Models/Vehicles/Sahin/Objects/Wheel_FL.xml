@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<node id="1">
+	<attribute name="Is Enabled" value="true" />
+	<attribute name="Name" value="Wheel_FL" />
+	<attribute name="Tags" />
+	<attribute name="Variables" />
+	<component id="1" type="StaticModel">
+		<attribute name="Model" value="Model;Models/Wheel_FL.mdl" />
+		<attribute name="Material" value="Material;Materials/Jant.001.xml;Materials/Lastik.xml" />
+	</component>
+</node>

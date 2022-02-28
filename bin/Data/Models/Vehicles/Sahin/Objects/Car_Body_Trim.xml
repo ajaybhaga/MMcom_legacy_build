@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<node id="1">
+	<attribute name="Is Enabled" value="true" />
+	<attribute name="Name" value="Car_Body_Trim" />
+	<attribute name="Tags" />
+	<attribute name="Variables" />
+	<component id="1" type="StaticModel">
+		<attribute name="Model" value="Model;Models/Car_Body_Trim.mdl" />
+		<attribute name="Material" value="Material;Materials/Koltuk Kumaslari.xml;Materials/KaportaBoya.001.xml;Materials/Far Camlari.001.xml;Materials/Sis Fari.001.xml;Materials/Zemin.xml;Materials/Siyah Trim.001.xml;Materials/Material _2233808 Slot _7.xml;Materials/Sinyaller.001.xml;Materials/PLAKA.001.xml;Materials/Egzos.001.xml;Materials/Krom.001.xml;Materials/Pandizot.001.xml;Materials/Far Arkasi.001.xml;Materials/stop_cam.001.xml;Materials/Iç Trim.xml;Materials/Material _2233808 Slot _17.xml;Materials/Gosterge.002.xml" />
+	</component>
+</node>

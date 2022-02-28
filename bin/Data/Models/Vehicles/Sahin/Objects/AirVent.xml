@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<node id="1">
+	<attribute name="Is Enabled" value="true" />
+	<attribute name="Name" value="AirVent" />
+	<attribute name="Tags" />
+	<attribute name="Variables" />
+	<component id="1" type="StaticModel">
+		<attribute name="Model" value="Model;Models/AirVent.mdl" />
+		<attribute name="Material" value="Material;Materials/Material _2235693.xml" />
+	</component>
+</node>
