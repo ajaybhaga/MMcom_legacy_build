@@ -3139,34 +3139,13 @@ void MayaScape::CreateUI() {
     versionText_ = ui->GetRoot()->CreateChild<Text>();
     versionText_->SetText(STUDIO_VERSION);
     versionText_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 25);
-    versionText_->SetColor(Color::YELLOW);
+    versionText_->SetColor(Color::GRAY);
 
     auto versionText2_ = ui->GetRoot()->CreateChild<Text>();
     versionText2_->SetText(STUDIO_VERSION);
     versionText2_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 25);
-    versionText2_->SetColor(Color::GRAY);
-
-
-    // Construct the instructions text element
-    auto gameNameText_ = ui->GetRoot()->CreateChild<Text>();
-    gameNameText_->SetText(GAME_NAME);
-    gameNameText_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 60);
-    gameNameText_->SetColor(Color::WHITE);
-    // Position the text relative to the screen center
-    gameNameText_->SetAlignment(HA_CENTER, VA_TOP);
-    gameNameText_->SetPosition(0, 70);
-    gameNameText_->SetVisible(true);
-
-    gameNameText_ = ui->GetRoot()->CreateChild<Text>();
-    gameNameText_->SetText(GAME_NAME);
-    gameNameText_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 60);
-    gameNameText_->SetColor(Color::GRAY);
-    // Position the text relative to the screen center
-    gameNameText_->SetAlignment(HA_CENTER, VA_TOP);
-    gameNameText_->SetPosition(0, 68);
-    gameNameText_->SetVisible(true);
-
-
+    versionText2_->SetColor(Color::YELLOW);
+    versionText2_->SetParent(versionText_);
 
     // Position the text relative to the screen center
     //versionText_->SetHorizontalAlignment(HA_CENTER);
@@ -3176,9 +3155,32 @@ void MayaScape::CreateUI() {
     versionText_->SetVisible(true);
 
     versionText2_->SetAlignment(HA_CENTER, VA_TOP);
-    versionText2_->SetPosition(0, 8);
+    versionText2_->SetPosition(0, -2);
     // Hide once connected
     versionText2_->SetVisible(true);
+
+    // Construct the instructions text element
+    auto gameNameText_ = ui->GetRoot()->CreateChild<Text>();
+    gameNameText_->SetText(GAME_NAME);
+    gameNameText_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 60);
+    gameNameText_->SetColor(Color::GRAY);
+    // Position the text relative to the screen center
+    gameNameText_->SetAlignment(HA_CENTER, VA_TOP);
+    gameNameText_->SetPosition(0, 70);
+    gameNameText_->SetVisible(true);
+
+    auto gameNameText2_ = ui->GetRoot()->CreateChild<Text>();
+    gameNameText2_->SetText(GAME_NAME);
+    gameNameText2_->SetFont(cache->GetResource<Font>(INGAME_FONT3), 60);
+    gameNameText2_->SetColor(Color::WHITE);
+    // Position the text relative to the screen center
+    gameNameText2_->SetAlignment(HA_CENTER, VA_TOP);
+    gameNameText2_->SetPosition(0, -2);
+    gameNameText2_->SetVisible(true);
+    gameNameText2_->SetParent(gameNameText_);
+
+
+
 
     /*studioText_ = ui->GetRoot()->CreateChild<Text>();
     studioText_->SetText(STUDIO_VERSION);
@@ -4454,6 +4456,9 @@ void MayaScape::CreateClientUI() {
     auto *font = cache->GetResource<Font>(INGAME_FONT2);
     auto *font2 = cache->GetResource<Font>(INGAME_FONT);
 
+
+    auto *font4 = cache->GetResource<Font>(INGAME_FONT4);
+
     // Get powerbar texture
     Texture2D *powerBarTexture = cache->GetResource<Texture2D>("Textures/powerbar.png");
     if (!powerBarTexture)
@@ -4756,10 +4761,10 @@ void MayaScape::CreateClientUI() {
         radioText_[i] = ui->GetRoot()->CreateChild<Text>("RadioTrackListText");
 
         radioText_[i]->SetAlignment(HA_RIGHT, VA_TOP);
-        radioText_[i]->SetPosition(-20.0f, 20 + (i * 26));
+        radioText_[i]->SetPosition(-20.0f, 20 + (i * 20));
         radioText_[i]->SetVisible(true);
-
-        radioText_[i]->SetFont(font2, 22);
+        radioText_[i]->SetColor(Color(181/255.0f, 219/255.0f, 0));
+        radioText_[i]->SetFont(font4, 19);
         radioText_[i]->SetTextEffect(TE_SHADOW);
         radioText_[i]->SetVisible(true);
         std::string debugData1;
@@ -5045,6 +5050,8 @@ void MayaScape::InitiateGameMap(Scene *scene) {
     //ui->GetRoot()->SetDefaultStyle(cache->GetResource<XMLFile>("UI/DefaultStyle.xml"));
     auto *font = cache->GetResource<Font>(INGAME_FONT2);
     auto *font2 = cache->GetResource<Font>(INGAME_FONT);
+    auto *font4 = cache->GetResource<Font>(INGAME_FONT4);
+
 
 /*
     // Create a directional light with shadows
