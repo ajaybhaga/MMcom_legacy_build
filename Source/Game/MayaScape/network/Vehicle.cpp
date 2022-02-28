@@ -1030,7 +1030,7 @@ void Vehicle::Init(Node* node) {
 
 
                     XMLFile *f = cache->GetResource<XMLFile>("Objects/Sahin_Vehicle.xml");
-                    Vector3 pos = Vector3(0,0,40.0f);
+                    Vector3 pos = Vector3(0,0,42.0f);
                     Quaternion q = Quaternion(0,90,0);
                     Node* vehiclePrefab_ = GetScene()->InstantiateXML(f->GetRoot(), pos, q, REPLICATED);
 
@@ -1137,9 +1137,9 @@ void Vehicle::Init(Node* node) {
 
                     //connectionHeight = -4.74f;
                     //connectionHeight = -4.2f;
-                    connectionHeight = -0.4f;//-2.2f;
+                    connectionHeight = -1.4f;//-2.2f;
                     //wheelSpace = 2.4f;
-                    wheelSpace = 14.1f*scaleF;
+                    wheelSpace = 17.1f*scaleF;
                     // chassis width -> 35 * 20% -> 7
                     //wheelX = ((7 / 2.0f) + wheelWidth_);
                     wheelX = ((2.6f / 2.0f) + wheelWidth_);
