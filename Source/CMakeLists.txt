@@ -148,7 +148,7 @@ endif ()
 add_subdirectory (Tools)
 # In order to get clean module segregation, always exclude player/samples from AAR
 if (NOT ANDROID)
-    #add_subdirectory (Tools)
+#    add_subdirectory (Tools)
     add_subdirectory (Game)
 endif ()
 

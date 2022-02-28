@@ -1028,11 +1028,91 @@ void Vehicle::Init(Node* node) {
                     v3BoxExtents.y_ *= 1.3f*scaleF2;
                     v3BoxExtents.z_ *= 2.82f*scaleF2;
 
-                    hullObject->SetModel(cache->GetResource<Model>("Models/Vehicles/SetA/Models/Jeep.mdl"));
-                    hullObject->ApplyMaterialList("Models/Vehicles/SetA/Models/Jeep.txt");
+
+                    XMLFile *f = cache->GetResource<XMLFile>("Objects/Sahin_Vehicle.xml");
+                    Vector3 pos = Vector3(0,0,40.0f);
+                    Quaternion q = Quaternion(0,90,0);
+                    Node* vehiclePrefab_ = GetScene()->InstantiateXML(f->GetRoot(), pos, q, REPLICATED);
+
+                    vehiclePrefab_->SetParent(node_);
+
+                    //gilza_->SetWorldScale(Vector3(0.11f, 0.11f, 0.11f)); LifeTime* lt = gilza_->CreateComponent<LifeTime>(); lt->SetLifeTime(5.0f)
+/*
+                    // Top of Car Body
+
+                    //hullObject->SetModel(cache->GetResource<Model>("Models/Vehicles/SetA/Models/Jeep.mdl"));
+                    hullObject->SetModel(cache->GetResource<Model>("Models/Vehicles/Sahin/Models/Car_Body_Frame.mdl"));
+                    hullObject->ApplyMaterialList("Models/Vehicles/SetA/Models/Car_Body_Frame.txt");
+                    //
+                    //code/dev/MonkeyMaya_com/bin/Data/
+                    //hullObject->ApplyMaterialList("Models/Vehicles/SetA/Models/Jeep.txt");
+
+                    Node* node;
+                    StaticModel* model;
+
+                    // Bottom Trim of Body and Inner Parts
+
+                    // Create new child node
+                    node = adjNode->CreateChild("Model");
+                    model = node->CreateComponent<StaticModel>();
+                    model->SetCastShadows(true);
+                    //adjNode3->SetRotation(Quaternion(0.0f, -180.0f, -90.0f));
+                    model->SetModel(cache->GetResource<Model>("Models/Vehicles/Sahin/Models/Car_Body_Trim.mdl"));
+                    model->ApplyMaterialList("Models/Vehicles/Sahin/Models/Car_Body_Trim.txt");
+                    node->SetPosition(Vector3(0,0,0));
+
+                    // Doors
+
+                    // Front Left Door
+
+                    // Create new child node
+                    node = adjNode->CreateChild("Model");
+                    model = node->CreateComponent<StaticModel>();
+                    model->SetCastShadows(true);
+                    //adjNode3->SetRotation(Quaternion(0.0f, -180.0f, -90.0f));
+                    model->SetModel(cache->GetResource<Model>("Models/Vehicles/Sahin/Models/Door_FL.mdl"));
+                    model->ApplyMaterialList("Models/Vehicles/Sahin/Models/Door_FL.txt");
+                    node->SetPosition(Vector3(0,0,0));
+
+                    // Front Right Door
+
+                    // Create new child node
+                    node = adjNode->CreateChild("Model");
+                    model = node->CreateComponent<StaticModel>();
+                    model->SetCastShadows(true);
+                    //adjNode3->SetRotation(Quaternion(0.0f, -180.0f, -90.0f));
+                    model->SetModel(cache->GetResource<Model>("Models/Vehicles/Sahin/Models/Door_FR.mdl"));
+                    model->ApplyMaterialList("Models/Vehicles/Sahin/Models/Door_FR.txt");
+                    node->SetPosition(Vector3(0,0,0));
+
+                    // Back Left Door
+
+                    // Create new child node
+                    node = adjNode->CreateChild("Model");
+                    model = node->CreateComponent<StaticModel>();
+                    model->SetCastShadows(true);
+                    //adjNode3->SetRotation(Quaternion(0.0f, -180.0f, -90.0f));
+                    model->SetModel(cache->GetResource<Model>("Models/Vehicles/Sahin/Models/Door_BL.mdl"));
+                    model->ApplyMaterialList("Models/Vehicles/Sahin/Models/Door_BL.txt");
+                    node->SetPosition(Vector3(0,0,0));
+
+                    // Back Right Door
+
+                    // Create new child node
+                    node = adjNode->CreateChild("Model");
+                    model = node->CreateComponent<StaticModel>();
+                    model->SetCastShadows(true);
+                    //adjNode3->SetRotation(Quaternion(0.0f, -180.0f, -90.0f));
+                    model->SetModel(cache->GetResource<Model>("Models/Vehicles/Sahin/Models/Door_BR.mdl"));
+                    model->ApplyMaterialList("Models/Vehicles/Sahin/Models/Door_BR.txt");
+                    node->SetPosition(Vector3(0,0,0));
+
+
+*/
+
+
 
                     Node* adjNode2 = adjNode->CreateChild("Model");
-
                     hullObjectTurrent_ = adjNode2->CreateComponent<StaticModel>();
                     hullObjectTurrent_->SetCastShadows(true);
 //                    hullObjectTurrent->SetModel(cache->GetResource<Model>("Models/AssetPack/sherman-gun.mdl"));
@@ -1217,12 +1297,18 @@ void Vehicle::Init(Node* node) {
                 case 6 ... 11: {
                     //scale = 0.1f;
                     scale = 0.04f; //SetScale(Vector3(0.04f,0.04f,0.04f))
-                    Model *tireModel = cache->GetResource<Model>("Models/Vehicles/SetA/Models/Wheels_4.mdl");
+                    //Model *tireModel = cache->GetResource<Model>("Models/Vehicles/SetA/Models/Wheels_4.mdl");
+
+                    Model *tireModel = cache->GetResource<Model>("Models/Vehicles/Sahin/Models/Wheel_FL.mdl");
                     pWheel->SetModel(tireModel);
-                    pWheel->ApplyMaterialList("Models/Vehicles/SetA/Models/Wheels_4.txt");
+                    //pWheel->ApplyMaterialList("Models/Vehicles/SetA/Models/Wheels_4.txt");
+                    pWheel->ApplyMaterialList("Models/Vehicles/Sahin/Models/Wheel_FL.txt");
+
                     //pWheel->SetMaterial(cache->GetResource<Material>("Offroad/Models/Materials/Tire.xml"));
-                    wheelNode->SetScale(Vector3(scale/1.2f, scale, scale));
-                    wheelNode->SetRotation(connectionPoint.x_ >= 0.0 ? Quaternion(0.0f, 0.0f, 180.0f) : Quaternion(0.0f, 0.0f, -0.0f));
+//                    wheelNode->SetScale(Vector3(scale/1.2f, scale, scale));
+                    wheelNode->SetScale(Vector3(scale, scale, scale));
+//                    wheelNode->SetRotation(connectionPoint.x_ >= 0.0 ? Quaternion(0.0f, 0.0f, 180.0f) : Quaternion(0.0f, 0.0f, -0.0f));
+                    wheelNode->SetRotation(connectionPoint.x_ >= 0.0 ? Quaternion(0.0f, 90.0f, 180.0f) : Quaternion(0.0f, 90.0f, -0.0f));
                     wheelNode->SetWorldPosition(Vector3(0,0,forwardWeightOffset*scale)+node_->GetWorldPosition() + node_->GetWorldRotation() * connectionPoints_[id]);
                     //wheelNode->SetWorldPosition(node_->GetWorldPosition() + node_->GetWorldRotation() * connectionPoints_[id]);
 

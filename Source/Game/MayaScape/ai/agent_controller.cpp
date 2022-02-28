@@ -248,7 +248,9 @@ void AgentController::update(float duration) {
     // Check for reward completion condition
     if (getCurrentCompletionReward() > MAX_REWARD && timeSinceLastCheckpoint > 5.0f) {
         URHO3D_LOGDEBUGF("WINNER! [actor %d] -> reward=%f", (agentIndex+1), getCurrentCompletionReward());
-        win();
+
+        // TODO: Disabled win
+     //   win();
     }
 
     // Process sensor inputs through ffn
