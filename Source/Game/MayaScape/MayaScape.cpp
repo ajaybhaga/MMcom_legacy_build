@@ -172,7 +172,7 @@ std::vector<std::string> bzRadioTracksArtistName = {
         "Bhagatriks",
         "Bhagatriks",
         "Bhagatriks",
-        "Monkey"
+        "MonkeyMaya"
 };
 
 std::vector<std::string> bzRadioTracksArtistLink = {
@@ -183,7 +183,7 @@ std::vector<std::string> bzRadioTracksArtistLink = {
         "IG: @bhagatriks",
         "IG: @bhagatriks",
         "IG: @bhagatriks",
-        "Maya"
+        "Free cruising!"
 };
 
 
