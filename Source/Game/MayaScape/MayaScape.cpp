@@ -174,7 +174,8 @@ std::vector<std::string> bzRadioTracksArtistName = {
         "Bhagatriks",
         "Bhagatriks",
         "Bhagatriks",
-        "Bhagatriks"
+        "Bhagatriks",
+        "Monkey"
 };
 
 std::vector<std::string> bzRadioTracksArtistLink = {
@@ -184,7 +185,8 @@ std::vector<std::string> bzRadioTracksArtistLink = {
         "IG: @bhagatriks",
         "IG: @bhagatriks",
         "IG: @bhagatriks",
-        "IG: @bhagatriks"
+        "IG: @bhagatriks",
+        "Maya"
 };
 
 
@@ -195,7 +197,8 @@ std::vector<std::string> bzRadioTracksTrackName = {
         "BZradio/110-happy-saturday.ogg",
         "BZradio/120-flovibe.ogg",
         "BZradio/130-breakabeat.ogg",
-        "BZradio/150-trappp.ogg"
+        "BZradio/150-trappp.ogg",
+        "BZradio/mm-theme-rp01.ogg"
 };
 
 std::vector<std::string> driveAudioEffect = {
@@ -360,6 +363,20 @@ void MayaScape::Start() {
 
     // Create empty scene
     CreateEmptyScene(context_);
+
+    // Enable for 3D sounds to work (attach to camera node)
+    SoundListener *listener = scene_->CreateComponent<SoundListener>(LOCAL);
+    GetSubsystem<Audio>()->SetListener(listener);
+
+    // you can set master volumes for the different kinds if sounds, 40% for music
+    GetSubsystem<Audio>()->SetMasterGain(SOUND_MUSIC, 0.4);
+    GetSubsystem<Audio>()->SetMasterGain(SOUND_EFFECT, 0.6);
+
+    // Theme song
+    String trackName = "Sounds/BZradio/mm-theme-rp01.ogg";
+            //bzRadioTracksTrackName[7].c_str();
+    PlayMusic(trackName);
+
 
     // Start in menu mode
     //UpdateUIState(false);
@@ -1160,7 +1177,7 @@ void MayaScape::HandleRadioTrackNext(StringHash eventType, VariantMap &eventData
 
         if (bkgMusic_) {
             bkgMusicPlaying_ = true;
-            PlayMusic(trackName);
+            PlayMusic("Sounds/" + trackName);
             RadioTrack track;
             track.trackName = trackName;
             track.artistName = trackArtist;
@@ -3003,19 +3020,22 @@ void MayaScape::PlayMusic(const String &soundName) {
     source->SetFarDistance(6000);  // distance from where the volume is at 0%
     source->SetSoundType(SOUND_MUSIC);
 
+    /*
     // If existing tracks are in the queue, stop them
     if (!radioTrackQueue_.Empty()) {
         for (int i = 0; i < radioTrackQueue_.Size(); i++) {
-            if (radioTrackQueue_[i]->IsPlaying()) radioTrackQueue_[i]->Stop();
+            if (radioTrackQueue_[i]) {
+                if (radioTrackQueue_[i]->IsPlaying()) radioTrackQueue_[i]->Stop();
+            }
         }
-    }
+    }*/
 
     // Store track
     radioTrackQueue_.Push(source);
 
 
     // Play latest track
-    auto *sound = cache->GetResource<Sound>("Sounds/" + soundName);
+    auto *sound = cache->GetResource<Sound>(soundName);
     if (sound != nullptr) {
         source->SetAutoRemoveMode(REMOVE_COMPONENT);
         source->Play(sound);
@@ -4398,6 +4418,8 @@ void MayaScape::HandleClientIdentity(StringHash eventType, VariantMap& eventData
     // Store in server local login list
     loginList_.Push(username);
 
+    // Shuffle to next track
+    currTrack_ = Random(0,bzRadioTracksTrackName.size());
     // Send remote event
     connection->SendRemoteEvent(E_PLAYERSPAWNED, true); // Player spawn
     server->SendRadioTrackNextMsg(connection, bzRadioTracksArtistName[currTrack_].c_str(), bzRadioTracksArtistLink[currTrack_].c_str(), bzRadioTracksTrackName[currTrack_].c_str()); // Radio track
