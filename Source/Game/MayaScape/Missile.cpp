@@ -22,7 +22,6 @@
 #include "Missile.h"
 #include "Toolkit.h"
 
-#include "HeatSource.h"
 
 Missile::Missile(Context* context) : GameObject(context)
 {

@@ -39,13 +39,6 @@
 #include "Missile.h"
 #include "types.h"
 #include "Bullet.h"
-#include "AP.h"
-#include "BUFF.h"
-#include "HeatSource.h"
-#include "Skill.h"
-#include "Skill_Missile.h"
-#include "Skill_Flare.h"
-#include "Skill_Blink.h"
 
 #define PI 3.1415926
 

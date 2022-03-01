@@ -118,8 +118,6 @@
 #include <Urho3D/DebugNew.h>
 
 #include "GameController.h"
-#include "Character2D.h"
-#include "Object2D.h"
 #include "Utilities2D/Mover.h"
 #include "MayaScape.h"
 #include <MayaScape/ai/evolution_manager.h>
@@ -135,7 +133,6 @@
 #include "types.h"
 #include "Player.h"
 #include "Bullet.h"
-#include "AP.h"
 
 #include "boids.h"
 #include "../../Urho3D/Input/Controls.h"
@@ -3102,15 +3099,12 @@ void MayaScape::CreateServerSubsystem() {
     NetworkActor::RegisterObject(context_);
     Vehicle::RegisterObject(context_);
 
-    Character2D::RegisterObject(context_);
-    Object2D::RegisterObject(context_);
     Mover::RegisterObject(context_);
 
     RaycastVehicleBase::RegisterObject(context_);
     WheelTrackModel::RegisterObject(context_);
     Missile::RegisterObject(context_);
     Bullet::RegisterObject(context_);
-    AP::RegisterObject(context_);
 
     // Client-side Prediction
     CSP_Server::RegisterObject(context_);

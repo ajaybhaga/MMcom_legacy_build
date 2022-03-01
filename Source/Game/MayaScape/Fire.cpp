@@ -35,10 +35,8 @@
 
 #include "GameObject.h"
 #include "Fire.h"
-#include "BUFFList.h"
 #include "Toolkit.h"
 
-#include "HeatSource.h"
 
 Fire::Fire(Context* context) : GameObject(context)
 {
