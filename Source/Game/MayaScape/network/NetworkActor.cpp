@@ -46,6 +46,23 @@
 
 #define PI 3.1415926
 
+/*
+String mdlFile = "Models/Player/Shino/FBX/Models/Shino.mdl";
+                                            //Models/Armature_idle_01_idle_01.ani
+String idleAniFile = "Models/Player/Shino/FBX/Models/Armature_idle_01_idle_01.ani";
+String walkAniFile = "Models/Player/Shino/FBX/Models/Armature_walk_walk.ani";
+String matFile = "Models/Player/Shino/FBX/Models/Shino.txt";
+
+*/
+
+String mdlFile = "Models/Player/Bino/Models/f_8.mdl";
+//Models/Armature_idle_01_idle_01.ani
+String idleAniFile = "Models/Player/Bino/Models/r_f_8_r_f_8_Run_r_f_8_Run.ani";
+String walkAniFile = "Models/Player/Bino/Models/r_f_8_r_f_8_Run_r_f_8_Run.ani";
+String matFile = "Models/Player/Bino/Models/f_8.txt";
+
+
+
 //=============================================================================
 // NETWORK ACTOR
 //=============================================================================
@@ -151,7 +168,8 @@ void NetworkActor::Init(Node* node) {
 
 
         Node* modelNode = node_->CreateChild("Actor");
-        modelNode->SetScale(4.0f);
+        //modelNode->SetScale(4.0f);
+        modelNode->SetScale(20.0f);
         modelNode->SetPosition(Vector3(0.0f,0.0f, 0.0f));
         modelNode->SetRotation(Quaternion(0, -90, 0.0f));
         model_ = modelNode->CreateComponent<AnimatedModel>();
@@ -164,20 +182,10 @@ void NetworkActor::Init(Node* node) {
         wpActiveIndex_ = 0;
         targetAgentIndex_ = 0;
 
-        // TODO: Set Shino here
-        String mdlFile = "Models/Player/Shino/FBX/Models/Shino.mdl";
-        String idleAniFile = "Models/Player/Shino/FBX/Models/Armature_idle_01_idle_01.ani";
-        String walkAniFile = "Models/Player/Shino/FBX/Models/Armature_walk_walk.ani";
-        String matFile = "Models/Player/Shino/FBX/Models/Shino.txt";
-
-
-        //model_->SetModel(MC->GetModel("Male"));
-        //model_->SetCastShadows(true);
-        //Node* head{ node_->GetChild("Head", true) };
-        //Node* hairNode{ head->CreateChild("Hair") };
-
         model_->SetModel(cache->GetResource<Model>(mdlFile));
         model_->SetCastShadows(true);
+        //model_->SetMaterial(cache->GetResource<Material>(matFile));
+        model_->ApplyMaterialList(matFile);
 
         body_->SetFriction(0.0f);
         body_->SetMass(1.0f);
@@ -188,9 +196,10 @@ void NetworkActor::Init(Node* node) {
         body_->SetAngularRestThreshold(0.0f);
         collisionShape_->SetCapsule(0.42f, 0.5f, Vector3::UP * 0.3f);
 
-        animCtrl_->PlayExclusive(idleAniFile, 0, true);
-        animCtrl_->SetSpeed(idleAniFile, 0.5f);
-        animCtrl_->SetStartBone(idleAniFile, "MasterBone");
+        animCtrl_->PlayExclusive(walkAniFile, 0, true);
+        animCtrl_->SetSpeed(walkAniFile, 0.2f);
+        animCtrl_->SetStartBone(walkAniFile, "root");
+
 
         // register
         SetUpdateEventMask(USE_UPDATE | USE_FIXEDUPDATE);
@@ -299,6 +308,7 @@ void NetworkActor::FixedUpdate(float timeStep) {
         FindTarget();
     }
 
+
     if (vehicle_) {
         this->position_ = vehicle_->GetRaycastVehicle()->GetNode()->GetPosition();
         node_->SetPosition(position_);
@@ -313,6 +323,20 @@ void NetworkActor::FixedUpdate(float timeStep) {
         //towards_ = Vector3(cos(angleRadians * PI / 180.0f), 0, sin(angleRadians * PI / 180.0f));
         //int degrees = vehicle_->GetNode()->GetRotation().y_+round((angleRadians * 180.0f / PI)-90.0f);
 
+        Vector3 velocity = body_->GetLinearVelocity();
+
+        // Update animation
+        if (velocity.Length() > 0.1f) {
+
+            animCtrl_->PlayExclusive(walkAniFile, 1, true, 0.15f);
+            animCtrl_->SetSpeed(walkAniFile, velocity.Length() * 2.3f);
+            animCtrl_->SetStartBone(walkAniFile, "Ctrl_all");
+
+        } else {
+
+            animCtrl_->PlayExclusive(idleAniFile, 1, true, 0.15f);
+            animCtrl_->SetStartBone(idleAniFile, "Ctrl_all");
+        }
 
 
 
