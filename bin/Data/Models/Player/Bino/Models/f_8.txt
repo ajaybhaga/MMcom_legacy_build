@@ -1,0 +1,1 @@
+Materials/characters_1_01.xml

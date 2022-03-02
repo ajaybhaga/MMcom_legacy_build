@@ -57,8 +57,13 @@ String matFile = "Models/Player/Shino/FBX/Models/Shino.txt";
 
 String mdlFile = "Models/Player/Bino/Models/f_8.mdl";
 //Models/Armature_idle_01_idle_01.ani
-String idleAniFile = "Models/Player/Bino/Models/r_f_8_r_f_8_Run_r_f_8_Run.ani";
-String walkAniFile = "Models/Player/Bino/Models/r_f_8_r_f_8_Run_r_f_8_Run.ani";
+//String idleAniFile = "Models/Player/Bino/Models/r_f_8_r_f_8_Run_r_f_8_Run.ani";
+//String walkAniFile = "Models/Player/Bino/Models/r_f_8_r_f_8_Run_r_f_8_Run.ani";
+String idleAniFile = "Models/Player/Bino/Models/Idle.ani";
+String walkAniFile = "Models/Player/Bino/Models/Walk.ani";
+String runAniFile = "Models/Player/Bino/Models/Run.ani";
+String victoryAniFile = "Models/Player/Bino/Models/Victory.ani";
+String defeatAniFile = "Models/Player/Bino/Models/Defeat.ani";
 String matFile = "Models/Player/Bino/Models/f_8.txt";
 
 
@@ -169,7 +174,7 @@ void NetworkActor::Init(Node* node) {
 
         Node* modelNode = node_->CreateChild("Actor", REPLICATED);
         //modelNode->SetScale(4.0f);
-        modelNode->SetScale(20.0f);
+        modelNode->SetScale(4.0f);
         modelNode->SetPosition(Vector3(0.0f,0.0f, 0.0f));
         modelNode->SetRotation(Quaternion(0, -90, 0.0f));
         model_ = modelNode->CreateComponent<AnimatedModel>();
