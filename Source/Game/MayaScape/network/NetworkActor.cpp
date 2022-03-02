@@ -50,10 +50,9 @@
 // NETWORK ACTOR
 //=============================================================================
 NetworkActor::NetworkActor(Context *context)
-        : ClientObj(context), mass_(10.0f) {
+        : ClientObj(context), mass_(10.0f), alive_(true) {
       SetUpdateEventMask(USE_NO_EVENT);
 
-    ///Set original staus
     SetLife(100);
     SetSpeed(0.0f);
     SetMaxSpeed(5.0f);
@@ -62,14 +61,11 @@ NetworkActor::NetworkActor(Context *context)
     SetBrake(0.05f);
     SetTowards(Vector3(0.0f, 1.0f, 0.0f));
     SetBulletType("AP");
-    ///Set bullets type
-    //bulletType_ = "A";
+
     lastFire_ = 0;
     toTarget_ = Vector3(0,0,0);
     targetAgentIndex_ = 0;
-//    bulletType_ = "AP";
     disconnected_ = false;
-
 }
 
 NetworkActor::~NetworkActor() {
@@ -152,37 +148,52 @@ void NetworkActor::Init(Node* node) {
         Node* markerNode = node_->CreateChild("Marker");
         markerNode->SetScale(24.0f);
         markerNode->SetPosition(Vector3(0.0f,72.0f, -4.0f));
-        // model
-        //StaticModel* ballModel = markerNode->GetOrCreateComponent<StaticModel>();
-        //ballModel->SetModel(cache->GetResource<Model>("Models/Sphere.mdl"));
-        //ballModel->SetCastShadows(true);
 
 
+        Node* modelNode = node_->CreateChild("Actor");
+        modelNode->SetScale(4.0f);
+        modelNode->SetPosition(Vector3(0.0f,0.0f, 0.0f));
+        modelNode->SetRotation(Quaternion(0, -90, 0.0f));
+        model_ = modelNode->CreateComponent<AnimatedModel>();
+        body_ = modelNode->CreateComponent<RigidBody>();
+        collisionShape_ = modelNode->CreateComponent<CollisionShape>();
+        animCtrl_ = modelNode->CreateComponent<AnimationController>();
 
-        // Create the physics components
-        body_ = node_->GetOrCreateComponent<RigidBody>();
-        body_->SetMass(90.0f);
-        body_->SetFriction(1.0f);
-        // In addition to friction, use motion damping so that the ball can not accelerate limitlessly
-        body_->SetLinearDamping(0.5f);
-        body_->SetAngularDamping(0.5f);
-        //body->SetLinearVelocity(Vector3(0.1, 1, 0.1));
-        auto *shape = node_->GetOrCreateComponent<CollisionShape>();
-        shape->SetSphere(1.0f);
-
-
-
-        // Create a random colored point light at the ball so that can see better where is going
-        auto *light = node_->GetOrCreateComponent<Light>();
-        light->SetRange(3.0f);
-        light->SetColor(Color(0.5f + ((unsigned) Rand() & 1u) * 0.5f, 0.5f + ((unsigned) Rand() & 1u) * 0.5f,
-                              0.5f + ((unsigned) Rand() & 1u) * 0.5f));
+        model_->SetCastShadows(true);
 
         wpActiveIndex_ = 0;
         targetAgentIndex_ = 0;
 
+        // TODO: Set Shino here
+        String mdlFile = "Models/Player/Shino/FBX/Models/Shino.mdl";
+        String idleAniFile = "Models/Player/Shino/FBX/Models/Armature_idle_01_idle_01.ani";
+        String walkAniFile = "Models/Player/Shino/FBX/Models/Armature_walk_walk.ani";
+        String matFile = "Models/Player/Shino/FBX/Models/Shino.txt";
+
+
+        //model_->SetModel(MC->GetModel("Male"));
+        //model_->SetCastShadows(true);
+        //Node* head{ node_->GetChild("Head", true) };
+        //Node* hairNode{ head->CreateChild("Hair") };
+
+        model_->SetModel(cache->GetResource<Model>(mdlFile));
+        model_->SetCastShadows(true);
+
+        body_->SetFriction(0.0f);
+        body_->SetMass(1.0f);
+        body_->SetRestitution(0.0f);
+        body_->SetLinearDamping(0.88f);
+        body_->SetLinearRestThreshold(0.0f);
+        body_->SetAngularFactor(Vector3::ZERO);
+        body_->SetAngularRestThreshold(0.0f);
+        collisionShape_->SetCapsule(0.42f, 0.5f, Vector3::UP * 0.3f);
+
+        animCtrl_->PlayExclusive(idleAniFile, 0, true);
+        animCtrl_->SetSpeed(idleAniFile, 0.5f);
+        animCtrl_->SetStartBone(idleAniFile, "MasterBone");
+
         // register
-        SetUpdateEventMask(USE_FIXEDUPDATE);
+        SetUpdateEventMask(USE_UPDATE | USE_FIXEDUPDATE);
 
         // update serializable of the change
         SetAttribute("Color Index", Variant(50));
@@ -290,6 +301,8 @@ void NetworkActor::FixedUpdate(float timeStep) {
 
     if (vehicle_) {
         this->position_ = vehicle_->GetRaycastVehicle()->GetNode()->GetPosition();
+        node_->SetPosition(position_);
+        node_->SetRotation(vehicle_->GetRaycastVehicle()->GetNode()->GetRotation());
         vehicle_->setActorNode(this->node_);
 
         // Once target found, calculate angle
@@ -561,39 +574,6 @@ void NetworkActor::Fire() {
 void NetworkActor::Fire(Vector3 target) {
     if (vehicle_) {
         Scene *scene = GetScene();
-
-        // 4test
-        // Only for test
-//    if (bulletType_ == "AP") {
-/*
-		testcnt_++;
-		Node* bullet0 = scene->CreateChild("bullet", REPLICATED);
-		bullet0->CreateComponent<AP>(LOCAL);
-		// Set the ownership of the bullet to the Player
-	//	bullet0->GetComponent<AP>()->SetProducer(node);
-		// Set the position and rotation of the bullet
-		bullet0->SetWorldPosition(node->GetPosition() + towards_.Normalized()*0.2f);
-		bullet0->SetWorldRotation(Quaternion(Vector3::UP, towards_));
-//		bullet0->GetComponent<RigidBody2D>()->SetLinearVelocity(Vector2(towards_.x_, towards_.y_).Normalized() * 10.0f);
-        URHO3D_LOGDEBUGF("Player::Fire() -> %d", testcnt_);*/
-        //  } else {
-        //
-        // bulletType_ = "CB"
-
-        /*
-        if (testcnt_ > 4) {
-            return;
-        }*/
-
-/*
-        VariantMap& eventData = GetNode()->GetEventDataMap();
-        eventData[P_DATA] = GetNode()->GetWorldPosition();
-        SendEvent(StringHash("Blast"), eventData);
-
-        GetNode()->Remove();
-*/
-
-
 
         SharedPtr<Node> n;
         Node *bullet0 = scene->CreateChild("bullet", REPLICATED);

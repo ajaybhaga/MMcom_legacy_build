@@ -25,6 +25,8 @@
 #include "ClientObj.h"
 #include "Vehicle.h"
 #include "../GameController.h"
+#include "../../../Urho3D/Graphics/AnimatedModel.h"
+#include "../../../Urho3D/Graphics/AnimationController.h"
 
 namespace Urho3D
 {
@@ -169,20 +171,6 @@ public:
     // Mark NetworkActor disconnected, clean-up delayed
     void MarkDisconnected() { disconnected_ = true; }
 
-    String name_;
-    Vector3 vehiclePos_;
-//    WeakPtr<Node> nodeInfo_;
-//    Controls prevControls_;
-
-    // Rigid body
-    SharedPtr<RigidBody> body_;
-
-    /// The controllable vehicle component.
-    SharedPtr<Vehicle> vehicle_;
-    SharedPtr<Text3D> floatingText_;
-
-    float turrentAngle_ = 0;
-
     // PEER
     /// Movement controls. Assigned by the main program each physics update step.
     bool disconnected_;
@@ -241,5 +229,30 @@ public:
     bool autoSteering_;
 
     bool doJump_;
+
+    // Animated model
+    AnimatedModel* model_;
+    // Rigid body
+    SharedPtr<RigidBody> body_;
+    // Collision shape
+    CollisionShape* collisionShape_;
+    // Animation controller
+    AnimationController* animCtrl_;
+
+    bool alive_;
+
+
+    String name_;
+    Vector3 vehiclePos_;
+//    WeakPtr<Node> nodeInfo_;
+//    Controls prevControls_;
+
+
+    /// The controllable vehicle component.
+    SharedPtr<Vehicle> vehicle_;
+    SharedPtr<Text3D> floatingText_;
+
+    float turrentAngle_ = 0;
+
 };
 
