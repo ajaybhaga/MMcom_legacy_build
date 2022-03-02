@@ -643,9 +643,9 @@ void MayaScape::HandleClientResourceLoadAttempt(StringHash eventType, VariantMap
     progressResText_->SetVisible(true);
 
 
-    if (clientLevelLoading_)
+    //if (clientLevelLoading_)
     // Show updated frame
-    engine_->RunFrame();
+   // engine_->RunFrame();
 
 }
 
@@ -669,11 +669,11 @@ void MayaScape::HandleClientResourceLoadFinished(StringHash eventType, VariantMa
     progressText_->SetVisible(true);
     progressResText_->SetVisible(true);
 
-
+/*
     if (clientLevelLoading_)
         // Show updated frame
         engine_->RunFrame();
-
+*/
 
 }
 
@@ -3899,13 +3899,13 @@ void MayaScape::HandleLevelLoaded(StringHash eventType, VariantMap& eventData)
 
     // model
     StaticModel* ballModel = camTargetNode_->GetOrCreateComponent<StaticModel>();
-    ballModel->SetModel(cache->GetResource<Model>("Models/Sphere.mdl"));
+    //ballModel->SetModel(cache->GetResource<Model>("Models/Sphere.mdl"));
     //ballModel->SetCastShadows(true);
 
 
     // spline model
     splineModel_ = scene_->GetOrCreateComponent<StaticModel>();
-    splineModel_->SetModel(cache->GetResource<Model>("Models/Sphere.mdl"));
+    //splineModel_->SetModel(cache->GetResource<Model>("Models/Sphere.mdl"));
 
     // Post map load
 
