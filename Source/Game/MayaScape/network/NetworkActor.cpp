@@ -167,7 +167,7 @@ void NetworkActor::Init(Node* node) {
         markerNode->SetPosition(Vector3(0.0f,72.0f, -4.0f));
 
 
-        Node* modelNode = node_->CreateChild("Actor");
+        Node* modelNode = node_->CreateChild("Actor", REPLICATED);
         //modelNode->SetScale(4.0f);
         modelNode->SetScale(20.0f);
         modelNode->SetPosition(Vector3(0.0f,0.0f, 0.0f));
