@@ -119,6 +119,8 @@ Vehicle::Vehicle(Context* context)
 
     SetUpdateEventMask(USE_FIXEDUPDATE | USE_POSTUPDATE);
 
+    enableControls_ = false; // Disable until the network actor takes control
+
     engineForce_ = 0.0f;
     brakingForce_ = 50.0f;
     vehicleSteering_ = 0.0f;
@@ -287,38 +289,41 @@ void Vehicle::FixedUpdate(float timeStep)
         auto *vehicle = node_->GetComponent<RaycastVehicleBase>();
         String vehicleName = node_->GetName().CString();
 
-        //URHO3D_LOGDEBUGF("**VEHICLE CONTROLS** -> %l", controls_.buttons_);
+        if (enableControls_) {
 
-        // Read controls generate vehicle control instruction
-        if (controls_.buttons_ & NTWK_CTRL_LEFT) {
-            newSteering = -1.0f;
-            //URHO3D_LOGDEBUG(vehicleName + " -> **NTWK_CTRL_LEFT**");
-        }
-        if (controls_.buttons_ & NTWK_CTRL_RIGHT) {
-            newSteering = 1.0f;
-            //URHO3D_LOGDEBUG(vehicleName + " -> **NTWK_CTRL_RIGHT**");
-        }
+            //URHO3D_LOGDEBUGF("**VEHICLE CONTROLS** -> %l", controls_.buttons_);
 
-        if (controls_.buttons_ & NTWK_CTRL_FORWARD) {
-            accelerator = 1.0f;
-            //URHO3D_LOGDEBUG(vehicleName + " -> **ACCELERATE**");
-        }
-        if (controls_.buttons_ & NTWK_CTRL_BACK) {
-            accelerator = -0.5f;
-        }
-        if (controls_.buttons_ & CTRL_SPACE) {
-            brake = true;
-        }
+            // Read controls generate vehicle control instruction
+            if (controls_.buttons_ & NTWK_CTRL_LEFT) {
+                newSteering = -1.0f;
+                //URHO3D_LOGDEBUG(vehicleName + " -> **NTWK_CTRL_LEFT**");
+            }
+            if (controls_.buttons_ & NTWK_CTRL_RIGHT) {
+                newSteering = 1.0f;
+                //URHO3D_LOGDEBUG(vehicleName + " -> **NTWK_CTRL_RIGHT**");
+            }
 
-        if (controls_.buttons_ & NTWK_CTRL_FLIP) {
-            // FLIP CAR
-            Flip(timeStep);
-        }
+            if (controls_.buttons_ & NTWK_CTRL_FORWARD) {
+                accelerator = 1.0f;
+                //URHO3D_LOGDEBUG(vehicleName + " -> **ACCELERATE**");
+            }
+            if (controls_.buttons_ & NTWK_CTRL_BACK) {
+                accelerator = -0.5f;
+            }
+            if (controls_.buttons_ & CTRL_SPACE) {
+                brake = true;
+            }
 
-        if (controls_.buttons_ & NTWK_CTRL_FIRE) {
-            // FIRE
-            fire = true;
-            URHO3D_LOGDEBUGF("%s -> FIRE = %l", vehicleName.CString(), controls_.buttons_);
+            if (controls_.buttons_ & NTWK_CTRL_FLIP) {
+                // FLIP CAR
+                Flip(timeStep);
+            }
+
+            if (controls_.buttons_ & NTWK_CTRL_FIRE) {
+                // FIRE
+                fire = true;
+                URHO3D_LOGDEBUGF("%s -> FIRE = %l", vehicleName.CString(), controls_.buttons_);
+            }
         }
 
         UpdateGear();
@@ -1993,4 +1998,8 @@ void Vehicle::setActorNode(Node *actorNode) {
 
 float Vehicle::getWheelContactTime() const {
     return wheelContactTime_;
+}
+
+void Vehicle::setEnableControls(bool enableControls) {
+    enableControls_ = enableControls;
 }

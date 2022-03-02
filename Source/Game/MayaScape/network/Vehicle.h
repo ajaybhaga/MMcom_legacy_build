@@ -253,7 +253,12 @@ private:
 
     // ang velocity limiter
     float   m_fYAngularVelocity;
-    ///
+
+    bool enableControls_;
+public:
+    void setEnableControls(bool enableControls);
+
+private:
 
     /// Emitter data for saving.
     Vector<Node*> particleEmitterNodeList_;

@@ -72,7 +72,10 @@ String matFile = "Models/Player/Bino/Models/f_8.txt";
 // NETWORK ACTOR
 //=============================================================================
 NetworkActor::NetworkActor(Context *context)
-        : ClientObj(context), mass_(10.0f), alive_(true) {
+        : ClientObj(context), mass_(10.0f),
+        alive_(true),
+        onVehicle_(false)
+        {
       SetUpdateEventMask(USE_NO_EVENT);
 
     SetLife(100);
@@ -88,6 +91,7 @@ NetworkActor::NetworkActor(Context *context)
     toTarget_ = Vector3(0,0,0);
     targetAgentIndex_ = 0;
     disconnected_ = false;
+
 }
 
 NetworkActor::~NetworkActor() {
@@ -199,6 +203,8 @@ void NetworkActor::Init(Node* node) {
         body_->SetLinearRestThreshold(0.0f);
         body_->SetAngularFactor(Vector3::ZERO);
         body_->SetAngularRestThreshold(0.0f);
+        // Set rigid body kinematic mode. In kinematic mode forces are not applied to the rigid body.
+        body_->SetKinematic(true);
         collisionShape_->SetCapsule(0.42f, 0.5f, Vector3::UP * 0.3f);
 
         animCtrl_->PlayExclusive(walkAniFile, 0, true);
@@ -313,8 +319,12 @@ void NetworkActor::FixedUpdate(float timeStep) {
         FindTarget();
     }
 
-
+    // Snaps network actor to vehicle
     if (vehicle_) {
+
+        // Set to control if actor on vehicle
+        vehicle_->setEnableControls(onVehicle_);
+
         this->position_ = vehicle_->GetRaycastVehicle()->GetNode()->GetPosition();
         node_->SetPosition(position_);
         node_->SetRotation(vehicle_->GetRaycastVehicle()->GetNode()->GetRotation());

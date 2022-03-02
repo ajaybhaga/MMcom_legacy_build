@@ -239,7 +239,9 @@ public:
     // Animation controller
     AnimationController* animCtrl_;
 
+    // Player state variables
     bool alive_;
+    bool onVehicle_;
 
 
     String name_;
