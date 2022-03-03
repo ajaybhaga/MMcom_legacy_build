@@ -209,7 +209,7 @@ void NetworkActor::Init(Node* node) {
         body_->SetAngularFactor(Vector3::ZERO);
         body_->SetAngularRestThreshold(0.0f);
         // Set rigid body kinematic mode. In kinematic mode forces are not applied to the rigid body.
-        body_->SetKinematic(true);
+        //body_->SetKinematic(true);
         collisionShape_->SetCapsule(0.42f, 0.5f, Vector3::UP * 0.3f);
 
         animCtrl_->PlayExclusive(walkAniFile, 0, true);
@@ -370,10 +370,13 @@ void NetworkActor::FixedUpdate(float timeStep) {
         // Snap to vehicle once
         if (!initialSet_) {
             this->position_ = vehicle_->GetRaycastVehicle()->GetNode()->GetPosition();
-            node_->SetPosition(position_);
             node_->SetRotation(vehicle_->GetRaycastVehicle()->GetNode()->GetRotation());
             initialSet_ = true;
         }
+
+        // Set client object
+        node_->SetPosition(GetNode()->GetPosition());
+        node_->SetRotation(GetNode()->GetRotation());
 
 
         vehicle_->setActorNode(this->node_);
@@ -457,7 +460,7 @@ void NetworkActor::FixedUpdate(float timeStep) {
         }
 
         if (controls_.buttons_ & NTWK_CTRL_FORWARD) {
-            move_ = Vector3(0.0f, 0.0f, 1.0f);
+            move_ = Vector3(0.0f, 0.0f, 100.0f);
             URHO3D_LOGDEBUG("NetworkActor -> **NTWK_CTRL_FORWARD**");
         }
         if (controls_.buttons_ & NTWK_CTRL_BACK) {

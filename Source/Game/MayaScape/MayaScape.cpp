@@ -3500,7 +3500,7 @@ void MayaScape::MoveCamera(float timeStep) {
 
                         if (actor) {
                             // Snap camera to actor once available
-                            Vector3 startPos = actor->GetNode()->GetNetPositionAttr();
+                            Vector3 startPos = actorNode->GetNetPositionAttr();
                             MemoryBuffer buf(actor->GetNode()->GetNetRotationAttr());
                             Quaternion rotation = buf.ReadPackedQuaternion();
 
@@ -3512,50 +3512,54 @@ void MayaScape::MoveCamera(float timeStep) {
                             // NetworkActor (Player) cam
 
 //////
+                            if (startPos != Vector3(0, 0, 0)) {
 
-                            // Physics update has completed. Position camera behind vehicle
-                            vehicleRot_ = SmoothStepAngle(vehicleRot_, actorNode->GetRotation(), timeStep * rotLerpRate);
-                            Quaternion dir(vehicleRot_.YawAngle(), Vector3::UP);
-                            dir = dir * Quaternion(yaw_, Vector3::UP);
-                            dir = dir * Quaternion(pitch_, Vector3::RIGHT);
+                                // Physics update has completed. Position camera behind vehicle
+                                vehicleRot_ = SmoothStepAngle(vehicleRot_, actorNode->GetRotation(),
+                                                              timeStep * rotLerpRate);
+                                Quaternion dir(vehicleRot_.YawAngle(), Vector3::UP);
+                                dir = dir * Quaternion(yaw_, Vector3::UP);
+                                dir = dir * Quaternion(pitch_, Vector3::RIGHT);
 
-                            Vector3 actorPos = actorNode->GetPosition();
-                            float curDist = (actorPos - targetCameraPos_).Length();
+                                Vector3 actorPos = startPos;
+                                float curDist = (actorPos - targetCameraPos_).Length();
 
-                            curDist = SpringDamping(curDist, CLIENT_CAMERA_DISTANCE/3, springVelocity_, damping, maxVel, timeStep);
-                            targetCameraPos_ = actorPos - dir * Vector3(0.0f, 0.0f, curDist);
+                                curDist = SpringDamping(curDist, CLIENT_CAMERA_DISTANCE / 3, springVelocity_, damping,
+                                                        maxVel, timeStep);
+                                targetCameraPos_ = actorPos - dir * Vector3(0.0f, 0.0f, curDist);
 
-                            Vector3 cameraTargetPos = targetCameraPos_;
-                            Vector3 cameraStartPos = actorPos;
+                                Vector3 cameraTargetPos = targetCameraPos_;
+                                Vector3 cameraStartPos = actorPos;
 
-                            // Raycast camera against static objects (physics collision mask 2)
-                            // and move it closer to the vehicle if something in between
-                            Ray cameraRay(cameraStartPos, cameraTargetPos - cameraStartPos);
-                            float cameraRayLength = (cameraTargetPos - cameraStartPos).Length();
-                            PhysicsRaycastResult result;
-                            //scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result, cameraRay, cameraRayLength, 2);
+                                // Raycast camera against static objects (physics collision mask 2)
+                                // and move it closer to the vehicle if something in between
+                                Ray cameraRay(cameraStartPos, cameraTargetPos - cameraStartPos);
+                                float cameraRayLength = (cameraTargetPos - cameraStartPos).Length();
+                                PhysicsRaycastResult result;
+                                //scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result, cameraRay, cameraRayLength, 2);
 
-                            if (cameraRayLength < 10.0f) {
-                                scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result,
-                                                                                    cameraRay,
-                                                                                    cameraRayLength,
-                                                                                    NETWORKACTOR_COL_LAYER);
-                            } else {
-                                scene_->GetComponent<PhysicsWorld>()->RaycastSingleSegmented(result,
-                                                                                             cameraRay,
-                                                                                             cameraRayLength,
-                                                                                             NETWORKACTOR_COL_LAYER);
+                                if (cameraRayLength < 10.0f) {
+                                    scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result,
+                                                                                        cameraRay,
+                                                                                        cameraRayLength,
+                                                                                        NETWORKACTOR_COL_LAYER);
+                                } else {
+                                    scene_->GetComponent<PhysicsWorld>()->RaycastSingleSegmented(result,
+                                                                                                 cameraRay,
+                                                                                                 cameraRayLength,
+                                                                                                 NETWORKACTOR_COL_LAYER);
+                                }
+
+
+                                if (result.body_)
+                                    cameraTargetPos = cameraStartPos + cameraRay.direction_ * (result.distance_ - 0.5f);
+
+                                clientCam_->GetNode()->SetPosition(cameraTargetPos);
+                                clientCam_->GetNode()->SetRotation(dir);
+
+
+                                /////
                             }
-
-
-                            if (result.body_)
-                                cameraTargetPos = cameraStartPos + cameraRay.direction_ * (result.distance_ - 0.5f);
-
-                            clientCam_->GetNode()->SetPosition(cameraTargetPos);
-                            clientCam_->GetNode()->SetRotation(dir);
-
-
-                            /////
                         }
 
                     }
