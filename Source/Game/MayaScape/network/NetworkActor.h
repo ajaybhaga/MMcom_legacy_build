@@ -156,13 +156,8 @@ public:
     // Player node collision
     void HandlePlayerCollision(StringHash eventType, VariantMap &eventData);
 
-    const Vector3& GetVehiclePositionAttr() const;
-    void SetVehiclePositionAttr(const Vector3& value) const;
+    void AlignWithMovement(float timeStep);
 
-
-
-
-protected:
 
 public:
     void SwapMat();
@@ -209,10 +204,16 @@ public:
     float mass_;
     float speed_;
     float maxSpeed_;
+    float thrust_;
     float damping_;
     float acceleration_;
     float brake_;
     Vector3 towards_;
+
+    bool enableControls_;
+    Vector3 move_;
+
+    bool initialSet_;
 
 
     float lastFire_;

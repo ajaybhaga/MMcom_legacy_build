@@ -36,6 +36,7 @@
 #include "GameObject.h"
 #include "Fire.h"
 #include "Toolkit.h"
+#include "Missile.h"
 
 
 Fire::Fire(Context* context) : GameObject(context)

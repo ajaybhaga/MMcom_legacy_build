@@ -131,13 +131,13 @@
 // AgentSim shared libs
 #include "shared_libs.h"
 #include "types.h"
-#include "Player.h"
 #include "Bullet.h"
 
 #include "boids.h"
 #include "../../Urho3D/Input/Controls.h"
 #include "../../Urho3D/Scene/SplinePath.h"
 #include "../../Urho3D/Resource/ResourceEvents.h"
+#include "Missile.h"
 #include <MayaScape/Constants.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -3103,7 +3103,7 @@ void MayaScape::CreateServerSubsystem() {
 
     RaycastVehicleBase::RegisterObject(context_);
     WheelTrackModel::RegisterObject(context_);
-    Missile::RegisterObject(context_);
+//    Missile::RegisterObject(context_);
     Bullet::RegisterObject(context_);
 
     // Client-side Prediction
@@ -3440,6 +3440,13 @@ void MayaScape::MoveCamera(float timeStep) {
     // Mouse sensitivity as degrees per pixel
     const float MOUSE_SENSITIVITY = 0.1f;
 
+
+    // smooth step
+    const float rotLerpRate = 10.0f;
+    const float maxVel = 50.0f;
+    const float damping = 0.2f;
+
+
     if (started_) {
 
         // For clients
@@ -3481,7 +3488,77 @@ void MayaScape::MoveCamera(float timeStep) {
                     // Store number of nodes
                     lastNumNodes_ = size;
 */
+
+                    String actorName = clientName_ + String("-actor");
+                    Node *actorNode = scene_->GetChild(actorName);
+
                     //BLUE-304-vehicle
+
+                    if (actorNode) {
+                        // Retrieve Actor
+                        ClientObj *actor = actorNode->GetDerivedComponent<ClientObj>();
+
+                        if (actor) {
+                            // Snap camera to actor once available
+                            Vector3 startPos = actor->GetNode()->GetNetPositionAttr();
+                            MemoryBuffer buf(actor->GetNode()->GetNetRotationAttr());
+                            Quaternion rotation = buf.ReadPackedQuaternion();
+
+
+                            /// NEW CAM CODE
+
+                            // Client: Move Camera
+
+                            // NetworkActor (Player) cam
+
+//////
+
+                            // Physics update has completed. Position camera behind vehicle
+                            vehicleRot_ = SmoothStepAngle(vehicleRot_, actorNode->GetRotation(), timeStep * rotLerpRate);
+                            Quaternion dir(vehicleRot_.YawAngle(), Vector3::UP);
+                            dir = dir * Quaternion(yaw_, Vector3::UP);
+                            dir = dir * Quaternion(pitch_, Vector3::RIGHT);
+
+                            Vector3 actorPos = actorNode->GetPosition();
+                            float curDist = (actorPos - targetCameraPos_).Length();
+
+                            curDist = SpringDamping(curDist, CLIENT_CAMERA_DISTANCE/3, springVelocity_, damping, maxVel, timeStep);
+                            targetCameraPos_ = actorPos - dir * Vector3(0.0f, 0.0f, curDist);
+
+                            Vector3 cameraTargetPos = targetCameraPos_;
+                            Vector3 cameraStartPos = actorPos;
+
+                            // Raycast camera against static objects (physics collision mask 2)
+                            // and move it closer to the vehicle if something in between
+                            Ray cameraRay(cameraStartPos, cameraTargetPos - cameraStartPos);
+                            float cameraRayLength = (cameraTargetPos - cameraStartPos).Length();
+                            PhysicsRaycastResult result;
+                            //scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result, cameraRay, cameraRayLength, 2);
+
+                            if (cameraRayLength < 10.0f) {
+                                scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result,
+                                                                                    cameraRay,
+                                                                                    cameraRayLength,
+                                                                                    NETWORKACTOR_COL_LAYER);
+                            } else {
+                                scene_->GetComponent<PhysicsWorld>()->RaycastSingleSegmented(result,
+                                                                                             cameraRay,
+                                                                                             cameraRayLength,
+                                                                                             NETWORKACTOR_COL_LAYER);
+                            }
+
+
+                            if (result.body_)
+                                cameraTargetPos = cameraStartPos + cameraRay.direction_ * (result.distance_ - 0.5f);
+
+                            clientCam_->GetNode()->SetPosition(cameraTargetPos);
+                            clientCam_->GetNode()->SetRotation(dir);
+
+
+                            /////
+                        }
+
+                    }
 
                     String vehicleName = clientName_ + String("-vehicle");
                     Node *vehicleNode = scene_->GetChild(vehicleName);
@@ -3527,11 +3604,6 @@ void MayaScape::MoveCamera(float timeStep) {
                             debugText_[k]->SetText(String("Vehicle -> ") + String(vehicleName));
                             k++;
 
-                            // smooth step
-                            const float rotLerpRate = 10.0f;
-                            const float maxVel = 50.0f;
-                            const float damping = 0.2f;
-
 
                             // Object location for camera
                             Vector3 snap = Vector3(startPos);
@@ -3540,71 +3612,7 @@ void MayaScape::MoveCamera(float timeStep) {
                             snap.z_ -= 120.0f;
                             //Vector3 snap = server->GetFocusObjects().Empty() ? Vector3(0, 35.0, 0) : server->GetFocusObjects()[0];
 
-                            /// NEW CAM CODE
 
-                            // Client: Move Camera
-
-                            // NetworkActor (Player) cam
-
-//////
-
-                            // Physics update has completed. Position camera behind vehicle
-                            vehicleRot_ = SmoothStepAngle(vehicleRot_, vehicleNode->GetRotation(), timeStep * rotLerpRate);
-                            Quaternion dir(vehicleRot_.YawAngle(), Vector3::UP);
-                            dir = dir * Quaternion(yaw_, Vector3::UP);
-                            dir = dir * Quaternion(pitch_, Vector3::RIGHT);
-
-                            Vector3 vehiclePos = vehicleNode->GetPosition();
-                            float curDist = (vehiclePos - targetCameraPos_).Length();
-
-                            curDist = SpringDamping(curDist, CLIENT_CAMERA_DISTANCE, springVelocity_, damping, maxVel, timeStep);
-                            targetCameraPos_ = vehiclePos - dir * Vector3(0.0f, 0.0f, curDist);
-
-                            Vector3 cameraTargetPos = targetCameraPos_;
-                            Vector3 cameraStartPos = vehiclePos;
-
-                            // Raycast camera against static objects (physics collision mask 2)
-                            // and move it closer to the vehicle if something in between
-                            Ray cameraRay(cameraStartPos, cameraTargetPos - cameraStartPos);
-                            float cameraRayLength = (cameraTargetPos - cameraStartPos).Length();
-                            PhysicsRaycastResult result;
-                            //scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result, cameraRay, cameraRayLength, 2);
-
-                            if (cameraRayLength < 10.0f) {
-                                scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result,
-                                                                                    cameraRay,
-                                                                                    cameraRayLength,
-                                                                                    NETWORKACTOR_COL_LAYER);
-                            } else {
-                                scene_->GetComponent<PhysicsWorld>()->RaycastSingleSegmented(result,
-                                                                                             cameraRay,
-                                                                                             cameraRayLength,
-                                                                                             NETWORKACTOR_COL_LAYER);
-                            }
-
-
-                            if (result.body_)
-                                cameraTargetPos = cameraStartPos + cameraRay.direction_ * (result.distance_ - 0.5f);
-
-                            //cameraNode_->SetPosition(cameraTargetPos);
-                            //cameraNode_->SetRotation(dir);
-                            clientCam_->GetNode()->SetPosition(cameraTargetPos);
-                            clientCam_->GetNode()->SetRotation(dir);
-                            //clientCam_->GetNode()->LookAt(dir);
-
-                            /////
-
-
-                            // Raycast camera collision
-
-                            auto *body = vehicleNode->GetComponent<RigidBody>(true);
-                            float botSpeed = round(abs(body->GetLinearVelocity().Length()));
-                            // Back wheel points forward
-                            Quaternion forward = rotation;
-
-                            botSpeed = Clamp(botSpeed, 1.0f, 2000.0f);
-
-                            float velMult = 3.0f;
 /*
                             // Zoom up on body velocity increase
                             Vector3 cameraTargetPos =
@@ -4892,14 +4900,14 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
     /// Retrieve the username for the client
     VariantMap identity = connection->GetIdentity();
     String username = String(identity["UserName"]);
-
+    String actorName = String(username + String("-actor"));
     // Create a new network actor for the player
-    SharedPtr<Node> networkActorNode(scene_->CreateChild(username, REPLICATED));
+    SharedPtr<Node> networkActorNode(scene_->CreateChild(actorName, REPLICATED));
     networkActorNode->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 
     NetworkActor *actor = networkActorNode->CreateComponent<NetworkActor>(REPLICATED);
     actor->Init(networkActorNode);
-    String name = String(String("actor-") + username);
+
     //actor->SetClientInfo(name, Random(1,100), Vector3(Random(-400.0f,400.0f),Random(20.0f,80.0f),Random(-400.0f,400.0f)));
 
     auto* body = networkActorNode->GetComponent<RigidBody>(true);
@@ -4922,7 +4930,9 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
     }
 
 
-    actor->SetClientInfo(name, Random(1,100), actorPos);
+    //actor->SetClientInfo(name, Random(1,100), actorPos);
+//    actor->SetClientInfo(vehicleName, Random(1,100), Vector3(actor->GetPosition()));
+    actor->SetClientInfo(actorName, Random(1,100), Vector3(actor->GetPosition()));
 
     String vehicleName = username + "-vehicle";
     // Create a new vehicle for the player
@@ -4930,7 +4940,7 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
     //vehicleNode->SetRotation(Quaternion(0.0f, 180.0f, 0.0f));
     Vehicle *vehicle = vehicleNode->CreateComponent<Vehicle>(REPLICATED);
     vehicle->Init(vehicleNode);
-    actor->SetClientInfo(vehicleName, Random(1,100), Vector3(actor->GetPosition()));
+
     vehicleNode->SetPosition(Vector3(actor->GetPosition()));
     vehicleNode->SetRotation(Quaternion(0.0f, Random(0.0f, 360.0f), 0.0f));
     // Attach vehicle to actor
@@ -4968,8 +4978,8 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
     // 2. Create a new camera following the actor
     // ** THIS APPEARS TO BE CRITICAL FOR CLIENT SCENE REPLICATION TO START
     Graphics* graphics = GetSubsystem<Graphics>();
-    String cameraname = "camera_" + username;
-    Node* cameraNode = networkActorNode->CreateChild(cameraname, REPLICATED);
+    String cameraName = "camera_" + username;
+    Node* cameraNode = networkActorNode->CreateChild(cameraName, REPLICATED);
     // Set position to force update
     cameraNode->SetPosition(Vector3(0.0f, 2.0f, 0.0f));
 

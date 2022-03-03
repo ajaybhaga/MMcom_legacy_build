@@ -35,7 +35,6 @@
 #include <MayaScape/network/csp/CSP_messages.h>
 #include "Game.h"
 #include "MayaScape/network/Vehicle.h"
-#include "Player.h"
 
 #define APP_VERSION "MayaScape v1.0c"
 #define STUDIO_VERSION "Monkey Maya Studios"

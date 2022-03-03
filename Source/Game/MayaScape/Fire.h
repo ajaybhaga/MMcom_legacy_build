@@ -4,7 +4,6 @@
 #include <Urho3D/Graphics/StaticModel.h>
 #include <Urho3D/Graphics/ParticleEmitter.h>
 #include "GameObject.h"
-#include "Player.h"
 
 using namespace Urho3D;
 
@@ -28,7 +27,7 @@ private:
     SharedPtr<StaticModel> pObject_;
     SharedPtr<ParticleEmitter> pParticleEmitter_;
 
-    SharedPtr<Player> owner_;
+    SharedPtr<NetworkActor> owner_;
 
 	/// Target Node
 	Vector<SharedPtr<Node>> targetNodes_;

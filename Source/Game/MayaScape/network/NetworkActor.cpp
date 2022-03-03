@@ -74,7 +74,9 @@ String matFile = "Models/Player/Bino/Models/f_8.txt";
 NetworkActor::NetworkActor(Context *context)
         : ClientObj(context), mass_(10.0f),
         alive_(true),
-        onVehicle_(false)
+        onVehicle_(false),
+        enableControls_(false),
+        initialSet_(false)
         {
       SetUpdateEventMask(USE_NO_EVENT);
 
@@ -92,6 +94,9 @@ NetworkActor::NetworkActor(Context *context)
     targetAgentIndex_ = 0;
     disconnected_ = false;
 
+
+    thrust_   = 1024.0f;
+    maxSpeed_ = 1.23f;
 }
 
 NetworkActor::~NetworkActor() {
@@ -215,6 +220,8 @@ void NetworkActor::Init(Node* node) {
         // register
         SetUpdateEventMask(USE_UPDATE | USE_FIXEDUPDATE);
 
+        enableControls_ = true;
+
         // update serializable of the change
         SetAttribute("Color Index", Variant(50));
         SetAttribute("Position", Variant(node_->GetPosition()));
@@ -306,6 +313,41 @@ void NetworkActor::FindTarget() {
     }
 }
 
+void NetworkActor::AlignWithMovement(float timeStep) {
+    Quaternion rot{ node_->GetRotation() };
+
+    // Next move
+    move_ = move_.Normalized() * Pow(move_.Length() * 1.05f, 2.0f);
+    if (move_.Length() > 1.0f)
+        move_.Normalize();
+
+    Quaternion targetRot{};
+    Vector3 direction{ 0.13f * move_ + body_->GetLinearVelocity() * Vector3{ 1.0f, 0.0f, 1.0f }};
+
+    if (direction.Length() < 0.1f)
+        return;
+
+    targetRot.FromLookRotation(direction);
+    rot = rot.Slerp(targetRot, Clamp(timeStep * 5.0f, 0.0f, 1.0f));
+    node_->SetRotation(rot);
+
+
+
+    // Apply Movement
+
+    // Apply force to rigid body of actor
+    bool run = false;
+    Vector3 force{ move_.Length() < 0.05f ? Vector3::ZERO : move_ * thrust_ * timeStep };
+    force *= 1.0f + 0.23f * run;
+
+    if (body_->GetLinearVelocity().Length() < (maxSpeed_ * (1.0f + 0.42f * run))
+         || (body_->GetLinearVelocity().Normalized() + force.Normalized()).Length() < M_SQRT2 )
+    {
+        body_->ApplyForce(force);
+    }
+
+}
+
 void NetworkActor::FixedUpdate(float timeStep) {
     if (!node_) {
         return;
@@ -325,9 +367,15 @@ void NetworkActor::FixedUpdate(float timeStep) {
         // Set to control if actor on vehicle
         vehicle_->setEnableControls(onVehicle_);
 
-        this->position_ = vehicle_->GetRaycastVehicle()->GetNode()->GetPosition();
-        node_->SetPosition(position_);
-        node_->SetRotation(vehicle_->GetRaycastVehicle()->GetNode()->GetRotation());
+        // Snap to vehicle once
+        if (!initialSet_) {
+            this->position_ = vehicle_->GetRaycastVehicle()->GetNode()->GetPosition();
+            node_->SetPosition(position_);
+            node_->SetRotation(vehicle_->GetRaycastVehicle()->GetNode()->GetRotation());
+            initialSet_ = true;
+        }
+
+
         vehicle_->setActorNode(this->node_);
 
         // Once target found, calculate angle
@@ -338,7 +386,16 @@ void NetworkActor::FixedUpdate(float timeStep) {
         //towards_ = Vector3(cos(angleRadians * PI / 180.0f), 0, sin(angleRadians * PI / 180.0f));
         //int degrees = vehicle_->GetNode()->GetRotation().y_+round((angleRadians * 180.0f / PI)-90.0f);
 
+        // Update rotation according to direction of the player's movement.
         Vector3 velocity = body_->GetLinearVelocity();
+
+//    Vector3 lookDirection{ velocity + 2.0f * aim_ };
+//    Quaternion rotation{ node_->GetWorldRotation() };
+//    Quaternion aimRotation{ rotation };
+//    aimRotation.FromLookRotation(lookDirection);
+//    node_->SetRotation(rotation.Slerp(aimRotation, 7.0f * timeStep * velocity.Length()));
+        AlignWithMovement(timeStep);
+
 
         // Update animation
         if (velocity.Length() > 0.1f) {
@@ -383,6 +440,42 @@ void NetworkActor::FixedUpdate(float timeStep) {
             }
             lastFire_ = 0;
         }
+
+
+    if (enableControls_) {
+
+        //URHO3D_LOGDEBUGF("**VEHICLE CONTROLS** -> %l", controls_.buttons_);
+
+        // Read controls generate vehicle control instruction
+        if (controls_.buttons_ & NTWK_CTRL_LEFT) {
+            move_ = Vector3(-1.0f, 0.0f, 0.0f);
+            URHO3D_LOGDEBUG("NetworkActor -> **NTWK_CTRL_LEFT**");
+        }
+        if (controls_.buttons_ & NTWK_CTRL_RIGHT) {
+            move_ = Vector3(1.0f, 0.0f, 0.0f);
+            URHO3D_LOGDEBUG("NetworkActor -> **NTWK_CTRL_RIGHT**");
+        }
+
+        if (controls_.buttons_ & NTWK_CTRL_FORWARD) {
+            move_ = Vector3(0.0f, 0.0f, 1.0f);
+            URHO3D_LOGDEBUG("NetworkActor -> **NTWK_CTRL_FORWARD**");
+        }
+        if (controls_.buttons_ & NTWK_CTRL_BACK) {
+            move_ = Vector3(0.0f, 0.0f, -1.0f);
+        }
+
+        if (controls_.buttons_ & NTWK_CTRL_FLIP) {
+            // FLIP CAR
+            //Flip(timeStep);
+        }
+
+        if (controls_.buttons_ & NTWK_CTRL_FIRE) {
+            // FIRE
+            //fire = true;
+            //URHO3D_LOGDEBUGF("%s -> FIRE = %l", vehicleName.CString(), controls_.buttons_);
+        }
+    }
+
 }
 
 /*

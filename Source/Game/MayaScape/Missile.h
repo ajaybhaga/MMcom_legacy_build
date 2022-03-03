@@ -4,11 +4,9 @@
 #include <Urho3D/Graphics/StaticModel.h>
 #include <Urho3D/Graphics/ParticleEmitter.h>
 #include "GameObject.h"
-#include "Player.h"
+#include "MayaScape/network/NetworkActor.h"
 
 using namespace Urho3D;
-
-class Player;
 
 class Missile : public GameObject
 {
@@ -30,7 +28,7 @@ private:
     SharedPtr<StaticModel> pObject_;
     SharedPtr<ParticleEmitter> pParticleEmitter_;
 
-    SharedPtr<Player> owner_;
+    SharedPtr<NetworkActor> owner_;
 
 	/// Target Node
 	Vector<SharedPtr<Node>>targetnodes_;
