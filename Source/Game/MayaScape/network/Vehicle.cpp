@@ -439,10 +439,10 @@ void Vehicle::PostUpdate(float timeStep)
         auto *debug = GetScene()->GetComponent<DebugRenderer>();
         if (debug) {
 
-            Vector3 velocity = vehicleBody->GetLinearVelocity();
+        Vector3 velocity = vehicleBody->GetLinearVelocity();
         Vector3 accel = (velocity - prevVelocity_) / timeStep;
         float planeAccel = Vector3(accel.x_, 0.0f, accel.z_).Length();
-            prevVelocity_ = velocity;
+        prevVelocity_ = velocity;
         float boundSize;
 
         Vector3 pos = vehicleBody->GetPosition();
@@ -461,30 +461,9 @@ void Vehicle::PostUpdate(float timeStep)
             //light->SetBrightness(0.7f);
 
 
-
-//            dbgRenderer->AddLine(sensorRay.origin_, sensorRay.origin_+(Vector3(0, axisRot.y_, 0)*150.0f), Color(Urho3D::Color::CYAN));
-                //dbgRenderer->AddLine(sensorRay.origin_, sensorRay.origin_+(rotation.EulerAngles()*50.0f), Color(Urho3D::Color::YELLOW));
-
-                /*
-            // small arbitrary multiplier
-            const float velocityMultiplyer = 0.86f;
-            Vector3 downNormal = node_->GetUp() * -1.0f;
-            float velocityMag = raycastVehicle_->GetBody()->GetLinearVelocity().LengthSquared() * velocityMultiplyer;
-            velocityMag = Clamp( velocityMag, MIN_DOWN_FORCE, MAX_DOWN_FORCE );
-            Vector3 force = velocityMag * downNormal;
-
-            // Force line
-                debug->AddLine(raycastVehicle_->GetNode()->GetPosition(),
-                                     raycastVehicle_->GetNode()->GetPosition() + (force), Color(Urho3D::Color::CYAN));
-
-*/
-
-
             // Store the raycast vehicle body
-
             body_ = node_->GetComponent<RigidBody>();
             body_->DrawDebugGeometry(debug, true);
-
 
             // Apply normal force relative to vehicle
             // small arbitrary multiplier
@@ -514,55 +493,6 @@ void Vehicle::PostUpdate(float timeStep)
             float pushMag = 10.0f + raycastVehicle_->GetBody()->GetLinearVelocity().LengthSquared() * 250.0f + raycastVehicle_->GetRPM()*100.0f;
             pushMag = Clamp( pushMag, MIN_DOWN_FORCE, MAX_DOWN_FORCE );
 
-/*
-        // Normal force contact per wheel
-
-        const float normVelMultiplyer = 20.25f;
-        float normVelMag = 0;
-
-        normVelMag = raycastVehicle_->GetBody()->GetLinearVelocity().LengthSquared() * normVelMultiplyer;
-        normVelMag = Clamp( normVelMag, 1.0f, MAX_DOWN_FORCE*1000.0f );
-
-        // Wheel 0
-        Vector3 normForceWheel0 = normPosWheel0 + normVelMag * normWheel0;
-        raycastVehicle_->GetBody()->ApplyForce( normForceWheel0 );
-
-        // Wheel 1
-        Vector3 normForceWheel1 = normPosWheel1 + normVelMag * normWheel1;
-        raycastVehicle_->GetBody()->ApplyForce( normForceWheel1 );
-
-        // Wheel 2
-        Vector3 normForceWheel2 = normPosWheel2 + normVelMag * normWheel2;
-        raycastVehicle_->GetBody()->ApplyForce( normForceWheel2 );
-
-        // Wheel 3
-        Vector3 normForceWheel3 = normPosWheel3 + normVelMag * normWheel3;
-        raycastVehicle_->GetBody()->ApplyForce( normForceWheel3 );
-
-*/
-
-            // Front wheels - hood force
-//            raycastVehicle_->GetBody()->ApplyForce(normWheel0*pushMag);
-  //          raycastVehicle_->GetBody()->ApplyForce(normWheel1*pushMag);
-
-            /*
-            // Force line
-            debug->AddLine(raycastVehicle_->GetNode()->GetPosition(),
-                           raycastVehicle_->GetNode()->GetPosition() + (normForceWheel0), Color(Urho3D::Color::YELLOW));
-
-            // Force line
-            debug->AddLine(raycastVehicle_->GetNode()->GetPosition(),
-                           raycastVehicle_->GetNode()->GetPosition() + (normForceWheel1), Color(Urho3D::Color::YELLOW));
-
-            // Force line
-            debug->AddLine(raycastVehicle_->GetNode()->GetPosition(),
-                           raycastVehicle_->GetNode()->GetPosition() + (normForceWheel2), Color(Urho3D::Color::YELLOW));
-
-            // Force line
-            debug->AddLine(raycastVehicle_->GetNode()->GetPosition(),
-                           raycastVehicle_->GetNode()->GetPosition() + (normForceWheel3), Color(Urho3D::Color::YELLOW));
-*/
-
             //normWheel0*pushMag
             // Force line
             debug->AddLine(normPosWheel0,
@@ -572,10 +502,6 @@ void Vehicle::PostUpdate(float timeStep)
             // Force line
             debug->AddLine(normPosWheel1,
                            normPosWheel1 + (normWheel1*pushMag), Color(Urho3D::Color::WHITE));
-
-
-
-
 
             float antiRoll = 100.0f;
             float travelFL = 1.0f;
@@ -588,7 +514,6 @@ void Vehicle::PostUpdate(float timeStep)
             bool groundBL = false;
             bool groundBR = false;
             bool wheelHit = false;
-
 
 
             if (raycastVehicle_) {
@@ -681,14 +606,6 @@ void Vehicle::PostUpdate(float timeStep)
                 }
 
             }
-
-
-
-
-
-
-
-
 
 
 

@@ -3447,6 +3447,7 @@ void MayaScape::MoveCamera(float timeStep) {
     const float damping = 0.2f;
 
 
+    int k = 0;
     if (started_) {
 
         // For clients
@@ -3510,6 +3511,22 @@ void MayaScape::MoveCamera(float timeStep) {
                             // Client: Move Camera
 
                             // NetworkActor (Player) cam
+
+                            debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
+                            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                            debugText_[k]->SetVisible(true);
+                            debugText_[k]->SetText(String("Actor Pos -> ") + String(startPos.ToString()));
+                            k++;
+                            debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
+                            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                            debugText_[k]->SetVisible(true);
+                            debugText_[k]->SetText(String("Actor Rot -> ") + String(rotation.ToString()));
+                            k++;
+                            debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
+                            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                            debugText_[k]->SetVisible(true);
+                            debugText_[k]->SetText(String("Actor -> ") + String(actorName));
+                            k++;
 
 //////
                             if (startPos != Vector3(0, 0, 0)) {
@@ -3591,7 +3608,6 @@ void MayaScape::MoveCamera(float timeStep) {
                             }
 
 
-                            int k = 0;
                             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
                             debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
                             debugText_[k]->SetVisible(true);

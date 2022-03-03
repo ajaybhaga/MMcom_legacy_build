@@ -231,6 +231,19 @@ void NetworkActor::Init(Node* node) {
 
 void NetworkActor::Create() {
 
+    // Update for clients replicating
+    // Set node
+    //node_ = this;
+
+    node_ = GetNode();
+    enableControls_ = true;
+
+
+
+    // register
+    SetUpdateEventMask(USE_UPDATE | USE_FIXEDUPDATE);
+
+
 }
 
 void NetworkActor::SetNode(Node* node)
@@ -377,6 +390,8 @@ void NetworkActor::FixedUpdate(float timeStep) {
         // Set client object
         node_->SetPosition(GetNode()->GetPosition());
         node_->SetRotation(GetNode()->GetRotation());
+
+        this->position_ = GetNode()->GetPosition();
 
 
         vehicle_->setActorNode(this->node_);

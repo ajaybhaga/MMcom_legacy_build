@@ -74,7 +74,7 @@ public:
 
     const WeakPtr<Connection> GetConnection() const { return connection_; }
     void SetNode(Node* node);
-    const Node* GetNode() const { return node_; };
+//    const Node* GetNode() const { return node_; };
 
     /// Parameter function
     int GetLife() { return life_; }
