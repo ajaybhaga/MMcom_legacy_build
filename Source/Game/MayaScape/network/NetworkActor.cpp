@@ -208,10 +208,14 @@ void NetworkActor::Init(Node* node) {
         body_->SetLinearRestThreshold(0.0f);
         body_->SetAngularFactor(Vector3::ZERO);
         body_->SetAngularRestThreshold(0.0f);
+        body_->SetCollisionLayer(2);
+        body_->SetUseGravity(false);
+
         // Set rigid body kinematic mode. In kinematic mode forces are not applied to the rigid body.
         // Disable physics
         //body_->SetKinematic(true);
-        collisionShape_->SetCapsule(0.42f, 0.5f, Vector3::UP * 0.3f);
+//        collisionShape_->SetCapsule(0.42f, 0.5f, Vector3::UP * 0.3f);
+        collisionShape_->SetCapsule(0.01f, 0.5f, Vector3::UP * 0.3f);
 
         animCtrl_->PlayExclusive(walkAniFile, 0, true);
         animCtrl_->SetSpeed(walkAniFile, 0.2f);
@@ -241,7 +245,7 @@ void NetworkActor::Create() {
     model_ = modelNode->GetComponent<AnimatedModel>();
     body_ = modelNode->GetComponent<RigidBody>();
 
-    // register
+    // register100
     SetUpdateEventMask(USE_UPDATE | USE_FIXEDUPDATE);
 }
 
@@ -372,9 +376,10 @@ void NetworkActor::FixedUpdate(float timeStep) {
     //node_->SetPosition(body_->GetPosition());
     //node_->SetRotation(body_->GetRotation());
 
+
+    // Update the node with the body movement
     GetNode()->SetPosition(body_->GetPosition());
     GetNode()->SetRotation(body_->GetRotation());
-
 
     if (toTarget_ == Vector3(0,0,0)) {
         FindTarget();
@@ -388,8 +393,8 @@ void NetworkActor::FixedUpdate(float timeStep) {
 
         // Snap to vehicle once
         if (!initialSet_) {
-            this->position_ = vehicle_->GetRaycastVehicle()->GetNode()->GetPosition();
-            node_->SetRotation(vehicle_->GetRaycastVehicle()->GetNode()->GetRotation());
+//            this->position_ = vehicle_->GetRaycastVehicle()->GetNode()->GetPosition();
+  //          node_->SetRotation(vehicle_->GetRaycastVehicle()->GetNode()->GetRotation());
             initialSet_ = true;
         }
 
@@ -468,16 +473,16 @@ void NetworkActor::FixedUpdate(float timeStep) {
         // Read controls generate vehicle control instruction
         if (controls_.buttons_ & NTWK_CTRL_LEFT) {
             move_ = Vector3(-1.0f, 0.0f, 0.0f);
-            URHO3D_LOGDEBUG("NetworkActor -> **NTWK_CTRL_LEFT**");
+            //URHO3D_LOGDEBUG("NetworkActor -> **NTWK_CTRL_LEFT**");
         }
         if (controls_.buttons_ & NTWK_CTRL_RIGHT) {
             move_ = Vector3(1.0f, 0.0f, 0.0f);
-            URHO3D_LOGDEBUG("NetworkActor -> **NTWK_CTRL_RIGHT**");
+            //URHO3D_LOGDEBUG("NetworkActor -> **NTWK_CTRL_RIGHT**");
         }
 
         if (controls_.buttons_ & NTWK_CTRL_FORWARD) {
-            move_ = Vector3(0.0f, 0.0f, 100.0f);
-            URHO3D_LOGDEBUG("NetworkActor -> **NTWK_CTRL_FORWARD**");
+            move_ = Vector3(0.0f, 0.0f, 10.0f);
+            //URHO3D_LOGDEBUG("NetworkActor -> **NTWK_CTRL_FORWARD**");
         }
         if (controls_.buttons_ & NTWK_CTRL_BACK) {
             move_ = Vector3(0.0f, 0.0f, -1.0f);

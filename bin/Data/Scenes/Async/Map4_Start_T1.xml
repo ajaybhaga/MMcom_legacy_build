@@ -5,10 +5,10 @@
 	<attribute name="Smoothing Constant" value="50" />
 	<attribute name="Snap Threshold" value="5" />
 	<attribute name="Elapsed Time" value="8.737" />
-	<attribute name="Next Replicated Node ID" value="185" />
-	<attribute name="Next Replicated Component ID" value="133" />
-	<attribute name="Next Local Node ID" value="16777232" />
-	<attribute name="Next Local Component ID" value="16777408" />
+	<attribute name="Next Replicated Node ID" value="189" />
+	<attribute name="Next Replicated Component ID" value="139" />
+	<attribute name="Next Local Node ID" value="16777234" />
+	<attribute name="Next Local Component ID" value="16777432" />
 	<attribute name="Variables" />
 	<attribute name="Variable Names" value="" />
 	<component type="Octree" id="1" />
@@ -410,6 +410,72 @@
 				<attribute name="Model" value="Model;Models/Objects/Models/BillboardStand.mdl" />
 				<attribute name="Material" value="Material;Materials/Metal.xml;Materials/Material.001.xml" />
 			</component>
+		</node>
+		<node id="185">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="track1-back" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="1127.22 431.138 1" />
+			<attribute name="Rotation" value="0.707107 0 0 -0.707107" />
+			<attribute name="Scale" value="10 10 10" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="133">
+				<attribute name="Model" value="Model;Models/Tracks/Models/race_obj_pPlane1.mdl" />
+				<attribute name="Material" value="Material;Materials/lambert2.xml" />
+			</component>
+			<component type="RigidBody" id="134">
+				<attribute name="Physics Rotation" value="0.707107 0 0 -0.707107" />
+				<attribute name="Physics Position" value="1127.22 431.138 1" />
+			</component>
+			<component type="CollisionShape" id="135">
+				<attribute name="Shape Type" value="TriangleMesh" />
+				<attribute name="Model" value="Model;Models/Tracks/Models/race_obj_pPlane1.mdl" />
+			</component>
+			<node id="186">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="2.10962 -600 -0" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+				<component type="Light" id="136">
+					<attribute name="Radius" value="2000" />
+					<attribute name="Length" value="5000" />
+					<attribute name="Range" value="3000" />
+					<attribute name="Light Shape Texture" value="TextureCube;" />
+				</component>
+			</node>
+			<node id="187">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="0.399277 199.91 0" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+				<component type="Light" id="137">
+					<attribute name="Radius" value="2000" />
+					<attribute name="Length" value="3000" />
+					<attribute name="Range" value="3000" />
+					<attribute name="Light Shape Texture" value="TextureCube;" />
+				</component>
+			</node>
+			<node id="188">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="0.404311 5.05192 2.50615" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+				<component type="Light" id="138">
+					<attribute name="Radius" value="20000" />
+					<attribute name="Length" value="30000" />
+					<attribute name="Range" value="30000" />
+					<attribute name="Light Shape Texture" value="TextureCube;" />
+				</component>
+			</node>
 		</node>
 	</node>
 </scene>
