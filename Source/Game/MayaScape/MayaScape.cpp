@@ -3501,10 +3501,14 @@ void MayaScape::MoveCamera(float timeStep) {
 
                         if (actor) {
                             // Snap camera to actor once available
+/*                            Vector3 startPos = actorNode->GetNetPositionAttr();
+                            MemoryBuffer buf(actor->GetNode()->GetNetRotationAttr());
+                            Quaternion rotation = buf.ReadPackedQuaternion();
+*/
+
                             Vector3 startPos = actorNode->GetNetPositionAttr();
                             MemoryBuffer buf(actor->GetNode()->GetNetRotationAttr());
                             Quaternion rotation = buf.ReadPackedQuaternion();
-
 
                             /// NEW CAM CODE
 

@@ -209,6 +209,7 @@ void NetworkActor::Init(Node* node) {
         body_->SetAngularFactor(Vector3::ZERO);
         body_->SetAngularRestThreshold(0.0f);
         // Set rigid body kinematic mode. In kinematic mode forces are not applied to the rigid body.
+        // Disable physics
         //body_->SetKinematic(true);
         collisionShape_->SetCapsule(0.42f, 0.5f, Vector3::UP * 0.3f);
 
@@ -231,19 +232,17 @@ void NetworkActor::Init(Node* node) {
 
 void NetworkActor::Create() {
 
-    // Update for clients replicating
-    // Set node
-    //node_ = this;
-
     node_ = GetNode();
     enableControls_ = true;
 
-
+    // Retrieve client network actor data
+    Node* modelNode = node_->GetChild("Actor", REPLICATED);
+    node_ = modelNode;
+    model_ = modelNode->GetComponent<AnimatedModel>();
+    body_ = modelNode->GetComponent<RigidBody>();
 
     // register
     SetUpdateEventMask(USE_UPDATE | USE_FIXEDUPDATE);
-
-
 }
 
 void NetworkActor::SetNode(Node* node)
@@ -369,6 +368,13 @@ void NetworkActor::FixedUpdate(float timeStep) {
     // DEBUG DRAW
     DebugDraw();
 
+    // Set client object
+    //node_->SetPosition(body_->GetPosition());
+    //node_->SetRotation(body_->GetRotation());
+
+    GetNode()->SetPosition(body_->GetPosition());
+    GetNode()->SetRotation(body_->GetRotation());
+
 
     if (toTarget_ == Vector3(0,0,0)) {
         FindTarget();
@@ -387,11 +393,6 @@ void NetworkActor::FixedUpdate(float timeStep) {
             initialSet_ = true;
         }
 
-        // Set client object
-        node_->SetPosition(GetNode()->GetPosition());
-        node_->SetRotation(GetNode()->GetRotation());
-
-        this->position_ = GetNode()->GetPosition();
 
 
         vehicle_->setActorNode(this->node_);
