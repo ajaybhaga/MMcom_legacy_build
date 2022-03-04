@@ -3495,6 +3495,9 @@ void MayaScape::MoveCamera(float timeStep) {
 
                     //BLUE-304-vehicle
 
+                    Vector3 startPos;
+                    Quaternion rotation;
+
                     if (actorNode) {
                         // Retrieve Actor
                         ClientObj *actor = actorNode->GetDerivedComponent<ClientObj>();
@@ -3506,9 +3509,17 @@ void MayaScape::MoveCamera(float timeStep) {
                             Quaternion rotation = buf.ReadPackedQuaternion();
 */
 
-                            Vector3 startPos = actorNode->GetNetPositionAttr();
-                            MemoryBuffer buf(actor->GetNode()->GetNetRotationAttr());
-                            Quaternion rotation = buf.ReadPackedQuaternion();
+                            NetworkActor *na = actorNode->GetDerivedComponent<NetworkActor>();
+                            if (na) {
+                                auto* body = na->GetNode()->GetComponent<RigidBody>(true);
+                                if (body) {
+                                    // CLIENT RIGID BODY RETRIEVED
+                                    startPos = body->GetPosition();
+                                    rotation = body->GetRotation();
+                                }
+                            }
+
+
 
                             /// NEW CAM CODE
 
@@ -4943,7 +4954,7 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
         Vector3 spawnDir = (starBMarker_-starAMarker_);
         Vector3 startPos = starAMarker_;
 
-        float w = 1;
+        float w = 1.2;
 
         //actorPos = Quaternion(0,90,0) * (startPos+spawnDir*w);
         actorPos = Quaternion(0,0,0) * (startPos+spawnDir*w);

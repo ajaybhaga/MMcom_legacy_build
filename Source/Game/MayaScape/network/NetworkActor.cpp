@@ -145,23 +145,9 @@ void NetworkActor::RegisterObject(Context *context) {
     URHO3D_COPY_BASE_ATTRIBUTES(ClientObj);
 
     ClientObj::RegisterObject(context);
-    //Vehicle::RegisterObject(context);
 
-
-    // Network Actor Network Attributes
- //   URHO3D_ATTRIBUTE("Name", String, userName_, String::EMPTY, AM_DEFAULT | AM_NET);
- //   URHO3D_ATTRIBUTE("Color Index", int, colorIdx_, 0, AM_DEFAULT | AM_NET);
-
-    // These macros register the class attributes to the Context for automatic load / save handling.
-    // We specify the Default attribute mode which means it will be used both for saving into file, and network replication
-    //URHO3D_ATTRIBUTE("Controls Yaw" int, controls_.buttons_, 0.0f, AM_DEFAULT);
-    //URHO3D_ATTRIBUTE("Speed", float, speed_, 0.0f, AM_DEFAULT);
-    //URHO3D_ATTRIBUTE("Turning Velocity", float, turningVelocity_, 0.0f, AM_DEFAULT);
     URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, bool, true, AM_DEFAULT);
-    //    URHO3D_ATTRIBUTE("On Ground", bool, vehicle_->GetRaycastVehicle()->GetCurrentSpeedKmHour(), 0.0f, AM_DEFAULT);
     URHO3D_ATTRIBUTE("Player Name", String, name_, String::EMPTY, AM_DEFAULT | AM_NET);
-
-
 }
 
 void NetworkActor::DelayedStart()
@@ -181,16 +167,16 @@ void NetworkActor::Init(Node* node) {
         markerNode->SetPosition(Vector3(0.0f,72.0f, -4.0f));
 
 
-        Node* modelNode = node_->CreateChild("Actor", REPLICATED);
+        Node* objectNode = node_->CreateChild("Actor", REPLICATED);
         //modelNode->SetScale(4.0f);
-        modelNode->SetScale(4.0f);
-        modelNode->SetPosition(Vector3(0.0f,0.0f, 0.0f));
-        modelNode->SetRotation(Quaternion(0, -90, 0.0f));
+        objectNode->SetScale(4.0f);
+        objectNode->SetPosition(Vector3(0.0f,0.0f, 0.0f));
+        objectNode->SetRotation(Quaternion(0, -90, 0.0f));
 
-        model_ = modelNode->CreateComponent<AnimatedModel>();
-        body_ = modelNode->CreateComponent<RigidBody>();
-        collisionShape_ = modelNode->CreateComponent<CollisionShape>();
-        animCtrl_ = modelNode->CreateComponent<AnimationController>();
+        model_ = objectNode->CreateComponent<AnimatedModel>();
+        body_ = objectNode->CreateComponent<RigidBody>();
+        collisionShape_ = objectNode->CreateComponent<CollisionShape>();
+        animCtrl_ = objectNode->CreateComponent<AnimationController>();
 
         model_->SetCastShadows(true);
 
@@ -208,15 +194,23 @@ void NetworkActor::Init(Node* node) {
         body_->SetLinearDamping(0.88f);
         body_->SetLinearRestThreshold(0.0f);
         body_->SetAngularDamping(0.8f);
+        // Set zero angular factor so that physics doesn't turn the character on its own.
+        // Instead we will control the character yaw manually
         body_->SetAngularFactor(Vector3::ZERO);
-        body_->SetAngularRestThreshold(0.0f);
+        // Set the rigidbody to signal collision also when in rest, so that we get ground collisions properly
+        body_->SetCollisionEventMode(COLLISION_ALWAYS);
+
         body_->SetCollisionLayer(2);
+
+
+        body_->SetAngularRestThreshold(0.0f);
+        //body_->SetCollisionLayer(2);
         body_->SetUseGravity(false);
 
         // Set rigid body kinematic mode. In kinematic mode forces are not applied to the rigid body.
         // Disable physics
       //  body_->SetKinematic(true);
-//        collisionShape_->SetCapsule(0.42f, 0.5f, Vector3::UP * 0.3f);
+        collisionShape_->SetCapsule(0.7f, 1.4f, Vector3::UP * 0.3f);
        // collisionShape_->SetCapsule(0.01f, 0.5f, Vector3::UP * 0.3f);
 
         animCtrl_->PlayExclusive(walkAniFile, 0, true);
@@ -352,13 +346,9 @@ void NetworkActor::AlignWithMovement(float timeStep) {
 
     targetRot.FromLookRotation(direction);
     rot = rot.Slerp(targetRot, Clamp(timeStep * 5.0f, 0.0f, 1.0f));
-    node_->SetRotation(rot);
 
     // Update the node with the body movement
-    GetNode()->SetPosition(body_->GetPosition());
-    //GetNode()->SetRotation(body_->GetRotation());
-
-
+    GetNode()->SetRotation(rot);
 
     // Apply Movement
 
@@ -482,16 +472,16 @@ void NetworkActor::FixedUpdate(float timeStep) {
 
         // Read controls generate vehicle control instruction
         if (controls_.buttons_ & NTWK_CTRL_LEFT) {
-            move_ = Vector3(-0.4f, 0.0f, 0.0f);
+            move_ = Vector3(-1.0f, 0.0f, 0.0f);
             //URHO3D_LOGDEBUG("NetworkActor -> **NTWK_CTRL_LEFT**");
         }
         if (controls_.buttons_ & NTWK_CTRL_RIGHT) {
-            move_ = Vector3(0.4f, 0.0f, 0.0f);
+            move_ = Vector3(1.0f, 0.0f, 0.0f);
             //URHO3D_LOGDEBUG("NetworkActor -> **NTWK_CTRL_RIGHT**");
         }
 
         if (controls_.buttons_ & NTWK_CTRL_FORWARD) {
-            move_ = Vector3(0.0f, 0.0f, 5.0f);
+            move_ = Vector3(0.0f, 0.0f, 1.0f);
             //URHO3D_LOGDEBUG("NetworkActor -> **NTWK_CTRL_FORWARD**");
         }
         if (controls_.buttons_ & NTWK_CTRL_BACK) {
