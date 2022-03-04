@@ -4947,6 +4947,7 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
 
         //actorPos = Quaternion(0,90,0) * (startPos+spawnDir*w);
         actorPos = Quaternion(0,0,0) * (startPos+spawnDir*w);
+        actor->GetNode()->SetPosition(actorPos);
 
         // Clamp y to start marker
         //actorPos.y_ = starAMarker_.y_;

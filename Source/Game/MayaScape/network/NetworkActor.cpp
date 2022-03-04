@@ -186,6 +186,7 @@ void NetworkActor::Init(Node* node) {
         modelNode->SetScale(4.0f);
         modelNode->SetPosition(Vector3(0.0f,0.0f, 0.0f));
         modelNode->SetRotation(Quaternion(0, -90, 0.0f));
+
         model_ = modelNode->CreateComponent<AnimatedModel>();
         body_ = modelNode->CreateComponent<RigidBody>();
         collisionShape_ = modelNode->CreateComponent<CollisionShape>();
@@ -206,6 +207,7 @@ void NetworkActor::Init(Node* node) {
         body_->SetRestitution(0.0f);
         body_->SetLinearDamping(0.88f);
         body_->SetLinearRestThreshold(0.0f);
+        body_->SetAngularDamping(0.8f);
         body_->SetAngularFactor(Vector3::ZERO);
         body_->SetAngularRestThreshold(0.0f);
         body_->SetCollisionLayer(2);
@@ -213,9 +215,9 @@ void NetworkActor::Init(Node* node) {
 
         // Set rigid body kinematic mode. In kinematic mode forces are not applied to the rigid body.
         // Disable physics
-        //body_->SetKinematic(true);
+      //  body_->SetKinematic(true);
 //        collisionShape_->SetCapsule(0.42f, 0.5f, Vector3::UP * 0.3f);
-        collisionShape_->SetCapsule(0.01f, 0.5f, Vector3::UP * 0.3f);
+       // collisionShape_->SetCapsule(0.01f, 0.5f, Vector3::UP * 0.3f);
 
         animCtrl_->PlayExclusive(walkAniFile, 0, true);
         animCtrl_->SetSpeed(walkAniFile, 0.2f);
@@ -332,6 +334,11 @@ void NetworkActor::FindTarget() {
 void NetworkActor::AlignWithMovement(float timeStep) {
     Quaternion rot{ node_->GetRotation() };
 
+    if (move_ == Vector3(0, 0, 0)) {
+        body_->SetAngularVelocity(Vector3(0,0,0));
+        body_->SetLinearVelocity(Vector3(0,0,0));
+    }
+
     // Next move
     move_ = move_.Normalized() * Pow(move_.Length() * 1.05f, 2.0f);
     if (move_.Length() > 1.0f)
@@ -346,6 +353,10 @@ void NetworkActor::AlignWithMovement(float timeStep) {
     targetRot.FromLookRotation(direction);
     rot = rot.Slerp(targetRot, Clamp(timeStep * 5.0f, 0.0f, 1.0f));
     node_->SetRotation(rot);
+
+    // Update the node with the body movement
+    GetNode()->SetPosition(body_->GetPosition());
+    //GetNode()->SetRotation(body_->GetRotation());
 
 
 
@@ -362,6 +373,7 @@ void NetworkActor::AlignWithMovement(float timeStep) {
         body_->ApplyForce(force);
     }
 
+
 }
 
 void NetworkActor::FixedUpdate(float timeStep) {
@@ -377,9 +389,7 @@ void NetworkActor::FixedUpdate(float timeStep) {
     //node_->SetRotation(body_->GetRotation());
 
 
-    // Update the node with the body movement
-    GetNode()->SetPosition(body_->GetPosition());
-    GetNode()->SetRotation(body_->GetRotation());
+
 
     if (toTarget_ == Vector3(0,0,0)) {
         FindTarget();
@@ -392,12 +402,12 @@ void NetworkActor::FixedUpdate(float timeStep) {
         vehicle_->setEnableControls(onVehicle_);
 
         // Snap to vehicle once
-        if (!initialSet_) {
+/*        if (!initialSet_) {
 //            this->position_ = vehicle_->GetRaycastVehicle()->GetNode()->GetPosition();
   //          node_->SetRotation(vehicle_->GetRaycastVehicle()->GetNode()->GetRotation());
             initialSet_ = true;
         }
-
+*/
 
 
         vehicle_->setActorNode(this->node_);
@@ -472,20 +482,20 @@ void NetworkActor::FixedUpdate(float timeStep) {
 
         // Read controls generate vehicle control instruction
         if (controls_.buttons_ & NTWK_CTRL_LEFT) {
-            move_ = Vector3(-1.0f, 0.0f, 0.0f);
+            move_ = Vector3(-0.4f, 0.0f, 0.0f);
             //URHO3D_LOGDEBUG("NetworkActor -> **NTWK_CTRL_LEFT**");
         }
         if (controls_.buttons_ & NTWK_CTRL_RIGHT) {
-            move_ = Vector3(1.0f, 0.0f, 0.0f);
+            move_ = Vector3(0.4f, 0.0f, 0.0f);
             //URHO3D_LOGDEBUG("NetworkActor -> **NTWK_CTRL_RIGHT**");
         }
 
         if (controls_.buttons_ & NTWK_CTRL_FORWARD) {
-            move_ = Vector3(0.0f, 0.0f, 10.0f);
+            move_ = Vector3(0.0f, 0.0f, 5.0f);
             //URHO3D_LOGDEBUG("NetworkActor -> **NTWK_CTRL_FORWARD**");
         }
         if (controls_.buttons_ & NTWK_CTRL_BACK) {
-            move_ = Vector3(0.0f, 0.0f, -1.0f);
+            move_ = Vector3(0.0f, 0.0f, 0.0f);
         }
 
         if (controls_.buttons_ & NTWK_CTRL_FLIP) {
