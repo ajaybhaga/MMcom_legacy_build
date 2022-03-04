@@ -3500,7 +3500,7 @@ void MayaScape::MoveCamera(float timeStep) {
 
                     //BLUE-304-vehicle
 
-                    Vector3 startPos;
+                    Vector3 bodyPos;
                     Quaternion rotation;
 
                     if (actorNode) {
@@ -3513,13 +3513,10 @@ void MayaScape::MoveCamera(float timeStep) {
                                 auto* body = na->GetNode()->GetComponent<RigidBody>(true);
                                 if (body) {
                                     // CLIENT RIGID BODY RETRIEVED
-                                    startPos = body->GetPosition();
-                                    rotation = body->GetRotation();
+                                    bodyPos = body->GetPosition();
+                                    rotation = na->GetNode()->GetRotation();
                                 }
                             }
-
-
-                            /// NEW CAM CODE
 
                             // Client: Move Camera
 
@@ -3528,7 +3525,7 @@ void MayaScape::MoveCamera(float timeStep) {
                             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
                             debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
                             debugText_[k]->SetVisible(true);
-                            debugText_[k]->SetText(String("Actor Pos -> ") + String(startPos.ToString()));
+                            debugText_[k]->SetText(String("Actor Pos -> ") + String(bodyPos.ToString()));
                             k++;
                             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
                             debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
@@ -3542,7 +3539,7 @@ void MayaScape::MoveCamera(float timeStep) {
                             k++;
 
 //////
-                            if (startPos != Vector3(0, 0, 0)) {
+/*                            if (bodyPos != Vector3(0, 0, 0)) {
 
                                 // Physics update has completed. Position camera behind vehicle
                                 vehicleRot_ = SmoothStepAngle(vehicleRot_, actorNode->GetRotation(),
@@ -3551,10 +3548,10 @@ void MayaScape::MoveCamera(float timeStep) {
                                 dir = dir * Quaternion(yaw_, Vector3::UP);
                                 dir = dir * Quaternion(pitch_, Vector3::RIGHT);
 
-                                Vector3 actorPos = startPos + Vector3::UP*0.2f;
+                                Vector3 actorPos = bodyPos + Vector3::UP*2.2f;
                                 float curDist = (actorPos - targetCameraPos_).Length();
 
-                                curDist = SpringDamping(curDist, CLIENT_CAMERA_DISTANCE / 8, springVelocity_, damping,
+                                curDist = SpringDamping(curDist, CLIENT_CAMERA_DISTANCE / 4, springVelocity_, damping,
                                                         maxVel, timeStep);
                                 targetCameraPos_ = actorPos - dir * Vector3(0.0f, 0.0f, curDist);
 
@@ -3587,12 +3584,41 @@ void MayaScape::MoveCamera(float timeStep) {
                                 clientCam_->GetNode()->SetPosition(cameraTargetPos);
                                 clientCam_->GetNode()->SetRotation(dir);
 
+                                */
+///
+float m = 1.2f;
+                            const float CAMERA_MIN_DIST = 3.0f * m;
+                            const float CAMERA_INITIAL_DIST = 6.0f * m;
+                            const float CAMERA_MAX_DIST = 30.0f * m;
 
-                                /////
+
+                                // Get camera lookat dir from character yaw + pitch
+                                const Quaternion& rot = rotation;
+                                Quaternion dir = rot * Quaternion(na->controls_.pitch_, Vector3::RIGHT);
+
+                                // Third person camera: position behind the character
+                                Vector3 aimPoint = bodyPos + rot * Vector3(0.0f, 1.7f, 0.0f);
+
+                                // Collide camera ray with static physics objects (layer bitmask 2) to ensure we see the character properly
+                                Vector3 rayDir = dir * Vector3::BACK;
+                                float rayDistance = CAMERA_INITIAL_DIST;
+                                PhysicsRaycastResult result;
+                                scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result, Ray(aimPoint, rayDir), rayDistance, 2);
+                                if (result.body_)
+                                    rayDistance = Min(rayDistance, result.distance_);
+                                rayDistance = Clamp(rayDistance, CAMERA_MIN_DIST, CAMERA_MAX_DIST);
+
+  //                              cameraNode_->SetPosition(aimPoint + rayDir * rayDistance);
+//                                cameraNode_->SetRotation(dir);
+
+                                clientCam_->GetNode()->SetPosition(aimPoint + rayDir * rayDistance);
+                                clientCam_->GetNode()->SetRotation(dir);
+
+                            /////
                             }
                         }
 
-                    }
+
 
                     String vehicleName = clientName_ + String("-vehicle");
                     Node *vehicleNode = scene_->GetChild(vehicleName);
