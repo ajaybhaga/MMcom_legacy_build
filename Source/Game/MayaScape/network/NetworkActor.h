@@ -71,6 +71,7 @@ public:
     void SetConnection(Connection* connection);
     void Init(Node* node);
 
+    void HandleNodeCollision(StringHash eventType, VariantMap& eventData);
 
     const WeakPtr<Connection> GetConnection() const { return connection_; }
     void SetNode(Node* node);
@@ -139,10 +140,6 @@ public:
 
     void Flip();
 
-
-
-
-
     SharedPtr<Vehicle> GetVehicle() { return vehicle_; }
 
     void FindTarget();
@@ -153,10 +150,14 @@ public:
 
     void Kill();
 
-    // Player node collision
-    void HandlePlayerCollision(StringHash eventType, VariantMap &eventData);
+    void ApplyMovement(float timeStep);
 
-    void AlignWithMovement(float timeStep);
+    /// Grounded flag for movement.
+    bool onGround_;
+    /// Jump flag.
+    bool okToJump_;
+    /// In air timer. Due to possible physics inaccuracy, character can be off ground for max. 1/10 second and still be allowed to move.
+    float inAirTimer_;
 
 
 public:

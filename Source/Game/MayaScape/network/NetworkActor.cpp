@@ -40,6 +40,7 @@
 
 
 #include "NetworkActor.h"
+#include "Urho3D/IO/MemoryBuffer.h"
 
 #include <Urho3D/DebugNew.h>
 #include <MayaScape/Missile.h>
@@ -76,7 +77,10 @@ NetworkActor::NetworkActor(Context *context)
         alive_(true),
         onVehicle_(false),
         enableControls_(false),
-        initialSet_(false)
+        initialSet_(false),
+          onGround_(false),
+          okToJump_(true),
+          inAirTimer_(0.0f)
         {
       SetUpdateEventMask(USE_NO_EVENT);
 
@@ -96,7 +100,10 @@ NetworkActor::NetworkActor(Context *context)
 
 
     thrust_   = 1024.0f;
-    maxSpeed_ = 1.23f;
+    maxSpeed_ = 100.23f;
+
+    onGround_ = false;
+
 }
 
 NetworkActor::~NetworkActor() {
@@ -146,8 +153,15 @@ void NetworkActor::RegisterObject(Context *context) {
 
     ClientObj::RegisterObject(context);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, bool, true, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Player Name", String, name_, String::EMPTY, AM_DEFAULT | AM_NET);
+    //URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, bool, true, AM_DEFAULT);
+    //URHO3D_ATTRIBUTE("Player Name", String, name_, String::EMPTY, AM_DEFAULT | AM_NET);
+    URHO3D_ATTRIBUTE("Controls Yaw", float, controls_.yaw_, 0.0f, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("Controls Pitch", float, controls_.pitch_, 0.0f, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("On Ground", bool, onGround_, false, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("OK To Jump", bool, okToJump_, true, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("In Air Timer", float, inAirTimer_, 0.0f, AM_DEFAULT);
+
+
 }
 
 void NetworkActor::DelayedStart()
@@ -171,12 +185,17 @@ void NetworkActor::Init(Node* node) {
         //modelNode->SetScale(4.0f);
         objectNode->SetScale(4.0f);
         objectNode->SetPosition(Vector3(0.0f,0.0f, 0.0f));
-        objectNode->SetRotation(Quaternion(0, -90, 0.0f));
+//        objectNode->SetRotation(Quaternion(0, -90, 0.0f));
 
-        model_ = objectNode->CreateComponent<AnimatedModel>();
+        // spin node
+        Node* adjustNode = objectNode->CreateChild("AdjNode");
+        adjustNode->SetRotation( Quaternion(-90, Vector3(0,1,0) ) );
+
+
+        model_ = adjustNode->CreateComponent<AnimatedModel>();
         body_ = objectNode->CreateComponent<RigidBody>();
         collisionShape_ = objectNode->CreateComponent<CollisionShape>();
-        animCtrl_ = objectNode->CreateComponent<AnimationController>();
+        animCtrl_ = adjustNode->CreateComponent<AnimationController>();
 
         model_->SetCastShadows(true);
 
@@ -199,14 +218,9 @@ void NetworkActor::Init(Node* node) {
         body_->SetAngularFactor(Vector3::ZERO);
         // Set the rigidbody to signal collision also when in rest, so that we get ground collisions properly
         body_->SetCollisionEventMode(COLLISION_ALWAYS);
-
         body_->SetCollisionLayer(2);
-
-
         body_->SetAngularRestThreshold(0.0f);
         //body_->SetCollisionLayer(2);
-        body_->SetUseGravity(false);
-
         // Set rigid body kinematic mode. In kinematic mode forces are not applied to the rigid body.
         // Disable physics
       //  body_->SetKinematic(true);
@@ -325,7 +339,7 @@ void NetworkActor::FindTarget() {
     }
 }
 
-void NetworkActor::AlignWithMovement(float timeStep) {
+void NetworkActor::ApplyMovement(float timeStep) {
     Quaternion rot{ node_->GetRotation() };
 
     if (move_ == Vector3(0, 0, 0)) {
@@ -339,7 +353,7 @@ void NetworkActor::AlignWithMovement(float timeStep) {
         move_.Normalize();
 
     Quaternion targetRot{};
-    Vector3 direction{ 0.13f * move_ + body_->GetLinearVelocity() * Vector3{ 1.0f, 0.0f, 1.0f }};
+    Vector3 direction{ 0.40f * move_ + body_->GetLinearVelocity() * Vector3{ 1.0f, 0.0f, 1.0f }};
 
     if (direction.Length() < 0.1f)
         return;
@@ -355,7 +369,7 @@ void NetworkActor::AlignWithMovement(float timeStep) {
     // Apply force to rigid body of actor
     bool run = false;
     Vector3 force{ move_.Length() < 0.05f ? Vector3::ZERO : move_ * thrust_ * timeStep };
-    force *= 1.0f + 0.23f * run;
+    force *= 1.0f + 0.25f * run;
 
     if (body_->GetLinearVelocity().Length() < (maxSpeed_ * (1.0f + 0.42f * run))
          || (body_->GetLinearVelocity().Normalized() + force.Normalized()).Length() < M_SQRT2 )
@@ -374,11 +388,12 @@ void NetworkActor::FixedUpdate(float timeStep) {
     // DEBUG DRAW
     DebugDraw();
 
-    // Set client object
-    //node_->SetPosition(body_->GetPosition());
-    //node_->SetRotation(body_->GetRotation());
 
-
+    // Update the in air timer. Reset if grounded
+    if (!onGround_)
+        inAirTimer_ += timeStep;
+    else
+        inAirTimer_ = 0.0f;
 
 
     if (toTarget_ == Vector3(0,0,0)) {
@@ -406,26 +421,17 @@ void NetworkActor::FixedUpdate(float timeStep) {
         Vector3 delta = toTarget_-vehicle_->GetNode()->GetWorldPosition();
         double angleRadians = atan2(delta.z_, delta.x_);
 
-        // The towards vector according to the angle
-        //towards_ = Vector3(cos(angleRadians * PI / 180.0f), 0, sin(angleRadians * PI / 180.0f));
-        //int degrees = vehicle_->GetNode()->GetRotation().y_+round((angleRadians * 180.0f / PI)-90.0f);
-
         // Update rotation according to direction of the player's movement.
         Vector3 velocity = body_->GetLinearVelocity();
 
-//    Vector3 lookDirection{ velocity + 2.0f * aim_ };
-//    Quaternion rotation{ node_->GetWorldRotation() };
-//    Quaternion aimRotation{ rotation };
-//    aimRotation.FromLookRotation(lookDirection);
-//    node_->SetRotation(rotation.Slerp(aimRotation, 7.0f * timeStep * velocity.Length()));
-        AlignWithMovement(timeStep);
-
+        // Align model and apply movement to body
+        ApplyMovement(timeStep);
 
         // Update animation
         if (velocity.Length() > 0.1f) {
 
             animCtrl_->PlayExclusive(walkAniFile, 1, true, 0.15f);
-            animCtrl_->SetSpeed(walkAniFile, velocity.Length() * 2.3f);
+            animCtrl_->SetSpeed(walkAniFile, velocity.Length() * 0.2f);
             animCtrl_->SetStartBone(walkAniFile, "Ctrl_all");
 
         } else {
@@ -448,10 +454,6 @@ void NetworkActor::FixedUpdate(float timeStep) {
 
     }
 
-    // update serializable of the change
-    //SetAttribute("Color Index", Variant(50));
-    //SetAttribute("Position", Variant(node_->GetPosition()));
-
     // update prev
     lastFire_ += timeStep;
 
@@ -472,17 +474,17 @@ void NetworkActor::FixedUpdate(float timeStep) {
 
         // Read controls generate vehicle control instruction
         if (controls_.buttons_ & NTWK_CTRL_LEFT) {
-            move_ = Vector3(-1.0f, 0.0f, 0.0f);
-            //URHO3D_LOGDEBUG("NetworkActor -> **NTWK_CTRL_LEFT**");
+            move_ += Vector3::LEFT;
+            controls_.yaw_ += -1.0f;
         }
+
         if (controls_.buttons_ & NTWK_CTRL_RIGHT) {
-            move_ = Vector3(1.0f, 0.0f, 0.0f);
-            //URHO3D_LOGDEBUG("NetworkActor -> **NTWK_CTRL_RIGHT**");
+            move_ += Vector3::RIGHT;
+            controls_.yaw_ += 1.0f;
         }
 
         if (controls_.buttons_ & NTWK_CTRL_FORWARD) {
-            move_ = Vector3(0.0f, 0.0f, 1.0f);
-            //URHO3D_LOGDEBUG("NetworkActor -> **NTWK_CTRL_FORWARD**");
+            move_ += Vector3::FORWARD;
         }
         if (controls_.buttons_ & NTWK_CTRL_BACK) {
             move_ = Vector3(0.0f, 0.0f, 0.0f);
@@ -498,6 +500,11 @@ void NetworkActor::FixedUpdate(float timeStep) {
             //fire = true;
             //URHO3D_LOGDEBUGF("%s -> FIRE = %l", vehicleName.CString(), controls_.buttons_);
         }
+
+
+        // Normalize move vector
+        if (move_.LengthSquared() > 0.0f)
+            move_.Normalize();
     }
 
 }
@@ -824,4 +831,28 @@ bool NetworkActor::isSteerSet() const {
 
 const Vector3 &NetworkActor::getToTarget() const {
     return toTarget_;
+}
+
+void NetworkActor::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
+{
+    // Check collision contacts and see if character is standing on ground (look for a contact that has near vertical normal)
+    using namespace NodeCollision;
+
+    MemoryBuffer contacts(eventData[P_CONTACTS].GetBuffer());
+
+    while (!contacts.IsEof())
+    {
+        Vector3 contactPosition = contacts.ReadVector3();
+        Vector3 contactNormal = contacts.ReadVector3();
+        /*float contactDistance = */contacts.ReadFloat();
+        /*float contactImpulse = */contacts.ReadFloat();
+
+        // If contact is below node center and pointing up, assume it's a ground contact
+        if (contactPosition.y_ < (node_->GetPosition().y_ + 1.0f))
+        {
+            float level = contactNormal.y_;
+            if (level > 0.75)
+                onGround_ = true;
+        }
+    }
 }

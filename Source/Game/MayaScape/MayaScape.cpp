@@ -1933,6 +1933,11 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
 
                             pos = actor->vehicle_->GetNode()->GetPosition();
                             rot = actor->vehicle_->GetNode()->GetRotation();
+
+
+                            // Set rotation already here so that it's updated every rendering frame instead of every physics frame
+                            actor->GetNode()->SetRotation(Quaternion(actor->controls_.yaw_, Vector3::UP));
+
                             noWheelContactTime = actor->vehicle_->GetRaycastVehicle()->getNoWheelContactTime();
 
 //                            wheelsContactNum = actor->vehicle_->GetRaycastVehicle()->getNumWheelsContact();
@@ -3503,12 +3508,6 @@ void MayaScape::MoveCamera(float timeStep) {
                         ClientObj *actor = actorNode->GetDerivedComponent<ClientObj>();
 
                         if (actor) {
-                            // Snap camera to actor once available
-/*                            Vector3 startPos = actorNode->GetNetPositionAttr();
-                            MemoryBuffer buf(actor->GetNode()->GetNetRotationAttr());
-                            Quaternion rotation = buf.ReadPackedQuaternion();
-*/
-
                             NetworkActor *na = actorNode->GetDerivedComponent<NetworkActor>();
                             if (na) {
                                 auto* body = na->GetNode()->GetComponent<RigidBody>(true);
@@ -3518,7 +3517,6 @@ void MayaScape::MoveCamera(float timeStep) {
                                     rotation = body->GetRotation();
                                 }
                             }
-
 
 
                             /// NEW CAM CODE
@@ -3553,10 +3551,10 @@ void MayaScape::MoveCamera(float timeStep) {
                                 dir = dir * Quaternion(yaw_, Vector3::UP);
                                 dir = dir * Quaternion(pitch_, Vector3::RIGHT);
 
-                                Vector3 actorPos = startPos;
+                                Vector3 actorPos = startPos + Vector3::UP*0.2f;
                                 float curDist = (actorPos - targetCameraPos_).Length();
 
-                                curDist = SpringDamping(curDist, CLIENT_CAMERA_DISTANCE / 3, springVelocity_, damping,
+                                curDist = SpringDamping(curDist, CLIENT_CAMERA_DISTANCE / 8, springVelocity_, damping,
                                                         maxVel, timeStep);
                                 targetCameraPos_ = actorPos - dir * Vector3(0.0f, 0.0f, curDist);
 
