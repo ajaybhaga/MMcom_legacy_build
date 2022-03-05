@@ -822,8 +822,8 @@ Controls MayaScape::SampleCSPControls()
     }
 
 
-    float actorAccel = rStick.GetVector2().y_ * 1.25f;
-    ntwkControls_.yaw_ += (float)lAxisVal.x_*120.0f * YAW_SENSITIVITY;
+    float actorAccel = lStick.GetVector2().y_ * 1.25f;
+    ntwkControls_.yaw_ += (float)lAxisVal.x_*360.0f * YAW_SENSITIVITY;
 
     bool accel = (input->GetKeyDown(KEY_W) || ntwkControls_.IsDown(BUTTON_B) || (actorAccel < -0.9f));
     bool fire = input->GetKeyDown(KEY_SPACE) || ntwkControls_.IsDown(BUTTON_A);
