@@ -2418,13 +2418,24 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
 
                         auto *actor = dynamic_cast<NetworkActor *>(aiActorMap_[i].Get());
                         if (actor) {
+
+                            //Vector3 camPos = actor->GetNode()->GetPosition();
+                            Vector3 camPos = actor->GetBody()->GetPosition();
+
+                            //Vector3 camPos = actor->GetNode()->GetPosition();
+                            // Store ai actor vehicle position for server cam
+                            camPosList.Push(camPos);
+
+
+
                             if (actor->vehicle_) {
                                 Node *node = actor->vehicle_->GetNode();
-                                if (!node) return;
+                                //if (!node) return;
 
-                                Vector3 camPos = actor->vehicle_->GetNode()->GetPosition();
+                              //  Vector3 camPos = actor->vehicle_->GetNode()->GetPosition();
+                                //Vector3 camPos = actor->GetNode()->GetPosition();
                                 // Store ai actor vehicle position for server cam
-                                camPosList.Push(camPos);
+                            //    camPosList.Push(camPos);
                             }
                         }
 
@@ -2461,17 +2472,40 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
 
                                         float velMult = 8.0f;
 
-                                        // Zoom up on body velocity increase
-                                        Vector3 cameraTargetPos =
-                                                actor->vehicle_->GetBody()->GetPosition() + forward *
-                                                                                            Vector3(actor->vehicle_->GetBody()->GetLinearVelocity().Length() *
-                                                                                                    velMult,
-                                                                                                    (actor->vehicle_->GetNode()->GetPosition().y_ +
-                                                                                                     CAMERA_RAY_DISTANCE_LIMIT +
-                                                                                                     12.0f) +
-                                                                                                    (botSpeedKm * 2.7),
-                                                                                                    actor->vehicle_->GetBody()->GetLinearVelocity().Length() *
-                                                                                                    velMult) * 0.9f;
+                                        Vector3 cameraTargetPos;
+                                        if (actor->onVehicle_) {
+
+                                            // On vehicle
+
+                                            // Zoom up on body velocity increase
+                                            cameraTargetPos =
+                                                    actor->vehicle_->GetBody()->GetPosition() + forward *
+                                                                                                Vector3(actor->vehicle_->GetBody()->GetLinearVelocity().Length() *
+                                                                                                        velMult,
+                                                                                                        (actor->vehicle_->GetNode()->GetPosition().y_ +
+                                                                                                         CAMERA_RAY_DISTANCE_LIMIT +
+                                                                                                         12.0f) +
+                                                                                                        (botSpeedKm *
+                                                                                                         2.7),
+                                                                                                        actor->vehicle_->GetBody()->GetLinearVelocity().Length() *
+                                                                                                        velMult) * 0.9f;
+                                        } else {
+                                            // On foot
+
+                                            // Zoom up on body velocity increase
+                                            cameraTargetPos =
+                                                    actor->GetBody()->GetPosition() + forward *
+                                                                                                Vector3(actor->GetBody()->GetLinearVelocity().Length() *
+                                                                                                        velMult,
+                                                                                                        (actor->GetNode()->GetPosition().y_ +
+                                                                                                         CAMERA_RAY_DISTANCE_LIMIT +
+                                                                                                         12.0f) +
+                                                                                                        (botSpeedKm *
+                                                                                                         2.7),
+                                                                                                        actor->GetBody()->GetLinearVelocity().Length() *
+                                                                                                        velMult) * 0.9f;
+
+                                        }
                                         Vector3 cameraStartPos = serverCam_->GetNode()->GetPosition();
 
                                         // Camera ray cast limiter
@@ -2665,7 +2699,7 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                             camPosList[camMode_ - 1] + forward*Vector3(actor->vehicle_->GetBody()->GetLinearVelocity().Length()*velMult, (actor->vehicle_->GetNode()->GetPosition().y_+CAMERA_RAY_DISTANCE_LIMIT+12.0f)+(botSpeedKm*2.7), actor->vehicle_->GetBody()->GetLinearVelocity().Length()*velMult)*0.9f;
 */
                                             Vector3 cameraTargetPos =
-                                                    camPosList[camMode_ - 1] + forward * Vector3(1, 140.0f, 1) * 0.9f;
+                                                    camPosList[camMode_ - 1] + forward * Vector3(1, 20.0f, 1) * 0.9f;
                                             //actor->vehicle_->GetBody()->GetLinearVelocity().Length()*velMult, actor->vehicle_->GetNode()->GetPosition().y_+(botSpeedKm*1.0), actor->vehicle_->GetBody()->GetLinearVelocity().Length()*velMult
                                             Vector3 cameraStartPos = serverCam_->GetNode()->GetPosition();
 
@@ -2676,9 +2710,19 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                             PhysicsRaycastResult result;
 
                                             bool stopMove = false;
-                                            // Adjust camera up to ray length
-                                            if (cameraRayLength < CAMERA_RAY_DISTANCE_LIMIT) {
-                                                stopMove = true;
+
+                                            if (actor->onVehicle_) {
+
+                                                // Adjust camera up to ray length
+                                                if (cameraRayLength < CAMERA_RAY_DISTANCE_LIMIT) {
+                                                    stopMove = true;
+                                                }
+                                            } else {
+                                                // On foot
+                                                // Adjust camera up to ray length
+                                                if (cameraRayLength < CAMERA_RAY_DISTANCE_LIMIT/8) {
+                                                    stopMove = true;
+                                                }
                                             }
 
                                             if (cameraRayLength < 10.0f) {
@@ -5080,9 +5124,15 @@ NetworkActor *MayaScape::SpawnPlayer(unsigned int id) {
 
         float w = 0.14f*id;
 
+        //float w = 1.2;
+
+        //actorPos = Quaternion(0,90,0) * (startPos+spawnDir*w);
+//        actorPos = Quaternion(0,0,0) * (startPos+spawnDir*w);
+
+
         //actorPos = Quaternion(0,90,0) * (startPos+spawnDir*w);
         actorPos = Quaternion(0,0,0) * (startPos+spawnDir*w);
-
+        actor->GetNode()->SetPosition(actorPos);
         // Clamp y to start marker
         //actorPos.y_ = starAMarker_.y_;
 

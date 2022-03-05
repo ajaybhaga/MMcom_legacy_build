@@ -110,6 +110,7 @@ public:
 
     float GetMass() { return mass_; }
     void SetMass(float m_mass) { mass_ = m_mass; }
+    SharedPtr<RigidBody> GetBody() { return body_; }
 
     Controls GetControls() { return controls_; }
 
