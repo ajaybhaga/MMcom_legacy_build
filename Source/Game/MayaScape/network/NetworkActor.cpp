@@ -341,16 +341,12 @@ void NetworkActor::FindTarget() {
 
 void NetworkActor::ApplyMovement(float timeStep) {
     Quaternion rot{ node_->GetRotation() };
-/*
-    if (move_ == Vector3(0, 0, 0)) {
-        body_->SetAngularVelocity(Vector3(0,0,0));
-        body_->SetLinearVelocity(Vector3(0,0,0));
-    }*/
 
     // Next move
     move_ = move_.Normalized() * Pow(move_.Length() * 1.05f, 2.0f);
-    if (move_.Length() > 1.0f)
+    if (move_.LengthSquared() > 0.0f)
         move_.Normalize();
+
 
     Quaternion targetRot{};
     Vector3 direction{ 0.40f * move_ + body_->GetLinearVelocity() * Vector3{ 1.0f, 0.0f, 1.0f }};
@@ -366,6 +362,12 @@ void NetworkActor::ApplyMovement(float timeStep) {
 
     // Apply Movement
 
+    // If in air, allow control, but slower than when on ground
+    //body_->ApplyImpulse(rot * move_ * (softGrounded ? MOVE_FORCE : INAIR_MOVE_FORCE));
+    const float MOVE_FORCE = 0.8f;
+    body_->ApplyImpulse(rot * move_ * MOVE_FORCE);
+
+/*
     // Apply force to rigid body of actor
     bool run = false;
     Vector3 force{ move_.Length() < 0.05f ? Vector3::ZERO : move_ * thrust_ * timeStep };
@@ -376,7 +378,7 @@ void NetworkActor::ApplyMovement(float timeStep) {
     {
         body_->ApplyForce(force);
     }
-
+*/
 
 }
 

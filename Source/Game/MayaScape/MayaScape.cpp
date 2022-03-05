@@ -839,7 +839,7 @@ Controls MayaScape::SampleCSPControls()
 
 
     float actorAccel = rStick.GetVector2().y_ * 1.25f;
-    ntwkControls_.yaw_ += (float)lAxisVal.x_*5.0f * YAW_SENSITIVITY;
+    ntwkControls_.yaw_ += (float)lAxisVal.x_*120.0f * YAW_SENSITIVITY;
 
     bool accel = (input->GetKeyDown(KEY_W) || ntwkControls_.IsDown(BUTTON_B) || (actorAccel < -0.9f));
     bool fire = input->GetKeyDown(KEY_SPACE) || ntwkControls_.IsDown(BUTTON_A);
@@ -3517,7 +3517,7 @@ void MayaScape::MoveCamera(float timeStep) {
                         if (actor) {
                             NetworkActor *na = actorNode->GetDerivedComponent<NetworkActor>();
                             if (na) {
-                                auto* body = na->GetNode()->GetComponent<RigidBody>(true);
+                                auto *body = na->GetNode()->GetComponent<RigidBody>(true);
                                 if (body) {
                                     // CLIENT RIGID BODY RETRIEVED
                                     bodyPos = body->GetPosition();
@@ -3554,16 +3554,16 @@ void MayaScape::MoveCamera(float timeStep) {
 
 
 //////
-/*                            if (bodyPos != Vector3(0, 0, 0)) {
+                            if (bodyPos != Vector3(0, 0, 0)) {
 
                                 // Physics update has completed. Position camera behind vehicle
-                                vehicleRot_ = SmoothStepAngle(vehicleRot_, actorNode->GetRotation(),
-                                                              timeStep * rotLerpRate);
-                                Quaternion dir(vehicleRot_.YawAngle(), Vector3::UP);
+                                Quaternion actorRot_ = SmoothStepAngle(rotation, actorNode->GetRotation(),
+                                                                       timeStep * rotLerpRate);
+                                Quaternion dir(actorRot_.YawAngle(), Vector3::UP);
                                 dir = dir * Quaternion(yaw_, Vector3::UP);
                                 dir = dir * Quaternion(pitch_, Vector3::RIGHT);
 
-                                Vector3 actorPos = bodyPos + Vector3::UP*2.2f;
+                                Vector3 actorPos = bodyPos + Vector3::UP * 2.2f;
                                 float curDist = (actorPos - targetCameraPos_).Length();
 
                                 curDist = SpringDamping(curDist, CLIENT_CAMERA_DISTANCE / 4, springVelocity_, damping,
@@ -3599,92 +3599,61 @@ void MayaScape::MoveCamera(float timeStep) {
                                 clientCam_->GetNode()->SetPosition(cameraTargetPos);
                                 clientCam_->GetNode()->SetRotation(dir);
 
-                                */
-///
-float m = 1.2f;
-                            const float CAMERA_MIN_DIST = 3.0f * m;
-                            const float CAMERA_INITIAL_DIST = 6.0f * m;
-                            const float CAMERA_MAX_DIST = 30.0f * m;
-
-
-                                // Get camera lookat dir from character yaw + pitch
-                                const Quaternion& rot = rotation;
-                                Quaternion dir = rot * Quaternion(na->controls_.pitch_, Vector3::RIGHT);
-
-                                // Third person camera: position behind the character
-                                Vector3 aimPoint = bodyPos + rot * Vector3(0.0f, 1.7f, 0.0f);
-
-                                // Collide camera ray with static physics objects (layer bitmask 2) to ensure we see the character properly
-                                Vector3 rayDir = dir * Vector3::BACK;
-                                float rayDistance = CAMERA_INITIAL_DIST;
-                                PhysicsRaycastResult result;
-                                scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result, Ray(aimPoint, rayDir), rayDistance, 2);
-                                if (result.body_)
-                                    rayDistance = Min(rayDistance, result.distance_);
-                                rayDistance = Clamp(rayDistance, CAMERA_MIN_DIST, CAMERA_MAX_DIST);
-
-  //                              cameraNode_->SetPosition(aimPoint + rayDir * rayDistance);
-//                                cameraNode_->SetRotation(dir);
-
-                                clientCam_->GetNode()->SetPosition(aimPoint + rayDir * rayDistance);
-                                clientCam_->GetNode()->SetRotation(dir);
-
-                            /////
+                                /////
                             }
                         }
 
 
+                        String vehicleName = clientName_ + String("-vehicle");
+                        Node *vehicleNode = scene_->GetChild(vehicleName);
 
-                    String vehicleName = clientName_ + String("-vehicle");
-                    Node *vehicleNode = scene_->GetChild(vehicleName);
+                        // Locate vehicle node
+                        if (vehicleNode) {
 
-                    // Locate vehicle node
-                    if (vehicleNode) {
+                            // Retrieve Vehicle
+                            ClientObj *vehicle = vehicleNode->GetDerivedComponent<ClientObj>();
 
-                        // Retrieve Vehicle
-                        ClientObj *vehicle = vehicleNode->GetDerivedComponent<ClientObj>();
+                            if (vehicle) {
+                                // Snap camera to vehicle once available
+                                Vector3 startPos = vehicle->GetNode()->GetNetPositionAttr();
+                                MemoryBuffer buf(vehicle->GetNode()->GetNetRotationAttr());
+                                Quaternion rotation = buf.ReadPackedQuaternion();
 
-                        if (vehicle) {
-                            // Snap camera to vehicle once available
-                            Vector3 startPos = vehicle->GetNode()->GetNetPositionAttr();
-                            MemoryBuffer buf(vehicle->GetNode()->GetNetRotationAttr());
-                            Quaternion rotation = buf.ReadPackedQuaternion();
+                                // Show message on first snap
+                                if (!isSnapped_) {
+                                    isSnapped_ = true;
 
-                            // Show message on first snap
-                            if (!isSnapped_) {
-                                isSnapped_ = true;
-
-                                URHO3D_LOGDEBUG(
-                                        "--- Retrieved vehicle -> can snap camera -> Actor [" +
-                                        String(startPos.x_) + "," +
-                                        String(startPos.y_) + "," +
-                                        String(startPos.z_) + "]");
-                            }
-
-
-                            debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-                            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
-                            debugText_[k]->SetVisible(true);
-                            debugText_[k]->SetText(String("Vehicle Pos -> ") + String(startPos.ToString()));
-                            k++;
-                            debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-                            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
-                            debugText_[k]->SetVisible(true);
-                            debugText_[k]->SetText(String("Vehicle Rot -> ") + String(rotation.ToString()));
-                            k++;
-                            debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-                            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
-                            debugText_[k]->SetVisible(true);
-                            debugText_[k]->SetText(String("Vehicle -> ") + String(vehicleName));
-                            k++;
+                                    URHO3D_LOGDEBUG(
+                                            "--- Retrieved vehicle -> can snap camera -> Actor [" +
+                                            String(startPos.x_) + "," +
+                                            String(startPos.y_) + "," +
+                                            String(startPos.z_) + "]");
+                                }
 
 
-                            // Object location for camera
-                            Vector3 snap = Vector3(startPos);
-                            snap.y_ += 230.0f;
-                            snap.x_ -= 120.0f;
-                            snap.z_ -= 120.0f;
-                            //Vector3 snap = server->GetFocusObjects().Empty() ? Vector3(0, 35.0, 0) : server->GetFocusObjects()[0];
+                                debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
+                                debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                                debugText_[k]->SetVisible(true);
+                                debugText_[k]->SetText(String("Vehicle Pos -> ") + String(startPos.ToString()));
+                                k++;
+                                debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
+                                debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                                debugText_[k]->SetVisible(true);
+                                debugText_[k]->SetText(String("Vehicle Rot -> ") + String(rotation.ToString()));
+                                k++;
+                                debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
+                                debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                                debugText_[k]->SetVisible(true);
+                                debugText_[k]->SetText(String("Vehicle -> ") + String(vehicleName));
+                                k++;
+
+
+                                // Object location for camera
+                                Vector3 snap = Vector3(startPos);
+                                snap.y_ += 230.0f;
+                                snap.x_ -= 120.0f;
+                                snap.z_ -= 120.0f;
+                                //Vector3 snap = server->GetFocusObjects().Empty() ? Vector3(0, 35.0, 0) : server->GetFocusObjects()[0];
 
 
 /*
@@ -3747,13 +3716,13 @@ float m = 1.2f;
                                 clientCam_->GetNode()->LookAt(startPos);
                             }*/
 
+                            }
                         }
                     }
                 }
             }
         }
     }
-}
 
 
 
@@ -3809,7 +3778,7 @@ float m = 1.2f;
 
                                 }
 */
-
+}
 
 
 void MayaScape::NodeRegisterLoadTriggers(Node *node)
