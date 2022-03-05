@@ -341,11 +341,11 @@ void NetworkActor::FindTarget() {
 
 void NetworkActor::ApplyMovement(float timeStep) {
     Quaternion rot{ node_->GetRotation() };
-
+/*
     if (move_ == Vector3(0, 0, 0)) {
         body_->SetAngularVelocity(Vector3(0,0,0));
         body_->SetLinearVelocity(Vector3(0,0,0));
-    }
+    }*/
 
     // Next move
     move_ = move_.Normalized() * Pow(move_.Length() * 1.05f, 2.0f);

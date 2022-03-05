@@ -815,28 +815,6 @@ Controls MayaScape::SampleCSPControls()
     // set controls and pos
     ntwkControls_.yaw_ = yaw_;
 
-    bool accel = (input->GetKeyDown(KEY_W) || ntwkControls_.IsDown(BUTTON_B));
-    bool fire = input->GetKeyDown(KEY_SPACE) || ntwkControls_.IsDown(BUTTON_A);
-    bool flip = input->GetKeyDown(KEY_F);
-    bool brake = input->GetKeyDown(KEY_S) || ntwkControls_.IsDown(BUTTON_X);
-    if (accel) {
-        // Rev
-        PlaySoundEffect(driveAudioEffect[SOUND_FX_ENGINE_REV].c_str());
-    }
-
-    if (brake) {
-        // Brake
-        PlaySoundEffect(driveAudioEffect[SOUND_FX_ENGINE_BRAKE].c_str());
-    }
-
-
-
-    ntwkControls_.Set(NTWK_CTRL_FORWARD, accel);
-    ntwkControls_.Set(NTWK_CTRL_BACK, brake);
-    ntwkControls_.Set(NTWK_CTRL_LEFT, input->GetKeyDown(KEY_A));
-    ntwkControls_.Set(NTWK_CTRL_RIGHT, input->GetKeyDown(KEY_D));
-    ntwkControls_.Set(NTWK_CTRL_FLIP, flip);
-    ntwkControls_.Set(NTWK_CTRL_FIRE, fire);
 
     // axis
     const StringHash axisHashList[SDL_CONTROLLER_AXIS_MAX / 2] = {VAR_AXIS_0, VAR_AXIS_1, VAR_AXIS_2};
@@ -858,6 +836,35 @@ Controls MayaScape::SampleCSPControls()
         ntwkControls_.Set(NTWK_CTRL_RIGHT, 1);
         snap = true;
     }
+
+
+    float actorAccel = rStick.GetVector2().y_ * 1.25f;
+    ntwkControls_.yaw_ += (float)lAxisVal.x_*5.0f * YAW_SENSITIVITY;
+
+    bool accel = (input->GetKeyDown(KEY_W) || ntwkControls_.IsDown(BUTTON_B) || (actorAccel < -0.9f));
+    bool fire = input->GetKeyDown(KEY_SPACE) || ntwkControls_.IsDown(BUTTON_A);
+    bool flip = input->GetKeyDown(KEY_F);
+    bool brake = input->GetKeyDown(KEY_S) || ntwkControls_.IsDown(BUTTON_X) || (actorAccel > 0.9f);
+    if (accel) {
+        // Rev
+        PlaySoundEffect(driveAudioEffect[SOUND_FX_ENGINE_REV].c_str());
+    }
+
+    if (brake) {
+        // Brake
+        PlaySoundEffect(driveAudioEffect[SOUND_FX_ENGINE_BRAKE].c_str());
+    }
+
+
+
+    ntwkControls_.Set(NTWK_CTRL_FORWARD, accel);
+    ntwkControls_.Set(NTWK_CTRL_BACK, brake);
+    ntwkControls_.Set(NTWK_CTRL_LEFT, input->GetKeyDown(KEY_A));
+    ntwkControls_.Set(NTWK_CTRL_RIGHT, input->GetKeyDown(KEY_D));
+    ntwkControls_.Set(NTWK_CTRL_FLIP, flip);
+    ntwkControls_.Set(NTWK_CTRL_FIRE, fire);
+
+
 
     // Set controls to updated ntwkControls
     controls = ntwkControls_;
@@ -3537,6 +3544,14 @@ void MayaScape::MoveCamera(float timeStep) {
                             debugText_[k]->SetVisible(true);
                             debugText_[k]->SetText(String("Actor -> ") + String(actorName));
                             k++;
+
+                            debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
+                            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                            debugText_[k]->SetVisible(true);
+                            debugText_[k]->SetText(String("ntwkControls_.yaw_ -> ") + String(ntwkControls_.yaw_));
+                            k++;
+
+
 
 //////
 /*                            if (bodyPos != Vector3(0, 0, 0)) {
