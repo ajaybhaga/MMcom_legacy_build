@@ -220,7 +220,7 @@ void NetworkActor::Init(Node* node) {
         body_->SetCollisionEventMode(COLLISION_ALWAYS);
         body_->SetCollisionLayer(2);
         body_->SetAngularRestThreshold(0.0f);
-        //body_->SetCollisionLayer(2);
+
         // Set rigid body kinematic mode. In kinematic mode forces are not applied to the rigid body.
         // Disable physics
       //  body_->SetKinematic(true);
@@ -349,22 +349,45 @@ void NetworkActor::ApplyMovement(float timeStep) {
 
 
     Quaternion targetRot{};
-    Vector3 direction{ 0.40f * move_ + body_->GetLinearVelocity() * Vector3{ 1.0f, 0.0f, 1.0f }};
-
+    //Vector3 direction{0.90f * move_ + (0.1f*body_->GetLinearVelocity() * Vector3{ 1.0f, 0.0f, 1.0f })};
+/*
     if (direction.Length() < 0.1f)
         return;
 
     targetRot.FromLookRotation(direction);
-    rot = rot.Slerp(targetRot, Clamp(timeStep * 5.0f, 0.0f, 1.0f));
+    rot = rot.Slerp(targetRot, Clamp(timeStep * 1.0f, 0.0f, 1.0f));
+
+*/
+
+
+    // Adjust controls yaw
+    //cos θ = (a · b) / (|a| |b|)
+
+    if (move_.LengthSquared() > 0) {
+        Vector3 a = move_;
+        Vector3 b = node_->GetDirection();
+
+        float angle = a.Angle(b);
+
+//        controls_.yaw_ += angle;
+    }
+    //rot = Quaternion(move_);
+
+    targetRot.FromLookRotation(move_);
+//    rot = rot.Slerp(targetRot, Clamp(timeStep * 20.0f, 0.0f, 1.0f));
+    // Set rotation already here so that it's updated every rendering frame instead of every physics frame
+    //GetNode()->SetRotation((targetRot)+Quaternion(controls_.yaw_, Vector3::UP)));
+
+    //GetNode()->SetRotation(rot);
 
     // Update the node with the body movement
-    GetNode()->SetRotation(rot);
+    //GetNode()->SetRotation(rot);
 
     // Apply Movement
 
     // If in air, allow control, but slower than when on ground
     //body_->ApplyImpulse(rot * move_ * (softGrounded ? MOVE_FORCE : INAIR_MOVE_FORCE));
-    const float MOVE_FORCE = 0.8f;
+    const float MOVE_FORCE = 0.1f;
     body_->ApplyImpulse(rot * move_ * MOVE_FORCE);
 
 /*
@@ -423,11 +446,16 @@ void NetworkActor::FixedUpdate(float timeStep) {
         Vector3 delta = toTarget_-vehicle_->GetNode()->GetWorldPosition();
         double angleRadians = atan2(delta.z_, delta.x_);
 
-        // Update rotation according to direction of the player's movement.
-        Vector3 velocity = body_->GetLinearVelocity();
+        // Update movement & animation
+        const Quaternion& rot = node_->GetRotation();
+        Vector3 moveDir = Vector3::ZERO;
+        const Vector3& velocity = body_->GetLinearVelocity();
+        // Velocity on the XZ plane
+        Vector3 planeVelocity(velocity.x_, 0.0f, velocity.z_);
 
-        // Align model and apply movement to body
-        ApplyMovement(timeStep);
+        // Update rotation according to direction of the player's movement.
+        //Vector3 velocity = body_->GetLinearVelocity();
+
 
         // Update animation
         if (velocity.Length() > 0.1f) {
@@ -477,12 +505,12 @@ void NetworkActor::FixedUpdate(float timeStep) {
         // Read controls generate vehicle control instruction
         if (controls_.buttons_ & NTWK_CTRL_LEFT) {
             move_ += Vector3::LEFT;
-            controls_.yaw_ += -1.0f;
+        //    controls_.yaw_ += -1.0f;
         }
 
         if (controls_.buttons_ & NTWK_CTRL_RIGHT) {
             move_ += Vector3::RIGHT;
-            controls_.yaw_ += 1.0f;
+//            controls_.yaw_ += 1.0f;
         }
 
         if (controls_.buttons_ & NTWK_CTRL_FORWARD) {
@@ -509,6 +537,9 @@ void NetworkActor::FixedUpdate(float timeStep) {
             move_.Normalize();
     }
 
+
+    // Align model and apply movement to body
+    ApplyMovement(timeStep);
 }
 
 /*
@@ -792,30 +823,10 @@ void NetworkActor::DebugDraw() {
 
         if (dbgRenderer) {
 
-            // draw compound shape bounding box (the inertia bbox)
-            //Vector3 localExtents = vehicle_->GetBody()->GetCompoundLocalExtents();
-            Vector3 localCenter = vehicle_->GetNode()->GetPosition();
 
-
-            btTransform trans;
-            vehicle_->GetBody()->getWorldTransform(trans);
-            Vector3 posWS = ToVector3(trans.getOrigin());
-            Vector3 centerWS = ToQuaternion(trans.getRotation()) * localCenter;
-            //posWS += centerWS;
-            Matrix3x4 mat34(posWS, ToQuaternion(trans.getRotation()), 1.0f);
-
-
-            dbgRenderer->AddLine(posWS, (toTarget_), Color(1.0f, 1.0, 0.0));
-            //dbgRenderer->AddBoundingBox(bbox, mat34, color);
-
-            //dbgRenderer->AddLine(posWS, posWS + (node_->GetUp()*100.0f), Color(1.0f, 0.0, 0.0));
-            //dbgRenderer->AddLine(posWS, posWS + (node_->GetRight()*100.0f), Color(1.0f, 0.0, 0.0));
-
-
-//        vehicle_->GetRaycastVehicle()->DrawDebugGeometry(dbgRenderer, false);
-
-//        ToQuaternion(trans.getRotation()),
-            // dbgRenderer->AddBoundingBox(bbox, mat34, color);
+            Vector3 localCenter = body_->GetPosition();
+            dbgRenderer->AddLine(localCenter, (localCenter+move_*40.0f), Color(1.0f, 1.0, 0.0));
+            dbgRenderer->AddLine(localCenter, (localCenter+GetNode()->GetDirection()*40.0f), Color(1.0f, 0.0, 0.0));
 //        dbgRenderer->AddLine(posWS, posWS + node_->R, color);
             //dbgRenderer->AddLine(posWS, posWS + this->vehicle_->GetNode()->GetDirection() * 40.0f, Color::CYAN);
             //dbgRenderer->AddLine(posWS, toTarget_, Color::YELLOW);

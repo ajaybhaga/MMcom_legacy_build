@@ -729,22 +729,6 @@ void MayaScape::SubscribeToEvents() {
     SubscribeToEvent(E_LOADSUCCEED, URHO3D_HANDLER(MayaScape, HandleClientResourceLoadFinished));
     SubscribeToEvent(E_LOADATTEMPT, URHO3D_HANDLER(MayaScape, HandleClientResourceLoadAttempt));
 
-
-
-/*
-/// Resource reloading started.
-    URHO3D_EVENT(E_RELOADSTARTED, ReloadStarted)
-    {
-    }
-
-/// Resource reloading finished successfully.
-    URHO3D_EVENT(E_RELOADFINISHED, ReloadFinished)
-    {
-    }
-  */
-
-
-
     // Subscribe to log messages so that we can pipe them to the chat window
     SubscribeToEvent(E_LOGMESSAGE, URHO3D_HANDLER(MayaScape, HandleLogMessage));
 
@@ -2459,21 +2443,25 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                             if (actorMap_[lastConnection_]) {
                                 auto *actor = dynamic_cast<NetworkActor *>(actorMap_[lastConnection_].Get());
                                 if (actor) {
-                                    if (actor->vehicle_) {
-                                        String username = actor->GetUserName();
-                                        float botSpeedKm = round(
-                                                abs(actor->vehicle_->GetRaycastVehicle()->GetSpeedKm()));
-                                        // Back wheel points forward
-                                        Quaternion forward = actor->vehicle_->GetNode()->GetRotation();
 
-
-                                        //float bodyVel = EvolutionManager::getInstance()->getAgents()[camMode_ -1]->getActor()->vehicle_->GetBody()->GetLinearVelocity().Length();
-                                        botSpeedKm = Clamp(botSpeedKm, 1.0f, 2000.0f);
+                                    String username = actor->GetUserName();
+                                    float botSpeedKm = 0;
+                                    Quaternion forward;
 
                                         float velMult = 8.0f;
 
                                         Vector3 cameraTargetPos;
                                         if (actor->onVehicle_) {
+
+                                            if (actor->vehicle_) {
+                                                botSpeedKm = round(
+                                                        abs(actor->vehicle_->GetRaycastVehicle()->GetSpeedKm()));
+                                                // Back wheel points forward
+                                                forward = actor->vehicle_->GetNode()->GetRotation();
+                                            }
+
+                                            //float bodyVel = EvolutionManager::getInstance()->getAgents()[camMode_ -1]->getActor()->vehicle_->GetBody()->GetLinearVelocity().Length();
+                                            botSpeedKm = Clamp(botSpeedKm, 1.0f, 2000.0f);
 
                                             // On vehicle
 
@@ -2491,17 +2479,16 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                                                                                         velMult) * 0.9f;
                                         } else {
                                             // On foot
+                                            botSpeedKm = 0;
+                                            // Back wheel points forward
+                                            forward = actor->GetNode()->GetRotation();
 
                                             // Zoom up on body velocity increase
                                             cameraTargetPos =
                                                     actor->GetBody()->GetPosition() + forward *
                                                                                                 Vector3(actor->GetBody()->GetLinearVelocity().Length() *
                                                                                                         velMult,
-                                                                                                        (actor->GetNode()->GetPosition().y_ +
-                                                                                                         CAMERA_RAY_DISTANCE_LIMIT +
-                                                                                                         12.0f) +
-                                                                                                        (botSpeedKm *
-                                                                                                         2.7),
+                                                                                                        CAMERA_RAY_DISTANCE_LIMIT/10,
                                                                                                         actor->GetBody()->GetLinearVelocity().Length() *
                                                                                                         velMult) * 0.9f;
 
@@ -2540,6 +2527,13 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                             // Reset timer for recent ray cast
                                             lastCamRaycast = 0;
 
+                                            Vector3 lookAtObject;
+
+                                            if (actor->onVehicle_) {
+                                                lookAtObject = actor->vehicle_->GetBody()->GetPosition();
+                                            } else {
+                                                lookAtObject = actor->GetBody()->GetPosition();
+                                            }
 
                                             // Set camera position and orientation
                                             float w1;
@@ -2558,18 +2552,16 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
 
                                             // Calculate camera distance
                                             serverCam_->GetNode()->SetPosition(weightedSum);
-                                            serverCam_->GetNode()->LookAt(actor->vehicle_->GetBody()->GetPosition());
+                                            serverCam_->GetNode()->LookAt(lookAtObject);
                                         }
                                     }
                                 }
+                            } else {
+                                // Heli cam
+                                serverCam_->GetNode()->SetRotation(Quaternion(90.0f, 0.0f, 0.0f));
+                                serverCam_->GetNode()->SetPosition(heliCamView_);
                             }
-                        } // End of Server: Move Camera (Player Cam)
-                        else {
-                            // Heli cam
-                            serverCam_->GetNode()->SetRotation(Quaternion(90.0f, 0.0f, 0.0f));
-                            serverCam_->GetNode()->SetPosition(heliCamView_);
-                        }
-                    }
+                } // End of Server: Move Camera (Player Cam)
                         break;
                     case 1 ... 1000: {
                         // Server: Move Camera
@@ -2867,7 +2859,7 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
             }
 
 
-            // Special server input ////
+            // Special server input
             UI *ui = GetSubsystem<UI>();
             Input *input = GetSubsystem<Input>();
 
