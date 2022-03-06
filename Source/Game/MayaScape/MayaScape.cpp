@@ -865,7 +865,7 @@ Controls MayaScape::SampleCSPControls()
     bool accel = (input->GetKeyDown(KEY_W) || ntwkControls_.IsDown(BUTTON_B) || (actorAccel < -0.9f));
     bool fire = input->GetKeyDown(KEY_SPACE) || ntwkControls_.IsDown(BUTTON_A);
     bool flip = input->GetKeyDown(KEY_F);
-    bool brake = input->GetKeyDown(KEY_S) || ntwkControls_.IsDown(BUTTON_X));
+    bool brake = (input->GetKeyDown(KEY_S) || ntwkControls_.IsDown(BUTTON_X));
     if (accel) {
         // Rev
         PlaySoundEffect(driveAudioEffect[SOUND_FX_ENGINE_REV].c_str());
