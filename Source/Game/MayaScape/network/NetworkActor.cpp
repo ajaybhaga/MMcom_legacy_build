@@ -103,7 +103,7 @@ NetworkActor::NetworkActor(Context *context)
     maxSpeed_ = 100.23f;
 
     onGround_ = false;
-
+    acceleration_ = 0.0f;
 }
 
 NetworkActor::~NetworkActor() {
@@ -368,7 +368,7 @@ void NetworkActor::ApplyMovement(float timeStep) {
     //body_->ApplyImpulse(rot * move_ * (softGrounded ? MOVE_FORCE : INAIR_MOVE_FORCE));
     const float MOVE_FORCE = 0.1f;
     //body_->ApplyImpulse(rot * move_ * MOVE_FORCE);
-    const Vector3 impulse = Quaternion(controls_.yaw_, Vector3::UP) * GetNode()->GetDirection() * MOVE_FORCE;
+    const Vector3 impulse = Quaternion(controls_.yaw_, Vector3::UP) * GetNode()->GetDirection() * MOVE_FORCE * acceleration_;
     body_->ApplyImpulse(impulse);
 
 
@@ -486,20 +486,22 @@ void NetworkActor::FixedUpdate(float timeStep) {
 
         // Read controls generate vehicle control instruction
         if (controls_.buttons_ & NTWK_CTRL_LEFT) {
-            move_ += Vector3::LEFT;
+           // move_ += Vector3::LEFT;
         //    controls_.yaw_ += -1.0f;
         }
 
         if (controls_.buttons_ & NTWK_CTRL_RIGHT) {
-            move_ += Vector3::RIGHT;
+            //move_ += Vector3::RIGHT;
 //            controls_.yaw_ += 1.0f;
         }
 
         if (controls_.buttons_ & NTWK_CTRL_FORWARD) {
-            move_ += Vector3::FORWARD;
+            //move_ += Vector3::FORWARD;
+            Run();
         }
         if (controls_.buttons_ & NTWK_CTRL_BACK) {
-            move_ = Vector3(0.0f, 0.0f, 0.0f);
+            //move_ = Vector3(0.0f, 0.0f, 0.0f);
+            acceleration_ = 0;
         }
 
         if (controls_.buttons_ & NTWK_CTRL_FLIP) {
@@ -850,4 +852,12 @@ void NetworkActor::HandleNodeCollision(StringHash eventType, VariantMap& eventDa
                 onGround_ = true;
         }
     }
+}
+
+void NetworkActor::Run() {
+    acceleration_ = 10.0f;
+}
+
+void NetworkActor::Walk() {
+    acceleration_ = 2.0f;
 }

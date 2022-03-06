@@ -151,6 +151,9 @@ public:
 
     void Kill();
 
+    void Run();
+    void Walk();
+
     void ApplyMovement(float timeStep);
 
     /// Grounded flag for movement.
