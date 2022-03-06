@@ -347,17 +347,7 @@ void NetworkActor::ApplyMovement(float timeStep) {
     if (move_.LengthSquared() > 0.0f)
         move_.Normalize();
 
-
-    Quaternion targetRot{};
     //Vector3 direction{0.90f * move_ + (0.1f*body_->GetLinearVelocity() * Vector3{ 1.0f, 0.0f, 1.0f })};
-/*
-    if (direction.Length() < 0.1f)
-        return;
-
-    targetRot.FromLookRotation(direction);
-    rot = rot.Slerp(targetRot, Clamp(timeStep * 1.0f, 0.0f, 1.0f));
-
-*/
 
 
     // Adjust controls yaw
@@ -367,28 +357,20 @@ void NetworkActor::ApplyMovement(float timeStep) {
         Vector3 a = move_;
         Vector3 b = node_->GetDirection();
 
-        float angle = a.Angle(b);
+        //float angle = a.Angle(b);
 
-//        controls_.yaw_ += angle;
     }
-    //rot = Quaternion(move_);
 
-    targetRot.FromLookRotation(move_);
-//    rot = rot.Slerp(targetRot, Clamp(timeStep * 20.0f, 0.0f, 1.0f));
-    // Set rotation already here so that it's updated every rendering frame instead of every physics frame
-    //GetNode()->SetRotation((targetRot)+Quaternion(controls_.yaw_, Vector3::UP)));
-
-    //GetNode()->SetRotation(rot);
-
-    // Update the node with the body movement
-    //GetNode()->SetRotation(rot);
 
     // Apply Movement
 
     // If in air, allow control, but slower than when on ground
     //body_->ApplyImpulse(rot * move_ * (softGrounded ? MOVE_FORCE : INAIR_MOVE_FORCE));
     const float MOVE_FORCE = 0.1f;
-    body_->ApplyImpulse(rot * move_ * MOVE_FORCE);
+    //body_->ApplyImpulse(rot * move_ * MOVE_FORCE);
+    const Vector3 impulse = Quaternion(controls_.yaw_, Vector3::UP) * GetNode()->GetDirection() * MOVE_FORCE;
+    body_->ApplyImpulse(impulse);
+
 
 /*
     // Apply force to rigid body of actor
