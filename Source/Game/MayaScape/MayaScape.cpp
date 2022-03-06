@@ -1964,9 +1964,6 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
                             rot = actor->vehicle_->GetNode()->GetRotation();
 
 
-                            // Set rotation already here so that it's updated every rendering frame instead of every physics frame
-                            actor->GetNode()->SetRotation(Quaternion(actor->controls_.yaw_, Vector3::UP));
-
                             noWheelContactTime = actor->vehicle_->GetRaycastVehicle()->getNoWheelContactTime();
 
 //                            wheelsContactNum = actor->vehicle_->GetRaycastVehicle()->getNumWheelsContact();
@@ -2311,6 +2308,7 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
 
             // Snap camera to vehicle once available
             Vector3 startPos = networkActor->GetPosition();
+
         }
     }
 
@@ -2372,9 +2370,12 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                         String vehicleName = clientName + String("-vehicle");
                         Node *vehicleNode = scene_->GetChild(vehicleName);
 
-                        if (vehicleNode) {
                             auto *actor = dynamic_cast<NetworkActor *>(actorMap_[connection].Get());
                             if (actor) {
+                                // Set rotation already here so that it's updated every rendering frame instead of every physics frame
+                                actor->GetNode()->SetRotation(Quaternion(actor->controls_.yaw_, Vector3::UP));
+
+                                if (vehicleNode) {
                                 if (actor->vehicle_) {
 
                                     using namespace Update;
@@ -2796,6 +2797,7 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                         }
                                     }
                                 } // End of Server: Move Camera
+
 
                                 // Update per-BOT info
 
