@@ -847,14 +847,17 @@ Controls MayaScape::SampleCSPControls()
         }
     } else {
         // x < 0
-        if (lAxisVal.y_ != 0) {
-            // x < 0 and y != 0
-            delta = 180.0f;
+        if (lAxisVal.y_ < 0) {
+            // x < 0 and y < 0
+            delta = 360.0f;
+            angle = delta + thetaAng;
+        } else {
+            // x < 0 and y > 0
+            delta = 0;
             angle = delta + thetaAng;
         }
     }
     joyAngle = angle;
-
 
     ntwkControls_.yaw_ = joyAngle;
 
