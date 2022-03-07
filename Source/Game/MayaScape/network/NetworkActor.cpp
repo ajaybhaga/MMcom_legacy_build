@@ -392,7 +392,7 @@ void NetworkActor::ApplyMovement(float timeStep) {
         lastImpulse_ = impulse;
         body_->ApplyImpulse(impulse);
         //body_->ApplyImpulse(Vector3(impulse.x_, 0, impulse.z_));
-        GetNode()->SetPosition(body_->GetNode()->GetWorldPosition());
+      //  GetNode()->SetPosition(body_->GetNode()->GetWorldPosition());
 
     } else {
         // Slow down in opposite direction

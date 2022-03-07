@@ -1658,7 +1658,7 @@ void MayaScape::HandleRenderUpdate(StringHash eventType, VariantMap &eventData) 
                                      // Detect move vector and visible only on non-zero
                                      if (joySteer_.LengthSquared() > 0) {
                                          steerActorSprite_->SetVisible(true);
-                                         steerActorSprite_->SetRotation(na->GetNode()->GetRotation().YawAngle());
+                                         steerActorSprite_->SetRotation(body->GetRotation().YawAngle());
                                      } else {
                                          steerActorSprite_->SetVisible(false);
                                      }
@@ -2425,7 +2425,7 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                             if (actor) {
 
                                 // Set rotation already here so that it's updated every rendering frame instead of every physics frame
-                                actor->GetNode()->SetRotation(Quaternion(actor->controls_.yaw_, Vector3::UP));
+                                actor->GetBody()->GetNode()->SetRotation(Quaternion(actor->controls_.yaw_, Vector3::UP));
 
                                 using namespace Update;
                                 // Take the frame time step, which is stored as a float
