@@ -2423,7 +2423,6 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
 
                             auto *actor = dynamic_cast<NetworkActor *>(actorMap_[connection].Get());
                             if (actor) {
-                                //actor->GetNode()->SetPosition(actor->GetBody()->GetPosition());
 
                                 // Set rotation already here so that it's updated every rendering frame instead of every physics frame
                                 actor->GetNode()->SetRotation(Quaternion(actor->controls_.yaw_, Vector3::UP));

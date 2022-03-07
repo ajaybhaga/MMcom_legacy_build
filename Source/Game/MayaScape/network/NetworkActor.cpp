@@ -221,6 +221,8 @@ void NetworkActor::Init(Node* node) {
         body_->SetCollisionLayer(2);
         body_->SetAngularRestThreshold(0.0f);
 
+        //body_->SetUseGravity(false);
+
         // Set rigid body kinematic mode. In kinematic mode forces are not applied to the rigid body.
         // Disable physics
         //body_->SetKinematic(true);
@@ -380,16 +382,17 @@ void NetworkActor::ApplyMovement(float timeStep) {
 
         // If in air, allow control, but slower than when on ground
         //body_->ApplyImpulse(rot * move_ * (softGrounded ? MOVE_FORCE : INAIR_MOVE_FORCE));
-        const float MOVE_FORCE = 1.0f;
+        const float MOVE_FORCE = 0.01f;
         //body_->ApplyImpulse(rot * move_ * MOVE_FORCE);
         //const Vector3 impulse = rot*Quaternion(controls_.yaw_, Vector3::UP) * GetNode()->GetDirection() * MOVE_FORCE * acceleration_;
         //const Vector3 impulse = rot*Quaternion(controls_.yaw_, Vector3::UP) * GetNode()->GetDirection() * MOVE_FORCE * moveMag;
 
-        const Vector3 impulse =
-                -Quaternion(controls_.yaw_, Vector3::UP) * GetNode()->GetDirection() * MOVE_FORCE * moveMag;
+        const Vector3 impulse = Quaternion(controls_.yaw_, Vector3::UP) * body_->GetRotation() * Vector3::FORWARD * MOVE_FORCE * moveMag;
 
         lastImpulse_ = impulse;
         body_->ApplyImpulse(impulse);
+        //body_->ApplyImpulse(Vector3(impulse.x_, 0, impulse.z_));
+        GetNode()->SetPosition(body_->GetNode()->GetWorldPosition());
 
     } else {
         // Slow down in opposite direction
