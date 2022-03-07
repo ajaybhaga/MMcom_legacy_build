@@ -859,7 +859,7 @@ Controls MayaScape::SampleCSPControls()
     }
     joyAngle = angle;
 
-    joyAngle += 0;
+    joyAngle += 90;
     // TODO: Rotate joy entry by 90?
 //    joyAngle = Clamp(joyAngle, 0.0f, 360.0f);
 
@@ -1654,9 +1654,16 @@ void MayaScape::HandleRenderUpdate(StringHash eventType, VariantMap &eventData) 
                                  //float steering = na->GetSteering();
                                  if (steerActorSprite_) {
                                      steerWheelSprite_->SetVisible(false);
-                                     steerActorSprite_->SetVisible(true);
-                                     steerActorSprite_->SetRotation(na->GetNode()->GetRotation().YawAngle());
-                                     //steerActorSprite_->SetRotation(360.0f * steering);
+
+
+                                     // TODO: Detect move vector and visible only on non-zero
+                                     if (na->lastImpulse_.LengthSquared() > 0) {
+                                         steerActorSprite_->SetVisible(true);
+                                         steerActorSprite_->SetRotation(na->GetNode()->GetRotation().YawAngle());
+                                         //steerActorSprite_->SetRotation(360.0f * steering);
+                                     } else {
+                                         steerActorSprite_->SetVisible(false);
+                                     }
                                  }
                              }
 
