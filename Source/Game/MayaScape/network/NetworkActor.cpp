@@ -63,6 +63,7 @@ String mdlFile = "Models/Player/Bino/Models/f_8.mdl";
 String idleAniFile = "Models/Player/Bino/Models/Idle.ani";
 String walkAniFile = "Models/Player/Bino/Models/Walk.ani";
 String runAniFile = "Models/Player/Bino/Models/Run.ani";
+String jumpAniFile = "Models/Player/Bino/Models/Victory.ani";
 String victoryAniFile = "Models/Player/Bino/Models/Victory.ani";
 String defeatAniFile = "Models/Player/Bino/Models/Defeat.ani";
 String matFile = "Models/Player/Bino/Models/f_8.txt";
@@ -102,6 +103,7 @@ NetworkActor::NetworkActor(Context *context)
     thrust_   = 1024.0f;
     maxSpeed_ = 100.23f;
 
+    doJump_ = false;
     onGround_ = false;
     acceleration_ = 0.0f;
 }
@@ -465,18 +467,29 @@ void NetworkActor::FixedUpdate(float timeStep) {
         //Vector3 velocity = body_->GetLinearVelocity();
 
 
-        // Update animation
-        if (velocity.Length() > 0.1f) {
+        if (!doJump_) {
 
-            animCtrl_->PlayExclusive(walkAniFile, 1, true, 0.15f);
-            animCtrl_->SetSpeed(walkAniFile, velocity.Length() * 0.2f);
-            animCtrl_->SetStartBone(walkAniFile, "Ctrl_all");
+            // Update animation
+            if (velocity.Length() > 0.1f) {
+
+                animCtrl_->PlayExclusive(walkAniFile, 1, true, 0.15f);
+                animCtrl_->SetSpeed(walkAniFile, velocity.Length() * 0.2f);
+                animCtrl_->SetStartBone(walkAniFile, "Ctrl_all");
+
+            } else {
+
+                animCtrl_->PlayExclusive(idleAniFile, 1, true, 0.15f);
+                animCtrl_->SetStartBone(idleAniFile, "Ctrl_all");
+            }
 
         } else {
 
-            animCtrl_->PlayExclusive(idleAniFile, 1, true, 0.15f);
-            animCtrl_->SetStartBone(idleAniFile, "Ctrl_all");
+            animCtrl_->PlayExclusive(jumpAniFile, 1, true, 0.15f);
+            animCtrl_->SetStartBone(jumpAniFile, "Ctrl_all");
+            doJump_ = false;
         }
+
+
 
 
 
@@ -533,6 +546,7 @@ void NetworkActor::FixedUpdate(float timeStep) {
         if (controls_.buttons_ & NTWK_CTRL_FLIP) {
             // FLIP CAR
             //Flip(timeStep);
+            doJump_ = true;
         }
 
         if (controls_.buttons_ & NTWK_CTRL_FIRE) {
