@@ -811,7 +811,6 @@ Controls MayaScape::SampleCSPControls()
     Variant rStick = ntwkControls_.extraData_[VAR_AXIS_1];
     Vector2 rAxisVal = rStick.GetVector2();
 
-
     joySteer_ = lStick.GetVector2();
 
     bool snap = false;
@@ -1660,7 +1659,6 @@ void MayaScape::HandleRenderUpdate(StringHash eventType, VariantMap &eventData) 
                                      if (joySteer_.LengthSquared() > 0) {
                                          steerActorSprite_->SetVisible(true);
                                          steerActorSprite_->SetRotation(na->GetNode()->GetRotation().YawAngle());
-                                         //steerActorSprite_->SetRotation(360.0f * steering);
                                      } else {
                                          steerActorSprite_->SetVisible(false);
                                      }
@@ -2359,6 +2357,9 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
             // Snap camera to vehicle once available
             Vector3 startPos = networkActor->GetPosition();
 
+
+
+
         }
     }
 
@@ -2427,55 +2428,59 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                 // Set rotation already here so that it's updated every rendering frame instead of every physics frame
                                 actor->GetNode()->SetRotation(Quaternion(actor->controls_.yaw_, Vector3::UP));
 
-
+                                using namespace Update;
+                                // Take the frame time step, which is stored as a float
+                                float timeStep = eventData[P_TIMESTEP].GetFloat();
+                                // Align model and apply movement to body
+                                actor->ApplyMovement(timeStep);
 
                                 if (vehicleNode) {
-                                if (actor->vehicle_) {
+                                    if (actor->vehicle_) {
 
-                                    using namespace Update;
-                                    // Take the frame time step, which is stored as a float
-                                    float timeStep = eventData[P_TIMESTEP].GetFloat();
+                                        using namespace Update;
+                                        // Take the frame time step, which is stored as a float
+                                        float timeStep = eventData[P_TIMESTEP].GetFloat();
 
-                                    // Add time step to player state wait
-                                    lastPlayerStateTime_ += timeStep;
-
-
-                                        // After wait send player state
-                                    if (lastPlayerStateTime_ >= 0.45f) {
-
-                                        // 1. Send update to client about vehicle stats
-                                        using namespace ClientPlayerState;
-
-                                        // Send the event forward
-                                        VariantMap &newEventData = GetEventDataMap();
+                                        // Add time step to player state wait
+                                        lastPlayerStateTime_ += timeStep;
 
 
-                                        newEventData[P_WHEEL_CONTACTS] = actor->vehicle_->GetRaycastVehicle()->getNumWheelsContact();
-                                        newEventData[P_NO_WHEEL_CONTACT_TIME] = actor->vehicle_->GetRaycastVehicle()->getNoWheelContactTime();
-                                        newEventData[P_DISTANCE] = actor->GetVehicle()->GetRaycastVehicle()->GetDistanceOnGround();
+                                            // After wait send player state
+                                        if (lastPlayerStateTime_ >= 0.45f) {
 
-                                        newEventData[P_LIFE] = actor->GetLife();
-                                        if (actor->vehicle_->GetRaycastVehicle()) {
-                                            float rpm = actor->vehicle_->GetCurrentRPM();
-                                            newEventData[P_RPM] = rpm;
-                                            newEventData[P_VELOCITY] = actor->vehicle_->GetRaycastVehicle()->GetSpeedKm();
-                                            newEventData[P_STEER] = actor->GetVehicle()->GetSteering();
+                                            // 1. Send update to client about vehicle stats
+                                            using namespace ClientPlayerState;
+
+                                            // Send the event forward
+                                            VariantMap &newEventData = GetEventDataMap();
 
 
-                                            // Finally send the object's node ID using a remote event
-                                            connection->SendRemoteEvent(E_PLAYERSTATE, true, newEventData);
-                                            // Reset timer
-                                            lastPlayerStateTime_ = 0.0f;
-                                        }
-                                    } // End of delayed send
+                                            newEventData[P_WHEEL_CONTACTS] = actor->vehicle_->GetRaycastVehicle()->getNumWheelsContact();
+                                            newEventData[P_NO_WHEEL_CONTACT_TIME] = actor->vehicle_->GetRaycastVehicle()->getNoWheelContactTime();
+                                            newEventData[P_DISTANCE] = actor->GetVehicle()->GetRaycastVehicle()->GetDistanceOnGround();
+
+                                            newEventData[P_LIFE] = actor->GetLife();
+                                            if (actor->vehicle_->GetRaycastVehicle()) {
+                                                float rpm = actor->vehicle_->GetCurrentRPM();
+                                                newEventData[P_RPM] = rpm;
+                                                newEventData[P_VELOCITY] = actor->vehicle_->GetRaycastVehicle()->GetSpeedKm();
+                                                newEventData[P_STEER] = actor->GetVehicle()->GetSteering();
 
 
-                                    // Immediate update
+                                                // Finally send the object's node ID using a remote event
+                                                connection->SendRemoteEvent(E_PLAYERSTATE, true, newEventData);
+                                                // Reset timer
+                                                lastPlayerStateTime_ = 0.0f;
+                                            }
+                                        } // End of delayed send
 
 
-                                    // Add to server cam calculation
-                                    // camPos += startPos;
-                                }
+                                        // Immediate update
+
+
+                                        // Add to server cam calculation
+                                        // camPos += startPos;
+                                    }
                             }
                         }
                     }
@@ -2581,7 +2586,7 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                                     actor->GetBody()->GetPosition() + forward *
                                                                                                 Vector3(actor->GetBody()->GetLinearVelocity().Length() *
                                                                                                         velMult,
-                                                                                                        CAMERA_RAY_DISTANCE_LIMIT/10,
+                                                                                                        CAMERA_RAY_DISTANCE_LIMIT,
                                                                                                         actor->GetBody()->GetLinearVelocity().Length() *
                                                                                                         velMult) * 0.9f;
 

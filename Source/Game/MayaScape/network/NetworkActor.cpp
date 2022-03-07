@@ -345,6 +345,21 @@ void NetworkActor::FindTarget() {
 void NetworkActor::ApplyMovement(float timeStep) {
     Quaternion rot{ node_->GetRotation() };
 
+
+    // Apply move to network actor
+
+    // axis
+    const StringHash axisHashList[SDL_CONTROLLER_AXIS_MAX / 2] = {VAR_AXIS_0, VAR_AXIS_1, VAR_AXIS_2};
+    // left stick - vehicle
+    Variant lStick = controls_.extraData_[VAR_AXIS_0];
+    Vector2 lAxisVal = lStick.GetVector2();
+
+    // right stick
+    Variant rStick = controls_.extraData_[VAR_AXIS_1];
+    Vector2 rAxisVal = rStick.GetVector2();
+
+    setMove(Vector3(lStick.GetVector2().x_, 0, lStick.GetVector2().y_));
+
     // Next move
     move_ = move_.Normalized() * Pow(move_.Length() * 1.05f, 2.0f);
     if (move_.LengthSquared() > 0.0f)
@@ -356,26 +371,30 @@ void NetworkActor::ApplyMovement(float timeStep) {
     // Adjust controls yaw
     //cos θ = (a · b) / (|a| |b|)
 
-    if (move_.LengthSquared() > 0) {
-        Vector3 a = move_;
-        Vector3 b = node_->GetDirection();
-
-        //float angle = a.Angle(b);
-
-    }
-
 
     // Apply Movement
 
-    // If in air, allow control, but slower than when on ground
-    //body_->ApplyImpulse(rot * move_ * (softGrounded ? MOVE_FORCE : INAIR_MOVE_FORCE));
-    const float MOVE_FORCE = 0.1f;
-    //body_->ApplyImpulse(rot * move_ * MOVE_FORCE);
-    const Vector3 impulse = rot*Quaternion(controls_.yaw_, Vector3::UP) * GetNode()->GetDirection() * MOVE_FORCE * acceleration_;
-    lastImpulse_ = impulse;
-    body_->ApplyImpulse(impulse);
+    float moveMag = move_.Length();
 
+    if (moveMag > 0) {
 
+        // If in air, allow control, but slower than when on ground
+        //body_->ApplyImpulse(rot * move_ * (softGrounded ? MOVE_FORCE : INAIR_MOVE_FORCE));
+        const float MOVE_FORCE = 1.0f;
+        //body_->ApplyImpulse(rot * move_ * MOVE_FORCE);
+        //const Vector3 impulse = rot*Quaternion(controls_.yaw_, Vector3::UP) * GetNode()->GetDirection() * MOVE_FORCE * acceleration_;
+        //const Vector3 impulse = rot*Quaternion(controls_.yaw_, Vector3::UP) * GetNode()->GetDirection() * MOVE_FORCE * moveMag;
+
+        const Vector3 impulse =
+                -Quaternion(controls_.yaw_, Vector3::UP) * GetNode()->GetDirection() * MOVE_FORCE * moveMag;
+
+        lastImpulse_ = impulse;
+        body_->ApplyImpulse(impulse);
+
+    } else {
+        // Slow down in opposite direction
+        //body_->ApplyImpulse(-body_->GetLinearVelocity());
+    }
 /*
     // Apply force to rigid body of actor
     bool run = false;
@@ -525,9 +544,6 @@ void NetworkActor::FixedUpdate(float timeStep) {
             move_.Normalize();
     }
 
-
-    // Align model and apply movement to body
-    ApplyMovement(timeStep);
 }
 
 /*
@@ -875,4 +891,12 @@ void NetworkActor::Run() {
 
 void NetworkActor::Walk() {
     acceleration_ = 2.0f;
+}
+
+const Vector3 &NetworkActor::getMove() const {
+    return move_;
+}
+
+void NetworkActor::setMove(const Vector3 &move) {
+    move_ = move;
 }

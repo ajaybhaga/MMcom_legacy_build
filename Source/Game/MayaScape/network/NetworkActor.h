@@ -218,6 +218,10 @@ public:
     bool enableControls_;
     Vector3 move_;
 
+    const Vector3 &getMove() const;
+
+    void setMove(const Vector3 &move);
+
     bool initialSet_;
 
 
