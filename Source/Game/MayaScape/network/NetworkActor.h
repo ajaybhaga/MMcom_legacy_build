@@ -248,6 +248,7 @@ public:
     // Player state variables
     bool alive_;
     bool onVehicle_;
+    Vector3 lastImpulse_;
 
 
     String name_;

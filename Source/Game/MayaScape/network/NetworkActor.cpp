@@ -184,7 +184,7 @@ void NetworkActor::Init(Node* node) {
         Node* objectNode = node_->CreateChild("Actor", REPLICATED);
         //modelNode->SetScale(4.0f);
         objectNode->SetScale(4.0f);
-        objectNode->SetPosition(Vector3(0.0f,0.0f, 0.0f));
+        objectNode->SetPosition(Vector3(0.0f,1.0f, 0.0f));
 //        objectNode->SetRotation(Quaternion(0, -90, 0.0f));
 
         // spin node
@@ -207,7 +207,7 @@ void NetworkActor::Init(Node* node) {
         //model_->SetMaterial(cache->GetResource<Material>(matFile));
         model_->ApplyMaterialList(matFile);
 
-        body_->SetFriction(0.0f);
+        body_->SetFriction(0.1f);
         body_->SetMass(1.0f);
         body_->SetRestitution(0.0f);
         body_->SetLinearDamping(0.88f);
@@ -223,9 +223,12 @@ void NetworkActor::Init(Node* node) {
 
         // Set rigid body kinematic mode. In kinematic mode forces are not applied to the rigid body.
         // Disable physics
-      //  body_->SetKinematic(true);
-        collisionShape_->SetCapsule(0.7f, 1.4f, Vector3::UP * 0.3f);
+        //body_->SetKinematic(true);
+        collisionShape_->SetCapsule(0.4f, 1.0f, Vector3::UP * 0.3f);
        // collisionShape_->SetCapsule(0.01f, 0.5f, Vector3::UP * 0.3f);
+
+
+
 
         animCtrl_->PlayExclusive(walkAniFile, 0, true);
         animCtrl_->SetSpeed(walkAniFile, 0.2f);
@@ -368,7 +371,8 @@ void NetworkActor::ApplyMovement(float timeStep) {
     //body_->ApplyImpulse(rot * move_ * (softGrounded ? MOVE_FORCE : INAIR_MOVE_FORCE));
     const float MOVE_FORCE = 0.1f;
     //body_->ApplyImpulse(rot * move_ * MOVE_FORCE);
-    const Vector3 impulse = Quaternion(controls_.yaw_, Vector3::UP) * GetNode()->GetDirection() * MOVE_FORCE * acceleration_;
+    const Vector3 impulse = rot*Quaternion(controls_.yaw_, Vector3::UP) * GetNode()->GetDirection() * MOVE_FORCE * acceleration_;
+    lastImpulse_ = impulse;
     body_->ApplyImpulse(impulse);
 
 
@@ -807,10 +811,20 @@ void NetworkActor::DebugDraw() {
 
         if (dbgRenderer) {
 
+            collisionShape_->DrawDebugGeometry(dbgRenderer, true);
 
             Vector3 localCenter = body_->GetPosition();
-            dbgRenderer->AddLine(localCenter, (localCenter+move_*40.0f), Color(1.0f, 1.0, 0.0));
+            //dbgRenderer->AddLine(localCenter, (localCenter+move_*40.0f), Color(1.0f, 1.0, 0.0));
+
+
             dbgRenderer->AddLine(localCenter, (localCenter+GetNode()->GetDirection()*40.0f), Color(1.0f, 0.0, 0.0));
+            dbgRenderer->AddLine(localCenter, (localCenter+lastImpulse_*40.0f), Color(0.0f, 0.0, 1.0));
+
+            Vector3 nodePos = GetNode()->GetPosition();
+            dbgRenderer->AddLine(nodePos, localCenter, Color(1.0f, 1.0, 0.0));
+
+
+
 //        dbgRenderer->AddLine(posWS, posWS + node_->R, color);
             //dbgRenderer->AddLine(posWS, posWS + this->vehicle_->GetNode()->GetDirection() * 40.0f, Color::CYAN);
             //dbgRenderer->AddLine(posWS, toTarget_, Color::YELLOW);

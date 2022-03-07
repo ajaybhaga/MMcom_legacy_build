@@ -479,6 +479,7 @@ void MayaScape::UpdateUIState(bool state) {
             //miniMapBkgSprite_->SetVisible(state);
             //markerMapBkgSprite_->SetVisible(state);
             steerWheelSprite_->SetVisible(state);
+            steerActorSprite_->SetVisible(state);
 
 
             // Create the UI for displaying the remaining lifes
@@ -857,6 +858,9 @@ Controls MayaScape::SampleCSPControls()
         }
     }
     joyAngle = angle;
+
+    // TODO: Rotate joy entry by 90?
+
 
     ntwkControls_.yaw_ = joyAngle;
 
@@ -1483,7 +1487,6 @@ void MayaScape::HandleRenderUpdate(StringHash eventType, VariantMap &eventData) 
 
 
 
-
 //    float zoom_ = cameraNode_->GetComponent<Camera>()->GetZoom();
     float deltaSum;
 
@@ -1590,15 +1593,6 @@ void MayaScape::HandleRenderUpdate(StringHash eventType, VariantMap &eventData) 
          */
 
 
-    Variant lStick = ntwkControls_.extraData_[VAR_AXIS_0];
-    Vector2 lAxisVal = lStick.GetVector2();
-    float steering = lStick.GetVector2().x_ * 0.25f;
-    //    Quaternion vRot = vehicle_->GetNode()->GetRotation();
-
-    if (steerWheelSprite_) {
-        steerWheelSprite_->SetRotation(360.0f * steering);
-    }
-
 //    float maxX = terrain_->GetPatchSize()*terrain_->GetNumPatches().x_;
 //    float maxY = terrain_->GetPatchSize()*terrain_->GetNumPatches().y_;
         //
@@ -1621,6 +1615,54 @@ void MayaScape::HandleRenderUpdate(StringHash eventType, VariantMap &eventData) 
          if (isSnapped_) {
              String vehicleName = clientName_ + String("-vehicle");
              Node *vehicleNode = scene_->GetChild(vehicleName);
+
+
+
+             String actorName = clientName_ + String("-actor");
+             Node *actorNode = scene_->GetChild(actorName);
+
+             //BLUE-304-vehicle
+
+             Vector3 bodyPos;
+             Quaternion rotation;
+
+             if (actorNode) {
+                 // Retrieve Actor
+                 ClientObj *actor = actorNode->GetDerivedComponent<ClientObj>();
+
+                 if (actor) {
+                     NetworkActor *na = actorNode->GetDerivedComponent<NetworkActor>();
+                     if (na) {
+                         auto *body = na->GetNode()->GetComponent<RigidBody>(true);
+                         if (body) {
+                             // CLIENT RIGID BODY RETRIEVED
+                             bodyPos = body->GetPosition();
+                             rotation = na->GetNode()->GetRotation();
+
+
+
+                             if (na->onVehicle_) {
+                                 float steering = na->vehicle_->GetSteering();
+                                 if (steerWheelSprite_) {
+                                     steerWheelSprite_->SetVisible(true);
+                                     steerActorSprite_->SetVisible(false);
+                                     steerWheelSprite_->SetRotation(360.0f * steering);
+                                 }
+                             } else {
+                                 //float steering = na->GetSteering();
+                                 if (steerActorSprite_) {
+                                     steerWheelSprite_->SetVisible(false);
+                                     steerActorSprite_->SetVisible(true);
+                                     steerActorSprite_->SetRotation(na->GetNode()->GetRotation().YawAngle());
+                                     //steerActorSprite_->SetRotation(360.0f * steering);
+                                 }
+                             }
+
+                         }
+                     }
+                 }
+             }
+
 
              // Locate vehicle node
              if (vehicleNode) {
@@ -2371,8 +2413,12 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
 
                             auto *actor = dynamic_cast<NetworkActor *>(actorMap_[connection].Get());
                             if (actor) {
+                                //actor->GetNode()->SetPosition(actor->GetBody()->GetPosition());
+
                                 // Set rotation already here so that it's updated every rendering frame instead of every physics frame
                                 actor->GetNode()->SetRotation(Quaternion(actor->controls_.yaw_, Vector3::UP));
+
+
 
                                 if (vehicleNode) {
                                 if (actor->vehicle_) {
@@ -4702,6 +4748,12 @@ void MayaScape::CreateClientUI() {
     if (!steerWheelTexture)
         return;
 
+    // Get steering actor texture
+    Texture2D *steerActorTexture = cache->GetResource<Texture2D>("Textures/steer-actor.png");
+    if (!steerWheelTexture)
+        return;
+
+
     // Create sprite and add to the UI layout
     powerBarP1Sprite_ = ui->GetRoot()->CreateChild<Sprite>();
     powerBarBkgP1Sprite_ = ui->GetRoot()->CreateChild<Sprite>();
@@ -4714,6 +4766,7 @@ void MayaScape::CreateClientUI() {
     //miniMapBkgSprite_ = ui->GetRoot()->CreateChild<Sprite>();
     //markerMapBkgSprite_ = ui->GetRoot()->CreateChild<Sprite>();
     steerWheelSprite_ = ui->GetRoot()->CreateChild<Sprite>();
+    steerActorSprite_ = ui->GetRoot()->CreateChild<Sprite>();
 
 
     // Set sprite texture
@@ -4728,6 +4781,7 @@ void MayaScape::CreateClientUI() {
     //miniMapBkgSprite_->SetTexture(miniMapBkgTexture);
     //markerMapBkgSprite_->SetTexture(markerMapBkgTexture);
     steerWheelSprite_->SetTexture(steerWheelTexture);
+    steerActorSprite_->SetTexture(steerActorTexture);
 
     float textOverlap = 245.0f;
 
@@ -4950,6 +5004,18 @@ void MayaScape::CreateClientUI() {
     // Set a low priority so that other UI elements can be drawn on top
     steerWheelSprite_->SetPriority(-100);
     steerWheelSprite_->SetVisible(true);
+
+
+    steerActorSprite_->SetScale(256.0f / textureWidth);
+    steerActorSprite_->SetSize(textureWidth, textureHeight);
+    steerActorSprite_->SetHotSpot(textureWidth / 2, textureHeight / 2);
+    steerActorSprite_->SetAlignment(HA_LEFT, VA_TOP);
+    steerActorSprite_->SetPosition(Vector2(steerWheelX, steerWheelY));
+    steerActorSprite_->SetOpacity(0.5f);
+    // Set a low priority so that other UI elements can be drawn on top
+    steerActorSprite_->SetPriority(-100);
+    steerActorSprite_->SetVisible(true);
+
 
     // Debug text
     for (int i = 0; i < NUM_DEBUG_FIELDS; i++) {

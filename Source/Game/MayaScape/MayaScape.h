@@ -429,6 +429,8 @@ private:
 
     /// Steering wheel
     SharedPtr<Sprite> steerWheelSprite_;
+    /// Steering actor
+    SharedPtr<Sprite> steerActorSprite_;
 
     // BOTS
     // Sprite map of ffn
