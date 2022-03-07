@@ -859,7 +859,9 @@ Controls MayaScape::SampleCSPControls()
     }
     joyAngle = angle;
 
+    joyAngle += 0;
     // TODO: Rotate joy entry by 90?
+//    joyAngle = Clamp(joyAngle, 0.0f, 360.0f);
 
 
     ntwkControls_.yaw_ = joyAngle;
