@@ -811,6 +811,9 @@ Controls MayaScape::SampleCSPControls()
     Variant rStick = ntwkControls_.extraData_[VAR_AXIS_1];
     Vector2 rAxisVal = rStick.GetVector2();
 
+
+    joySteer_ = lStick.GetVector2();
+
     bool snap = false;
     if (lAxisVal.x_ < -0.4f) {
         // left
@@ -1642,7 +1645,6 @@ void MayaScape::HandleRenderUpdate(StringHash eventType, VariantMap &eventData) 
                              rotation = na->GetNode()->GetRotation();
 
 
-
                              if (na->onVehicle_) {
                                  float steering = na->vehicle_->GetSteering();
                                  if (steerWheelSprite_) {
@@ -1651,13 +1653,11 @@ void MayaScape::HandleRenderUpdate(StringHash eventType, VariantMap &eventData) 
                                      steerWheelSprite_->SetRotation(360.0f * steering);
                                  }
                              } else {
-                                 //float steering = na->GetSteering();
                                  if (steerActorSprite_) {
                                      steerWheelSprite_->SetVisible(false);
 
-
-                                     // TODO: Detect move vector and visible only on non-zero
-                                     if (na->lastImpulse_.LengthSquared() > 0) {
+                                     // Detect move vector and visible only on non-zero
+                                     if (joySteer_.LengthSquared() > 0) {
                                          steerActorSprite_->SetVisible(true);
                                          steerActorSprite_->SetRotation(na->GetNode()->GetRotation().YawAngle());
                                          //steerActorSprite_->SetRotation(360.0f * steering);

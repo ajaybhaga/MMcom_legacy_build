@@ -494,6 +494,9 @@ private:
     bool starBMarkerSet_;
 
 
+    Vector2 joySteer_;
+
+
     unsigned int networkActorNodeId_;
     unsigned int vehicleNodeId_;
     bool isServer_;

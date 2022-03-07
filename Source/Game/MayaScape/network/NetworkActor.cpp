@@ -825,6 +825,7 @@ void NetworkActor::DebugDraw() {
 
 
 
+
 //        dbgRenderer->AddLine(posWS, posWS + node_->R, color);
             //dbgRenderer->AddLine(posWS, posWS + this->vehicle_->GetNode()->GetDirection() * 40.0f, Color::CYAN);
             //dbgRenderer->AddLine(posWS, toTarget_, Color::YELLOW);
