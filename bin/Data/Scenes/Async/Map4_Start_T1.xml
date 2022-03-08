@@ -7,8 +7,8 @@
 	<attribute name="Elapsed Time" value="8.737" />
 	<attribute name="Next Replicated Node ID" value="189" />
 	<attribute name="Next Replicated Component ID" value="139" />
-	<attribute name="Next Local Node ID" value="16777234" />
-	<attribute name="Next Local Component ID" value="16777432" />
+	<attribute name="Next Local Node ID" value="16777236" />
+	<attribute name="Next Local Component ID" value="16777456" />
 	<attribute name="Variables" />
 	<attribute name="Variable Names" value="" />
 	<component type="Octree" id="1" />
@@ -26,7 +26,7 @@
 			<attribute name="Is Enabled" value="true" />
 			<attribute name="Name" value="track1" />
 			<attribute name="Tags" />
-			<attribute name="Position" value="1127.22 431.138 1" />
+			<attribute name="Position" value="0 223.712 0" />
 			<attribute name="Rotation" value="0.707107 0 0 -0.707107" />
 			<attribute name="Scale" value="10 10 10" />
 			<attribute name="Variables" />
@@ -36,7 +36,7 @@
 			</component>
 			<component type="RigidBody" id="24">
 				<attribute name="Physics Rotation" value="0.707107 0 0 -0.707107" />
-				<attribute name="Physics Position" value="1127.22 431.138 1" />
+				<attribute name="Physics Position" value="0 223.712 0" />
 			</component>
 			<component type="CollisionShape" id="25">
 				<attribute name="Shape Type" value="TriangleMesh" />
@@ -102,24 +102,11 @@
 				<attribute name="Tags">
 					<string value="levelLoadTrigger" />
 				</attribute>
-				<attribute name="Position" value="26.5269 292.483 -1837.91" />
+				<attribute name="Position" value="17.655 82.5702 -707.826" />
 				<attribute name="Rotation" value="1 0 0 0" />
 				<attribute name="Scale" value="100 100 100" />
 				<attribute name="Variables" />
 				<component type="StaticModel" id="11">
-					<attribute name="Model" value="Model;Models/AssetPack/starfish_T.mdl" />
-					<attribute name="Material" value="Material;Materials/ORANGE YELLOW.xml" />
-				</component>
-			</node>
-			<node id="28">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="start_starB" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="635.752 290.856 -1819.38" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="100 100 100" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="38">
 					<attribute name="Model" value="Model;Models/AssetPack/starfish_T.mdl" />
 					<attribute name="Material" value="Material;Materials/ORANGE YELLOW.xml" />
 				</component>
@@ -309,6 +296,19 @@
 					<attribute name="Variables" />
 				</node>
 			</node>
+			<node id="28">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="start_starB" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-384.299 78.3229 -703.145" />
+				<attribute name="Rotation" value="1 -4.3212e-07 -1.29789e-07 -1.37504e-07" />
+				<attribute name="Scale" value="100 100 100" />
+				<attribute name="Variables" />
+				<component type="StaticModel" id="38">
+					<attribute name="Model" value="Model;Models/AssetPack/starfish_T.mdl" />
+					<attribute name="Material" value="Material;Materials/ORANGE YELLOW.xml" />
+				</component>
+			</node>
 		</node>
 		<node id="12">
 			<attribute name="Is Enabled" value="true" />
@@ -415,21 +415,20 @@
 			<attribute name="Is Enabled" value="true" />
 			<attribute name="Name" value="track1-back" />
 			<attribute name="Tags" />
-			<attribute name="Position" value="1127.22 431.138 1" />
-			<attribute name="Rotation" value="0.707107 0 0 -0.707107" />
-			<attribute name="Scale" value="10 10 10" />
+			<attribute name="Position" value="0 210 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="20 20 20" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="133">
-				<attribute name="Model" value="Model;Models/Tracks/Models/race_obj_pPlane1.mdl" />
-				<attribute name="Material" value="Material;Materials/lambert2.xml" />
+				<attribute name="Model" value="Model;Models/Tracks/TheMerchant_Map1/Models/Land.mdl" />
+				<attribute name="Material" value="Material;Materials/Material.xml" />
 			</component>
 			<component type="RigidBody" id="134">
-				<attribute name="Physics Rotation" value="0.707107 0 0 -0.707107" />
-				<attribute name="Physics Position" value="1127.22 431.138 1" />
+				<attribute name="Physics Position" value="0 210 0" />
 			</component>
 			<component type="CollisionShape" id="135">
 				<attribute name="Shape Type" value="TriangleMesh" />
-				<attribute name="Model" value="Model;Models/Tracks/Models/race_obj_pPlane1.mdl" />
+				<attribute name="Model" value="Model;Models/Tracks/TheMerchant_Map1/Models/Land.mdl" />
 			</component>
 			<node id="186">
 				<attribute name="Is Enabled" value="true" />
