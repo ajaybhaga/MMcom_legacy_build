@@ -1866,7 +1866,7 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
 
         int k = 0;
         debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-        debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+        debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
         debugText_[k]->SetVisible(true);
         debugText_[k]->SetText(String("Cam Mode: ") + String(camMode_));
 
@@ -1926,59 +1926,59 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
             // Update debug text
             k++;
             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+            debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
             debugText_[k]->SetVisible(true);
             debugText_[k]->SetText(String("Speed (km/h): ") + String(botSpeedKm));
 
             k++;
             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+            debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
             debugText_[k]->SetVisible(true);
             debugText_[k]->SetText(String("Distance (km): ") + String(botDistance));
 
 
             k++;
             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+            debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
             debugText_[k]->SetVisible(true);
             debugText_[k]->SetText(String("Avg Speed (km/h): ") + String(botAvgSpeedKm));
 
             k++;
             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+            debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
             debugText_[k]->SetVisible(true);
             debugText_[k]->SetText(String("On Ground: ") + String(onGround));
 
 
             k++;
             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+            debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
             debugText_[k]->SetVisible(true);
             debugText_[k]->SetText(String("Reward: ") + String(reward));
 
 
             k++;
             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+            debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
             debugText_[k]->SetVisible(true);
             debugText_[k]->SetText(String("Pos: ") + String(pos) + String(", Rot: ") + String(rot));
 
             k++;
             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+            debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
             debugText_[k]->SetVisible(true);
             debugText_[k]->SetText(String("Wheel Contact -> ") + String(wheelsContactNum));
 
 
             k++;
             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+            debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
             debugText_[k]->SetVisible(true);
             debugText_[k]->SetText(String("wheelContactTime -> ") + String(wheelContactTime));
 
             k++;
             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+            debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
             debugText_[k]->SetVisible(true);
             debugText_[k]->SetText(String("GetTurrentAngle -> ") + String(turrentAngle));
 
@@ -2028,13 +2028,13 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
                     // Update debug text
                     k++;
                     debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-                    debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                    debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
                     debugText_[k]->SetVisible(true);
                     debugText_[k]->SetText(String("Speed (km/h): ") + String(botSpeedKm));
 
                     k++;
                     debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-                    debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                    debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
                     debugText_[k]->SetVisible(true);
                     debugText_[k]->SetText(String("Distance (km): ") + String(botDistance));
 
@@ -2047,25 +2047,25 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
 
                     k++;
                     debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-                    debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                    debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
                     debugText_[k]->SetVisible(true);
                     debugText_[k]->SetText(String("On Ground: ") + String(onGround));
 
                     k++;
                     debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-                    debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                    debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
                     debugText_[k]->SetVisible(true);
                     debugText_[k]->SetText(String("Pos: ") + String(pos) + String(", Rot: ") + String(rot));
 
                     k++;
                     debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-                    debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                    debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
                     debugText_[k]->SetVisible(true);
                     debugText_[k]->SetText(String("wheelsContactNum -> ") + String(wheelsContactNum));
 
                    k++;
                    debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-                   debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                   debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
                    debugText_[k]->SetVisible(true);
                    debugText_[k]->SetText(String("noWheelContactTime: ") + String(noWheelContactTime));
 
@@ -4676,17 +4676,17 @@ void MayaScape::CreateClientUI() {
 
     packetsIn_ = ui->GetRoot()->CreateChild<Text>();
     packetsIn_->SetText("Packets in : 0");
-    packetsIn_->SetFont(cache->GetResource<Font>(INGAME_FONT2), 20);
+    packetsIn_->SetFont(cache->GetResource<Font>(INGAME_FONT2), 14);
     packetsIn_->SetHorizontalAlignment(HA_RIGHT);
     packetsIn_->SetVerticalAlignment(VA_CENTER);
-    packetsIn_->SetPosition(-50, -10);
+    packetsIn_->SetPosition(-50, -5);
 
     packetsOut_ = ui->GetRoot()->CreateChild<Text>();
     packetsOut_->SetText("Packets out: 0");
-    packetsOut_->SetFont(cache->GetResource<Font>(INGAME_FONT2), 20);
+    packetsOut_->SetFont(cache->GetResource<Font>(INGAME_FONT2), 14);
     packetsOut_->SetHorizontalAlignment(HA_RIGHT);
     packetsOut_->SetVerticalAlignment(VA_CENTER);
-    packetsOut_->SetPosition(-50, 10);
+    packetsOut_->SetPosition(-50, 5);
 
 
     // Set the default UI style and font
@@ -5035,8 +5035,8 @@ void MayaScape::CreateClientUI() {
     for (int i = 0; i < NUM_DEBUG_FIELDS; i++) {
         debugText_[i] = ui->GetRoot()->CreateChild<Text>("DebugText");
         debugText_[i]->SetAlignment(HA_LEFT, VA_CENTER);
-        debugText_[i]->SetPosition(10.0f, 500.0 + (i * 20));
-        debugText_[i]->SetFont(font, 26);
+        debugText_[i]->SetPosition(10.0f, 500.0 + (i * 14));
+        debugText_[i]->SetFont(font, 12);
         debugText_[i]->SetTextEffect(TE_SHADOW);
         debugText_[i]->SetVisible(true);
         std::string debugData1;
@@ -5320,8 +5320,8 @@ void MayaScape::InitiateGameMap(Scene *scene) {
     for (int i = 0; i < NUM_DEBUG_FIELDS; i++) {
         debugText_[i] = ui->GetRoot()->CreateChild<Text>("DebugText");
         debugText_[i]->SetAlignment(HA_LEFT, VA_CENTER);
-        debugText_[i]->SetPosition(10.0f, 10.0 + (i * 20));
-        debugText_[i]->SetFont(cache->GetResource<Font>(INGAME_FONT2), 26);
+        debugText_[i]->SetPosition(10.0f, 10.0 + (i * 12));
+        debugText_[i]->SetFont(cache->GetResource<Font>(INGAME_FONT2), 12);
         debugText_[i]->SetTextEffect(TE_SHADOW);
         debugText_[i]->SetVisible(true);
         std::string debugData1;

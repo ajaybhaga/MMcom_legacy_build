@@ -56,6 +56,7 @@ String matFile = "Models/Player/Shino/FBX/Models/Shino.txt";
 
 */
 
+#define REST_VELOCITY_THRESHOLD 4.5f
 String mdlFile = "Models/Player/Bino/Models/f_8.mdl";
 //Models/Armature_idle_01_idle_01.ani
 //String idleAniFile = "Models/Player/Bino/Models/r_f_8_r_f_8_Run_r_f_8_Run.ani";
@@ -470,7 +471,7 @@ void NetworkActor::FixedUpdate(float timeStep) {
         if (!doJump_) {
 
             // Update animation
-            if (velocity.Length() > 0.1f) {
+            if (velocity.Length() > REST_VELOCITY_THRESHOLD) {
 
                 animCtrl_->PlayExclusive(walkAniFile, 1, true, 0.15f);
                 animCtrl_->SetSpeed(walkAniFile, velocity.Length() * 0.2f);
@@ -546,7 +547,7 @@ void NetworkActor::FixedUpdate(float timeStep) {
         if (controls_.buttons_ & NTWK_CTRL_FLIP) {
             // FLIP CAR
             //Flip(timeStep);
-            doJump_ = true;
+            //doJump_ = true;
         }
 
         if (controls_.buttons_ & NTWK_CTRL_FIRE) {
