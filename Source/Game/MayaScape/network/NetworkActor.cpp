@@ -484,7 +484,7 @@ void NetworkActor::FixedUpdate(float timeStep) {
 
         } else {
 
-            animCtrl_->PlayExclusive(jumpAniFile, 1, true, 0.15f);
+            animCtrl_->PlayExclusive(jumpAniFile, 1, false, 0.15f);
             animCtrl_->SetStartBone(jumpAniFile, "Ctrl_all");
             doJump_ = false;
         }

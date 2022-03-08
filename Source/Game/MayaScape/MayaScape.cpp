@@ -861,8 +861,9 @@ Controls MayaScape::SampleCSPControls()
     }
     joyAngle = angle;
 
+    // Rotate joy entry by 90 to align to screen
     joyAngle += 90;
-    // TODO: Rotate joy entry by 90?
+
 //    joyAngle = Clamp(joyAngle, 0.0f, 360.0f);
 
 
