@@ -230,7 +230,7 @@ void NetworkActor::Init(Node* node) {
         // Set rigid body kinematic mode. In kinematic mode forces are not applied to the rigid body.
         // Disable physics
         //body_->SetKinematic(true);
-        collisionShape_->SetCapsule(0.4f, 0.8f, Vector3::UP * 0.3f);
+        collisionShape_->SetCapsule(0.4f, 0.8f, Vector3::UP * 0.4f);
        // collisionShape_->SetCapsule(0.01f, 0.5f, Vector3::UP * 0.3f);
 
 
@@ -868,8 +868,10 @@ void NetworkActor::DebugDraw() {
             //dbgRenderer->AddLine(localCenter, (localCenter+move_*40.0f), Color(1.0f, 1.0, 0.0));
 
 
-            dbgRenderer->AddLine(localCenter, (localCenter+GetNode()->GetDirection()*40.0f), Color(1.0f, 0.0, 0.0));
-            dbgRenderer->AddLine(localCenter, (localCenter+lastImpulse_*40.0f), Color(0.0f, 0.0, 1.0));
+            //dbgRenderer->AddLine(localCenter, (localCenter+GetNode()->GetDirection()*40.0f), Color(1.0f, 0.0, 0.0));
+            //dbgRenderer->AddLine(localCenter, (localCenter+lastImpulse_*40.0f), Color(0.0f, 0.0, 1.0));
+
+            dbgRenderer->AddLine(localCenter, vehicle_->GetRaycastVehicle()->GetBody()->GetPosition(), Color(0.0f, 0.0, 1.0));
 
             Vector3 nodePos = GetNode()->GetPosition();
             dbgRenderer->AddLine(nodePos, localCenter, Color(1.0f, 1.0, 0.0));
