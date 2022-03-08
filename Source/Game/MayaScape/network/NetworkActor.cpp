@@ -230,7 +230,7 @@ void NetworkActor::Init(Node* node) {
         // Set rigid body kinematic mode. In kinematic mode forces are not applied to the rigid body.
         // Disable physics
         //body_->SetKinematic(true);
-        collisionShape_->SetCapsule(0.4f, 1.0f, Vector3::UP * 0.3f);
+        collisionShape_->SetCapsule(0.4f, 0.8f, Vector3::UP * 0.3f);
        // collisionShape_->SetCapsule(0.01f, 0.5f, Vector3::UP * 0.3f);
 
 
@@ -386,10 +386,8 @@ void NetworkActor::ApplyMovement(float timeStep) {
 
         // If in air, allow control, but slower than when on ground
         //body_->ApplyImpulse(rot * move_ * (softGrounded ? MOVE_FORCE : INAIR_MOVE_FORCE));
-        const float MOVE_FORCE = 0.4f;
-        //body_->ApplyImpulse(rot * move_ * MOVE_FORCE);
-        //const Vector3 impulse = rot*Quaternion(controls_.yaw_, Vector3::UP) * GetNode()->GetDirection() * MOVE_FORCE * acceleration_;
-        //const Vector3 impulse = rot*Quaternion(controls_.yaw_, Vector3::UP) * GetNode()->GetDirection() * MOVE_FORCE * moveMag;
+        const float MOVE_FORCE = 0.54f;
+
 
         Vector3 impulse;
         if (controls_.yaw_ < 0) {
@@ -416,7 +414,7 @@ void NetworkActor::ApplyMovement(float timeStep) {
 
     } else {
         // Slow down in opposite direction
-        //body_->ApplyImpulse(-body_->GetLinearVelocity());
+        body_->ApplyImpulse(-body_->GetLinearVelocity()*timeStep);
     }
 /*
     // Apply force to rigid body of actor
