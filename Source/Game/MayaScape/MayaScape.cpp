@@ -2079,14 +2079,14 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
             // Genetic Algorithm statistics text
             int s = 0;
             genAlgStatsText_[s]->SetAlignment(HA_LEFT, VA_TOP);
-            genAlgStatsText_[s]->SetPosition(10.0f, 10 + (s * 20));
+            genAlgStatsText_[s]->SetPosition(10.0f, 10 + (s * 12));
             genAlgStatsText_[s]->SetVisible(true);
             genAlgStatsText_[s]->SetText(
                     String("Generation: ") + String(EvolutionManager::getInstance()->getGeneticAlgorithm()->generationCount_) + String(", ") + String("Population: ") + String(EvolutionManager::getInstance()->agentsAliveCount) + String(" out of ") + String(EvolutionManager::getInstance()->getGeneticAlgorithm()->populationSize_));
 
             s++;
             genAlgStatsText_[s]->SetAlignment(HA_LEFT, VA_TOP);
-            genAlgStatsText_[s]->SetPosition(10.0f, 10 + (s * 20));
+            genAlgStatsText_[s]->SetPosition(10.0f, 10 + (s * 12));
             genAlgStatsText_[s]->SetVisible(true);
             genAlgStatsText_[s]->SetText(
             String("Genotype Param Count: ") + String(EvolutionManager::getInstance()->getGeneticAlgorithm()->genotypeParamCount_));
@@ -2138,31 +2138,31 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
 
             s++;
             genAlgStatsText_[s]->SetAlignment(HA_LEFT, VA_TOP);
-            genAlgStatsText_[s]->SetPosition(10.0f, 10 + (s * 20));
+            genAlgStatsText_[s]->SetPosition(10.0f, 10 + (s * 12));
             genAlgStatsText_[s]->SetVisible(true);
             genAlgStatsText_[s]->SetText(String("Best Evaluation (Current): Agent -> ") + String(bestEvalIdx) + String(", Evaluation -> ") + String(maxEval));
 
             s++;
             genAlgStatsText_[s]->SetAlignment(HA_LEFT, VA_TOP);
-            genAlgStatsText_[s]->SetPosition(10.0f, 10 + (s * 20));
+            genAlgStatsText_[s]->SetPosition(10.0f, 10 + (s * 12));
             genAlgStatsText_[s]->SetVisible(true);
             genAlgStatsText_[s]->SetText(String("Previous Population (1st best): Agent -> ") + String(prevBestFitIdx) + String(", Fitness -> ") + String(prevPopMaxFitness));
 
             s++;
             genAlgStatsText_[s]->SetAlignment(HA_LEFT, VA_TOP);
-            genAlgStatsText_[s]->SetPosition(10.0f, 10 + (s * 20));
+            genAlgStatsText_[s]->SetPosition(10.0f, 10 + (s * 12));
             genAlgStatsText_[s]->SetVisible(true);
             genAlgStatsText_[s]->SetText(String("Previous Population (2nd best): Agent -> ") + String(1) + String(", Fitness -> ") + String(EvolutionManager::getInstance()->getGeneticAlgorithm()->getPrevPopulation()[1]->fitness));
 
             s++;
             genAlgStatsText_[s]->SetAlignment(HA_LEFT, VA_TOP);
-            genAlgStatsText_[s]->SetPosition(10.0f, 10 + (s * 20));
+            genAlgStatsText_[s]->SetPosition(10.0f, 10 + (s * 12));
             genAlgStatsText_[s]->SetVisible(true);
             genAlgStatsText_[s]->SetText(String("Previous Population (3rd best): Agent -> ") + String(2) + String(", Fitness -> ") + String(EvolutionManager::getInstance()->getGeneticAlgorithm()->getPrevPopulation()[2]->fitness));
 
             s++;
             genAlgStatsText_[s]->SetAlignment(HA_LEFT, VA_TOP);
-            genAlgStatsText_[s]->SetPosition(10.0f, 10 + (s * 20));
+            genAlgStatsText_[s]->SetPosition(10.0f, 10 + (s * 12));
             genAlgStatsText_[s]->SetVisible(true);
             genAlgStatsText_[s]->SetText(String("Previous Population: Agent -> ") + String(prevBestEvalIdx) + String(", Evaluation -> ") + String(prevPopMaxEval));
 
@@ -3665,23 +3665,23 @@ void MayaScape::MoveCamera(float timeStep) {
                             // NetworkActor (Player) cam
 
                             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-                            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                            debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
                             debugText_[k]->SetVisible(true);
                             debugText_[k]->SetText(String("Actor Pos -> ") + String(bodyPos.ToString()));
                             k++;
                             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-                            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                            debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
                             debugText_[k]->SetVisible(true);
                             debugText_[k]->SetText(String("Actor Rot -> ") + String(rotation.ToString()));
                             k++;
                             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-                            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                            debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
                             debugText_[k]->SetVisible(true);
                             debugText_[k]->SetText(String("Actor -> ") + String(actorName));
                             k++;
 
                             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-                            debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                            debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
                             debugText_[k]->SetVisible(true);
                             debugText_[k]->SetText(String("ntwkControls_.yaw_ -> ") + String(ntwkControls_.yaw_));
                             k++;
@@ -3767,17 +3767,17 @@ void MayaScape::MoveCamera(float timeStep) {
 
 
                                 debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-                                debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                                debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
                                 debugText_[k]->SetVisible(true);
                                 debugText_[k]->SetText(String("Vehicle Pos -> ") + String(startPos.ToString()));
                                 k++;
                                 debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-                                debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                                debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
                                 debugText_[k]->SetVisible(true);
                                 debugText_[k]->SetText(String("Vehicle Rot -> ") + String(rotation.ToString()));
                                 k++;
                                 debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-                                debugText_[k]->SetPosition(10.0f, 400 + (k * 20));
+                                debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
                                 debugText_[k]->SetVisible(true);
                                 debugText_[k]->SetText(String("Vehicle -> ") + String(vehicleName));
                                 k++;
@@ -5304,14 +5304,14 @@ void MayaScape::InitiateGameMap(Scene *scene) {
 
     packetsIn_ = ui->GetRoot()->CreateChild<Text>();
     packetsIn_->SetText("Packets in : 0");
-    packetsIn_->SetFont(cache->GetResource<Font>(INGAME_FONT2), 20);
+    packetsIn_->SetFont(cache->GetResource<Font>(INGAME_FONT2), 12);
     packetsIn_->SetHorizontalAlignment(HA_RIGHT);
     packetsIn_->SetVerticalAlignment(VA_CENTER);
     packetsIn_->SetPosition(-50, -10);
 
     packetsOut_ = ui->GetRoot()->CreateChild<Text>();
     packetsOut_->SetText("Packets out: 0");
-    packetsOut_->SetFont(cache->GetResource<Font>(INGAME_FONT2), 20);
+    packetsOut_->SetFont(cache->GetResource<Font>(INGAME_FONT2), 12);
     packetsOut_->SetHorizontalAlignment(HA_RIGHT);
     packetsOut_->SetVerticalAlignment(VA_CENTER);
     packetsOut_->SetPosition(-50, 10);
@@ -5334,8 +5334,8 @@ void MayaScape::InitiateGameMap(Scene *scene) {
     for (int i = 0; i < NUM_STAT_FIELDS; i++) {
         genAlgStatsText_[i] = ui->GetRoot()->CreateChild<Text>("GenAlgStatsText");
         genAlgStatsText_[i]->SetAlignment(HA_LEFT, VA_TOP);
-        genAlgStatsText_[i]->SetPosition(10.0f, 1.0 + (i * 20));
-        genAlgStatsText_[i]->SetFont(cache->GetResource<Font>(INGAME_FONT2), 26);
+        genAlgStatsText_[i]->SetPosition(10.0f, 1.0 + (i * 12));
+        genAlgStatsText_[i]->SetFont(cache->GetResource<Font>(INGAME_FONT2), 12);
         genAlgStatsText_[i]->SetTextEffect(TE_SHADOW);
         genAlgStatsText_[i]->SetVisible(false);
         std::string statData1;
