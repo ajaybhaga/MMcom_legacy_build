@@ -192,6 +192,7 @@ void NetworkActor::Init(Node* node) {
 
         // spin node
         Node* adjustNode = objectNode->CreateChild("AdjNode");
+        //adjustNode->SetRotation( Quaternion(-90, Vector3(0,1,0) ) );
         adjustNode->SetRotation( Quaternion(-90, Vector3(0,1,0) ) );
 
 
@@ -390,7 +391,7 @@ void NetworkActor::ApplyMovement(float timeStep) {
         //const Vector3 impulse = rot*Quaternion(controls_.yaw_, Vector3::UP) * GetNode()->GetDirection() * MOVE_FORCE * acceleration_;
         //const Vector3 impulse = rot*Quaternion(controls_.yaw_, Vector3::UP) * GetNode()->GetDirection() * MOVE_FORCE * moveMag;
 
-        const Vector3 impulse = Quaternion(controls_.yaw_, Vector3::UP) * body_->GetRotation() * Vector3::FORWARD * MOVE_FORCE * moveMag;
+        const Vector3 impulse = Quaternion(controls_.yaw_+90.0f, Vector3::UP) * body_->GetRotation() * Vector3::FORWARD * MOVE_FORCE * moveMag;
 
         lastImpulse_ = impulse;
         body_->ApplyImpulse(impulse);
@@ -466,6 +467,8 @@ void NetworkActor::FixedUpdate(float timeStep) {
 
         // Update rotation according to direction of the player's movement.
         //Vector3 velocity = body_->GetLinearVelocity();
+
+
 
 
         if (!doJump_) {

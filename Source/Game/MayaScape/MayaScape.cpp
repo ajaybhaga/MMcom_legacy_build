@@ -449,6 +449,7 @@ void MayaScape::CreateEmptyScene(Context* context) {
     // server requires client hash and scene info
     Server *server = GetSubsystem<Server>();
     server->RegisterScene(scene_);
+
 }
 
 void MayaScape::UpdateUIState(bool state) {
@@ -861,8 +862,8 @@ Controls MayaScape::SampleCSPControls()
     }
     joyAngle = angle;
 
-    // Rotate joy entry by 90 to align to screen
-    joyAngle += 90;
+    // Rotate joy entry to align to screen
+    joyAngle -= 180.0f;
 
 //    joyAngle = Clamp(joyAngle, 0.0f, 360.0f);
 
@@ -2425,8 +2426,20 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                             auto *actor = dynamic_cast<NetworkActor *>(actorMap_[connection].Get());
                             if (actor) {
 
+/*
+                                Quaternion endRot = Quaternion(0, 0, 0);
+                                Vector3 nVel = actor->lastImpulse_.Normalized();
+                                endRot.FromLookRotation(nVel, Vector3::UP);
+
+
+*/
+                                float yawAngle = actor->controls_.yaw_ - 90.0f;
                                 // Set rotation already here so that it's updated every rendering frame instead of every physics frame
-                                actor->GetBody()->GetNode()->SetRotation(Quaternion(actor->controls_.yaw_, Vector3::UP));
+                                actor->GetBody()->GetNode()->SetRotation(Quaternion(yawAngle, Vector3::UP));
+
+//                                actor->GetBody()->GetNode()->SetRotation(endRot);
+
+//                                node_->SetRotation(endRot);
 
                                 using namespace Update;
                                 // Take the frame time step, which is stored as a float
@@ -2585,10 +2598,10 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                             cameraTargetPos =
                                                     actor->GetBody()->GetPosition() + forward *
                                                                                                 Vector3(actor->GetBody()->GetLinearVelocity().Length() *
-                                                                                                        velMult,
-                                                                                                        CAMERA_RAY_DISTANCE_LIMIT,
+                                                                                                        velMult * 0.07,
+                                                                                                        CAMERA_RAY_DISTANCE_LIMIT/9,
                                                                                                         actor->GetBody()->GetLinearVelocity().Length() *
-                                                                                                        velMult) * 0.9f;
+                                                                                                        velMult) * 0.06f;
 
                                         }
                                         Vector3 cameraStartPos = serverCam_->GetNode()->GetPosition();
@@ -4244,6 +4257,9 @@ void MayaScape::HandleStartServer(StringHash eventType, VariantMap &eventData) {
     // Load base scene
     ReloadScene(true);
 
+    //GetSubsystem<Renderer>()->GetDefaultZone()->SetFogColor(Color(0.0f, 0.0f, 0.0f));
+    //GetSubsystem<Renderer>()->GetDefaultZone()->SetAmbientColor(Color(0.0f, 0.0f, 0.0f));
+
 
     // Setup Client-Side Prediction
     cspServer_ = scene_->CreateComponent<CSP_Server>(LOCAL);
@@ -5051,7 +5067,7 @@ void MayaScape::CreateClientUI() {
         radioText_[i]->SetAlignment(HA_RIGHT, VA_TOP);
         radioText_[i]->SetPosition(-20.0f, 20 + (i * 20));
         radioText_[i]->SetVisible(true);
-        radioText_[i]->SetColor(Color(181/255.0f, 219/255.0f, 0.3));
+        radioText_[i]->SetColor(Color(235/255.0f, 217/255.0f, 255/255));
         radioText_[i]->SetFont(font4, 19);
         radioText_[i]->SetTextEffect(TE_SHADOW);
         radioText_[i]->SetVisible(true);
