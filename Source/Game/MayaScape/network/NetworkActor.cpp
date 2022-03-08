@@ -386,13 +386,29 @@ void NetworkActor::ApplyMovement(float timeStep) {
 
         // If in air, allow control, but slower than when on ground
         //body_->ApplyImpulse(rot * move_ * (softGrounded ? MOVE_FORCE : INAIR_MOVE_FORCE));
-        const float MOVE_FORCE = 0.6f;
+        const float MOVE_FORCE = 0.4f;
         //body_->ApplyImpulse(rot * move_ * MOVE_FORCE);
         //const Vector3 impulse = rot*Quaternion(controls_.yaw_, Vector3::UP) * GetNode()->GetDirection() * MOVE_FORCE * acceleration_;
         //const Vector3 impulse = rot*Quaternion(controls_.yaw_, Vector3::UP) * GetNode()->GetDirection() * MOVE_FORCE * moveMag;
 
-        const Vector3 impulse = Quaternion(controls_.yaw_+90.0f, Vector3::UP) * body_->GetRotation() * Vector3::FORWARD * MOVE_FORCE * moveMag;
+        Vector3 impulse;
+        if (controls_.yaw_ < 0) {
 
+            if (controls_.yaw_ > -90) {
+                impulse =
+                        Quaternion(controls_.yaw_ * -1, Vector3::UP) * body_->GetRotation() * Vector3::FORWARD *
+                        MOVE_FORCE * moveMag;
+            } else {
+                impulse =
+                        Quaternion(controls_.yaw_ + 180.0f, Vector3::UP) * body_->GetRotation() * Vector3::FORWARD *
+                        MOVE_FORCE * moveMag;
+
+            }
+        } else {
+            impulse =
+                    Quaternion(controls_.yaw_ - 90.0f, Vector3::UP) * body_->GetRotation() * Vector3::FORWARD *
+                    MOVE_FORCE * moveMag;
+        }
         lastImpulse_ = impulse;
         body_->ApplyImpulse(impulse);
         //body_->ApplyImpulse(Vector3(impulse.x_, 0, impulse.z_));
