@@ -3655,8 +3655,8 @@ void MayaScape::MoveCamera(float timeStep) {
 
                     //BLUE-304-vehicle
 
-                    Vector3 bodyPos;
-                    Quaternion rotation;
+                    Vector3 pos;
+                    Quaternion rot;
 
                     if (actorNode) {
                         // Retrieve Actor
@@ -3668,8 +3668,8 @@ void MayaScape::MoveCamera(float timeStep) {
                                 auto *body = na->GetNode()->GetComponent<RigidBody>(true);
                                 if (body) {
                                     // CLIENT RIGID BODY RETRIEVED
-                                    bodyPos = body->GetPosition();
-                                    rotation = na->GetNode()->GetRotation();
+                                    pos = body->GetPosition();
+                                    rot = body->GetRotation();
                                 }
                             }
 
@@ -3680,12 +3680,12 @@ void MayaScape::MoveCamera(float timeStep) {
                             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
                             debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
                             debugText_[k]->SetVisible(true);
-                            debugText_[k]->SetText(String("Actor Pos -> ") + String(bodyPos.ToString()));
+                            debugText_[k]->SetText(String("Actor Pos -> ") + String(pos.ToString()));
                             k++;
                             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
                             debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
                             debugText_[k]->SetVisible(true);
-                            debugText_[k]->SetText(String("Actor Rot -> ") + String(rotation.ToString()));
+                            debugText_[k]->SetText(String("Actor Rot -> ") + String(rot.ToString()));
                             k++;
                             debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
                             debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
@@ -3702,21 +3702,23 @@ void MayaScape::MoveCamera(float timeStep) {
 
 
 //////
-                            if (bodyPos != Vector3(0, 0, 0)) {
+                            if (pos != Vector3(0, 0, 0)) {
 
                                 // Physics update has completed. Position camera behind vehicle
-                                Quaternion actorRot_ = SmoothStepAngle(rotation, actorNode->GetRotation(),
+                                Quaternion actorRot_ = SmoothStepAngle(rot, actorNode->GetRotation(),
                                                                        timeStep * rotLerpRate);
                                 Quaternion dir(actorRot_.YawAngle(), Vector3::UP);
                                 dir = dir * Quaternion(yaw_, Vector3::UP);
                                 dir = dir * Quaternion(pitch_, Vector3::RIGHT);
 
-                                Vector3 actorPos = bodyPos + Vector3::UP * 2.2f;
+                                Vector3 actorPos = pos + Vector3::UP * 2.2f;
                                 float curDist = (actorPos - targetCameraPos_).Length();
 
                                 curDist = SpringDamping(curDist, CLIENT_CAMERA_DISTANCE / 4, springVelocity_, damping,
                                                         maxVel, timeStep);
                                 targetCameraPos_ = actorPos - dir * Vector3(0.0f, 0.0f, curDist);
+
+                                Vector3 controlVec = Quaternion(na->controls_.yaw_ - 90.0f, Vector3::UP) * rot * Vector3::FORWARD;
 
                                 Vector3 cameraTargetPos = targetCameraPos_;
                                 Vector3 cameraStartPos = actorPos;

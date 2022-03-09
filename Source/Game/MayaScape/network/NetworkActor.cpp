@@ -869,7 +869,7 @@ void NetworkActor::DebugDraw() {
 
 
             //dbgRenderer->AddLine(localCenter, (localCenter+GetNode()->GetDirection()*40.0f), Color(1.0f, 0.0, 0.0));
-            //dbgRenderer->AddLine(localCenter, (localCenter+lastImpulse_*40.0f), Color(0.0f, 0.0, 1.0));
+            dbgRenderer->AddLine(localCenter, (localCenter+lastImpulse_*40.0f), Color(1.0f, 0.0, 0.0));
 
             dbgRenderer->AddLine(localCenter, vehicle_->GetRaycastVehicle()->GetBody()->GetPosition(), Color(0.0f, 0.0, 1.0));
 
