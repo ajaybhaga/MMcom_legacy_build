@@ -3724,45 +3724,46 @@ void MayaScape::MoveCamera(float timeStep) {
 
                                     // Zoom up on body velocity increase
                                     cameraTargetPos =
-                                            pos + forward *
+                                            pos + Vector3::UP *2.3f + forward *
                                           Vector3(lVel.Length() *
                                                   velMult * 0.07,
                                                   CAMERA_RAY_DISTANCE_LIMIT/9,
                                                   lVel.Length() *
-                                                  velMult) * 0.06f;
+                                                  velMult) * 0.09f;
 
                                 }
                                 Vector3 cameraStartPos = clientCam_->GetNode()->GetPosition();
 
+                                bool stopMove = false;
                                 // Camera ray cast limiter
                                 if (lastCamRaycast > CAM_RAYCAST_TIME_WAIT) {
 
-                                    // Raycast camera against static objects (physics collision mask 2)
-                                    // and move it closer to the vehicle if something in between
-                                    Ray cameraRay(cameraStartPos, cameraTargetPos - cameraStartPos);
-                                    float cameraRayLength = (cameraTargetPos - cameraStartPos).Length();
-                                    PhysicsRaycastResult result;
+                                    /*
+                                 // Raycast camera against static objects (physics collision mask 2)
+                                 // and move it closer to the vehicle if something in between
+                                 Ray cameraRay(cameraStartPos, cameraTargetPos - cameraStartPos);
+                                 float cameraRayLength = (cameraTargetPos - cameraStartPos).Length();
+                                 PhysicsRaycastResult result;
 
-                                    bool stopMove = false;
-                                    // Adjust camera up to ray length
-                                    if (cameraRayLength < CAMERA_RAY_DISTANCE_LIMIT) {
-                                    }
 
-                                    if (cameraRayLength < 10.0f) {
-                                        scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result, cameraRay,
-                                                                                            cameraRayLength,
-                                                                                            NETWORKACTOR_COL_LAYER);
-                                    } else {
-                                        scene_->GetComponent<PhysicsWorld>()->RaycastSingleSegmented(result,
-                                                                                                     cameraRay,
-                                                                                                     cameraRayLength,
-                                                                                                     NETWORKACTOR_COL_LAYER);
-                                    }
-                                    if (result.body_)
-                                        cameraTargetPos =
-                                                cameraStartPos +
-                                                cameraRay.direction_ * (result.distance_ - 0.5f);
+                                 // Adjust camera up to ray length
 
+                                 if (cameraRayLength < 10.0f) {
+                                     scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result, cameraRay,
+                                                                                         cameraRayLength,
+                                                                                         NETWORKACTOR_COL_LAYER);
+                                 } else {
+                                     scene_->GetComponent<PhysicsWorld>()->RaycastSingleSegmented(result,
+                                                                                                  cameraRay,
+                                                                                                  cameraRayLength,
+                                                                                                  NETWORKACTOR_COL_LAYER);
+                                 }
+
+                                 if (result.body_)
+                                     cameraTargetPos =
+                                             cameraStartPos +
+                                             cameraRay.direction_ * (result.distance_ - 0.5f);
+         */
                                     // Reset timer for recent ray cast
                                     lastCamRaycast = 0;
 
@@ -3782,8 +3783,8 @@ void MayaScape::MoveCamera(float timeStep) {
                                         w1 = 1.0f; // hold position
                                         w2 = 0.0f;
                                     } else {
-                                        w1 = 0.97;
-                                        w2 = 0.03;
+                                        w1 = 0.91;
+                                        w2 = 0.09;
                                     }
 
                                     Vector3 weightedSum =
@@ -3798,10 +3799,6 @@ void MayaScape::MoveCamera(float timeStep) {
                                 }
                             }
                             ////
-
-
-
-
 
                             // NetworkActor (Player) cam
 
@@ -3827,63 +3824,6 @@ void MayaScape::MoveCamera(float timeStep) {
                             debugText_[k]->SetText(String("ntwkControls_.yaw_ -> ") + String(ntwkControls_.yaw_));
                             k++;
 
-
-/*
-//////
-                            if (pos != Vector3(0, 0, 0)) {
-
-                                // Physics update has completed. Position camera behind vehicle
-                                //Quaternion actorRot_ = SmoothStepAngle(actorNode->GetRotation(), rot,
-                                 //                                      timeStep * rotLerpRate);
-
-                                Quaternion actorRot_ = SmoothStepAngle(rot, actorNode->GetRotation(),
-                                                                       timeStep * rotLerpRate);
-
-                                Quaternion dir(actorRot_.YawAngle(), Vector3::UP);
-
-
-                                dir = dir * Quaternion(yaw_, Vector3::UP);
-                                dir = dir * Quaternion(pitch_, Vector3::RIGHT);
-
-                                Vector3 actorPos = pos + Vector3::UP * 2.2f;
-                                float curDist = (actorPos - targetCameraPos_).Length();
-
-                                curDist = SpringDamping(curDist, CLIENT_CAMERA_DISTANCE / 4, springVelocity_, damping,
-                                                        maxVel, timeStep);
-                                targetCameraPos_ = actorPos - dir * Vector3(0.0f, 0.0f, curDist);
-
-                                Vector3 controlVec = Quaternion(na->controls_.yaw_ - 90.0f, Vector3::UP) * rot * Vector3::FORWARD;
-
-                                Vector3 cameraTargetPos = targetCameraPos_ + controlVec;
-                                Vector3 cameraStartPos = actorPos;
-
-                                // Raycast camera against static objects (physics collision mask 2)
-                                // and move it closer to the vehicle if something in between
-                                Ray cameraRay(cameraStartPos, cameraTargetPos - cameraStartPos);
-                                float cameraRayLength = (cameraTargetPos - cameraStartPos).Length();
-                                PhysicsRaycastResult result;
-                                //scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result, cameraRay, cameraRayLength, 2);
-
-                                if (cameraRayLength < 10.0f) {
-                                    scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result,
-                                                                                        cameraRay,
-                                                                                        cameraRayLength,
-                                                                                        NETWORKACTOR_COL_LAYER);
-                                } else {
-                                    scene_->GetComponent<PhysicsWorld>()->RaycastSingleSegmented(result,
-                                                                                                 cameraRay,
-                                                                                                 cameraRayLength,
-                                                                                                 NETWORKACTOR_COL_LAYER);
-                                }
-
-
-                                if (result.body_)
-                                    cameraTargetPos = cameraStartPos + cameraRay.direction_ * (result.distance_ - 0.5f);
-
-                                clientCam_->GetNode()->SetPosition(cameraTargetPos);
-                                clientCam_->GetNode()->SetRotation(dir);
-*/
-                                /////
                             }
                         }
 
