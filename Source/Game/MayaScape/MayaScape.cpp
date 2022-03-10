@@ -3724,7 +3724,7 @@ void MayaScape::MoveCamera(float timeStep) {
 
                                     // Zoom up on body velocity increase
                                     cameraTargetPos =
-                                            pos + Vector3::UP * 9.3f - forward *
+                                            pos + Vector3::UP * 3.3f - forward *
                                           Vector3(0.0f + lVel.Length() *
                                                   velMult * 0.07,
                                                   CAMERA_RAY_DISTANCE_LIMIT/14,
@@ -3783,8 +3783,8 @@ void MayaScape::MoveCamera(float timeStep) {
                                         w1 = 1.0f; // hold position
                                         w2 = 0.0f;
                                     } else {
-                                        w1 = 0.91;
-                                        w2 = 0.09;
+                                        w1 = 0.94f;
+                                        w2 = 0.06f;
                                     }
 
                                     Vector3 weightedSum =
