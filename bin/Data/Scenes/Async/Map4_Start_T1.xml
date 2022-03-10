@@ -5,8 +5,8 @@
 	<attribute name="Smoothing Constant" value="50" />
 	<attribute name="Snap Threshold" value="5" />
 	<attribute name="Elapsed Time" value="8.737" />
-	<attribute name="Next Replicated Node ID" value="190" />
-	<attribute name="Next Replicated Component ID" value="140" />
+	<attribute name="Next Replicated Node ID" value="195" />
+	<attribute name="Next Replicated Component ID" value="151" />
 	<attribute name="Next Local Node ID" value="16777237" />
 	<attribute name="Next Local Component ID" value="16777468" />
 	<attribute name="Variables" />
@@ -102,7 +102,7 @@
 				<attribute name="Tags">
 					<string value="levelLoadTrigger" />
 				</attribute>
-				<attribute name="Position" value="17.655 82.5702 -707.826" />
+				<attribute name="Position" value="-15.8894 82.5702 -708.089" />
 				<attribute name="Rotation" value="1 0 0 0" />
 				<attribute name="Scale" value="100 100 100" />
 				<attribute name="Variables" />
@@ -300,7 +300,7 @@
 				<attribute name="Is Enabled" value="true" />
 				<attribute name="Name" value="start_starB" />
 				<attribute name="Tags" />
-				<attribute name="Position" value="-384.299 78.3229 -703.145" />
+				<attribute name="Position" value="-122.845 78.3229 -701.091" />
 				<attribute name="Rotation" value="1 -4.3212e-07 -1.29789e-07 -1.37504e-07" />
 				<attribute name="Scale" value="100 100 100" />
 				<attribute name="Variables" />
@@ -480,13 +480,47 @@
 			<attribute name="Is Enabled" value="true" />
 			<attribute name="Name" value="dojo-stand" />
 			<attribute name="Tags" />
-			<attribute name="Position" value="1040.47 411.518 277.983" />
+			<attribute name="Position" value="1040.47 381.869 277.983" />
 			<attribute name="Rotation" value="-4.37114e-08 0 1 -0" />
 			<attribute name="Scale" value="8 8 8" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="139">
 				<attribute name="Model" value="Model;Models/Tracks/TheMerchant_Map1/Models/Cube.022.mdl" />
 				<attribute name="Material" value="Material;Materials/wood.001.xml;Materials/zwart metaal.001.xml;Materials/wood.001.xml;Materials/zwart metaal.003.xml;Materials/zwart metaal.004.xml;Materials/zwart metaal.005.xml;Materials/zwart metaal.008.xml;Materials/zwart metaal.007.xml;Materials/zwart metaal.006.xml;Materials/zwart metaal.011.xml" />
+			</component>
+			<node id="190">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="-1.72772 -19.9336 53.783" />
+				<attribute name="Rotation" value="1 0 0 0" />
+				<attribute name="Scale" value="1 1 1" />
+				<attribute name="Variables" />
+				<component type="CollisionShape" id="142">
+					<attribute name="Size" value="60 1 114" />
+					<attribute name="Model" value="Model;Models/Tracks/TheMerchant_Map1/Models/dojo-stand1.mdl" />
+				</component>
+			</node>
+		</node>
+		<node id="191">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="bridge" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="787.075 209.549 -3.73025" />
+			<attribute name="Rotation" value="0.5 -0.5 0.5 -0.5" />
+			<attribute name="Scale" value="9 9 9" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="143">
+				<attribute name="Model" value="Model;Models/AssetPack/medieval-bridge.mdl" />
+				<attribute name="Material" value="Material;Materials/ist_bridge_02_material.xml" />
+			</component>
+			<component type="RigidBody" id="149">
+				<attribute name="Physics Rotation" value="0.5 -0.5 0.5 -0.5" />
+				<attribute name="Physics Position" value="787.075 209.549 -3.73025" />
+			</component>
+			<component type="CollisionShape" id="150">
+				<attribute name="Shape Type" value="ConvexHull" />
+				<attribute name="Model" value="Model;Models/AssetPack/medieval-bridge.mdl" />
 			</component>
 		</node>
 	</node>

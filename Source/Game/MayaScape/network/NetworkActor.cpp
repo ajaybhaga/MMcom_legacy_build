@@ -56,7 +56,7 @@ String matFile = "Models/Player/Shino/FBX/Models/Shino.txt";
 
 */
 
-#define REST_VELOCITY_THRESHOLD 4.5f
+#define REST_VELOCITY_THRESHOLD 0.5f
 String mdlFile = "Models/Player/Bino/Models/f_8.mdl";
 //Models/Armature_idle_01_idle_01.ani
 //String idleAniFile = "Models/Player/Bino/Models/r_f_8_r_f_8_Run_r_f_8_Run.ani";
@@ -386,7 +386,7 @@ void NetworkActor::ApplyMovement(float timeStep) {
 
         // If in air, allow control, but slower than when on ground
         //body_->ApplyImpulse(rot * move_ * (softGrounded ? MOVE_FORCE : INAIR_MOVE_FORCE));
-        const float MOVE_FORCE = 0.23f;
+        const float MOVE_FORCE = 0.45f;
 
 
         Vector3 impulse;
