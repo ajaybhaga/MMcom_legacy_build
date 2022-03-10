@@ -386,7 +386,7 @@ void NetworkActor::ApplyMovement(float timeStep) {
 
         // If in air, allow control, but slower than when on ground
         //body_->ApplyImpulse(rot * move_ * (softGrounded ? MOVE_FORCE : INAIR_MOVE_FORCE));
-        const float MOVE_FORCE = 0.54f;
+        const float MOVE_FORCE = 0.23f;
 
 
         Vector3 impulse;
@@ -491,7 +491,7 @@ void NetworkActor::FixedUpdate(float timeStep) {
             if (velocity.Length() > REST_VELOCITY_THRESHOLD) {
 
                 animCtrl_->PlayExclusive(walkAniFile, 1, true, 0.15f);
-                animCtrl_->SetSpeed(walkAniFile, velocity.Length() * 0.2f);
+                animCtrl_->SetSpeed(walkAniFile, velocity.Length() * 0.4f);
                 animCtrl_->SetStartBone(walkAniFile, "Ctrl_all");
 
             } else {

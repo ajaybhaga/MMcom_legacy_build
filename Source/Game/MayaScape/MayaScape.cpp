@@ -3724,12 +3724,12 @@ void MayaScape::MoveCamera(float timeStep) {
 
                                     // Zoom up on body velocity increase
                                     cameraTargetPos =
-                                            pos + Vector3::UP *2.3f + forward *
-                                          Vector3(lVel.Length() *
+                                            pos + Vector3::UP * 9.3f - forward *
+                                          Vector3(0.0f + lVel.Length() *
                                                   velMult * 0.07,
-                                                  CAMERA_RAY_DISTANCE_LIMIT/9,
-                                                  lVel.Length() *
-                                                  velMult) * 0.09f;
+                                                  CAMERA_RAY_DISTANCE_LIMIT/14,
+                                                  78.0f + lVel.Length() *
+                                                  velMult) * 0.11f;
 
                                 }
                                 Vector3 cameraStartPos = clientCam_->GetNode()->GetPosition();
