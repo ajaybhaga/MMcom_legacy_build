@@ -3705,9 +3705,15 @@ void MayaScape::MoveCamera(float timeStep) {
                             if (pos != Vector3(0, 0, 0)) {
 
                                 // Physics update has completed. Position camera behind vehicle
+                                //Quaternion actorRot_ = SmoothStepAngle(actorNode->GetRotation(), rot,
+                                 //                                      timeStep * rotLerpRate);
+
                                 Quaternion actorRot_ = SmoothStepAngle(rot, actorNode->GetRotation(),
                                                                        timeStep * rotLerpRate);
+
                                 Quaternion dir(actorRot_.YawAngle(), Vector3::UP);
+
+
                                 dir = dir * Quaternion(yaw_, Vector3::UP);
                                 dir = dir * Quaternion(pitch_, Vector3::RIGHT);
 
@@ -3720,7 +3726,7 @@ void MayaScape::MoveCamera(float timeStep) {
 
                                 Vector3 controlVec = Quaternion(na->controls_.yaw_ - 90.0f, Vector3::UP) * rot * Vector3::FORWARD;
 
-                                Vector3 cameraTargetPos = targetCameraPos_;
+                                Vector3 cameraTargetPos = targetCameraPos_ + controlVec;
                                 Vector3 cameraStartPos = actorPos;
 
                                 // Raycast camera against static objects (physics collision mask 2)
