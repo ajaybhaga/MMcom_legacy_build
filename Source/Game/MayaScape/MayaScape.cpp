@@ -3606,7 +3606,6 @@ void MayaScape::MoveCamera(float timeStep) {
     const float maxVel = 50.0f;
     const float damping = 0.2f;
 
-
     int k = 0;
     if (started_) {
 
@@ -3657,6 +3656,7 @@ void MayaScape::MoveCamera(float timeStep) {
 
                     Vector3 pos;
                     Quaternion rot;
+                    Vector3 lVel;
 
                     if (actorNode) {
                         // Retrieve Actor
@@ -3670,10 +3670,138 @@ void MayaScape::MoveCamera(float timeStep) {
                                     // CLIENT RIGID BODY RETRIEVED
                                     pos = body->GetPosition();
                                     rot = body->GetRotation();
+                                    lVel = body->GetLinearVelocity();
                                 }
                             }
 
                             // Client: Move Camera
+
+                            // TODO: Convert client cam to chase cam like server cam
+                            // Camera Positioning
+
+
+                            ////
+                            if (na) {
+
+                                String username = actor->GetUserName();
+                                float botSpeedKm = 0;
+                                Quaternion forward;
+
+                                float velMult = 8.0f;
+
+                                Vector3 cameraTargetPos;
+                                if (na->onVehicle_) {
+
+                                    if (na->vehicle_) {
+                                        botSpeedKm = round(
+                                                abs(na->vehicle_->GetRaycastVehicle()->GetSpeedKm()));
+                                        // Back wheel points forward
+                                        forward = na->vehicle_->GetNode()->GetRotation();
+                                    }
+
+                                    //float bodyVel = EvolutionManager::getInstance()->getAgents()[camMode_ -1]->getActor()->vehicle_->GetBody()->GetLinearVelocity().Length();
+                                    botSpeedKm = Clamp(botSpeedKm, 1.0f, 2000.0f);
+
+                                    // On vehicle
+
+                                    // Zoom up on body velocity increase
+                                    cameraTargetPos =
+                                            pos + forward *
+                                            Vector3(lVel.Length() *
+                                                    velMult,
+                                                    (pos.y_ +
+                                                     CAMERA_RAY_DISTANCE_LIMIT +
+                                                     12.0f) +
+                                                    (botSpeedKm *
+                                                     2.7),
+                                                    lVel.Length() *
+                                                    velMult) * 0.9f;
+                                } else {
+                                    // On foot
+                                    botSpeedKm = 0;
+                                    // Back wheel points forward
+                                    forward = rot;
+
+                                    // Zoom up on body velocity increase
+                                    cameraTargetPos =
+                                            pos + forward *
+                                          Vector3(lVel.Length() *
+                                                  velMult * 0.07,
+                                                  CAMERA_RAY_DISTANCE_LIMIT/9,
+                                                  lVel.Length() *
+                                                  velMult) * 0.06f;
+
+                                }
+                                Vector3 cameraStartPos = clientCam_->GetNode()->GetPosition();
+
+                                // Camera ray cast limiter
+                                if (lastCamRaycast > CAM_RAYCAST_TIME_WAIT) {
+
+                                    // Raycast camera against static objects (physics collision mask 2)
+                                    // and move it closer to the vehicle if something in between
+                                    Ray cameraRay(cameraStartPos, cameraTargetPos - cameraStartPos);
+                                    float cameraRayLength = (cameraTargetPos - cameraStartPos).Length();
+                                    PhysicsRaycastResult result;
+
+                                    bool stopMove = false;
+                                    // Adjust camera up to ray length
+                                    if (cameraRayLength < CAMERA_RAY_DISTANCE_LIMIT) {
+                                    }
+
+                                    if (cameraRayLength < 10.0f) {
+                                        scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result, cameraRay,
+                                                                                            cameraRayLength,
+                                                                                            NETWORKACTOR_COL_LAYER);
+                                    } else {
+                                        scene_->GetComponent<PhysicsWorld>()->RaycastSingleSegmented(result,
+                                                                                                     cameraRay,
+                                                                                                     cameraRayLength,
+                                                                                                     NETWORKACTOR_COL_LAYER);
+                                    }
+                                    if (result.body_)
+                                        cameraTargetPos =
+                                                cameraStartPos +
+                                                cameraRay.direction_ * (result.distance_ - 0.5f);
+
+                                    // Reset timer for recent ray cast
+                                    lastCamRaycast = 0;
+
+                                    Vector3 lookAtObject;
+
+                                    if (na->onVehicle_) {
+                                        lookAtObject = na->vehicle_->GetRaycastVehicle()->GetBody()->GetPosition();
+                                    } else {
+                                        lookAtObject = pos;
+                                    }
+
+                                    // Set camera position and orientation
+                                    float w1;
+                                    float w2;
+
+                                    if (stopMove) {
+                                        w1 = 1.0f; // hold position
+                                        w2 = 0.0f;
+                                    } else {
+                                        w1 = 0.97;
+                                        w2 = 0.03;
+                                    }
+
+                                    Vector3 weightedSum =
+                                            clientCam_->GetNode()->GetPosition() * w1 + cameraTargetPos * w2;
+
+                                    // Calculate camera distance
+                                    clientCam_->GetNode()->SetPosition(weightedSum);
+                                    clientCam_->GetNode()->LookAt(lookAtObject);
+
+                                    //clientCam_->GetNode()->SetPosition(cameraTargetPos);
+                                    //clientCam_->GetNode()->SetRotation(dir);
+                                }
+                            }
+                            ////
+
+
+
+
 
                             // NetworkActor (Player) cam
 
@@ -3700,7 +3828,7 @@ void MayaScape::MoveCamera(float timeStep) {
                             k++;
 
 
-
+/*
 //////
                             if (pos != Vector3(0, 0, 0)) {
 
@@ -3754,7 +3882,7 @@ void MayaScape::MoveCamera(float timeStep) {
 
                                 clientCam_->GetNode()->SetPosition(cameraTargetPos);
                                 clientCam_->GetNode()->SetRotation(dir);
-
+*/
                                 /////
                             }
                         }
@@ -3811,129 +3939,12 @@ void MayaScape::MoveCamera(float timeStep) {
                                 snap.z_ -= 120.0f;
                                 //Vector3 snap = server->GetFocusObjects().Empty() ? Vector3(0, 35.0, 0) : server->GetFocusObjects()[0];
 
-
-/*
-                            // Zoom up on body velocity increase
-                            Vector3 cameraTargetPos =
-                                    startPos + forward*Vector3(body->GetLinearVelocity().Length()*velMult, 0, body->GetLinearVelocity().Length()*velMult)*0.9f;
-                            Vector3 cameraStartPos = startPos + Vector3(0, body->GetNode()->GetPosition().y_+(CAMERA_RAY_DISTANCE_LIMIT*20.0f)+12.0f+(botSpeed*2.7), 0);
-
-                            // Camera ray cast limiter
-                            if (lastCamRaycast > CAM_RAYCAST_TIME_WAIT) {
-
-                                // Raycast camera against static objects (physics collision mask 2)
-                                // and move it closer to the vehicle if something in between
-                                Ray cameraRay(cameraStartPos, cameraTargetPos - cameraStartPos);
-                                float cameraRayLength = (cameraTargetPos - cameraStartPos).Length();
-                                PhysicsRaycastResult result;
-
-                                bool stopMove = false;
-                                // Adjust camera up to ray length
-                                if (cameraRayLength < CAMERA_RAY_DISTANCE_LIMIT) {
-                                    stopMove = true;
-                                }
-
-                                if (cameraRayLength < 10.0f) {
-                                    scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result,
-                                                                                        cameraRay,
-                                                                                        cameraRayLength,
-                                                                                        NETWORKACTOR_COL_LAYER);
-                                } else {
-                                    scene_->GetComponent<PhysicsWorld>()->RaycastSingleSegmented(result,
-                                                                                                 cameraRay,
-                                                                                                 cameraRayLength,
-                                                                                                 NETWORKACTOR_COL_LAYER);
-                                }
-                                if (result.body_)
-                                    cameraTargetPos =
-                                            cameraStartPos +
-                                            cameraRay.direction_ * (result.distance_ - 0.5f);
-
-                                // Reset timer for recent ray cast
-                                lastCamRaycast = 0;
-
-
-                                // Set camera position and orientation
-                                float w1;
-                                float w2;
-
-                                if (stopMove) {
-                                    w1 = 1.0f; // hold position
-                                    w2 = 0.0f;
-                                } else {
-                                    w1 = 0.997;
-                                    w2 = 0.003;
-                                }
-
-                                Vector3 weightedSum =
-                                        clientCam_->GetNode()->GetPosition() * w1 +
-                                        cameraTargetPos * w2;
-                                clientCam_->GetNode()->SetPosition(weightedSum);
-                                clientCam_->GetNode()->LookAt(startPos);
-                            }*/
-
                             }
                         }
                     }
                 }
             }
-        }
-    }
-
-
-
-
-/*
-                                ///// OLD CAM CODE ////
-
-                                int camMode = 5;
-
-                                switch (camMode) {
-                                    case 0:
-                                    {
-                                        // Front Left wheel cam
-                                        cameraNode_->SetRotation(Quaternion(rotation.x_, rotation.y_, rotation.z_));
-                                    }
-                                    break;
-                                    case 1:
-                                    {
-                                        // Rear Left wheel cam
-                                        cameraNode_->SetRotation(Quaternion(rotation.x_, rotation.y_, -rotation.z_));
-
-                                    }
-                                    break;
-                                    case 2:
-                                    {
-                                        // Front Right wheel cam
-                                        cameraNode_->SetRotation(Quaternion(-rotation.x_, rotation.y_, rotation.z_));
-                                    }
-                                    break;
-                                    case 3:
-                                    {
-                                        // Rear Right wheel cam
-                                        cameraNode_->SetRotation(Quaternion(-rotation.x_, rotation.y_, -rotation.z_));
-                                    }
-                                    break;
-                                    case 4:
-                                    {
-                                        // Rear Dash cam
-                                       // cameraNode_->SetRotation(Quaternion(-rotation.x_/2.0f - 30.0f, rotation.y_-camSpin_, rotation.z_-camSpin2_));
-                                        cameraNode_->SetRotation(Quaternion(-rotation.x_/2.0f + 15.0f, rotation.y_-180.0f, rotation.z_-camSpin2_));
-                                        cameraNode_->SetPosition(cameraNode_->GetPosition() + Vector3(0.0f, 37.0f, 0.0f));
-                                    }
-                                    break;
-                                    case 5:
-                                    {
-                                        // Front Dash cam
-                                        Vector3 forward = Vector3(0, 0, 1.0f);
-                                        Vector3 lift = Vector3(0.0f, 33.0f, 0.0f);
-                                        cameraNode_->SetPosition(startPos + (lift+Vector3(0, (camZoom_*8.0), 0)) + (rotation*(-forward * 20.0f * (1+camZoom_))));
-                                        cameraNode_->LookAt(startPos + (lift/1.0f));
-                                    }
-                                        break;
-
-                                }
-*/
+        } // End of started_
 }
 
 
