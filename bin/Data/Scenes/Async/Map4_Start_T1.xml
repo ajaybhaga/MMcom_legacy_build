@@ -5,10 +5,10 @@
 	<attribute name="Smoothing Constant" value="50" />
 	<attribute name="Snap Threshold" value="5" />
 	<attribute name="Elapsed Time" value="8.737" />
-	<attribute name="Next Replicated Node ID" value="189" />
-	<attribute name="Next Replicated Component ID" value="139" />
-	<attribute name="Next Local Node ID" value="16777236" />
-	<attribute name="Next Local Component ID" value="16777456" />
+	<attribute name="Next Replicated Node ID" value="190" />
+	<attribute name="Next Replicated Component ID" value="140" />
+	<attribute name="Next Local Node ID" value="16777237" />
+	<attribute name="Next Local Component ID" value="16777468" />
 	<attribute name="Variables" />
 	<attribute name="Variable Names" value="" />
 	<component type="Octree" id="1" />
@@ -323,7 +323,7 @@
 			<attribute name="Is Enabled" value="true" />
 			<attribute name="Name" value="tree1" />
 			<attribute name="Tags" />
-			<attribute name="Position" value="244.442 -74.1017 -3.73025" />
+			<attribute name="Position" value="244.442 197.805 -3.73025" />
 			<attribute name="Rotation" value="0.707107 0 0 -0.707107" />
 			<attribute name="Scale" value="60 60 60" />
 			<attribute name="Variables" />
@@ -475,6 +475,19 @@
 					<attribute name="Light Shape Texture" value="TextureCube;" />
 				</component>
 			</node>
+		</node>
+		<node id="189">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="dojo-stand" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="1040.47 411.518 277.983" />
+			<attribute name="Rotation" value="-4.37114e-08 0 1 -0" />
+			<attribute name="Scale" value="8 8 8" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="139">
+				<attribute name="Model" value="Model;Models/Tracks/TheMerchant_Map1/Models/Cube.022.mdl" />
+				<attribute name="Material" value="Material;Materials/wood.001.xml;Materials/zwart metaal.001.xml;Materials/wood.001.xml;Materials/zwart metaal.003.xml;Materials/zwart metaal.004.xml;Materials/zwart metaal.005.xml;Materials/zwart metaal.008.xml;Materials/zwart metaal.007.xml;Materials/zwart metaal.006.xml;Materials/zwart metaal.011.xml" />
+			</component>
 		</node>
 	</node>
 </scene>
