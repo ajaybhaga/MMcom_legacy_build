@@ -5087,6 +5087,8 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
 
 
 
+    // Set calculated network actor position
+
     Vector3 actorPos = Vector3(0,0,0);
     if (starAMarkerSet_) {
         Vector3 spawnDir = (starBMarker_-starAMarker_);
@@ -5096,7 +5098,7 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
 
         //actorPos = Quaternion(0,90,0) * (startPos+spawnDir*w);
         actorPos = Quaternion(0,0,0) * (startPos+spawnDir*w);
-        actor->GetNode()->SetPosition(actorPos);
+        actor->GetBody()->SetPosition(actorPos);
 
         // Clamp y to start marker
         //actorPos.y_ = starAMarker_.y_;
@@ -5104,9 +5106,9 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
     }
 
 
-    //actor->SetClientInfo(name, Random(1,100), actorPos);
-//    actor->SetClientInfo(vehicleName, Random(1,100), Vector3(actor->GetPosition()));
     actor->SetClientInfo(actorName, Random(1,100), Vector3(actor->GetPosition()));
+
+    // Generate vehicle
 
     String vehicleName = username + "-vehicle";
     // Create a new vehicle for the player
@@ -5115,7 +5117,8 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
     Vehicle *vehicle = vehicleNode->CreateComponent<Vehicle>(REPLICATED);
     vehicle->Init(vehicleNode);
 
-    vehicleNode->SetPosition(Vector3(actor->GetPosition()));
+    vehicleNode->SetPosition(Vector3(actor->GetBody()->GetPosition())+Vector3(0,60,0));
+    //vehicle->GetRaycastVehicle()->GetBody()->SetPosition(Vector3(actor->GetPosition())-Vector3::UP*50.0f);
     vehicleNode->SetRotation(Quaternion(0.0f, Random(0.0f, 360.0f), 0.0f));
     // Attach vehicle to actor
     actor->vehicle_ = vehicle;
