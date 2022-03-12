@@ -1259,9 +1259,10 @@ void MayaScape::HandleNetworkUpdateSent(StringHash eventType, VariantMap& eventD
     }
 }
 
-/*
+
 void MayaScape::HandleNodeCollision(StringHash eventType, VariantMap& eventData) {
 
+    /*
     using namespace PhysicsBeginContact2D;
 
     Node* p1Node = scene_->GetChild("Bear-P1", true);
@@ -1288,8 +1289,8 @@ void MayaScape::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
         }
 
         std::cout << std::endl;
-
-}*/
+*/
+}
 
 void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventData) {
 

@@ -264,8 +264,11 @@ void NetworkActor::Create() {
     model_ = modelNode->GetComponent<AnimatedModel>();
     body_ = modelNode->GetComponent<RigidBody>();
 
-    // register100
+    // Register update
     SetUpdateEventMask(USE_UPDATE | USE_FIXEDUPDATE);
+
+    // Register collision
+    SubscribeToEvent(E_NODECOLLISION, URHO3D_HANDLER(NetworkActor, HandleNodeCollision));
 }
 
 void NetworkActor::SetNode(Node* node)
@@ -902,6 +905,38 @@ void NetworkActor::HandleNodeCollision(StringHash eventType, VariantMap& eventDa
 {
     // Check collision contacts and see if character is standing on ground (look for a contact that has near vertical normal)
     using namespace NodeCollision;
+
+    Node* collidedNode = static_cast<Node*>(eventData[P_OTHERNODE].GetPtr());
+//    URHO3D_LOGDEBUGF("***** NetworkActor::HandleNodeCollision() -> collidedNode: [%s]", collidedNode->GetName().CString());
+
+    if (vehicle_) {
+        if (!onVehicle_) {
+            // Found a vehicle?
+            String collNodeStr = collidedNode->GetName();
+            unsigned idx = collNodeStr.Find("vehicle");
+            if (idx > 0) {
+
+
+                if (collidedNode == vehicle_->GetNode()) {
+                    URHO3D_LOGDEBUGF("***** NetworkActor::FOUND VEHICLE: [%s]", collNodeStr.CString());
+                    // Set On Vehicle
+                    onVehicle_ = true;
+                }
+            }
+        }
+    }
+
+
+    if (collidedNode->GetName() == "boid")
+    {/*
+        // emitt particle effect when boid has been hit
+        Node* particle = collidedNode->CreateChild("Particle");
+        particle->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+        particle->SetScale(2.0f);
+        ParticleEmitter* emitter = particle->CreateComponent<ParticleEmitter>();
+        emitter->SetEffect(GetSubsystem<ResourceCache>()->GetResource<ParticleEffect>("Particle/Burst.xml"));*/
+    }
+
 
     MemoryBuffer contacts(eventData[P_CONTACTS].GetBuffer());
 
