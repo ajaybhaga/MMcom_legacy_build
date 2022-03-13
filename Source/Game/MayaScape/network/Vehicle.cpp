@@ -1060,7 +1060,7 @@ void Vehicle::Init(Node* node) {
                     // apply to x
                     adjNode2->SetRotation(Quaternion(-90.0f, 180.0f, 0.0f));
 
-
+/*
                     //connectionHeight = -4.74f;
                     //connectionHeight = -4.2f;
                     connectionHeight = -1.4f;//-2.2f;
@@ -1069,6 +1069,17 @@ void Vehicle::Init(Node* node) {
                     // chassis width -> 35 * 20% -> 7
                     //wheelX = ((7 / 2.0f) + wheelWidth_);
                     wheelX = ((2.6f / 2.0f) + wheelWidth_);
+*/
+
+                    //connectionHeight = -1.4f;//-2.2f; // Sahin
+                    //wheelSpace = 17.1f*scaleF; // Sahin
+                    //wheelX = ((2.6f / 2.0f) + wheelWidth_); // Sahin
+
+                    connectionHeight = -1.4f;//-2.2f; // Yugo
+                    wheelSpace = 24.1f*scaleF; // Yugo
+                    wheelX = ((2.6f / 2.0f) + wheelWidth_); // Yugo
+
+
 
                 } else if (carType == 7) {
                     v3BoxExtents.x_ *= 15.0f;
@@ -1238,7 +1249,7 @@ void Vehicle::Init(Node* node) {
                     wheelNode->SetScale(Vector3(scale, scale, scale));
 //                    wheelNode->SetRotation(connectionPoint.x_ >= 0.0 ? Quaternion(0.0f, 0.0f, 180.0f) : Quaternion(0.0f, 0.0f, -0.0f));
                     wheelNode->SetRotation(connectionPoint.x_ >= 0.0 ? Quaternion(0.0f, 90.0f, 180.0f) : Quaternion(0.0f, 90.0f, -0.0f));
-                    wheelNode->SetWorldPosition(Vector3(0,0,-forwardWeightOffset)+node_->GetWorldPosition() + node_->GetWorldRotation() * connectionPoints_[id]);
+                    wheelNode->SetWorldPosition(Vector3(0,0,3.0f-forwardWeightOffset)+node_->GetWorldPosition() + node_->GetWorldRotation() * connectionPoints_[id]);
                     //wheelNode->SetWorldPosition(node_->GetWorldPosition() + node_->GetWorldRotation() * connectionPoints_[id]);
 
                     break;
