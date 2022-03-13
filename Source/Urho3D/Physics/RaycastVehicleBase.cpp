@@ -333,20 +333,6 @@ void RaycastVehicleBase::FixedUpdate(float timeStep)
             break;
         }
     }
-
-        if (m_flip) {
-        m_flipTime += timeStep;
-        URHO3D_LOGDEBUGF("**RaycastVehicleBase::FixedUpdate -> Flip()");
-        // activate body
-        hullBody_->ApplyImpulse(Vector3(0.0f, 900, 0));
-        hullBody_->ApplyTorqueImpulse(Vector3(3300.0f, 0, 0));
-        hullBody_->Activate();
-
-        if (m_flipTime > 0.8f) {
-            m_flip = false;
-            m_flipTime = 0;
-        }
-    }
 }
 
 void RaycastVehicleBase::PostUpdate(float timeStep)

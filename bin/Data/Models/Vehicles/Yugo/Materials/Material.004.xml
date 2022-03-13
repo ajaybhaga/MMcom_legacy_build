@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<material>
+	<technique name="Techniques/DiffNormal.xml" />
+	<texture name="Textures/low_poly_body_color.png" unit="diffuse" />
+	<texture name="Textures/low_poly_normal_map_large.png" unit="normal" />
+	<parameter name="MatDiffColor" value="0.64 0.64 0.64 1" />
+	<parameter name="MatSpecColor" value="0.4 0.4 0.4 128" />
+</material>

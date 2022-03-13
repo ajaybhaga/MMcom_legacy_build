@@ -305,7 +305,7 @@ void NetworkActor::SetControls(const Controls &controls) {
 }
 
 void NetworkActor::Flip() {
-
+/*
     float qx;
     float qy;
     float qz;
@@ -330,7 +330,7 @@ void NetworkActor::Flip() {
     qy = updateTrans.getRotation().y();
     qz = updateTrans.getRotation().z();
     qw = updateTrans.getRotation().w();
-    URHO3D_LOGDEBUGF("NetworkActor::Flip() AFTER -> [q.x: %f, q.y: %f, q.z: %f, q.w: %f]", qx, qy, qz, qw);
+    URHO3D_LOGDEBUGF("NetworkActor::Flip() AFTER -> [q.x: %f, q.y: %f, q.z: %f, q.w: %f]", qx, qy, qz, qw);*/
 }
 
 void NetworkActor::FindTarget() {

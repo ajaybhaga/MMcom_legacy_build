@@ -749,7 +749,9 @@ void Vehicle::Init(Node* node) {
         body_ = node_->GetComponent<RigidBody>();
         //body_->DrawDebugGeometry(dbgRenderer, true);
 
-        float forwardWeightOffset = 38.0f;
+        //float forwardWeightOffset = 38.0f; // Sahin
+        float forwardWeightOffset = 3.0f; // Yugo
+
         // Push back
         node_->SetPosition(Vector3(0,0,forwardWeightOffset));
 //        m_fVehicleMass = 425.0f;
@@ -951,8 +953,10 @@ void Vehicle::Init(Node* node) {
                     v3BoxExtents.z_ *= 2.82f*scaleF2;
 
 
-                    XMLFile *f = cache->GetResource<XMLFile>("Objects/Sahin_Vehicle.xml");
-                    Vector3 pos = Vector3(0,0,42.0f);
+                    XMLFile *f = cache->GetResource<XMLFile>("Objects/Yugo_Vehicle.xml");
+//                    XMLFile *f = cache->GetResource<XMLFile>("Objects/Sahin_Vehicle.xml");
+                    //Vector3 pos = Vector3(0,0,42.0f); // Sahin
+                    Vector3 pos = Vector3(0,0,0.0f); // Yugo
                     Quaternion q = Quaternion(0,90,0);
                     Node* vehiclePrefab_ = GetScene()->InstantiateXML(f->GetRoot(), pos, q, REPLICATED);
 
@@ -1218,20 +1222,23 @@ void Vehicle::Init(Node* node) {
 
                 case 6 ... 11: {
                     //scale = 0.1f;
-                    scale = 0.04f; //SetScale(Vector3(0.04f,0.04f,0.04f))
+                    //scale = 0.04f; //SetScale(Vector3(0.04f,0.04f,0.04f))
+                    scale = 5.0f; //SetScale(Vector3(0.04f,0.04f,0.04f))
                     //Model *tireModel = cache->GetResource<Model>("Models/Vehicles/SetA/Models/Wheels_4.mdl");
 
-                    Model *tireModel = cache->GetResource<Model>("Models/Vehicles/Sahin/Models/Wheel_FL.mdl");
+                    Model *tireModel = cache->GetResource<Model>("Models/Vehicles/Yugo/Models/wheel.mdl");
                     pWheel->SetModel(tireModel);
                     //pWheel->ApplyMaterialList("Models/Vehicles/SetA/Models/Wheels_4.txt");
-                    pWheel->ApplyMaterialList("Models/Vehicles/Sahin/Models/Wheel_FL.txt");
+//                    pWheel->ApplyMaterialList("Models/Vehicles/Sahin/Models/Wheel_FL.txt");
+                    pWheel->ApplyMaterialList("Models/Vehicles/Yugo/Models/wheel.txt");
+
 
                     //pWheel->SetMaterial(cache->GetResource<Material>("Offroad/Models/Materials/Tire.xml"));
 //                    wheelNode->SetScale(Vector3(scale/1.2f, scale, scale));
                     wheelNode->SetScale(Vector3(scale, scale, scale));
 //                    wheelNode->SetRotation(connectionPoint.x_ >= 0.0 ? Quaternion(0.0f, 0.0f, 180.0f) : Quaternion(0.0f, 0.0f, -0.0f));
                     wheelNode->SetRotation(connectionPoint.x_ >= 0.0 ? Quaternion(0.0f, 90.0f, 180.0f) : Quaternion(0.0f, 90.0f, -0.0f));
-                    wheelNode->SetWorldPosition(Vector3(0,0,forwardWeightOffset*scale)+node_->GetWorldPosition() + node_->GetWorldRotation() * connectionPoints_[id]);
+                    wheelNode->SetWorldPosition(Vector3(0,0,-forwardWeightOffset)+node_->GetWorldPosition() + node_->GetWorldRotation() * connectionPoints_[id]);
                     //wheelNode->SetWorldPosition(node_->GetWorldPosition() + node_->GetWorldRotation() * connectionPoints_[id]);
 
                     break;
@@ -1282,7 +1289,7 @@ void Vehicle::Init(Node* node) {
         // Setup lighting
 
         Node *lightNode = node_->CreateChild("Lights");
-        lightNode->SetPosition(Vector3(0.0f, 25.0f, 0));
+        lightNode->SetPosition(Vector3(0.0f, 50.0f, 0));
         // Update vehicle head lamp lighting
         Light *light = lightNode->CreateComponent<Light>();
         // Light* light = vehicleHeadLamp_->CreateComponent<Light>();
@@ -1477,7 +1484,7 @@ void Vehicle::Flip(float duration) {
     // Apply impulse force in ray direction for duration of time
   //Vector3 impRayDir = -body_->GetRotation()*(direction * mag)*duration;
     //raycastVehicle_->ApplyImpulse(impRayDir);
-    raycastVehicle_->Flip();
+  //  raycastVehicle_->Flip();
     //body_->SetRotation(-body_->GetRotation());
 //    URHO3D_LOGDEBUGF("**[%f] [Vehicle %s]::FLIP -> body->ApplyImpulse [%f,%f,%f]", duration, this->userName_.CString(), impRayDir.x_, impRayDir.y_, impRayDir.z_);
 
