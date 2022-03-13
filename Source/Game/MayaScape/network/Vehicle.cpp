@@ -1249,7 +1249,7 @@ void Vehicle::Init(Node* node) {
                     wheelNode->SetScale(Vector3(scale, scale, scale));
 //                    wheelNode->SetRotation(connectionPoint.x_ >= 0.0 ? Quaternion(0.0f, 0.0f, 180.0f) : Quaternion(0.0f, 0.0f, -0.0f));
                     wheelNode->SetRotation(connectionPoint.x_ >= 0.0 ? Quaternion(0.0f, 90.0f, 180.0f) : Quaternion(0.0f, 90.0f, -0.0f));
-                    wheelNode->SetWorldPosition(Vector3(0,0,3.0f-forwardWeightOffset)+node_->GetWorldPosition() + node_->GetWorldRotation() * connectionPoints_[id]);
+                    wheelNode->SetWorldPosition(Vector3(0,0,2.0f-forwardWeightOffset)+node_->GetWorldPosition() + node_->GetWorldRotation() * connectionPoints_[id]);
                     //wheelNode->SetWorldPosition(node_->GetWorldPosition() + node_->GetWorldRotation() * connectionPoints_[id]);
 
                     break;
@@ -1300,7 +1300,7 @@ void Vehicle::Init(Node* node) {
         // Setup lighting
 
         Node *lightNode = node_->CreateChild("Lights");
-        lightNode->SetPosition(Vector3(0.0f, 50.0f, 0));
+        lightNode->SetPosition(Vector3(0.0f, 140.0f, 0));
         // Update vehicle head lamp lighting
         Light *light = lightNode->CreateComponent<Light>();
         // Light* light = vehicleHeadLamp_->CreateComponent<Light>();
