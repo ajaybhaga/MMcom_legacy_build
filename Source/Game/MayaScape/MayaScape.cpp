@@ -1660,6 +1660,10 @@ void MayaScape::HandleRenderUpdate(StringHash eventType, VariantMap &eventData) 
 
                                      // Detect move vector and visible only on non-zero
                                      if (joySteer_.LengthSquared() > 0) {
+
+                                         // Joy movement
+
+
                                          steerActorSprite_->SetVisible(true);
                                          steerActorSprite_->SetRotation(body->GetRotation().YawAngle());
                                      } else {
@@ -2427,24 +2431,50 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                             auto *actor = dynamic_cast<NetworkActor *>(actorMap_[connection].Get());
                             if (actor) {
 
-/*
-                                Quaternion endRot = Quaternion(0, 0, 0);
-                                Vector3 nVel = actor->lastImpulse_.Normalized();
-                                endRot.FromLookRotation(nVel, Vector3::UP);
-
-
-*/
-                                float yawAngle = actor->controls_.yaw_ - 90.0f;
-                                // Set rotation already here so that it's updated every rendering frame instead of every physics frame
-                                actor->GetBody()->GetNode()->SetRotation(Quaternion(yawAngle, Vector3::UP));
-
-//                                actor->GetBody()->GetNode()->SetRotation(endRot);
-
-//                                node_->SetRotation(endRot);
-
                                 using namespace Update;
                                 // Take the frame time step, which is stored as a float
                                 float timeStep = eventData[P_TIMESTEP].GetFloat();
+                                float controlYawAngle = actor->controls_.yaw_ - 90.0f;
+                                float slowdown = 0.07f;
+
+                                // Update this angle from global axis (joystick) to local (actor)
+                                Quaternion actorRot;
+                                Vector3 actorPos;
+
+                                // Smooth step
+                                //const float rotLerpRate = 10.0f;
+                                const float rotLerpRate = 0.08f;
+
+                                // Physics update has completed. Position camera behind vehicle
+
+                                // Body orientation
+                                actorPos = actor->GetBody()->GetPosition();
+                                actorRot = actor->GetBody()->GetRotation();
+                                Quaternion dir(actorRot.YawAngle(), Vector3::UP);
+
+                                // Control rotation
+                                dir = dir * Quaternion(controlYawAngle*slowdown, Vector3::UP);
+
+                                // Physics update has completed. Position camera behind vehicle
+                                dir = SmoothStepAngle(dir, actorRot, timeStep * rotLerpRate);
+                                //Quaternion dir(actorRot.YawAngle(), Vector3::UP);
+                                //dir = dir * Quaternion(vehicle_->controls_.yaw_, Vector3::UP);
+                                //dir = dir * Quaternion(vehicle_->controls_.pitch_, Vector3::RIGHT);
+
+                                ////
+
+
+                                //float z = dir.LengthSquared();
+                                float z = controlYawAngle;
+                                if (abs(controlYawAngle) < 90.0f) {
+                                    URHO3D_LOGINFOF("z -> %f", z);
+                                    // Apply rotation
+                                    actor->GetBody()->GetNode()->SetRotation(dir);
+                                }
+
+
+
+
                                 // Align model and apply movement to body
                                 actor->ApplyMovement(timeStep);
 
@@ -3634,22 +3664,6 @@ void MayaScape::MoveCamera(float timeStep) {
                     int size;
                     PODVector<Node *> vec;
 
-                    /*
-                    // Retrieve Network Actor (Client Object)
-                    vec = serverConnection->GetScene()->GetChildren(true);
-                    size = vec.Size();
-
-                    bool moreNodes = false;
-                    if (size > lastNumNodes_) {
-                        // More nodes
-                        //             URHO3D_LOGDEBUGF("*** MORE NODES ADDED TO SCENE -> +%d", size - lastNumNodes_);
-                        moreNodes = true;
-                    }
-
-                    // Store number of nodes
-                    lastNumNodes_ = size;
-*/
-
                     String actorName = clientName_ + String("-actor");
                     Node *actorNode = scene_->GetChild(actorName);
 
@@ -3676,11 +3690,7 @@ void MayaScape::MoveCamera(float timeStep) {
                             }
 
                             // Client: Move Camera
-
-                            // TODO: Convert client cam to chase cam like server cam
                             // Camera Positioning
-
-
                             ////
                             if (na) {
 
