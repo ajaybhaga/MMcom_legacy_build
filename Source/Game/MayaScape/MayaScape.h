@@ -307,6 +307,7 @@ private:
     String        levelLoadPending_;
     bool          levelLoading_; // Server level load
     bool          clientLevelLoading_; // Client level load
+    float         loadProgress_;
 
     WeakPtr<Text> levelText_;
     WeakPtr<Text> triggerText_;

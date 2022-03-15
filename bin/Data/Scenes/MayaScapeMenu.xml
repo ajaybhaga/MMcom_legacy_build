@@ -7,8 +7,8 @@
 	<attribute name="Elapsed Time" value="8.737" />
 	<attribute name="Next Replicated Node ID" value="176" />
 	<attribute name="Next Replicated Component ID" value="141" />
-	<attribute name="Next Local Node ID" value="16777244" />
-	<attribute name="Next Local Component ID" value="16777429" />
+	<attribute name="Next Local Node ID" value="16777245" />
+	<attribute name="Next Local Component ID" value="16777430" />
 	<attribute name="Variables" />
 	<attribute name="Variable Names" value="" />
 	<component type="Octree" id="1" />
@@ -65,7 +65,7 @@
 			<attribute name="Is Enabled" value="true" />
 			<attribute name="Name" value="menuCam" />
 			<attribute name="Tags" />
-			<attribute name="Position" value="-6.06707 17.5257 -0.00397282" />
+			<attribute name="Position" value="-4.76707 17.5257 -0.00397282" />
 			<attribute name="Rotation" value="0.5 0.5 -0.5 0.5" />
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
@@ -126,6 +126,19 @@
 			<component type="StaticModel" id="16777428">
 				<attribute name="Model" value="Model;Models/AssetPack/cloud06.mdl" />
 				<attribute name="Material" value="Material;Materials/CLOUDS.xml" />
+			</component>
+		</node>
+		<node id="16777244">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="ProgressBar" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0.841208 0.525776 0.110834" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777429">
+				<attribute name="Model" value="Model;Models/Menu/v2/Models/ProgressText.mdl" />
+				<attribute name="Material" value="Material;Materials/Material.004.xml" />
 			</component>
 		</node>
 	</node>

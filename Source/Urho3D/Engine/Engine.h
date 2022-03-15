@@ -171,6 +171,7 @@ private:
     bool headless_;
     /// Audio paused flag.
     bool audioPaused_;
-};
+
+    };
 
 }

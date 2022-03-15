@@ -428,10 +428,12 @@ void MayaScape::CreateAgents() {
 void MayaScape::CreateEmptyScene(Context* context) {
     scene_ = MakeShared<Scene>(context_);
     scene_->SetName("MainScene");
+    scene_->SetUpdateEnabled(false);
 
 
     menuScene_ = MakeShared<Scene>(context_);
-    scene_->SetName("MenuScene");
+    menuScene_->SetName("MenuScene");
+    menuScene_->SetUpdateEnabled(true);
 
     /*
     scene_->CreateComponent<Octree>();
@@ -651,10 +653,17 @@ void MayaScape::HandleClientResourceLoadAttempt(StringHash eventType, VariantMap
 
     if (clientLevelLoading_) {
         // Show updated frame
-        //engine_->SetPauseMinimized(true);
-        //engine_->RunFrame();
+ //       engine_->SetPauseMinimized(true);
+ //       engine_->SetPauseMinimized(true);
+//        engine_->RunFrame();
 
+
+        // Update load progress
+        loadProgress_ = scene_->GetAsyncProgress();
     }
+
+
+
 
 }
 
@@ -681,7 +690,10 @@ void MayaScape::HandleClientResourceLoadFinished(StringHash eventType, VariantMa
     if (clientLevelLoading_) {
         // Show updated frame
         //engine_->SetPauseMinimized(true);
-        //engine_->RunFrame();
+       // engine_->RunFrame();
+
+        // Update load progress
+        loadProgress_ = scene_->GetAsyncProgress();
     }
 
 }
@@ -2411,9 +2423,16 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                         menuCam->GetNode()->GetPosition().y_,
                                         menuCam->GetNode()->GetPosition().z_));
                     }
+
+
+                    auto* progressBar = menuScene_->GetChild("ProgressBar",LOCAL)->GetComponent<StaticModel>();
+                    progressBar->GetNode()->SetScale(Vector3(1,1,loadProgress_*200.0f));
                 }
             }
+
         }
+
+        loadProgress_ = Random(0.0f, 1.0f);
 
         if (packetsIn_) {
             if (packetCounterTimer_.GetMSec(false) > 1000 && GetSubsystem<Network>()->GetServerConnection()) {
@@ -3195,6 +3214,8 @@ void MayaScape::ReloadScene(bool reInit) {
        // setup for async loading
        //scene_->SetAsyncLoadingMs(3);
        levelLoading_ = true;
+
+       scene_->SetUpdateEnabled(true);
    }
 
    void MayaScape::PlaySoundEffect(const String &soundName) {
@@ -3642,6 +3663,8 @@ void MayaScape::SetupViewports()
     XMLFile *xmlLevel = cache->GetResource<XMLFile>("Scenes/MayaScapeMenu.xml");
     if (xmlLevel) {
         menuScene_->LoadXML(xmlLevel->GetRoot());
+        menuScene_->SetEnabled(true);
+        menuScene_->SetUpdateEnabled(true);
     }
 
 
@@ -3649,6 +3672,9 @@ void MayaScape::SetupViewports()
     auto* menuCam = menuScene_->GetChild("menuCam",LOCAL)->GetComponent<Camera>();
     //menuCam->GetNode()->SetRotation(Quaternion(0, -serverCam_->GetNode()->GetRotation().YawAngle(), 0));
     //menuCam->GetNode()->SetRotation(Quaternion(90, -90, 0));
+
+    auto* progressBar = menuScene_->GetChild("ProgressBar",LOCAL)->GetComponent<StaticModel>();
+    progressBar->GetNode()->SetScale(Vector3(1,1,1));
 
     //menuCam->SetFarClip(48000.0f);
     //rearCam->SetFillMode(Urho3D::FILL_SOLID);
@@ -6087,4 +6113,5 @@ void MayaScape::HandlePlayerLoaded(StringHash eventType, VariantMap &eventData) 
     scene_->SetEnabled(true);
 
     URHO3D_LOGINFOF("HandlePlayerLoaded");
+
 }
