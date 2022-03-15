@@ -427,8 +427,11 @@ void MayaScape::CreateAgents() {
 
 void MayaScape::CreateEmptyScene(Context* context) {
     scene_ = MakeShared<Scene>(context_);
-
     scene_->SetName("MainScene");
+
+
+    menuScene_ = MakeShared<Scene>(context_);
+    scene_->SetName("MenuScene");
 
     /*
     scene_->CreateComponent<Octree>();
@@ -2388,7 +2391,29 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
     if (clientLevelLoading_) return;
 
 
+
     if (started_) {
+
+        if (menuScene_) {
+            if (menuScene_->GetChild("menuCam", LOCAL)) {
+                // Get camera
+                auto *menuCam = menuScene_->GetChild("menuCam", LOCAL)->GetComponent<Camera>();
+
+                if (menuCam) {
+                    using namespace Update;
+                    // Take the frame time step, which is stored as a float
+                    float timeStep = eventData[P_TIMESTEP].GetFloat();
+
+                    Vector3 pos = menuCam->GetNode()->GetPosition();
+                    if (pos.x_ > -6.0f) {
+                        menuCam->GetNode()->SetPosition(
+                                Vector3(menuCam->GetNode()->GetPosition().x_ - 0.0001f * timeStep,
+                                        menuCam->GetNode()->GetPosition().y_,
+                                        menuCam->GetNode()->GetPosition().z_));
+                    }
+                }
+            }
+        }
 
         if (packetsIn_) {
             if (packetCounterTimer_.GetMSec(false) > 1000 && GetSubsystem<Network>()->GetServerConnection()) {
@@ -3610,10 +3635,30 @@ void MayaScape::SetupViewports()
     }
 
 
+
+
+    // Load menu scene
+    ResourceCache *cache = GetSubsystem<ResourceCache>();
+    XMLFile *xmlLevel = cache->GetResource<XMLFile>("Scenes/MayaScapeMenu.xml");
+    if (xmlLevel) {
+        menuScene_->LoadXML(xmlLevel->GetRoot());
+    }
+
+
+    // Get camera
+    auto* menuCam = menuScene_->GetChild("menuCam",LOCAL)->GetComponent<Camera>();
+    //menuCam->GetNode()->SetRotation(Quaternion(0, -serverCam_->GetNode()->GetRotation().YawAngle(), 0));
+    //menuCam->GetNode()->SetRotation(Quaternion(90, -90, 0));
+
+    //menuCam->SetFarClip(48000.0f);
+    //rearCam->SetFillMode(Urho3D::FILL_SOLID);
+
     // Set up the rear camera viewport on top of the front view ("rear view mirror")
     // The viewport index must be greater in that case, otherwise the view would be left behind
-    SharedPtr<Viewport> rearViewport(new Viewport(context_, scene_, rearCam,
-                                                  IntRect(graphics->GetWidth() * 2 / 3, 32, graphics->GetWidth() - 32, graphics->GetHeight() / 3)));
+        SharedPtr<Viewport> rearViewport(new Viewport(context_, menuScene_, menuCam,
+                                                     IntRect(graphics->GetWidth() * 2 / 3, 32, graphics->GetWidth() - 32, graphics->GetHeight() / 3)));
+//    SharedPtr<Viewport> rearViewport(new Viewport(context_, menuScene_, rearCam,
+ //                                                 IntRect(graphics->GetWidth() * 2 / 3, 32, graphics->GetWidth() - 32, graphics->GetHeight() / 3)));
     renderer->SetViewport(1, rearViewport);
 
 
