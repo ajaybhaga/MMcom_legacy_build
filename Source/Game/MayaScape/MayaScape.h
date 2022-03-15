@@ -235,7 +235,8 @@ private:
     //void CreateScene();
     void CreateEmptyScene(Context* context);
     // Viewport
-    void InitiateViewport(Context* context, Scene* scene, Camera* camera);
+    void InitiateViewport(Context* context, Scene* scene, Camera* camera, int id);
+    void SetupViewports();
     // Game Map
     void InitiateGameMap(Scene* scene);
     // Init Genetic Algorithm generator: Evolution Manager

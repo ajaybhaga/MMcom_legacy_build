@@ -645,9 +645,13 @@ void MayaScape::HandleClientResourceLoadAttempt(StringHash eventType, VariantMap
     progressResText_->SetVisible(true);
 
 
-    //if (clientLevelLoading_)
-    // Show updated frame
-   // engine_->RunFrame();
+
+    if (clientLevelLoading_) {
+        // Show updated frame
+        //engine_->SetPauseMinimized(true);
+        //engine_->RunFrame();
+
+    }
 
 }
 
@@ -671,11 +675,11 @@ void MayaScape::HandleClientResourceLoadFinished(StringHash eventType, VariantMa
     progressText_->SetVisible(true);
     progressResText_->SetVisible(true);
 
-/*
-    if (clientLevelLoading_)
+    if (clientLevelLoading_) {
         // Show updated frame
-        engine_->RunFrame();
-*/
+        //engine_->SetPauseMinimized(true);
+        //engine_->RunFrame();
+    }
 
 }
 
@@ -3074,6 +3078,9 @@ void MayaScape::HandleEndRendering(StringHash eventType, VariantMap &eventData) 
         progressText_->SetVisible(levelLoading_);
         progressResText_->SetVisible(levelLoading_);
     }
+
+
+    int a = 0;
 }
 
 void MayaScape::ReloadScene(bool reInit) {
@@ -3557,11 +3564,60 @@ void MayaScape::CreateUI() {
     GetSubsystem<Renderer>()->GetDefaultZone()->SetFogColor(Color(0.0f, 0.0f, 0.1f));
 }
 
-void MayaScape::InitiateViewport(Context* context, Scene* scene, Camera* camera)
+void MayaScape::InitiateViewport(Context* context, Scene* scene, Camera* camera, int id)
 {
     Renderer* renderer = GetSubsystem<Renderer>();
     SharedPtr<Viewport> viewport(new Viewport(context, scene, camera));
-    renderer->SetViewport(0, viewport);
+    renderer->SetViewport(id, viewport);
+}
+
+void MayaScape::SetupViewports()
+{
+
+    auto* graphics = GetSubsystem<Graphics>();
+    auto* renderer = GetSubsystem<Renderer>();
+
+    renderer->SetNumViewports(3);
+
+    // Viewports:
+    // 0 = front view
+    // 1 = rear view
+    // 2 = menu view
+
+    SharedPtr<Camera> rearCam;
+    if (isServer_) {
+        // SERVER CODE
+        InitiateViewport(context_, scene_, serverCam_, 0);
+        rearCam = serverCam_;
+        // Create camera opposite
+
+//        cameraNode_ = scene_->CreateChild("Camera", LOCAL);
+        // Create camera
+        rearCam = serverCam_->GetNode()->CreateComponent<Camera>();
+        rearCam->GetNode()->SetRotation(Quaternion(0, -serverCam_->GetNode()->GetRotation().YawAngle(), 0));
+        rearCam->SetFarClip(48000.0f);
+        rearCam->SetFillMode(Urho3D::FILL_SOLID);
+        //serverCam_->SetFillMode(Urho3D::FILL_WIREFRAME);
+        //rearCam->GetNode()->SetPosition(heliCamView_);
+
+
+
+
+    } else {
+        // CLIENT CODE
+        InitiateViewport(context_, scene_, clientCam_, 0);
+        rearCam = clientCam_;
+    }
+
+
+    // Set up the rear camera viewport on top of the front view ("rear view mirror")
+    // The viewport index must be greater in that case, otherwise the view would be left behind
+    SharedPtr<Viewport> rearViewport(new Viewport(context_, scene_, rearCam,
+                                                  IntRect(graphics->GetWidth() * 2 / 3, 32, graphics->GetWidth() - 32, graphics->GetHeight() / 3)));
+    renderer->SetViewport(1, rearViewport);
+
+
+
 }
 
 
@@ -4636,7 +4692,7 @@ SharedPtr<Node> MayaScape::SpawnPlayer() {
     //GetSubsystem<Audio>()->SetListener(listener);
 
     // Set viewport
-    InitiateViewport(context_, scene_, serverCam_);
+    SetupViewports();
 
     return networkActorNode;
 }
@@ -5967,9 +6023,8 @@ void MayaScape::HandlePlayerRespawned(StringHash eventType, VariantMap& eventDat
     SoundListener *listener = clientCam_->GetNode()->CreateComponent<SoundListener>();
     GetSubsystem<Audio>()->SetListener(listener);
 
-
-
-    InitiateViewport(context_, scene_, clientCam_);
+    // Setup viewport
+    SetupViewports();
 
     clientLevelLoading_ = false;
 
@@ -5983,6 +6038,8 @@ void MayaScape::HandlePlayerLoaded(StringHash eventType, VariantMap &eventData) 
 
     clientPhysicsWorld_->SetEnabled(true);
     clientPhysicsWorld_->SetUpdateEnabled(true);
+    scene_->SetUpdateEnabled(true);
+    scene_->SetEnabled(true);
 
     URHO3D_LOGINFOF("HandlePlayerLoaded");
 }

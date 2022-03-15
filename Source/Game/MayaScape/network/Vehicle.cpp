@@ -296,7 +296,7 @@ void Vehicle::FixedUpdate(float timeStep)
 
             if (controls_.buttons_ & NTWK_CTRL_FLIP) {
                 // FLIP CAR
-                Flip(timeStep);
+                //Flip(timeStep);
             }
 
             if (controls_.buttons_ & NTWK_CTRL_FIRE) {
