@@ -3681,13 +3681,14 @@ void MayaScape::SetupViewports()
 
     // Set up the rear camera viewport on top of the front view ("rear view mirror")
     // The viewport index must be greater in that case, otherwise the view would be left behind
-        SharedPtr<Viewport> rearViewport(new Viewport(context_, menuScene_, menuCam,
+        SharedPtr<Viewport> rearViewport(new Viewport(context_, scene_, rearCam,
                                                      IntRect(graphics->GetWidth() * 2 / 3, 32, graphics->GetWidth() - 32, graphics->GetHeight() / 3)));
-//    SharedPtr<Viewport> rearViewport(new Viewport(context_, menuScene_, rearCam,
- //                                                 IntRect(graphics->GetWidth() * 2 / 3, 32, graphics->GetWidth() - 32, graphics->GetHeight() / 3)));
     renderer->SetViewport(1, rearViewport);
 
-
+    // The viewport index must be greater in that case, otherwise the view would be left behind
+    menuViewport_ = new Viewport(context_, menuScene_, menuCam,
+                                                  IntRect(32, 32, graphics->GetWidth() - 32, graphics->GetHeight() - 32));
+    renderer->SetViewport(2, menuViewport_);
 
 }
 
@@ -4224,6 +4225,10 @@ void MayaScape::HandleLevelLoaded(StringHash eventType, VariantMap& eventData)
         //botSplinePath_->SetControlledNode(bot_);[/code]
     }
 
+
+    // Clear menu
+    Renderer *renderer = GetSubsystem<Renderer>();
+    renderer->SetViewport(2, nullptr);
 
 }
 
@@ -6111,6 +6116,10 @@ void MayaScape::HandlePlayerLoaded(StringHash eventType, VariantMap &eventData) 
     clientPhysicsWorld_->SetUpdateEnabled(true);
     scene_->SetUpdateEnabled(true);
     scene_->SetEnabled(true);
+
+    // Clear menu
+    Renderer *renderer = GetSubsystem<Renderer>();
+    renderer->SetViewport(2, nullptr);
 
     URHO3D_LOGINFOF("HandlePlayerLoaded");
 
