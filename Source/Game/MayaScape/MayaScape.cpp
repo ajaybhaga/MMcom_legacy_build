@@ -3634,29 +3634,25 @@ void MayaScape::SetupViewports()
     if (isServer_) {
         // SERVER CODE
         InitiateViewport(context_, scene_, serverCam_, 0);
-        rearCam = serverCam_;
         // Create camera opposite
-
-//        cameraNode_ = scene_->CreateChild("Camera", LOCAL);
-        // Create camera
-        rearCam = serverCam_->GetNode()->CreateComponent<Camera>();
-        rearCam->GetNode()->SetRotation(Quaternion(0, -serverCam_->GetNode()->GetRotation().YawAngle(), 0));
+        Node* node = serverCam_->GetNode()->CreateChild("RearCamera", LOCAL);
+        rearCam = node->CreateComponent<Camera>();
+        rearCam->GetNode()->SetRotation(Quaternion(0, 180, 0));
         rearCam->SetFarClip(48000.0f);
         rearCam->SetFillMode(Urho3D::FILL_SOLID);
-        //serverCam_->SetFillMode(Urho3D::FILL_WIREFRAME);
-        //rearCam->GetNode()->SetPosition(heliCamView_);
-
-
-
 
     } else {
         // CLIENT CODE
         InitiateViewport(context_, scene_, clientCam_, 0);
-        rearCam = clientCam_;
+        // Create camera opposite
+        Node* node = clientCam_->GetNode()->CreateChild("RearCamera", LOCAL);
+        rearCam = node->CreateComponent<Camera>();
+        rearCam->GetNode()->SetRotation(Quaternion(0, 180, 0));
+        rearCam->GetNode()->SetPosition(Vector3(0.0f,-0.3f,0.0f));
+        rearCam->SetFarClip(48000.0f);
+        rearCam->SetFillMode(Urho3D::FILL_SOLID);
+
     }
-
-
-
 
     // Load menu scene
     ResourceCache *cache = GetSubsystem<ResourceCache>();

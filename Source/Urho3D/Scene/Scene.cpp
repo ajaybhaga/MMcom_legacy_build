@@ -1281,11 +1281,16 @@ void Scene::UpdateAsyncLoading()
         if (asyncProgress_.instantiateAsync_)
         {
             unsigned nodeID = asyncProgress_.xmlElement_.GetUInt("id");
-            Node* newNode = asyncProgress_.rootNode_->CreateChild(0, ((asyncProgress_.createMode_ == REPLICATED) && nodeID < FIRST_LOCAL_ID) ? REPLICATED : LOCAL);
+            if (nodeID != 0) {
+                Node *newNode = asyncProgress_.rootNode_->CreateChild(0, ((asyncProgress_.createMode_ == REPLICATED) &&
+                                                                          nodeID < FIRST_LOCAL_ID) ? REPLICATED
+                                                                                                   : LOCAL);
 
-            asyncProgress_.resolver_.AddNode(nodeID, newNode);
-            newNode->LoadXML(asyncProgress_.xmlElement_, asyncProgress_.resolver_, true, true, asyncProgress_.createMode_);
-            asyncProgress_.xmlElement_ = asyncProgress_.xmlElement_.GetNext("node");
+                asyncProgress_.resolver_.AddNode(nodeID, newNode);
+                newNode->LoadXML(asyncProgress_.xmlElement_, asyncProgress_.resolver_, true, true,
+                                 asyncProgress_.createMode_);
+                asyncProgress_.xmlElement_ = asyncProgress_.xmlElement_.GetNext("node");
+            }
         }
 
 
@@ -1293,11 +1298,17 @@ void Scene::UpdateAsyncLoading()
         /// \todo Works poorly in scenes where one root-level child node contains all content
         if (asyncProgress_.xmlFile_)
         {
-            unsigned nodeID = asyncProgress_.xmlElement_.GetUInt("id");
-            Node* newNode = CreateChild(nodeID, IsReplicatedID(nodeID) ? REPLICATED : LOCAL);
-            resolver_.AddNode(nodeID, newNode);
-            newNode->LoadXML(asyncProgress_.xmlElement_, resolver_);
-            asyncProgress_.xmlElement_ = asyncProgress_.xmlElement_.GetNext("node");
+            
+            // TODO: Check for xml element going empty
+
+                unsigned nodeID = asyncProgress_.xmlElement_.GetUInt("id");
+                if (nodeID != 0) {
+                    Node *newNode = CreateChild(nodeID, IsReplicatedID(nodeID) ? REPLICATED : LOCAL);
+                    resolver_.AddNode(nodeID, newNode);
+                    newNode->LoadXML(asyncProgress_.xmlElement_, resolver_);
+                    asyncProgress_.xmlElement_ = asyncProgress_.xmlElement_.GetNext("node");
+                }
+
         }
         else if (asyncProgress_.jsonFile_) // Load from JSON
         {
