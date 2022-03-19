@@ -22,7 +22,7 @@ static const unsigned NTWK_CTRL_BACK = (1<<0);
 static const unsigned NTWK_CTRL_FORWARD    = (1<<1);
 static const unsigned NTWK_CTRL_LEFT    = (1<<2);
 static const unsigned NTWK_CTRL_RIGHT   = (1<<3);
-static const unsigned NTWK_CTRL_FLIP     = (1<<4);
+static const unsigned NTWK_CTRL_ENTER     = (1<<4);
 static const unsigned NTWK_CTRL_FIRE     = (1<<5);
 
 static const unsigned NETWORKACTOR_COL_LAYER = 2;
@@ -119,6 +119,7 @@ public:
     void SetBulletType(String m_bulletType) { bulletType_ = m_bulletType; }
 
     void Flip();
+    void EnterVehicle();
 
     SharedPtr<Vehicle> GetVehicle() { return vehicle_; }
 
@@ -233,6 +234,8 @@ public:
     // Player state variables
     bool alive_;
     bool onVehicle_;
+    bool canEnter_;
+    bool entered_;
     bool showMarker_;
     int markType_;
     Vector3 lastImpulse_;

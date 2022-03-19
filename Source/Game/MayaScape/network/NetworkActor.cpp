@@ -96,6 +96,8 @@ NetworkActor::NetworkActor(Context *context)
     doJump_ = false;
     onGround_ = false;
     acceleration_ = 0.0f;
+
+    entered_ = false;
 }
 
 NetworkActor::~NetworkActor() {
@@ -451,16 +453,27 @@ void NetworkActor::FixedUpdate(float timeStep) {
 
     if (body_) {
         if (vehicle_) {
+
+
+            if (onVehicle_ && entered_) {
+                body_->SetPosition(vehicle_->GetRaycastVehicle()->GetBody()->GetPosition());
+            }
+
             localCenter = body_->GetPosition();
             Vector3 distToVehicle = vehicle_->GetRaycastVehicle()->GetBody()->GetPosition()-localCenter;
+
 
             float dist = distToVehicle.LengthSquared();
             if (distToVehicle.LengthSquared() < 40.0f) {
                 // Close to vehicle mark
                 markType_ = 1;
+                canEnter_ = true;
+
 
             } else {
 
+                // Too far
+                canEnter_ = false;
                 markType_ = 0;
             }
 
@@ -624,11 +637,10 @@ void NetworkActor::FixedUpdate(float timeStep) {
             acceleration_ = 0;
         }
 
-        if (controls_.buttons_ & NTWK_CTRL_FLIP) {
-            // FLIP CAR
-            //Flip(timeStep);
-            //doJump_ = true;
-        }
+        if (controls_.buttons_ & NTWK_CTRL_ENTER) {
+            // ENTER CAR (if close enough)
+            EnterVehicle();
+
 
         if (controls_.buttons_ & NTWK_CTRL_FIRE) {
             // FIRE
@@ -728,6 +740,7 @@ void NetworkActor::FixedUpdate(float timeStep) {
     }
 
 */
+}
 ////
 
 
@@ -1088,3 +1101,15 @@ const Vector3 &NetworkActor::getMove() const {
 void NetworkActor::setMove(const Vector3 &move) {
     move_ = move;
 }
+
+void NetworkActor::EnterVehicle() {
+
+    // Check for permission
+    if (!canEnter_)
+        return;
+
+    // Snap actor to vehicle
+    onVehicle_ =  true;
+    entered_ = true;
+
+};

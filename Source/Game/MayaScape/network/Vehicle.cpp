@@ -294,9 +294,11 @@ void Vehicle::FixedUpdate(float timeStep)
                 brake = true;
             }
 
-            if (controls_.buttons_ & NTWK_CTRL_FLIP) {
+            if (controls_.buttons_ & NTWK_CTRL_ENTER) {
                 // FLIP CAR
                 //Flip(timeStep);
+
+                // Do nothing for enter right now
             }
 
             if (controls_.buttons_ & NTWK_CTRL_FIRE) {

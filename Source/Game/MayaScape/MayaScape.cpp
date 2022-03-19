@@ -899,7 +899,7 @@ Controls MayaScape::SampleCSPControls()
 
     bool accel = (input->GetKeyDown(KEY_W) || ntwkControls_.IsDown(BUTTON_B) || (actorAccel < -0.9f));
     bool fire = input->GetKeyDown(KEY_SPACE) || ntwkControls_.IsDown(BUTTON_A);
-    bool flip = input->GetKeyDown(KEY_F) || ntwkControls_.IsDown(BUTTON_Y);
+    bool enter = input->GetKeyDown(KEY_F) || ntwkControls_.IsDown(BUTTON_Y);
     bool brake = (input->GetKeyDown(KEY_S) || ntwkControls_.IsDown(BUTTON_X));
     if (accel) {
         // Rev
@@ -917,7 +917,7 @@ Controls MayaScape::SampleCSPControls()
     ntwkControls_.Set(NTWK_CTRL_BACK, brake);
     ntwkControls_.Set(NTWK_CTRL_LEFT, input->GetKeyDown(KEY_A));
     ntwkControls_.Set(NTWK_CTRL_RIGHT, input->GetKeyDown(KEY_D));
-    ntwkControls_.Set(NTWK_CTRL_FLIP, flip);
+    ntwkControls_.Set(NTWK_CTRL_ENTER, enter);
     ntwkControls_.Set(NTWK_CTRL_FIRE, fire);
 
 
