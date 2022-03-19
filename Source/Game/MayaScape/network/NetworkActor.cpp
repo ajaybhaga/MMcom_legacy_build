@@ -181,7 +181,7 @@ void NetworkActor::Init(Node* node) {
 
         Node* markerNode = adjustNode->CreateChild("Marker", REPLICATED);
         //markerNode->SetScale(4.0f);
-        markerNode->SetPosition(Vector3(0,1.2f,0));
+        markerNode->SetPosition(Vector3(0,1.0f,0));
 
 
         model_ = adjustNode->CreateComponent<AnimatedModel>();
