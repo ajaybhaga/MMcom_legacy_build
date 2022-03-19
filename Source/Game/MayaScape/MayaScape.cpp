@@ -2515,16 +2515,20 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                 //dir = dir * Quaternion(vehicle_->controls_.yaw_, Vector3::UP);
                                 //dir = dir * Quaternion(vehicle_->controls_.pitch_, Vector3::RIGHT);
 
-                                float z = controlYawAngle;
-                                if (abs(controlYawAngle) < 90.0f) {
-                                    //URHO3D_LOGINFOF("z -> %f", z);
 
-                                    // Apply rotation
-                                    actor->GetBody()->GetNode()->SetRotation(dir);
-                                    // Align model and apply movement to body
-                                    actor->ApplyMovement(timeStep);
-                                } else {
-                                    // Do not apply force
+                                // On foot controls
+                                if (!actor->onVehicle_) {
+                                    float z = controlYawAngle;
+                                    if (abs(controlYawAngle) < 90.0f) {
+                                        //URHO3D_LOGINFOF("z -> %f", z);
+
+                                        // Apply rotation
+                                        actor->GetBody()->GetNode()->SetRotation(dir);
+                                        // Align model and apply movement to body
+                                        actor->ApplyMovement(timeStep);
+                                    } else {
+                                        // Do not apply force
+                                    }
                                 }
 
 

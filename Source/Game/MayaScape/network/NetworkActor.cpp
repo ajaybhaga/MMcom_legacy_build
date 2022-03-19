@@ -155,6 +155,15 @@ void NetworkActor::RegisterObject(Context *context) {
     URHO3D_ATTRIBUTE("OK To Jump", bool, okToJump_, true, AM_DEFAULT);
     URHO3D_ATTRIBUTE("In Air Timer", float, inAirTimer_, 0.0f, AM_DEFAULT);
 
+    URHO3D_ATTRIBUTE("On Vehicle", bool, onVehicle_, 0.0f, AM_DEFAULT);
+    /*
+    URHO3D_ATTRIBUTE("On Vehicle", bool, onVehicle_, 0.0f, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("Alive", bool, alive_, 0.0f, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("Can Enter", float, canEnter_, 0.0f, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("Entered", bool, entered_, 0.0f, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("Show Marker", bool, showMarker_, 0.0f, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("Mark Type", int, markType_, 0.0f, AM_DEFAULT);
+*/
 
 }
 

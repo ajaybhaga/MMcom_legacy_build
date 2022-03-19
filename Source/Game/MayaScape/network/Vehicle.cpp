@@ -223,9 +223,9 @@ void Vehicle::RegisterObject(Context* context)
   //  ATTRIBUTE("Steering", float, steering_, 0.0f, AM_DEFAULT);
 
     //URHO3D_ATTRIBUTE("Vehicle Name", String, name_, String::EMPTY, AM_DEFAULT | AM_NET);
-    URHO3D_ATTRIBUTE("Name", String, name_, String::EMPTY, AM_DEFAULT | AM_NET);
-    URHO3D_ATTRIBUTE("Position", Vector3, position_, Vector3(0,0,0), AM_DEFAULT | AM_NET | AM_LATESTDATA);
-
+    //URHO3D_ATTRIBUTE("Name", String, name_, String::EMPTY, AM_DEFAULT | AM_NET);
+    //URHO3D_ATTRIBUTE("Position", Vector3, position_, Vector3(0,0,0), AM_DEFAULT | AM_NET | AM_LATESTDATA);
+    URHO3D_ATTRIBUTE("Steering", float, steering_, 0.0f, AM_DEFAULT);
 }
 
 //=============================================================================
