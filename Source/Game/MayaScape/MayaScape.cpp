@@ -655,7 +655,9 @@ void MayaScape::HandleClientResourceLoadAttempt(StringHash eventType, VariantMap
         // Show updated frame
  //       engine_->SetPauseMinimized(true);
  //       engine_->SetPauseMinimized(true);
-//        engine_->RunFrame();
+       // engine_->RunFrame();
+        engine_->Update();
+       engine_->Render();
 
 
         // Update load progress
@@ -691,6 +693,8 @@ void MayaScape::HandleClientResourceLoadFinished(StringHash eventType, VariantMa
         // Show updated frame
         //engine_->SetPauseMinimized(true);
        // engine_->RunFrame();
+        engine_->Update();
+        engine_->Render();
 
         // Update load progress
         loadProgress_ = scene_->GetAsyncProgress();
@@ -741,7 +745,9 @@ void MayaScape::SubscribeToEvents() {
 //    SubscribeToEvent(sendButton_, E_RELEASED, URHO3D_HANDLER(MayaScape, HandleSend));
 
     // Last chance to update before back buffer flip
-    SubscribeToEvent(E_ENDRENDERING, URHO3D_HANDLER(MayaScape, HandleEndRendering));
+//    SubscribeToEvent(E_ENDRENDERING, URHO3D_HANDLER(MayaScape, HandleEndRendering));
+    SubscribeToEvent(E_BEGINRENDERING, URHO3D_HANDLER(MayaScape, HandleEndRendering));
+    //E_BEGINRENDERING
 
     // Server asset loading
     SubscribeToEvent(E_RESOURCEBACKGROUNDLOADED, URHO3D_HANDLER(MayaScape, HandleResourceBackgroundLoaded));
@@ -2509,22 +2515,18 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                 //dir = dir * Quaternion(vehicle_->controls_.yaw_, Vector3::UP);
                                 //dir = dir * Quaternion(vehicle_->controls_.pitch_, Vector3::RIGHT);
 
-                                ////
-
-
-                                //float z = dir.LengthSquared();
                                 float z = controlYawAngle;
                                 if (abs(controlYawAngle) < 90.0f) {
-                                    URHO3D_LOGINFOF("z -> %f", z);
+                                    //URHO3D_LOGINFOF("z -> %f", z);
+
                                     // Apply rotation
                                     actor->GetBody()->GetNode()->SetRotation(dir);
+                                    // Align model and apply movement to body
+                                    actor->ApplyMovement(timeStep);
+                                } else {
+                                    // Do not apply force
                                 }
 
-
-
-
-                                // Align model and apply movement to body
-                                actor->ApplyMovement(timeStep);
 
                                 if (vehicleNode) {
                                     if (actor->vehicle_) {
@@ -3121,6 +3123,9 @@ void MayaScape::HandleEndRendering(StringHash eventType, VariantMap &eventData) 
     if (!clientLevelLoading_) {
         progressText_->SetVisible(levelLoading_);
         progressResText_->SetVisible(levelLoading_);
+    } else {
+        int b = 0;
+
     }
 
 
@@ -3148,11 +3153,15 @@ void MayaScape::ReloadScene(bool reInit) {
 
 
     levelPathName_= "Scenes/Async/";
-       // load scene
-//       XMLFile *xmlLevel = cache->GetResource<XMLFile>(levelPathName_ + "base.xml");
-//    XMLFile *xmlLevel = cache->GetResource<XMLFile>(levelPathName_ + filename + ".xml");
-//       scene_->LoadXML(xmlLevel->GetRoot());
+    // load scene
     XMLFile *xmlLevel = cache->GetResource<XMLFile>("Scenes/base.xml");
+
+
+    //BackgroundLoadResource -> fails
+    //XMLFile *xmlLevel;
+    //cache->BackgroundLoadResource<XMLFile>("Scenes/base.xml", true, xmlLevel);
+
+
     /*XMLFile *xmlLevel = cache->GetResource<XMLFile>("Scenes/" + filename + ".xml");
     //loadFile(context_, cache + "Data/Scenes/" + filename + ".xml",
      */
@@ -3653,6 +3662,11 @@ void MayaScape::SetupViewports()
         rearCam->SetFillMode(Urho3D::FILL_SOLID);
 
     }
+
+    // DEBUG -- disable views
+//    renderer->SetViewport(0, nullptr);
+//    renderer->SetViewport(1, nullptr);
+
 
     // Load menu scene
     ResourceCache *cache = GetSubsystem<ResourceCache>();
@@ -4750,6 +4764,7 @@ SharedPtr<Node> MayaScape::SpawnPlayer() {
     // Define server cam views
     heliCamView_ = Vector3(0.0f,14000.0f,0.0f);
 
+    // Set camera node
     cameraNode_ = scene_->CreateChild("Camera", LOCAL);
     serverCam_ = cameraNode_->CreateComponent<Camera>();
     serverCam_->GetNode()->SetRotation(Quaternion(90.0f, 0.0f, 0.0f));
@@ -6083,6 +6098,8 @@ void MayaScape::HandlePlayerRespawned(StringHash eventType, VariantMap& eventDat
     //network->GetServerConnection()->SendRemoteEvent(E_PLAYERSPAWNED, true);
     // Create camera and define viewport. We will be doing load / save, so it's convenient to create the camera outside the scene,
     // so that it won't be destroyed and recreated, and we don't have to redefine the viewport on load
+
+    // Set camera node
     cameraNode_ = scene_->CreateChild("Camera", LOCAL);
     clientCam_ = cameraNode_->CreateComponent<Camera>();
     clientCam_->SetFarClip(24000.0f);
@@ -6090,13 +6107,14 @@ void MayaScape::HandlePlayerRespawned(StringHash eventType, VariantMap& eventDat
     cameraNode_->SetPosition(Vector3(heliCamView_));
     clientCam_->GetNode()->SetRotation(Quaternion(90.0f, 0.0f, 0.0f));
 
+    // Setup viewport
+    SetupViewports();
+
 
     // Enable for 3D sounds to work (attach to camera node)
     SoundListener *listener = clientCam_->GetNode()->CreateComponent<SoundListener>();
     GetSubsystem<Audio>()->SetListener(listener);
 
-    // Setup viewport
-    SetupViewports();
 
     clientLevelLoading_ = false;
 
