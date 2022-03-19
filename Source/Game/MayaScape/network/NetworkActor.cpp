@@ -38,6 +38,10 @@ String matFile = "Models/Player/Shino/FBX/Models/Shino.txt";
 #define REST_VELOCITY_THRESHOLD 0.5f
 String mdlFile = "Models/Player/Bino/Models/f_8.mdl";
 String naMarkerMdlFile = "Models/Tracks/Models/circle.mdl";
+String naMarkerAMdlFile = "Models/Objects/Models/cursor1.mdl";
+String naMarkerAMatFile = "Models/Objects/Models/cursor1.txt";
+
+////code/dev/MonkeyMaya_com/bin/Data/Models/Objects/Models/cursor1.mdl
 
 
 //Models/Armature_idle_01_idle_01.ani
@@ -177,7 +181,7 @@ void NetworkActor::Init(Node* node) {
 
         Node* markerNode = adjustNode->CreateChild("Marker", REPLICATED);
         //markerNode->SetScale(4.0f);
-        markerNode->SetPosition(Vector3(0,0.6f,0));
+        markerNode->SetPosition(Vector3(0,1.6f,0));
 
 
 
@@ -189,7 +193,8 @@ void NetworkActor::Init(Node* node) {
 
         // Create marker on model adjust node
         marker_ = markerNode->CreateComponent<StaticModel>();
-        marker_->SetModel(cache->GetResource<Model>(naMarkerMdlFile));
+        marker_->SetModel(cache->GetResource<Model>(naMarkerAMdlFile));
+        marker_->ApplyMaterialList(naMarkerAMatFile);
 
 
         model_->SetCastShadows(true);
@@ -467,11 +472,12 @@ void NetworkActor::FixedUpdate(float timeStep) {
                 //marker_->GetNode()->SetPosition(localCenter);
 //                marker_->GetNode()->SetRotation(Quaternion(lastContactNorm_));
 
-                Quaternion endRot = Quaternion(0, 0, 0);
-                Vector3 cNorm = lastContactNorm_.Normalized();
-                endRot.FromLookRotation(cNorm, Vector3::UP);
-                marker_->GetNode()->SetRotation(endRot);
-                marker_->GetNode()->SetEnabled(true);
+                //Quaternion endRot = Quaternion(0, 0, 0);
+                //Vector3 cNorm = lastContactNorm_.Normalized();
+                //endRot.FromLookRotation(Vector3(cNorm.x_, cNorm.y_, cNorm.z_), Vector3::UP);
+                //endRot.FromLookRotation(Vector3(0, cNorm.y_, 0), Vector3::UP);
+                //marker_->GetNode()->SetRotation(endRot);
+                //marker_->GetNode()->SetEnabled(true);
             }
 
         } else {

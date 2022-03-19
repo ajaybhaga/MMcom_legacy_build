@@ -127,13 +127,13 @@
 				<attribute name="Is Enabled" value="true" />
 				<attribute name="Name" value="marker" />
 				<attribute name="Tags" />
-				<attribute name="Position" value="404.295 234.155 -1911.12" />
+				<attribute name="Position" value="404.299 270.254 -1911.14" />
 				<attribute name="Rotation" value="1 0 0 0" />
 				<attribute name="Scale" value="10 10 10" />
 				<attribute name="Variables" />
 				<component type="StaticModel" id="145">
-					<attribute name="Model" value="Model;Models/Tracks/Models/circle.mdl" />
-					<attribute name="Material" value="Material;Materials/Material.001.xml" />
+					<attribute name="Model" value="Model;Models/Objects/Models/cursor1.mdl" />
+					<attribute name="Material" value="Material;Materials/cursor.mat1.xml" />
 				</component>
 			</node>
 		</node>
