@@ -37,6 +37,9 @@ String matFile = "Models/Player/Shino/FBX/Models/Shino.txt";
 
 #define REST_VELOCITY_THRESHOLD 0.5f
 String mdlFile = "Models/Player/Bino/Models/f_8.mdl";
+String naMarkerMdlFile = "Models/Tracks/Models/circle.mdl";
+
+
 //Models/Armature_idle_01_idle_01.ani
 //String idleAniFile = "Models/Player/Bino/Models/r_f_8_r_f_8_Run_r_f_8_Run.ani";
 //String walkAniFile = "Models/Player/Bino/Models/r_f_8_r_f_8_Run_r_f_8_Run.ani";
@@ -57,6 +60,7 @@ NetworkActor::NetworkActor(Context *context)
         : ClientObj(context), mass_(10.0f),
         alive_(true),
         onVehicle_(false),
+        showMarker_(false),
         enableControls_(false),
         initialSet_(false),
           onGround_(false),
@@ -158,9 +162,6 @@ void NetworkActor::Init(Node* node) {
     node_ = node;
     if (node_) {
 
-        Node* markerNode = node_->CreateChild("Marker");
-        markerNode->SetScale(24.0f);
-        markerNode->SetPosition(Vector3(0.0f,72.0f, -4.0f));
 
 
         Node* objectNode = node_->CreateChild("Actor", REPLICATED);
@@ -174,11 +175,22 @@ void NetworkActor::Init(Node* node) {
         //adjustNode->SetRotation( Quaternion(-90, Vector3(0,1,0) ) );
         adjustNode->SetRotation( Quaternion(-90, Vector3(0,1,0) ) );
 
+        Node* markerNode = adjustNode->CreateChild("Marker", REPLICATED);
+        //markerNode->SetScale(4.0f);
+        markerNode->SetPosition(Vector3(0,0.6f,0));
+
+
 
         model_ = adjustNode->CreateComponent<AnimatedModel>();
         body_ = objectNode->CreateComponent<RigidBody>();
         collisionShape_ = objectNode->CreateComponent<CollisionShape>();
         animCtrl_ = adjustNode->CreateComponent<AnimationController>();
+
+
+        // Create marker on model adjust node
+        marker_ = markerNode->CreateComponent<StaticModel>();
+        marker_->SetModel(cache->GetResource<Model>(naMarkerMdlFile));
+
 
         model_->SetCastShadows(true);
 
@@ -421,12 +433,53 @@ void NetworkActor::FixedUpdate(float timeStep) {
     // DEBUG DRAW
     DebugDraw();
 
+    Vector3 localCenter = Vector3(0,0,0);
+
+    if (body_) {
+        if (vehicle_) {
+            localCenter = body_->GetPosition();
+            Vector3 distToVehicle = vehicle_->GetRaycastVehicle()->GetBody()->GetPosition()-localCenter;
+
+            if (distToVehicle.LengthSquared() < 4.0f) {
+                showMarker_ = true;
+            } else {
+                showMarker_ = false;
+            }
+
+
+        }
+    }
+
+
 
     // Update the in air timer. Reset if grounded
     if (!onGround_)
         inAirTimer_ += timeStep;
-    else
+    else {
+        // On ground
         inAirTimer_ = 0.0f;
+
+
+
+        if (showMarker_) {
+
+            if (marker_) {
+                //marker_->GetNode()->SetPosition(localCenter);
+//                marker_->GetNode()->SetRotation(Quaternion(lastContactNorm_));
+
+                Quaternion endRot = Quaternion(0, 0, 0);
+                Vector3 cNorm = lastContactNorm_.Normalized();
+                endRot.FromLookRotation(cNorm, Vector3::UP);
+                marker_->GetNode()->SetRotation(endRot);
+                marker_->GetNode()->SetEnabled(true);
+            }
+
+        } else {
+            if (marker_) {
+                //marker_->GetNode()->SetEnabled(false);
+            }
+        }
+    }
 
 
     if (toTarget_ == Vector3(0,0,0)) {
@@ -902,6 +955,7 @@ void NetworkActor::DebugDraw() {
             //dbgRenderer->AddLine(localCenter, (localCenter+GetNode()->GetDirection()*40.0f), Color(1.0f, 0.0, 0.0));
             dbgRenderer->AddLine(localCenter, (localCenter+lastImpulse_*40.0f), Color(1.0f, 0.0, 0.0));
 
+            // TO VEHICLE
             dbgRenderer->AddLine(localCenter, vehicle_->GetRaycastVehicle()->GetBody()->GetPosition(), Color(0.0f, 0.0, 1.0));
 
             Vector3 nodePos = GetNode()->GetPosition();
@@ -952,6 +1006,9 @@ void NetworkActor::HandleNodeCollision(StringHash eventType, VariantMap& eventDa
                 }
             }
         }
+
+
+
     }
 
 
@@ -974,6 +1031,9 @@ void NetworkActor::HandleNodeCollision(StringHash eventType, VariantMap& eventDa
         Vector3 contactNormal = contacts.ReadVector3();
         /*float contactDistance = */contacts.ReadFloat();
         /*float contactImpulse = */contacts.ReadFloat();
+
+        // Store contact normal for marker adjustment
+        lastContactNorm_ = contactNormal;
 
         // If contact is below node center and pointing up, assume it's a ground contact
         if (contactPosition.y_ < (node_->GetPosition().y_ + 1.0f))

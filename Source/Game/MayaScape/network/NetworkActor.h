@@ -219,6 +219,8 @@ public:
 
     bool doJump_;
 
+    // Marker
+    StaticModel* marker_;
     // Animated model
     AnimatedModel* model_;
     // Rigid body
@@ -231,7 +233,9 @@ public:
     // Player state variables
     bool alive_;
     bool onVehicle_;
+    bool showMarker_;
     Vector3 lastImpulse_;
+    Vector3 lastContactNorm_;
 
 
     String name_;
