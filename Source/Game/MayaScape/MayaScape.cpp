@@ -2517,7 +2517,7 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
 
 
                                 // On foot controls
-                                if (!actor->onVehicle_) {
+                                //if (!actor->onVehicle_) {
                                     float z = controlYawAngle;
                                     if (abs(controlYawAngle) < 90.0f) {
                                         //URHO3D_LOGINFOF("z -> %f", z);
@@ -2529,7 +2529,7 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                     } else {
                                         // Do not apply force
                                     }
-                                }
+                                //}
 
 
                                 if (vehicleNode) {
