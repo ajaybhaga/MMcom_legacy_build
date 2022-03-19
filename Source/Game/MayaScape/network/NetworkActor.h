@@ -220,7 +220,7 @@ public:
     bool doJump_;
 
     // Marker
-    StaticModel* marker_;
+    Vector<StaticModel*> markers_;
     // Animated model
     AnimatedModel* model_;
     // Rigid body
@@ -234,6 +234,7 @@ public:
     bool alive_;
     bool onVehicle_;
     bool showMarker_;
+    int markType_;
     Vector3 lastImpulse_;
     Vector3 lastContactNorm_;
 

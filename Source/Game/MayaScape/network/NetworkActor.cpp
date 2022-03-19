@@ -40,6 +40,8 @@ String mdlFile = "Models/Player/Bino/Models/f_8.mdl";
 String naMarkerMdlFile = "Models/Tracks/Models/circle.mdl";
 String naMarkerAMdlFile = "Models/Objects/Models/cursor1.mdl";
 String naMarkerAMatFile = "Models/Objects/Models/cursor1.txt";
+String naMarkerBMdlFile = "Models/Objects/Models/cursor2.mdl";
+String naMarkerBMatFile = "Models/Objects/Models/cursor2.txt";
 
 ////code/dev/MonkeyMaya_com/bin/Data/Models/Objects/Models/cursor1.mdl
 
@@ -191,10 +193,18 @@ void NetworkActor::Init(Node* node) {
 
 
         // Create marker on model adjust node
-        marker_ = markerNode->CreateComponent<StaticModel>();
-        marker_->SetModel(cache->GetResource<Model>(naMarkerAMdlFile));
-        marker_->ApplyMaterialList(naMarkerAMatFile);
+        markers_.Push(markerNode->CreateComponent<StaticModel>());
+        markers_[0]->SetModel(cache->GetResource<Model>(naMarkerAMdlFile));
+        markers_[0]->ApplyMaterialList(naMarkerAMatFile);
+        markers_[0]->SetEnabled(false);
+        markers_.Push(markerNode->CreateComponent<StaticModel>());
+        markers_[1]->SetModel(cache->GetResource<Model>(naMarkerBMdlFile));
+        markers_[1]->ApplyMaterialList(naMarkerBMatFile);
+        markers_[1]->SetEnabled(false);
 
+        // Free actor mark
+        markType_ = 0;
+        showMarker_ = true;
 
         model_->SetCastShadows(true);
 
@@ -444,10 +454,14 @@ void NetworkActor::FixedUpdate(float timeStep) {
             localCenter = body_->GetPosition();
             Vector3 distToVehicle = vehicle_->GetRaycastVehicle()->GetBody()->GetPosition()-localCenter;
 
-            if (distToVehicle.LengthSquared() < 4.0f) {
-                showMarker_ = true;
+            float dist = distToVehicle.LengthSquared();
+            if (distToVehicle.LengthSquared() < 40.0f) {
+                // Close to vehicle mark
+                markType_ = 1;
+
             } else {
-                showMarker_ = false;
+
+                markType_ = 0;
             }
 
 
@@ -462,29 +476,38 @@ void NetworkActor::FixedUpdate(float timeStep) {
     else {
         // On ground
         inAirTimer_ = 0.0f;
+    }
 
 
+    if (showMarker_) {
 
-        if (showMarker_) {
-
-            if (marker_) {
-                //marker_->GetNode()->SetPosition(localCenter);
+        if (!markers_.Empty()) {
+            //marker_->GetNode()->SetPosition(localCenter);
 //                marker_->GetNode()->SetRotation(Quaternion(lastContactNorm_));
 
-                //Quaternion endRot = Quaternion(0, 0, 0);
-                //Vector3 cNorm = lastContactNorm_.Normalized();
-                //endRot.FromLookRotation(Vector3(cNorm.x_, cNorm.y_, cNorm.z_), Vector3::UP);
-                //endRot.FromLookRotation(Vector3(0, cNorm.y_, 0), Vector3::UP);
-                //marker_->GetNode()->SetRotation(endRot);
-                //marker_->GetNode()->SetEnabled(true);
+            //Quaternion endRot = Quaternion(0, 0, 0);
+            //Vector3 cNorm = lastContactNorm_.Normalized();
+            //endRot.FromLookRotation(Vector3(cNorm.x_, cNorm.y_, cNorm.z_), Vector3::UP);
+            //endRot.FromLookRotation(Vector3(0, cNorm.y_, 0), Vector3::UP);
+            //marker_->GetNode()->SetRotation(endRot);
+            //marker_->GetNode()->SetEnabled(true);
+
+            //marker_->SetModel(cache->GetResource<Model>(naMarkerAMdlFile));
+            //marker_->ApplyMaterialList(naMarkerAMatFile);
+
+
+            for (int i = 0; i < markers_.Size(); i++) {
+                markers_[i]->SetEnabled((markType_ == i));
             }
 
-        } else {
-            if (marker_) {
-                //marker_->GetNode()->SetEnabled(false);
-            }
+        }
+
+    } else {
+        for (int i = 0; i < markers_.Size(); i++) {
+//            markers_[i]->SetEnabled(false);
         }
     }
+
 
 
     if (toTarget_ == Vector3(0,0,0)) {
