@@ -22,8 +22,8 @@ static const unsigned NTWK_CTRL_BACK = (1<<0);
 static const unsigned NTWK_CTRL_FORWARD    = (1<<1);
 static const unsigned NTWK_CTRL_LEFT    = (1<<2);
 static const unsigned NTWK_CTRL_RIGHT   = (1<<3);
-static const unsigned NTWK_CTRL_ENTER     = (1<<4);
-static const unsigned NTWK_CTRL_FIRE     = (1<<5);
+static const unsigned NTWK_CTRL_ENTER     = (1<<5);
+static const unsigned NTWK_CTRL_FIRE     = (1<<7);
 
 static const unsigned NETWORKACTOR_COL_LAYER = 2;
 static const int MAX_MAT_COUNT = 9;

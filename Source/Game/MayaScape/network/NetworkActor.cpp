@@ -42,6 +42,8 @@ String naMarkerAMdlFile = "Models/Objects/Models/cursor1.mdl";
 String naMarkerAMatFile = "Models/Objects/Models/cursor1.txt";
 String naMarkerBMdlFile = "Models/Objects/Models/cursor2.mdl";
 String naMarkerBMatFile = "Models/Objects/Models/cursor2.txt";
+String naMarkerCMdlFile = "Models/Objects/Models/cursor3.mdl";
+String naMarkerCMatFile = "Models/Objects/Models/cursor3.txt";
 
 ////code/dev/MonkeyMaya_com/bin/Data/Models/Objects/Models/cursor1.mdl
 
@@ -156,6 +158,10 @@ void NetworkActor::RegisterObject(Context *context) {
     URHO3D_ATTRIBUTE("In Air Timer", float, inAirTimer_, 0.0f, AM_DEFAULT);
 
     URHO3D_ATTRIBUTE("On Vehicle", bool, onVehicle_, 0.0f, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("Entered", bool, entered_, 0.0f, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("Enable Controls", bool, enableControls_, 0.0f, AM_DEFAULT);
+
+
     /*
     URHO3D_ATTRIBUTE("On Vehicle", bool, onVehicle_, 0.0f, AM_DEFAULT);
     URHO3D_ATTRIBUTE("Alive", bool, alive_, 0.0f, AM_DEFAULT);
@@ -212,6 +218,10 @@ void NetworkActor::Init(Node* node) {
         markers_[1]->SetModel(cache->GetResource<Model>(naMarkerBMdlFile));
         markers_[1]->ApplyMaterialList(naMarkerBMatFile);
         markers_[1]->SetEnabled(false);
+        markers_.Push(markerNode->CreateComponent<StaticModel>());
+        markers_[2]->SetModel(cache->GetResource<Model>(naMarkerCMdlFile));
+        markers_[2]->ApplyMaterialList(naMarkerCMatFile);
+        markers_[2]->SetEnabled(false);
 
         // Free actor mark
         markType_ = 0;
@@ -248,8 +258,6 @@ void NetworkActor::Init(Node* node) {
         //body_->SetKinematic(true);
         collisionShape_->SetCapsule(0.4f, 0.8f, Vector3::UP * 0.4f);
        // collisionShape_->SetCapsule(0.01f, 0.5f, Vector3::UP * 0.3f);
-
-
 
 
         animCtrl_->PlayExclusive(walkAniFile, 0, true);
@@ -315,7 +323,7 @@ void NetworkActor::SwapMat() {
 
 void NetworkActor::SetControls(const Controls &controls) {
     controls_ = controls;
-    if (vehicle_) {
+    if (vehicle_ && onVehicle_ && entered_) {
         vehicle_->SetControls(controls);
     }
 }
@@ -474,13 +482,18 @@ void NetworkActor::FixedUpdate(float timeStep) {
 
             float dist = distToVehicle.LengthSquared();
             if (distToVehicle.LengthSquared() < 40.0f) {
-                // Close to vehicle mark
-                markType_ = 1;
-                canEnter_ = true;
+
+                if (!entered_) {
+                    // Close to vehicle mark
+                    markType_ = 1;
+                    canEnter_ = true;
+                } else {
+                    // In vehicle
+                    markType_ = 2;
+                }
 
 
             } else {
-
                 // Too far
                 canEnter_ = false;
                 markType_ = 0;
@@ -489,8 +502,6 @@ void NetworkActor::FixedUpdate(float timeStep) {
 
         }
     }
-
-
 
     // Update the in air timer. Reset if grounded
     if (!onGround_)
@@ -624,42 +635,51 @@ void NetworkActor::FixedUpdate(float timeStep) {
 
     if (enableControls_) {
 
-        //URHO3D_LOGDEBUGF("**NETWORK ACTOR CONTROLS** -> %l", controls_.buttons_);
-
-        if (!onVehicle_) {
+        if (!entered_) {
+            // Controls conditional on being on-foot
 
             // Read controls generate vehicle control instruction
             if (controls_.buttons_ & NTWK_CTRL_LEFT) {
                 move_ += Vector3::LEFT;
                 controls_.yaw_ += -1.0f;
              //   ntwkControls_.yaw_
+
+                URHO3D_LOGDEBUGF("**NETWORK ACTOR LEFT** -> %l", controls_.buttons_);
             }
 
             if (controls_.buttons_ & NTWK_CTRL_RIGHT) {
                 move_ += Vector3::RIGHT;
                 controls_.yaw_ += 1.0f;
+                URHO3D_LOGDEBUGF("**NETWORK ACTOR RIGHT** -> %l", controls_.buttons_);
             }
 
             if (controls_.buttons_ & NTWK_CTRL_FORWARD) {
                 move_ += Vector3::FORWARD;
                 Run();
+                URHO3D_LOGDEBUGF("**NETWORK ACTOR FORWARD** -> %l", controls_.buttons_);
             }
+
             if (controls_.buttons_ & NTWK_CTRL_BACK) {
                 //move_ = Vector3(0.0f, 0.0f, 0.0f);
                 acceleration_ = 0;
-            }
-
-            if (controls_.buttons_ & NTWK_CTRL_ENTER) {
-                // ENTER CAR (if close enough)
-                EnterVehicle();
+                URHO3D_LOGDEBUGF("**NETWORK ACTOR BACK** -> %l", controls_.buttons_);
             }
 
             if (controls_.buttons_ & NTWK_CTRL_FIRE) {
                 // FIRE
                 //fire = true;
                 //URHO3D_LOGDEBUGF("%s -> FIRE = %l", vehicleName.CString(), controls_.buttons_);
+                URHO3D_LOGDEBUGF("**NETWORK ACTOR FIRE** -> %l", controls_.buttons_);
+
             }
         }
+
+        if (controls_.buttons_ & NTWK_CTRL_ENTER) {
+            // ENTER CAR (if close enough)
+            EnterVehicle();
+            URHO3D_LOGDEBUGF("**NETWORK ACTOR ENTER** -> %l", controls_.buttons_);
+        }
+
 
 
         // Normalize move vector
@@ -1116,6 +1136,13 @@ void NetworkActor::setMove(const Vector3 &move) {
 }
 
 void NetworkActor::EnterVehicle() {
+
+    if (entered_) {
+        // On already entered, exit vehicle
+        onVehicle_ =  false;
+        entered_ = false;
+        return;
+    }
 
     // Check for permission
     if (!canEnter_)

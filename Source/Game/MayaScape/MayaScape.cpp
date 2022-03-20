@@ -842,11 +842,11 @@ Controls MayaScape::SampleCSPControls()
     bool snap = false;
     if (lAxisVal.x_ < -0.4f) {
         // left
-        ntwkControls_.Set(NTWK_CTRL_LEFT, 1);
+//        ntwkControls_.Set(NTWK_CTRL_LEFT, 1);
         snap = true;
     } else if (lAxisVal.x_ > 0.4f) {
         // right
-        ntwkControls_.Set(NTWK_CTRL_RIGHT, 1);
+//        ntwkControls_.Set(NTWK_CTRL_RIGHT, 1);
         snap = true;
     }
 
@@ -1672,7 +1672,7 @@ void MayaScape::HandleRenderUpdate(StringHash eventType, VariantMap &eventData) 
                              rotation = na->GetNode()->GetRotation();
 
 
-                             if (na->onVehicle_) {
+                             if (na->entered_) {
                                  float steering = na->vehicle_->GetSteering();
                                  if (steerWheelSprite_) {
                                      steerWheelSprite_->SetVisible(true);
@@ -2509,7 +2509,7 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                 // Control rotation
                                 dir = dir * Quaternion(controlYawAngle*slowdown, Vector3::UP);
 
-                                if (!actor->onVehicle_) {
+                                if (!actor->entered_) {
                                     // Position dir around actor
                                     dir = SmoothStepAngle(dir, actorRot, timeStep * rotLerpRate);
 
@@ -2529,7 +2529,7 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                     } else {
                                         // Do not apply force
                                     }
-                                } else {
+/*                                } else {
 
                                  /*   // Set the left and right for move
                                     actor->setMove(Vector3(lStick.GetVector2().x_, 0, lStick.GetVector2().y_));
@@ -2540,6 +2540,7 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                         move_.Normalize();
 */
                                 }
+
 
                                 if (vehicleNode) {
                                     if (actor->vehicle_) {
@@ -2656,7 +2657,7 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                         float velMult = 8.0f;
 
                                         Vector3 cameraTargetPos;
-                                        if (actor->onVehicle_) {
+                                        if (actor->onVehicle_ && actor->entered_) {
 
                                             if (actor->vehicle_) {
                                                 botSpeedKm = round(
@@ -2734,7 +2735,7 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
 
                                             Vector3 lookAtObject;
 
-                                            if (actor->onVehicle_) {
+                                            if (actor->onVehicle_ && actor->entered_) {
                                                 lookAtObject = actor->vehicle_->GetBody()->GetPosition();
                                             } else {
                                                 lookAtObject = actor->GetBody()->GetPosition();
@@ -2908,7 +2909,7 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
 
                                             bool stopMove = false;
 
-                                            if (actor->onVehicle_) {
+                                            if (actor->onVehicle_ && actor->entered_) {
 
                                                 // Adjust camera up to ray length
                                                 if (cameraRayLength < CAMERA_RAY_DISTANCE_LIMIT) {
@@ -3852,7 +3853,7 @@ void MayaScape::MoveCamera(float timeStep) {
                                 float velMult = 8.0f;
 
                                 Vector3 cameraTargetPos;
-                                if (na->onVehicle_) {
+                                if (na->onVehicle_ && na->entered_) {
 
                                     if (na->vehicle_) {
                                         botSpeedKm = round(
@@ -3931,7 +3932,7 @@ void MayaScape::MoveCamera(float timeStep) {
 
                                     Vector3 lookAtObject;
 
-                                    if (na->onVehicle_) {
+                                    if (na->onVehicle_ && na->entered_) {
                                         lookAtObject = na->vehicle_->GetRaycastVehicle()->GetBody()->GetPosition();
                                     } else {
                                         lookAtObject = pos;
