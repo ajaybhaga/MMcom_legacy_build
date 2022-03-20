@@ -839,16 +839,6 @@ Controls MayaScape::SampleCSPControls()
 
     joySteer_ = lStick.GetVector2();
 
-    bool snap = false;
-    if (lAxisVal.x_ < -0.4f) {
-        // left
-//        ntwkControls_.Set(NTWK_CTRL_LEFT, 1);
-        snap = true;
-    } else if (lAxisVal.x_ > 0.4f) {
-        // right
-//        ntwkControls_.Set(NTWK_CTRL_RIGHT, 1);
-        snap = true;
-    }
 
 
     float actorAccel = rStick.GetVector2().y_ * 1.25f;
@@ -912,8 +902,21 @@ Controls MayaScape::SampleCSPControls()
     }
 
 
-    bool left = input->GetKeyDown(KEY_A) || input->GetKeyDown(Urho3D::KEY_LEFT);
-    bool right = input->GetKeyDown(KEY_D) || input->GetKeyDown(Urho3D::KEY_RIGHT);
+/*
+    bool snap = false;
+    if (lAxisVal.x_ < -0.4f) {
+        // left
+//        ntwkControls_.Set(NTWK_CTRL_LEFT, 1);
+        snap = true;
+    } else if (lAxisVal.x_ > 0.4f) {
+        // right
+//        ntwkControls_.Set(NTWK_CTRL_RIGHT, 1);
+        snap = true;
+    }
+*/
+
+    bool left = input->GetKeyDown(KEY_A) || input->GetKeyDown(Urho3D::KEY_LEFT) || (lAxisVal.x_ < -0.4f);
+    bool right = input->GetKeyDown(KEY_D) || input->GetKeyDown(Urho3D::KEY_RIGHT) || (lAxisVal.x_ > 0.4f);
 
     ntwkControls_.Set(NTWK_CTRL_FORWARD, accel);
     ntwkControls_.Set(NTWK_CTRL_BACK, brake);
@@ -5286,7 +5289,7 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
     Vehicle *vehicle = vehicleNode->CreateComponent<Vehicle>(REPLICATED);
     vehicle->Init(vehicleNode);
 
-    vehicleNode->SetPosition(Vector3(actor->GetBody()->GetPosition())+Vector3(0,40,0));
+    vehicleNode->SetPosition(Vector3(actor->GetBody()->GetPosition())+Vector3(0,10,0));
     //vehicle->GetRaycastVehicle()->GetBody()->SetPosition(Vector3(actor->GetPosition())-Vector3::UP*50.0f);
     vehicleNode->SetRotation(Quaternion(0.0f, Random(0.0f, 360.0f), 0.0f));
     // Attach vehicle to actor
