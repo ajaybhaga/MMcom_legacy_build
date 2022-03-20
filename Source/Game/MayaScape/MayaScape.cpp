@@ -3867,9 +3867,8 @@ void MayaScape::MoveCamera(float timeStep) {
                                 float velMult = 8.0f;
 
                                 Vector3 cameraTargetPos;
+                                auto *naBody = na->GetNode()->GetComponent<RigidBody>(true);
                                 if (na->onVehicle_ && na->entered_) {
-
-                                    auto *naBody = na->GetNode()->GetComponent<RigidBody>(true);
                                     if (naBody) {
                                         // CLIENT RIGID BODY RETRIEVED
                                         pos = naBody->GetPosition();
@@ -3884,6 +3883,8 @@ void MayaScape::MoveCamera(float timeStep) {
                                             pos = vBody->GetPosition();
                                             rot = vBody->GetRotation();
                                             lVel = vBody->GetLinearVelocity();
+                                            lookAtObject = vBody->GetPosition();;
+
                                         }
 
                                         // Back wheel points forward
@@ -3906,11 +3907,6 @@ void MayaScape::MoveCamera(float timeStep) {
                                                     lVel.Length() *
                                                     velMult) * 0.9f;
 
-
-                                    // Set look at
-                                    lookAtObject = pos;
-
-
                                 } else {
                                     // On foot
                                     botSpeedKm = 0;
@@ -3925,6 +3921,9 @@ void MayaScape::MoveCamera(float timeStep) {
                                                   CAMERA_RAY_DISTANCE_LIMIT/14,
                                                   78.0f + lVel.Length() *
                                                   velMult) * 0.11f;
+
+
+                                    lookAtObject = naBody->GetPosition();
 
                                 }
                                 Vector3 cameraStartPos = clientCam_->GetNode()->GetPosition();
