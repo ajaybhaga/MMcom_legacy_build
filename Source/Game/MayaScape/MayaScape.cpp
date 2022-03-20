@@ -897,7 +897,7 @@ Controls MayaScape::SampleCSPControls()
 
     //ntwkControls_.yaw_ += (float)lAxisVal.x_*90.0f * YAW_SENSITIVITY;
 
-    bool accel = (input->GetKeyDown(KEY_W) || ntwkControls_.IsDown(BUTTON_B) || (actorAccel < -0.9f));
+    bool accel = (input->GetKeyDown(Urho3D::KEY_AC_FORWARD) || input->GetKeyDown(KEY_W) || ntwkControls_.IsDown(BUTTON_B) || (actorAccel < -0.9f));
     bool fire = input->GetKeyDown(KEY_SPACE) || ntwkControls_.IsDown(BUTTON_A);
     bool enter = input->GetKeyDown(KEY_F) || ntwkControls_.IsDown(BUTTON_Y);
     bool brake = (input->GetKeyDown(KEY_S) || ntwkControls_.IsDown(BUTTON_X));
@@ -912,15 +912,15 @@ Controls MayaScape::SampleCSPControls()
     }
 
 
+    bool left = input->GetKeyDown(KEY_A) || input->GetKeyDown(Urho3D::KEY_LEFT);
+    bool right = input->GetKeyDown(KEY_D) || input->GetKeyDown(Urho3D::KEY_RIGHT);
 
     ntwkControls_.Set(NTWK_CTRL_FORWARD, accel);
     ntwkControls_.Set(NTWK_CTRL_BACK, brake);
-    ntwkControls_.Set(NTWK_CTRL_LEFT, input->GetKeyDown(KEY_A));
-    ntwkControls_.Set(NTWK_CTRL_RIGHT, input->GetKeyDown(KEY_D));
+    ntwkControls_.Set(NTWK_CTRL_LEFT, left);
+    ntwkControls_.Set(NTWK_CTRL_RIGHT, right);
     ntwkControls_.Set(NTWK_CTRL_ENTER, enter);
     ntwkControls_.Set(NTWK_CTRL_FIRE, fire);
-
-
 
     // Set controls to updated ntwkControls
     controls = ntwkControls_;
@@ -2509,15 +2509,15 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                 // Control rotation
                                 dir = dir * Quaternion(controlYawAngle*slowdown, Vector3::UP);
 
-                                // Physics update has completed. Position camera behind vehicle
-                                dir = SmoothStepAngle(dir, actorRot, timeStep * rotLerpRate);
-                                //Quaternion dir(actorRot.YawAngle(), Vector3::UP);
-                                //dir = dir * Quaternion(vehicle_->controls_.yaw_, Vector3::UP);
-                                //dir = dir * Quaternion(vehicle_->controls_.pitch_, Vector3::RIGHT);
+                                if (!actor->onVehicle_) {
+                                    // Position dir around actor
+                                    dir = SmoothStepAngle(dir, actorRot, timeStep * rotLerpRate);
 
+                                    //Quaternion dir(actorRot.YawAngle(), Vector3::UP);
+                                    //dir = dir * Quaternion(vehicle_->controls_.yaw_, Vector3::UP);
+                                    //dir = dir * Quaternion(vehicle_->controls_.pitch_, Vector3::RIGHT);
 
-                                // On foot controls
-                                //if (!actor->onVehicle_) {
+                                    // On foot controls
                                     float z = controlYawAngle;
                                     if (abs(controlYawAngle) < 90.0f) {
                                         //URHO3D_LOGINFOF("z -> %f", z);
@@ -2529,8 +2529,17 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                     } else {
                                         // Do not apply force
                                     }
-                                //}
+                                } else {
 
+                                 /*   // Set the left and right for move
+                                    actor->setMove(Vector3(lStick.GetVector2().x_, 0, lStick.GetVector2().y_));
+
+                                    // Next move
+                                    move_ = move_.Normalized() * Pow(move_.Length() * 1.05f, 2.0f);
+                                    if (move_.LengthSquared() > 0.0f)
+                                        move_.Normalize();
+*/
+                                }
 
                                 if (vehicleNode) {
                                     if (actor->vehicle_) {

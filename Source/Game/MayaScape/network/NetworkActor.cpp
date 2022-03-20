@@ -624,37 +624,41 @@ void NetworkActor::FixedUpdate(float timeStep) {
 
     if (enableControls_) {
 
-        //URHO3D_LOGDEBUGF("**VEHICLE CONTROLS** -> %l", controls_.buttons_);
+        //URHO3D_LOGDEBUGF("**NETWORK ACTOR CONTROLS** -> %l", controls_.buttons_);
 
-        // Read controls generate vehicle control instruction
-        if (controls_.buttons_ & NTWK_CTRL_LEFT) {
-           // move_ += Vector3::LEFT;
-        //    controls_.yaw_ += -1.0f;
-        }
+        if (!onVehicle_) {
 
-        if (controls_.buttons_ & NTWK_CTRL_RIGHT) {
-            //move_ += Vector3::RIGHT;
-//            controls_.yaw_ += 1.0f;
-        }
+            // Read controls generate vehicle control instruction
+            if (controls_.buttons_ & NTWK_CTRL_LEFT) {
+                move_ += Vector3::LEFT;
+                controls_.yaw_ += -1.0f;
+             //   ntwkControls_.yaw_
+            }
 
-        if (controls_.buttons_ & NTWK_CTRL_FORWARD) {
-            //move_ += Vector3::FORWARD;
-            Run();
-        }
-        if (controls_.buttons_ & NTWK_CTRL_BACK) {
-            //move_ = Vector3(0.0f, 0.0f, 0.0f);
-            acceleration_ = 0;
-        }
+            if (controls_.buttons_ & NTWK_CTRL_RIGHT) {
+                move_ += Vector3::RIGHT;
+                controls_.yaw_ += 1.0f;
+            }
 
-        if (controls_.buttons_ & NTWK_CTRL_ENTER) {
-            // ENTER CAR (if close enough)
-            EnterVehicle();
+            if (controls_.buttons_ & NTWK_CTRL_FORWARD) {
+                move_ += Vector3::FORWARD;
+                Run();
+            }
+            if (controls_.buttons_ & NTWK_CTRL_BACK) {
+                //move_ = Vector3(0.0f, 0.0f, 0.0f);
+                acceleration_ = 0;
+            }
 
+            if (controls_.buttons_ & NTWK_CTRL_ENTER) {
+                // ENTER CAR (if close enough)
+                EnterVehicle();
+            }
 
-        if (controls_.buttons_ & NTWK_CTRL_FIRE) {
-            // FIRE
-            //fire = true;
-            //URHO3D_LOGDEBUGF("%s -> FIRE = %l", vehicleName.CString(), controls_.buttons_);
+            if (controls_.buttons_ & NTWK_CTRL_FIRE) {
+                // FIRE
+                //fire = true;
+                //URHO3D_LOGDEBUGF("%s -> FIRE = %l", vehicleName.CString(), controls_.buttons_);
+            }
         }
 
 
@@ -749,7 +753,7 @@ void NetworkActor::FixedUpdate(float timeStep) {
     }
 
 */
-}
+
 ////
 
 
