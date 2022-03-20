@@ -151,17 +151,35 @@ void NetworkActor::RegisterObject(Context *context) {
 
     //URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, bool, true, AM_DEFAULT);
     //URHO3D_ATTRIBUTE("Player Name", String, name_, String::EMPTY, AM_DEFAULT | AM_NET);
+
+
+    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, bool, true, AM_DEFAULT);
+
     URHO3D_ATTRIBUTE("Controls Yaw", float, controls_.yaw_, 0.0f, AM_DEFAULT);
     URHO3D_ATTRIBUTE("Controls Pitch", float, controls_.pitch_, 0.0f, AM_DEFAULT);
     URHO3D_ATTRIBUTE("On Ground", bool, onGround_, false, AM_DEFAULT);
     URHO3D_ATTRIBUTE("OK To Jump", bool, okToJump_, true, AM_DEFAULT);
     URHO3D_ATTRIBUTE("In Air Timer", float, inAirTimer_, 0.0f, AM_DEFAULT);
 
-    URHO3D_ATTRIBUTE("On Vehicle", bool, onVehicle_, 0.0f, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Entered", bool, entered_, 0.0f, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Enable Controls", bool, enableControls_, 0.0f, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("On Vehicle", bool, onVehicle_, false, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("Entered", bool, entered_, false, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("Enable Controls", bool, enableControls_, false, AM_DEFAULT);
 
 
+
+
+
+//    URHO3D_ATTRIBUTE("Bone Axis", Vector3, boneAxis_, Vector3(0, 0, 1), AM_DEFAULT);
+
+/*    URHO3D_ATTRIBUTE("Stiffness", float, stiffness_, 0.1f, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("Mass", float, mass_, 0.9f, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("Damping", float, damping_, 0.75f, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("Gravity", float, gravity_, 0.75f, AM_DEFAULT);
+
+    URHO3D_ATTRIBUTE("Allow Stretch", bool, squashAndStretch_, true, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("Side Stretch", float, sideStretch_, 0.15f, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("Front Stretch", float, frontStretch_, 0.15f, AM_DEFAULT);
+*/
     /*
     URHO3D_ATTRIBUTE("On Vehicle", bool, onVehicle_, 0.0f, AM_DEFAULT);
     URHO3D_ATTRIBUTE("Alive", bool, alive_, 0.0f, AM_DEFAULT);
@@ -1146,6 +1164,7 @@ void NetworkActor::EnterVehicle() {
         // On already entered, exit vehicle
         onVehicle_ =  false;
         entered_ = false;
+        Urho3D::Component::MarkNetworkUpdate();
         return;
     }
 
@@ -1156,5 +1175,6 @@ void NetworkActor::EnterVehicle() {
     // Snap actor to vehicle
     onVehicle_ =  true;
     entered_ = true;
+    Urho3D::Component::MarkNetworkUpdate();
 
 };

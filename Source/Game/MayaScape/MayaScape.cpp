@@ -1648,14 +1648,12 @@ void MayaScape::HandleRenderUpdate(StringHash eventType, VariantMap &eventData) 
 
          // Found network player
          if (isSnapped_) {
-             String vehicleName = clientName_ + String("-vehicle");
-             Node *vehicleNode = scene_->GetChild(vehicleName);
-
-
 
              String actorName = clientName_ + String("-actor");
              Node *actorNode = scene_->GetChild(actorName);
 
+             String vehicleName = clientName_ + String("-vehicle");
+             Node *vehicleNode = scene_->GetChild(vehicleName);
              //BLUE-304-vehicle
 
              Vector3 bodyPos;
@@ -1667,6 +1665,7 @@ void MayaScape::HandleRenderUpdate(StringHash eventType, VariantMap &eventData) 
 
                  if (actor) {
                      NetworkActor *na = actorNode->GetDerivedComponent<NetworkActor>();
+                     Vehicle *v = vehicleNode->GetDerivedComponent<Vehicle>();
                      if (na) {
                          auto *body = na->GetNode()->GetComponent<RigidBody>(true);
                          if (body) {
@@ -1676,11 +1675,13 @@ void MayaScape::HandleRenderUpdate(StringHash eventType, VariantMap &eventData) 
 
 
                              if (na->entered_) {
-                                 float steering = na->vehicle_->GetSteering();
-                                 if (steerWheelSprite_) {
-                                     steerWheelSprite_->SetVisible(true);
-                                     steerActorSprite_->SetVisible(false);
-                                     steerWheelSprite_->SetRotation(360.0f * steering);
+                                 if (v) {
+                                     float steering = v->GetSteering();
+                                     if (steerWheelSprite_) {
+                                         steerWheelSprite_->SetVisible(true);
+                                         steerActorSprite_->SetVisible(false);
+                                         steerWheelSprite_->SetRotation(360.0f * steering);
+                                     }
                                  }
                              } else {
                                  if (steerActorSprite_) {
@@ -3822,6 +3823,9 @@ void MayaScape::MoveCamera(float timeStep) {
                     String actorName = clientName_ + String("-actor");
                     Node *actorNode = scene_->GetChild(actorName);
 
+                    String vehicleName = clientName_ + String("-vehicle");
+                    Node *vehicleNode = scene_->GetChild(vehicleName);
+
                     //BLUE-304-vehicle
 
                     Vector3 pos;
@@ -3834,6 +3838,9 @@ void MayaScape::MoveCamera(float timeStep) {
 
                         if (actor) {
                             NetworkActor *na = actorNode->GetDerivedComponent<NetworkActor>();
+                            Vehicle *v = vehicleNode->GetDerivedComponent<Vehicle>();
+
+
                             if (na) {
                                 auto *body = na->GetNode()->GetComponent<RigidBody>(true);
                                 if (body) {
@@ -3847,6 +3854,10 @@ void MayaScape::MoveCamera(float timeStep) {
                             // Client: Move Camera
                             // Camera Positioning
                             ////
+
+                            Vector3 lookAtObject;
+
+
                             if (na) {
 
                                 String username = actor->GetUserName();
@@ -3858,11 +3869,25 @@ void MayaScape::MoveCamera(float timeStep) {
                                 Vector3 cameraTargetPos;
                                 if (na->onVehicle_ && na->entered_) {
 
-                                    if (na->vehicle_) {
-                                        botSpeedKm = round(
-                                                abs(na->vehicle_->GetRaycastVehicle()->GetSpeedKm()));
+                                    auto *naBody = na->GetNode()->GetComponent<RigidBody>(true);
+                                    if (naBody) {
+                                        // CLIENT RIGID BODY RETRIEVED
+                                        pos = naBody->GetPosition();
+                                        rot = naBody->GetRotation();
+                                        lVel = naBody->GetLinearVelocity();
+                                    }
+
+                                    if (v) {
+                                        auto *vBody = v->GetNode()->GetComponent<RigidBody>(true);
+                                        if (vBody) {
+                                            // CLIENT RIGID BODY RETRIEVED
+                                            pos = vBody->GetPosition();
+                                            rot = vBody->GetRotation();
+                                            lVel = vBody->GetLinearVelocity();
+                                        }
+
                                         // Back wheel points forward
-                                        forward = na->vehicle_->GetNode()->GetRotation();
+                                        forward = v->GetNode()->GetRotation();
                                     }
 
                                     //float bodyVel = EvolutionManager::getInstance()->getAgents()[camMode_ -1]->getActor()->vehicle_->GetBody()->GetLinearVelocity().Length();
@@ -3877,11 +3902,15 @@ void MayaScape::MoveCamera(float timeStep) {
                                                     velMult,
                                                     (pos.y_ +
                                                      CAMERA_RAY_DISTANCE_LIMIT +
-                                                     12.0f) +
-                                                    (botSpeedKm *
-                                                     2.7),
+                                                     12.0f),
                                                     lVel.Length() *
                                                     velMult) * 0.9f;
+
+
+                                    // Set look at
+                                    lookAtObject = pos;
+
+
                                 } else {
                                     // On foot
                                     botSpeedKm = 0;
@@ -3933,13 +3962,6 @@ void MayaScape::MoveCamera(float timeStep) {
                                     // Reset timer for recent ray cast
                                     lastCamRaycast = 0;
 
-                                    Vector3 lookAtObject;
-
-                                    if (na->onVehicle_ && na->entered_) {
-                                        lookAtObject = na->vehicle_->GetRaycastVehicle()->GetBody()->GetPosition();
-                                    } else {
-                                        lookAtObject = pos;
-                                    }
 
                                     // Set camera position and orientation
                                     float w1;
@@ -3990,67 +4012,59 @@ void MayaScape::MoveCamera(float timeStep) {
                             debugText_[k]->SetText(String("ntwkControls_.yaw_ -> ") + String(ntwkControls_.yaw_));
                             k++;
 
+
+
+                                if (v) {
+                                    // Snap camera to vehicle once available
+                                    Vector3 startPos = v->GetNode()->GetNetPositionAttr();
+                                    MemoryBuffer buf(v->GetNode()->GetNetRotationAttr());
+                                    Quaternion rotation = buf.ReadPackedQuaternion();
+
+                                    // Show message on first snap
+                                    if (!isSnapped_) {
+                                        isSnapped_ = true;
+
+                                        URHO3D_LOGDEBUG(
+                                                "--- Retrieved vehicle -> can snap camera -> Actor [" +
+                                                String(startPos.x_) + "," +
+                                                String(startPos.y_) + "," +
+                                                String(startPos.z_) + "]");
+                                    }
+
+
+                                    debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
+                                    debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
+                                    debugText_[k]->SetVisible(true);
+                                    debugText_[k]->SetText(String("Vehicle Pos -> ") + String(startPos.ToString()));
+                                    k++;
+                                    debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
+                                    debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
+                                    debugText_[k]->SetVisible(true);
+                                    debugText_[k]->SetText(String("Vehicle Rot -> ") + String(rotation.ToString()));
+                                    k++;
+                                    debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
+                                    debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
+                                    debugText_[k]->SetVisible(true);
+                                    debugText_[k]->SetText(String("Vehicle -> ") + String(vehicleName));
+                                    k++;
+
+
+                                    // Object location for camera
+                                    Vector3 snap = Vector3(startPos);
+                                    snap.y_ += 230.0f;
+                                    snap.x_ -= 120.0f;
+                                    snap.z_ -= 120.0f;
+                                    //Vector3 snap = server->GetFocusObjects().Empty() ? Vector3(0, 35.0, 0) : server->GetFocusObjects()[0];
+
+                                }
                             }
+
                         }
 
-
-                        String vehicleName = clientName_ + String("-vehicle");
-                        Node *vehicleNode = scene_->GetChild(vehicleName);
-
-                        // Locate vehicle node
-                        if (vehicleNode) {
-
-                            // Retrieve Vehicle
-                            ClientObj *vehicle = vehicleNode->GetDerivedComponent<ClientObj>();
-
-                            if (vehicle) {
-                                // Snap camera to vehicle once available
-                                Vector3 startPos = vehicle->GetNode()->GetNetPositionAttr();
-                                MemoryBuffer buf(vehicle->GetNode()->GetNetRotationAttr());
-                                Quaternion rotation = buf.ReadPackedQuaternion();
-
-                                // Show message on first snap
-                                if (!isSnapped_) {
-                                    isSnapped_ = true;
-
-                                    URHO3D_LOGDEBUG(
-                                            "--- Retrieved vehicle -> can snap camera -> Actor [" +
-                                            String(startPos.x_) + "," +
-                                            String(startPos.y_) + "," +
-                                            String(startPos.z_) + "]");
-                                }
-
-
-                                debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-                                debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
-                                debugText_[k]->SetVisible(true);
-                                debugText_[k]->SetText(String("Vehicle Pos -> ") + String(startPos.ToString()));
-                                k++;
-                                debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-                                debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
-                                debugText_[k]->SetVisible(true);
-                                debugText_[k]->SetText(String("Vehicle Rot -> ") + String(rotation.ToString()));
-                                k++;
-                                debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
-                                debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
-                                debugText_[k]->SetVisible(true);
-                                debugText_[k]->SetText(String("Vehicle -> ") + String(vehicleName));
-                                k++;
-
-
-                                // Object location for camera
-                                Vector3 snap = Vector3(startPos);
-                                snap.y_ += 230.0f;
-                                snap.x_ -= 120.0f;
-                                snap.z_ -= 120.0f;
-                                //Vector3 snap = server->GetFocusObjects().Empty() ? Vector3(0, 35.0, 0) : server->GetFocusObjects()[0];
-
-                            }
                         }
                     }
                 }
-            }
-        } // End of started_
+            }  // End of started_
 }
 
 
