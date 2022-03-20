@@ -205,6 +205,7 @@ public:
     bool initialSet_;
 
 
+    float lastEnter_;
     float lastFire_;
     float heading_;
     bool isReady_;

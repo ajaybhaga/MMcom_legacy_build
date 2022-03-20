@@ -621,6 +621,7 @@ void NetworkActor::FixedUpdate(float timeStep) {
 
     // update prev
     lastFire_ += timeStep;
+    lastEnter_ += timeStep;
 
         //float limit = Random(1.0f, 4.0f);
         float limit = 0.4f;
@@ -674,10 +675,14 @@ void NetworkActor::FixedUpdate(float timeStep) {
             }
         }
 
-        if (controls_.buttons_ & NTWK_CTRL_ENTER) {
-            // ENTER CAR (if close enough)
-            EnterVehicle();
-            URHO3D_LOGDEBUGF("**NETWORK ACTOR ENTER** -> %l", controls_.buttons_);
+        float enterLimit = 0.15f;
+        if (lastEnter_ > enterLimit) {
+            if (controls_.buttons_ & NTWK_CTRL_ENTER) {
+                // ENTER CAR (if close enough)
+                EnterVehicle();
+                URHO3D_LOGDEBUGF("**NETWORK ACTOR ENTER** -> %l", controls_.buttons_);
+            }
+            lastEnter_ = 0;
         }
 
 
@@ -918,7 +923,7 @@ void NetworkActor::Fire() {
 void NetworkActor::Fire(Vector3 target) {
 
     // Not on vehicle
-    if (!onVehicle_) {
+    if (!entered_) {
         Scene *scene = GetScene();
 
         // On-foot fire
