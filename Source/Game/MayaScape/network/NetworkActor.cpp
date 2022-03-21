@@ -663,25 +663,25 @@ void NetworkActor::FixedUpdate(float timeStep) {
                 controls_.yaw_ += -1.0f;
              //   ntwkControls_.yaw_
 
-                URHO3D_LOGDEBUGF("**NETWORK ACTOR LEFT** -> %l", controls_.buttons_);
+                //URHO3D_LOGDEBUGF("**NETWORK ACTOR LEFT** -> %l", controls_.buttons_);
             }
 
             if (controls_.buttons_ & NTWK_CTRL_RIGHT) {
                 move_ += Vector3::RIGHT;
                 controls_.yaw_ += 1.0f;
-                URHO3D_LOGDEBUGF("**NETWORK ACTOR RIGHT** -> %l", controls_.buttons_);
+                //URHO3D_LOGDEBUGF("**NETWORK ACTOR RIGHT** -> %l", controls_.buttons_);
             }
 
             if (controls_.buttons_ & NTWK_CTRL_FORWARD) {
                 move_ += Vector3::FORWARD;
                 Run();
-                URHO3D_LOGDEBUGF("**NETWORK ACTOR FORWARD** -> %l", controls_.buttons_);
+                //URHO3D_LOGDEBUGF("**NETWORK ACTOR FORWARD** -> %l", controls_.buttons_);
             }
 
             if (controls_.buttons_ & NTWK_CTRL_BACK) {
                 //move_ = Vector3(0.0f, 0.0f, 0.0f);
                 acceleration_ = 0;
-                URHO3D_LOGDEBUGF("**NETWORK ACTOR BACK** -> %l", controls_.buttons_);
+                //URHO3D_LOGDEBUGF("**NETWORK ACTOR BACK** -> %l", controls_.buttons_);
             }
 
             if (controls_.buttons_ & NTWK_CTRL_FIRE) {
@@ -1164,6 +1164,7 @@ void NetworkActor::EnterVehicle() {
         // On already entered, exit vehicle
         onVehicle_ =  false;
         entered_ = false;
+        // Submit updated attributes over network
         Urho3D::Component::MarkNetworkUpdate();
         return;
     }
@@ -1175,6 +1176,7 @@ void NetworkActor::EnterVehicle() {
     // Snap actor to vehicle
     onVehicle_ =  true;
     entered_ = true;
+    // Submit updated attributes over network
     Urho3D::Component::MarkNetworkUpdate();
 
 };

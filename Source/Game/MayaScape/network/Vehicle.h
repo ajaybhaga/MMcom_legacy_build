@@ -135,7 +135,11 @@ public:
     float GetSteering() { return steering_; }
 
     /// Set steering value.
-    void SetSteering(float steering) { steering_ = steering; }
+    void SetSteering(float steering) {
+            steering_ = steering;
+            // Submit updated attributes over network
+            Urho3D::Component::MarkNetworkUpdate();
+         }
 
     /// Get wheel radius.
     float GetWheelRadius() { return wheelRadius_; }
