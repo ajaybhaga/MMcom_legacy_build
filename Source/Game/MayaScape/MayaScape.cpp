@@ -158,10 +158,10 @@ const int MSG_NODE_ERROR = 156;
 
 
 //#define GAME_SERVER_ADDRESS "10.0.2.2" // android server address
-#define GAME_SERVER_ADDRESS "192.168.4.58" // neko
+//#define GAME_SERVER_ADDRESS "192.168.4.58" // neko
 //#define GAME_SERVER_ADDRESS "192.168.4.77" // lady
 // At-home local server
-//#define GAME_SERVER_ADDRESS "localhost"
+#define GAME_SERVER_ADDRESS "localhost"
 //#define GAME_SERVER_ADDRESS "www.monkeymaya.com"
 
 std::vector<std::string> bzRadioTracksArtistName = {
@@ -3900,12 +3900,14 @@ void MayaScape::MoveCamera(float timeStep) {
                                     cameraTargetPos =
                                             pos + forward *
                                             Vector3(lVel.Length() *
-                                                    velMult,
+                                                    velMult  * 0.07,
                                                     (pos.y_ +
-                                                     CAMERA_RAY_DISTANCE_LIMIT +
-                                                     12.0f),
+                                                     CAMERA_RAY_DISTANCE_LIMIT/14),
                                                     lVel.Length() *
-                                                    velMult) * 0.9f;
+                                                    velMult) * 0.11f;
+
+
+
 
                                 } else {
                                     // On foot
@@ -4454,8 +4456,8 @@ void MayaScape::HandleStartServer(StringHash eventType, VariantMap &eventData) {
 
     // Server load level
     //LoadLevel(3);
-    //LoadLevel(4);
-    LoadLevel(5);
+    LoadLevel(4);
+    //LoadLevel(5);
 
 }
 
@@ -5302,7 +5304,7 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
     Vehicle *vehicle = vehicleNode->CreateComponent<Vehicle>(REPLICATED);
     vehicle->Init(vehicleNode);
 
-    vehicleNode->SetPosition(Vector3(actor->GetBody()->GetPosition())+Vector3(0,10,0));
+    vehicleNode->SetPosition(Vector3(actor->GetBody()->GetPosition())+Vector3(0,7,0));
     //vehicle->GetRaycastVehicle()->GetBody()->SetPosition(Vector3(actor->GetPosition())-Vector3::UP*50.0f);
     vehicleNode->SetRotation(Quaternion(0.0f, Random(0.0f, 360.0f), 0.0f));
     // Attach vehicle to actor

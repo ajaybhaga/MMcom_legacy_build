@@ -7,8 +7,8 @@
 	<attribute name="Elapsed Time" value="8.737" />
 	<attribute name="Next Replicated Node ID" value="199" />
 	<attribute name="Next Replicated Component ID" value="155" />
-	<attribute name="Next Local Node ID" value="16777239" />
-	<attribute name="Next Local Component ID" value="16777492" />
+	<attribute name="Next Local Node ID" value="16777240" />
+	<attribute name="Next Local Component ID" value="16777504" />
 	<attribute name="Variables" />
 	<attribute name="Variable Names" value="" />
 	<component type="Octree" id="1" />
@@ -336,7 +336,7 @@
 			<attribute name="Is Enabled" value="true" />
 			<attribute name="Name" value="tree2" />
 			<attribute name="Tags" />
-			<attribute name="Position" value="253.26 -133.733 -183.012" />
+			<attribute name="Position" value="253.26 169.603 -183.012" />
 			<attribute name="Rotation" value="0.648459 -0.12886 0.281958 -0.695266" />
 			<attribute name="Scale" value="60 60 60" />
 			<attribute name="Variables" />
@@ -480,17 +480,17 @@
 			<attribute name="Is Enabled" value="true" />
 			<attribute name="Name" value="bridge" />
 			<attribute name="Tags" />
-			<attribute name="Position" value="787.075 209.549 -3.73025" />
-			<attribute name="Rotation" value="0.5 -0.5 0.5 -0.5" />
-			<attribute name="Scale" value="9 9 9" />
+			<attribute name="Position" value="311.883 207.444 -3.73025" />
+			<attribute name="Rotation" value="0.163631 -0.687914 0.687913 -0.16363" />
+			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="143">
-				<attribute name="Model" value="Model;Models/AssetPack/medieval-bridge.mdl" />
-				<attribute name="Material" value="Material;Materials/ist_bridge_02_material.xml" />
+				<attribute name="Model" value="Model;Models/Tracks/Objects/Models/ra-home.mdl" />
+				<attribute name="Material" value="Material;Materials/ist_bridge_02_material.xml;;" />
 			</component>
 			<component type="RigidBody" id="149">
-				<attribute name="Physics Rotation" value="-0.5 0.5 -0.5 0.5" />
-				<attribute name="Physics Position" value="787.075 209.549 -3.73025" />
+				<attribute name="Physics Rotation" value="-0.163631 0.687914 -0.687913 0.16363" />
+				<attribute name="Physics Position" value="311.883 207.444 -3.73025" />
 			</component>
 			<component type="CollisionShape" id="150">
 				<attribute name="Shape Type" value="ConvexHull" />
@@ -501,7 +501,7 @@
 			<attribute name="Is Enabled" value="true" />
 			<attribute name="Name" value="tree1" />
 			<attribute name="Tags" />
-			<attribute name="Position" value="-167.909 209.415 -141.833" />
+			<attribute name="Position" value="232.67 209.415 150.39" />
 			<attribute name="Rotation" value="1 0 0 0" />
 			<attribute name="Scale" value="0.01 0.01 0.01" />
 			<attribute name="Variables" />
@@ -514,7 +514,7 @@
 			<attribute name="Is Enabled" value="true" />
 			<attribute name="Name" value="tree1" />
 			<attribute name="Tags" />
-			<attribute name="Position" value="-220.315 209.431 59.4449" />
+			<attribute name="Position" value="236.047 210.127 59.4449" />
 			<attribute name="Rotation" value="1 0 0 0" />
 			<attribute name="Scale" value="0.01 0.01 0.01" />
 			<attribute name="Variables" />

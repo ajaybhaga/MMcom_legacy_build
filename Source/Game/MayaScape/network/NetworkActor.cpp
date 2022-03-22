@@ -104,17 +104,18 @@ NetworkActor::NetworkActor(Context *context)
 
 NetworkActor::~NetworkActor() {
 
+    SetUpdateEventMask(USE_NO_EVENT);
+
     URHO3D_LOGINFOF("**** DESTROYING NetworkActor OBJECT -> %d", this->id_);
     if (vehicle_) {
-        URHO3D_LOGINFOF("**** DESTROYING CLIENT VEHICLE NODE OBJECT -> %d", this->id_);
-        vehicle_->Remove();
+        vehicle_->SetEnabled(false);
+        vehicle_->Kill();
     }
 
-
     if (node_) {
-        //URHO3D_LOGINFOF("**** DESTROYING CLIENT NODE OBJECT -> %d", this->id_);
+        URHO3D_LOGINFOF("**** DESTROYING CLIENT NODE OBJECT -> %d", this->id_);
         //node_->RemoveAllChildren();
-        //node_->Remove();
+        node_->Remove();
     }
 
 }
