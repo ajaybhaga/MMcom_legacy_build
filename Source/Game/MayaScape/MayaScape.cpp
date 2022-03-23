@@ -3888,7 +3888,7 @@ void MayaScape::MoveCamera(float timeStep) {
                                         }
 
                                         // Back wheel points forward
-                                        forward = vBody->GetNode()->GetRotation();
+                                        forward = -vBody->GetNode()->GetRotation();
                                     }
 
                                     //float bodyVel = EvolutionManager::getInstance()->getAgents()[camMode_ -1]->getActor()->vehicle_->GetBody()->GetLinearVelocity().Length();
@@ -3897,6 +3897,8 @@ void MayaScape::MoveCamera(float timeStep) {
                                     // On vehicle
                                     float velLen = lVel.Length();
 
+
+                                    // FRONT VIEW
                                     // Zoom up on body velocity increase
                                     cameraTargetPos =
                                             pos + forward *
@@ -3906,6 +3908,16 @@ void MayaScape::MoveCamera(float timeStep) {
                                                     50.0f + velLen *
                                                     velMult) * 0.6f;
 
+
+                                    // REAR VIEW
+                                    // Zoom up on body velocity increase
+                                    cameraTargetPos =
+                                            pos + forward *
+                                                  Vector3(velLen *
+                                                          velMult  * 0.07,
+                                                          (CAMERA_RAY_DISTANCE_LIMIT/22)*velLen,
+                                                          -50.0f + -velLen *
+                                                                  velMult) * 0.6f;
 
 
 
