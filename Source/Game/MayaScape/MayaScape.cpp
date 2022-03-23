@@ -4456,8 +4456,9 @@ void MayaScape::HandleStartServer(StringHash eventType, VariantMap &eventData) {
 
     // Server load level
     //LoadLevel(3);
-    LoadLevel(4);
+    //LoadLevel(4);
     //LoadLevel(5);
+    LoadLevel(6);
 
 }
 
@@ -5304,7 +5305,7 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
     Vehicle *vehicle = vehicleNode->CreateComponent<Vehicle>(REPLICATED);
     vehicle->Init(vehicleNode);
 
-    vehicleNode->SetPosition(Vector3(actor->GetBody()->GetPosition())+Vector3(0,7,0));
+    vehicleNode->SetPosition(Vector3(actor->GetBody()->GetPosition())+Vector3(0,90,0));
     //vehicle->GetRaycastVehicle()->GetBody()->SetPosition(Vector3(actor->GetPosition())-Vector3::UP*50.0f);
     vehicleNode->SetRotation(Quaternion(0.0f, Random(0.0f, 360.0f), 0.0f));
     // Attach vehicle to actor
@@ -5975,12 +5976,26 @@ void MayaScape::InitiateGameMap(Scene *scene) {
     if (track1Node) {
         StaticModel *model = track1Node->GetComponent<StaticModel>(REPLICATED);
         RigidBody *body = track1Node->GetComponent<RigidBody>(REPLICATED);
-        body->SetCollisionLayer(2);
+       // body->SetCollisionLayer(2);
         CollisionShape *trackColShape_ = track1Node->GetComponent<CollisionShape>(REPLICATED);
        // trackColShape_->SetTriangleMesh(model->GetModel(), 0);
 
 //                trackColShape_->SetConvexHull(model->GetModel());
     }
+
+    // Locate Earth
+    Node *earth1Node = scene_->GetChild("earth-land", true);
+
+    if (earth1Node) {
+        StaticModel *model = earth1Node->GetComponent<StaticModel>(REPLICATED);
+        RigidBody *body = earth1Node->GetComponent<RigidBody>(REPLICATED);
+        //body->SetCollisionLayer(2);
+        CollisionShape *colShape_ = earth1Node->GetComponent<CollisionShape>(REPLICATED);
+        // trackColShape_->SetTriangleMesh(model->GetModel(), 0);
+
+//                trackColShape_->SetConvexHull(model->GetModel());
+    }
+
 
     // Spawn the ai bot players
     CreateAgents();
