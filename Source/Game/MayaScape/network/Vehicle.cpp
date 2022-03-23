@@ -1889,6 +1889,28 @@ void Vehicle::UpdateDrift()
     }
 }
 
+void Vehicle::DebugDraw() {
+
+
+    if (GetScene()) {
+        DebugRenderer *dbgRenderer = GetScene()->GetComponent<DebugRenderer>();
+
+        if (dbgRenderer) {
+            // Call parent debug draw
+            this->raycastVehicle_->DebugDraw(dbgRenderer);
+
+            Vector3 localCenter = body_->GetPosition();
+            // TO VEHICLE
+            Vector3 nodePos = GetNode()->GetPosition();
+//            dbgRenderer->AddLine(nodePos, localCenter, Color(1.0f, 1.0, 0.0));
+
+
+            dbgRenderer->AddLine(localCenter, localCenter+GetNode()->GetUp()*400.0f, Color(1.0f, 1.0, 0.0));
+
+        }
+    }
+}
+
 float Vehicle::getDesiredSteer() const {
     return desiredSteer_;
 }

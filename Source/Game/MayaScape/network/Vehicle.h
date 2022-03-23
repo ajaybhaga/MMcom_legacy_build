@@ -102,7 +102,7 @@ public:
     void Init(Node* node);
 
 
-        /// Handle physics world update. Called by LogicComponent base class.
+    /// Handle physics world update. Called by LogicComponent base class.
     void FixedUpdate(float timeStep) override;
     /// Updating wheel effects here.
     void PostUpdate(float timeStep) override;
@@ -120,6 +120,8 @@ public:
     void ApplyEngineForces(float accelerator, bool braking);
     void UpdateSteering(float newSteering);
     void UpdateDrift();
+
+    void DebugDraw();
 
     void SetTurrentAngle(float angle);
     float GetTurrentAngle();
