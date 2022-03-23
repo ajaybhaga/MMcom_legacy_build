@@ -105,19 +105,7 @@ NetworkActor::NetworkActor(Context *context)
 NetworkActor::~NetworkActor() {
 
     SetUpdateEventMask(USE_NO_EVENT);
-
-    URHO3D_LOGINFOF("**** DESTROYING NetworkActor OBJECT -> %d", this->id_);
-    if (vehicle_) {
-        vehicle_->SetEnabled(false);
-        vehicle_->Kill();
-    }
-
-    if (node_) {
-        URHO3D_LOGINFOF("**** DESTROYING CLIENT NODE OBJECT -> %d", this->id_);
-        //node_->RemoveAllChildren();
-        node_->Remove();
-    }
-
+    Kill();
 }
 
 void NetworkActor::Kill() {
@@ -133,8 +121,8 @@ void NetworkActor::Kill() {
 
     if (node_) {
         URHO3D_LOGINFOF("**** DESTROYING CLIENT NODE OBJECT -> %d", this->id_);
-        node_->RemoveAllChildren();
-        //node_->Remove();
+        //node_->RemoveAllChildren();
+        node_->Remove();
     }
 
 }
@@ -145,6 +133,7 @@ void NetworkActor::SetScene(Scene *scene) {
 
 void NetworkActor::RegisterObject(Context *context) {
     context->RegisterFactory<NetworkActor>();
+    context->RegisterFactory<Missile>();
 
     URHO3D_COPY_BASE_ATTRIBUTES(ClientObj);
 
@@ -378,7 +367,7 @@ void NetworkActor::Flip() {
 }
 
 void NetworkActor::FindTarget() {
-    Vector3 center = this->GetPosition();
+    Vector3 center = body_->GetPosition();
     float radius = 200.0f;
     PhysicsWorld *physicsWorld = GetScene()->GetComponent<PhysicsWorld>();
     PODVector<RigidBody *> hitResults{};
@@ -389,7 +378,7 @@ void NetworkActor::FindTarget() {
 
 
         Vector3 delta = center-pos;
-        if (delta.Length() > 10.0f) {
+        if (delta.Length() > 40.0f) {
             toTarget_ = pos;
         }
     }
@@ -936,12 +925,14 @@ void NetworkActor::ComputeSteerForce() {
 
 
 void NetworkActor::Fire() {
-    if (vehicle_) {
-        Fire(toTarget_);
-    }
+    Fire(toTarget_);
+
 }
 
 void NetworkActor::Fire(Vector3 target) {
+
+    if (!node_)
+        return;
 
     // Not on vehicle
     if (!entered_) {
@@ -953,11 +944,12 @@ void NetworkActor::Fire(Vector3 target) {
         Node *bullet0 = scene->CreateChild("bullet", REPLICATED);
         Missile *newM = bullet0->CreateComponent<Missile>();
         // Set the position and rotation of the bullet
-        bullet0->SetWorldPosition(this->GetPosition() + Vector3(0,50.0f,0));
+        bullet0->SetWorldPosition(body_->GetPosition() + Vector3(0,50.0f,0));
         //   bullet0->SetWorldRotation(Quaternion(Vector3::UP, towards_));
 //		bullet0->GetComponent<RigidBody2D>()->SetLinearVelocity(Vector2(towards_.x_, towards_.y_).Normalized() * 10.0f);
 
-        newM->SetProducer(vehicle_->GetNode()->GetID());
+
+        newM->SetProducer(node_->GetID());
 
 
         // Store local missile list
@@ -979,9 +971,9 @@ void NetworkActor::Fire(Vector3 target) {
         tgt->SetPosition(target);
         newM->AddTarget(SharedPtr<Node>(tgt));
         // Assign the producer node
-        newM->AssignProducer(vehicle_->GetNode()->GetID(),
-                             vehicle_->GetRaycastVehicle()->GetNode()->GetPosition() + Vector3(40.0f, 2.0f, 0.0f));
-        URHO3D_LOGDEBUGF("NetworkActor::Fire() [%d] -> [%f,%f,%f]", vehicle_->GetNode()->GetID(),
+        newM->AssignProducer(GetNode()->GetID(),
+                             GetNode()->GetPosition() + Vector3(40.0f, 2.0f, 0.0f));
+        URHO3D_LOGDEBUGF("NetworkActor::Fire() [%d] -> [%f,%f,%f]", GetNode()->GetID(),
                          newM->GetNode()->GetPosition().x_,
                          newM->GetNode()->GetPosition().y_,
                          newM->GetNode()->GetPosition().z_);
@@ -998,7 +990,7 @@ void NetworkActor::Fire(Vector3 target) {
         Node *bullet0 = scene->CreateChild("bullet", REPLICATED);
         Missile *newM = bullet0->CreateComponent<Missile>();
         // Set the position and rotation of the bullet
-        bullet0->SetWorldPosition(this->GetPosition() + Vector3(0,50.0f,0));
+        bullet0->SetWorldPosition(body_->GetPosition() + Vector3(0,50.0f,0));
      //   bullet0->SetWorldRotation(Quaternion(Vector3::UP, towards_));
 //		bullet0->GetComponent<RigidBody2D>()->SetLinearVelocity(Vector2(towards_.x_, towards_.y_).Normalized() * 10.0f);
 

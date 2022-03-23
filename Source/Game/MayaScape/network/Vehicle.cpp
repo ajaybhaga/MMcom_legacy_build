@@ -67,7 +67,8 @@
 #define MAX_DOWN_FORCE          1e4f
 #define MAX_ANGULAR_VEL_LIMIT   80.0f
 //10.0f
-#define LINEAR_VEL_LIMIT_MPH    750.0f
+//#define LINEAR_VEL_LIMIT_MPH    750.0f
+#define LINEAR_VEL_LIMIT_MPH    1450.0f
 //140.0f -> 140mph->225kmh
 #define VEL_TO_MPH              (3.6f/1.60934f)
 #define MAX_LINEAR_VEL_LIMIT    (LINEAR_VEL_LIMIT_MPH/VEL_TO_MPH)
@@ -118,7 +119,7 @@ Vehicle::Vehicle(Context* context)
     emittersCreated = false;
 
     // Working
-    m_fmaxEngineForce = 2000.0f;//5400.0f;//950.f;
+    m_fmaxEngineForce = 4300.0f;//5400.0f;//950.f;
   //  m_fmaxEngineForce = 4200.0f;//5400.0f;//950.f;
 
     m_fmaxBreakingForce = 800.f;

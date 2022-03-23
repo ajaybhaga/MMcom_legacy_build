@@ -1649,10 +1649,10 @@ void MayaScape::HandleRenderUpdate(StringHash eventType, VariantMap &eventData) 
          // Found network player
          if (isSnapped_) {
 
-             String actorName = clientName_ + String("-actor");
+             String actorName = String("actor-") + clientName_;
              Node *actorNode = scene_->GetChild(actorName);
 
-             String vehicleName = clientName_ + String("-vehicle");
+             String vehicleName = String("vehicle-") + clientName_;
              Node *vehicleNode = scene_->GetChild(vehicleName);
              //BLUE-304-vehicle
 
@@ -2479,14 +2479,11 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                 auto connections = GetSubsystem<Network>()->GetClientConnections();
                 for (auto it = connections.Begin(); it != connections.End(); ++it) {
 
-
                     Connection *connection = (*it);
-                    //if (actorTextMap_[(*it)]) {
-                    for (String clientName: loginList_) {
-                        String vehicleName = clientName + String("-vehicle");
-                        Node *vehicleNode = scene_->GetChild(vehicleName);
-
-                            auto *actor = dynamic_cast<NetworkActor *>(actorMap_[connection].Get());
+                    String clientName = actorMap_[connection]->GetUserName();
+                    String vehicleName = String("vehicle-") + clientName;
+                    Node *vehicleNode = scene_->GetChild(vehicleName);
+                    auto *actor = dynamic_cast<NetworkActor *>(actorMap_[connection].Get());
                             if (actor) {
 
                                 using namespace Update;
@@ -2595,7 +2592,6 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                     }
                             }
                         }
-                    }
 
 //                    }
                 } // End of connections loop
@@ -3820,10 +3816,10 @@ void MayaScape::MoveCamera(float timeStep) {
                     int size;
                     PODVector<Node *> vec;
 
-                    String actorName = clientName_ + String("-actor");
+                    String actorName = String("actor-") + clientName_;
                     Node *actorNode = scene_->GetChild(actorName);
 
-                    String vehicleName = clientName_ + String("-vehicle");
+                    String vehicleName = String("vehicle-") + clientName_;
                     Node *vehicleNode = scene_->GetChild(vehicleName);
 
                     //BLUE-304-vehicle
@@ -5250,6 +5246,13 @@ void MayaScape::DestroyPlayer(Connection *connection) {
     VariantMap identity = connection->GetIdentity();
     String username = String(identity["UserName"]);
 
+    // Remove network actor from csp server
+    cspServer_->snapshot.removeNode(actorMap_[connection]->GetNode());
+
+    String playerName = actorMap_[connection]->GetUserName();
+    // Store in local login list
+    loginList_.Remove(playerName);
+
     ClientObj *actor = actorMap_[connection];
     actor->SetEnabled(false);
     actor->Remove();
@@ -5275,9 +5278,9 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
     /// Retrieve the username for the client
     VariantMap identity = connection->GetIdentity();
     String username = String(identity["UserName"]);
-    String actorName = String(username + String("-actor"));
+    String name = String(String("actor-") + username);
     // Create a new network actor for the player
-    SharedPtr<Node> networkActorNode(scene_->CreateChild(actorName, REPLICATED));
+    SharedPtr<Node> networkActorNode(scene_->CreateChild(name, REPLICATED));
     networkActorNode->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 
     NetworkActor *actor = networkActorNode->CreateComponent<NetworkActor>(REPLICATED);
@@ -5307,12 +5310,11 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
 
     }
 
-
-    actor->SetClientInfo(actorName, Random(1,100), Vector3(actor->GetPosition()));
+    actor->SetClientInfo(username, Random(1,100), Vector3(actor->GetPosition()));
 
     // Generate vehicle
 
-    String vehicleName = username + "-vehicle";
+    String vehicleName = "vehicle-" + username;
     // Create a new vehicle for the player
     SharedPtr<Node> vehicleNode(scene_->CreateChild(vehicleName, REPLICATED));
     //vehicleNode->SetRotation(Quaternion(0.0f, 180.0f, 0.0f));
@@ -5431,13 +5433,13 @@ NetworkActor *MayaScape::SpawnPlayer(unsigned int id) {
 
     actor->SetClientInfo(name, Random(1,100), actorPos);
 
-    String vehicleName = username + "-vehicle";
+    String vehicleName = "vehicle-" + username;
     // Create a new vehicle for the player
     SharedPtr<Node> vehicleNode(scene_->CreateChild(vehicleName, REPLICATED));
     //vehicleNode->SetRotation(Quaternion(0.0f, 180.0f, 0.0f));
     Vehicle *vehicle = vehicleNode->CreateComponent<Vehicle>(REPLICATED);
     vehicle->Init(vehicleNode);
-    actor->SetClientInfo(vehicleName, Random(1,100), Vector3(actor->GetPosition()));
+    actor->SetClientInfo(username, Random(1,100), Vector3(actor->GetPosition()));
     vehicleNode->SetPosition(Vector3(actor->GetPosition()));
     vehicleNode->SetRotation(Quaternion(0.0f, Random(0.0f, 360.0f), 0.0f));
     // Attach vehicle to actor

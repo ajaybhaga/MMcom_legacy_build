@@ -28,4 +28,8 @@ struct StateSnapshot {
     void addNode(Node* node) {
         nodes_.Push(node);
     }
+
+    void removeNode(Node* node) {
+        nodes_.Remove(node);
+    }
 };
