@@ -1012,40 +1012,21 @@ void MayaScape::HandlePhysicsPreStep(StringHash eventType, VariantMap &eventData
                 // Retrieve based on username
                 String name = serverConnection->identity_["UserName"].GetString();
 
-                String vehicleName = name + String("-vehicle");
+                String actorName = String("actor-") + name;
+                Node *actorNode = scene_->GetChild(actorName);
+
+                String vehicleName = String("vehicle-") + name;
                 Node *vehicleNode = scene_->GetChild(vehicleName);
 
-
-                // Locate vehicle node
-                if (vehicleNode) {
-
-                    // Retrieve rigid body
-                    body = vehicleNode->GetComponent<RigidBody>(true);
-
-                    if (!body) {
-                        URHO3D_LOGINFO("processCSPControls -> MISSING BODY!");
-                    } else {
-                        //URHO3D_LOGINFO("processCSPControls -> GOT BODY*****");
-                    }
-
-                    // Retrieve Vehicle
-                    ClientObj *vehicle = vehicleNode->GetDerivedComponent<ClientObj>();
-
-                    if (vehicle) {
-
-
-                        // Snap camera to vehicle once available
-                        Vector3 startPos = vehicle->GetNode()->GetNetPositionAttr();
-                        MemoryBuffer buf(vehicle->GetNode()->GetNetRotationAttr());
-                        Quaternion rotation = buf.ReadPackedQuaternion();
-
+                    if (actorNode) {
 
                         // On change of controls, send update
                         serverConnection->SetControls(ntwkControls_);
 
                         // On change of controls, send update
                         if (lastControls_.buttons_ != ntwkControls_.buttons_) {
-                            URHO3D_LOGINFOF("CLIENT: SET controls -> %s", ToStringHex(ntwkControls_.buttons_).CString());
+                            URHO3D_LOGINFOF("CLIENT: SET controls -> %s",
+                                            ToStringHex(ntwkControls_.buttons_).CString());
                         }
 
                         // Store last control for next iteration
@@ -1058,7 +1039,7 @@ void MayaScape::HandlePhysicsPreStep(StringHash eventType, VariantMap &eventData
                         // Client: collect controls
                         // Torque is relative to the forward vector
                         Quaternion rotationF(0.0f, ntwkControls_.yaw_, 0.0f);
-
+/*
                         // Apply local physics change (Client-Side Prediction)
                         if (ntwkControls_.buttons_ & NTWK_CTRL_FORWARD)
                             change_func(rotationF * Vector3::RIGHT * MOVE_TORQUE);
@@ -1067,10 +1048,9 @@ void MayaScape::HandlePhysicsPreStep(StringHash eventType, VariantMap &eventData
                         if (ntwkControls_.buttons_ & NTWK_CTRL_LEFT)
                             change_func(rotationF * Vector3::FORWARD * MOVE_TORQUE);
                         if (ntwkControls_.buttons_ & NTWK_CTRL_RIGHT)
-                            change_func(rotationF * Vector3::BACK * MOVE_TORQUE);
+                            change_func(rotationF * Vector3::BACK * MOVE_TORQUE);*/
 
                     }
-                }
             };
 
 
@@ -2480,9 +2460,7 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                 for (auto it = connections.Begin(); it != connections.End(); ++it) {
 
                     Connection *connection = (*it);
-                    String clientName = actorMap_[connection]->GetUserName();
-                    String vehicleName = String("vehicle-") + clientName;
-                    Node *vehicleNode = scene_->GetChild(vehicleName);
+
                     auto *actor = dynamic_cast<NetworkActor *>(actorMap_[connection].Get());
                             if (actor) {
 
@@ -2542,6 +2520,9 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
 */
                                 }
 
+                                String clientName = actorMap_[connection]->GetUserName();
+                                String vehicleName = String("vehicle-") + clientName;
+                                Node *vehicleNode = scene_->GetChild(vehicleName);
 
                                 if (vehicleNode) {
                                     if (actor->vehicle_) {
