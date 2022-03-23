@@ -3888,23 +3888,23 @@ void MayaScape::MoveCamera(float timeStep) {
                                         }
 
                                         // Back wheel points forward
-                                        forward = v->GetNode()->GetRotation();
+                                        forward = vBody->GetNode()->GetRotation();
                                     }
 
                                     //float bodyVel = EvolutionManager::getInstance()->getAgents()[camMode_ -1]->getActor()->vehicle_->GetBody()->GetLinearVelocity().Length();
                                     botSpeedKm = Clamp(botSpeedKm, 1.0f, 2000.0f);
 
                                     // On vehicle
+                                    float velLen = lVel.Length();
 
                                     // Zoom up on body velocity increase
                                     cameraTargetPos =
                                             pos + forward *
-                                            Vector3(lVel.Length() *
+                                            Vector3(velLen *
                                                     velMult  * 0.07,
-                                                    (pos.y_ +
-                                                     CAMERA_RAY_DISTANCE_LIMIT/14),
-                                                    lVel.Length() *
-                                                    velMult) * 0.11f;
+                                                    (CAMERA_RAY_DISTANCE_LIMIT/22)*velLen,
+                                                    50.0f + velLen *
+                                                    velMult) * 0.6f;
 
 
 
@@ -3915,13 +3915,15 @@ void MayaScape::MoveCamera(float timeStep) {
                                     // Back wheel points forward
                                     forward = rot;
 
+                                    float velLen = lVel.Length();
+
                                     // Zoom up on body velocity increase
                                     cameraTargetPos =
                                             pos + Vector3::UP * 3.3f - forward *
-                                          Vector3(0.0f + lVel.Length() *
+                                          Vector3(0.0f + velLen *
                                                   velMult * 0.07,
                                                   CAMERA_RAY_DISTANCE_LIMIT/14,
-                                                  78.0f + lVel.Length() *
+                                                  78.0f + velLen *
                                                   velMult) * 0.11f;
 
 
@@ -5305,9 +5307,9 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
     Vehicle *vehicle = vehicleNode->CreateComponent<Vehicle>(REPLICATED);
     vehicle->Init(vehicleNode);
 
-    vehicleNode->SetPosition(Vector3(actor->GetBody()->GetPosition())+Vector3(0,90,-40));
+    vehicleNode->SetPosition(Vector3(actor->GetBody()->GetPosition())+Vector3(0,55,-40));
     //vehicle->GetRaycastVehicle()->GetBody()->SetPosition(Vector3(actor->GetPosition())-Vector3::UP*50.0f);
-    vehicleNode->SetRotation(Quaternion(0.0f, Random(0.0f, 360.0f), 0.0f));
+    vehicleNode->SetRotation(Quaternion(0.0f, Random(0.0f, 0.0f), 0.0f));
     // Attach vehicle to actor
     actor->vehicle_ = vehicle;
 
