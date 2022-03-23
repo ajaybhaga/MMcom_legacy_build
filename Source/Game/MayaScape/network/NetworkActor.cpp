@@ -257,7 +257,8 @@ void NetworkActor::Init(Node* node) {
         model_->ApplyMaterialList(matFile);
 
         body_->SetFriction(0.1f);
-        body_->SetMass(1.0f);
+        //body_->SetMass(1.0f);
+        body_->SetMass(28.0f);
         body_->SetRestitution(0.0f);
         body_->SetLinearDamping(0.88f);
         body_->SetLinearRestThreshold(0.0f);
@@ -432,7 +433,8 @@ void NetworkActor::ApplyMovement(float timeStep) {
 
         // If in air, allow control, but slower than when on ground
         //body_->ApplyImpulse(rot * move_ * (softGrounded ? MOVE_FORCE : INAIR_MOVE_FORCE));
-        const float MOVE_FORCE = 0.45f;
+//        const float MOVE_FORCE = 0.45f;
+        const float MOVE_FORCE = 13.5f;
 
 
         Vector3 impulse;
