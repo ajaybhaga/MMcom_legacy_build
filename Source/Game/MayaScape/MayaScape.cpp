@@ -3325,26 +3325,6 @@ void MayaScape::SetupGameViewports()
     // 1 = rear view
     // 2 = menu view
 
-    // Load menu scene
-    ResourceCache *cache = GetSubsystem<ResourceCache>();
-    XMLFile *xmlLevel = cache->GetResource<XMLFile>("Scenes/MayaScapeMenu.xml");
-    if (xmlLevel) {
-        menuScene_->LoadXML(xmlLevel->GetRoot());
-        menuScene_->SetEnabled(true);
-        menuScene_->SetUpdateEnabled(true);
-    }
-
-
-    // Get camera
-    auto* menuCam = menuScene_->GetChild("menuCam",LOCAL)->GetComponent<Camera>();
-    auto* progressBar = menuScene_->GetChild("ProgressBar",LOCAL)->GetComponent<StaticModel>();
-    progressBar->GetNode()->SetScale(Vector3(1,1,1));
-
-    // The viewport index must be greater in that case, otherwise the view would be left behind
-    menuViewport_ = new Viewport(context_, menuScene_, menuCam,
-                                 IntRect(32, 32, graphics->GetWidth() - 32, graphics->GetHeight() - 32));
-    renderer->SetViewport(2, menuViewport_);
-
 
     SharedPtr<Camera> rearCam;
     if (isServer_) {
