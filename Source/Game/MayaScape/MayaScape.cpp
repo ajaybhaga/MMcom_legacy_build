@@ -159,10 +159,11 @@ const int MSG_NODE_ERROR = 156;
 
 //#define GAME_SERVER_ADDRESS "10.0.2.2" // android server address
 //#define GAME_SERVER_ADDRESS "192.168.4.58" // neko
-//#define GAME_SERVER_ADDRESS "192.168.4.77" // lady
+#define GAME_SERVER_ADDRESS "192.168.4.77" // lady
 // At-home local server
-#define GAME_SERVER_ADDRESS "localhost"
+//#define GAME_SERVER_ADDRESS "localhost"
 //#define GAME_SERVER_ADDRESS "www.monkeymaya.com"
+// TODO: need to add increased move step to network actor (on remote server)
 
 std::vector<std::string> bzRadioTracksArtistName = {
         "Bhagatriks",
@@ -365,8 +366,8 @@ void MayaScape::Start() {
     SoundListener *listener = scene_->CreateComponent<SoundListener>(LOCAL);
     GetSubsystem<Audio>()->SetListener(listener);
 
-    // you can set master volumes for the different kinds if sounds, 40% for music
-    GetSubsystem<Audio>()->SetMasterGain(SOUND_MUSIC, 0.4);
+    // you can set master volumes for the different kinds if sounds, 30% for music
+    GetSubsystem<Audio>()->SetMasterGain(SOUND_MUSIC, 0.3);
     GetSubsystem<Audio>()->SetMasterGain(SOUND_EFFECT, 0.6);
 
     // Theme song
@@ -726,8 +727,8 @@ void MayaScape::HandleClientSceneLoaded(StringHash eventType, VariantMap& eventD
         SoundListener *listener = actorMap_[client]->GetNode()->CreateComponent<SoundListener>(REPLICATED);
         GetSubsystem<Audio>()->SetListener(listener);
 
-        // you can set master volumes for the different kinds if sounds, 40% for music
-        GetSubsystem<Audio>()->SetMasterGain(SOUND_MUSIC, 0.4);
+        // you can set master volumes for the different kinds if sounds, 30% for music
+        GetSubsystem<Audio>()->SetMasterGain(SOUND_MUSIC, 0.3);
         GetSubsystem<Audio>()->SetMasterGain(SOUND_EFFECT, 0.6);
 
     }
@@ -826,7 +827,6 @@ Controls MayaScape::SampleCSPControls()
     // set controls and pos
     ntwkControls_.yaw_ = yaw_;
 
-
     // axis
     const StringHash axisHashList[SDL_CONTROLLER_AXIS_MAX / 2] = {VAR_AXIS_0, VAR_AXIS_1, VAR_AXIS_2};
     // left stick - vehicle
@@ -839,14 +839,10 @@ Controls MayaScape::SampleCSPControls()
 
     joySteer_ = lStick.GetVector2();
 
-
-
     float actorAccel = rStick.GetVector2().y_ * 1.25f;
 
     // Set yaw to angle from axis calculation
     float joyAngle = 0;
-    //(float)lAxisVal.x_*90.0f * YAW_SENSITIVITY;
-
 
     // Calculate joyAngle
     float theta = atan2(lAxisVal.y_,lAxisVal.x_);
@@ -880,12 +876,7 @@ Controls MayaScape::SampleCSPControls()
     // Rotate joy entry to align to screen
     joyAngle -= 180.0f;
 
-//    joyAngle = Clamp(joyAngle, 0.0f, 360.0f);
-
-
     ntwkControls_.yaw_ = joyAngle;
-
-    //ntwkControls_.yaw_ += (float)lAxisVal.x_*90.0f * YAW_SENSITIVITY;
 
     bool accel = (input->GetKeyDown(Urho3D::KEY_AC_FORWARD) || input->GetKeyDown(KEY_W) || ntwkControls_.IsDown(BUTTON_B) || (actorAccel < -0.9f));
     bool fire = input->GetKeyDown(KEY_SPACE) || ntwkControls_.IsDown(BUTTON_A);
@@ -900,20 +891,6 @@ Controls MayaScape::SampleCSPControls()
         // Brake
         PlaySoundEffect(driveAudioEffect[SOUND_FX_ENGINE_BRAKE].c_str());
     }
-
-
-/*
-    bool snap = false;
-    if (lAxisVal.x_ < -0.4f) {
-        // left
-//        ntwkControls_.Set(NTWK_CTRL_LEFT, 1);
-        snap = true;
-    } else if (lAxisVal.x_ > 0.4f) {
-        // right
-//        ntwkControls_.Set(NTWK_CTRL_RIGHT, 1);
-        snap = true;
-    }
-*/
 
     bool left = input->GetKeyDown(KEY_A) || input->GetKeyDown(Urho3D::KEY_LEFT) || (lAxisVal.x_ < -0.4f);
     bool right = input->GetKeyDown(KEY_D) || input->GetKeyDown(Urho3D::KEY_RIGHT) || (lAxisVal.x_ > 0.4f);
