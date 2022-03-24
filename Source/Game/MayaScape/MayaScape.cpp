@@ -3969,7 +3969,7 @@ void MayaScape::HandleConnect(StringHash eventType, VariantMap &eventData) {
     // Client connect to server
     if (network->Connect(address, SERVER_PORT, scene_, identity)) {
 
-        // TODO: Update to new loading page here
+        // CLIENT CODE -> START CONNECT
 
         // Set camera node for viewport
         cameraNode_ = scene_->CreateChild("Camera", LOCAL);
