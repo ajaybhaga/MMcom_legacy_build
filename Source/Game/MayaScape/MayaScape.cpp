@@ -433,10 +433,6 @@ void MayaScape::CreateEmptyScene(Context* context) {
     scene_->SetUpdateEnabled(false);
 
 
-    menuScene_ = MakeShared<Scene>(context_);
-    menuScene_->SetName("MenuScene");
-    menuScene_->SetUpdateEnabled(true);
-
     /*
     scene_->CreateComponent<Octree>();
     float minUnivSpace = -25000.0f;
@@ -774,7 +770,7 @@ void MayaScape::SubscribeToEvents() {
 //    SubscribeToEvent(connectButton_, E_RELEASED, URHO3D_HANDLER(MayaScape, HandleConnect));
     SubscribeToEvent(disconnectButton_, E_RELEASED, URHO3D_HANDLER(MayaScape, HandleDisconnect));
     SubscribeToEvent(startServerButton_, E_RELEASED, URHO3D_HANDLER(MayaScape, HandleStartServer));
-    SubscribeToEvent(exitButton_, E_RELEASED, URHO3D_HANDLER(MayaScape, HandleExit));
+    //SubscribeToEvent(exitButton_, E_RELEASED, URHO3D_HANDLER(MayaScape, HandleExit));
 
     SubscribeToEvent(E_CONNECTFAILED, URHO3D_HANDLER(MayaScape, HandleConnectionFailed));
 
@@ -2064,34 +2060,34 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
     if (clientLevelLoading_) return;
 
 
+    if (menuScene_) {
+        if (menuScene_->GetChild("menuCam", LOCAL)) {
+            // Get camera
+            auto *menuCam = menuScene_->GetChild("menuCam", LOCAL)->GetComponent<Camera>();
+
+            if (menuCam) {
+                using namespace Update;
+                // Take the frame time step, which is stored as a float
+                float timeStep = eventData[P_TIMESTEP].GetFloat();
+
+                Vector3 pos = menuCam->GetNode()->GetPosition();
+                if (pos.x_ > -6.0f) {
+                    menuCam->GetNode()->SetPosition(
+                            Vector3(menuCam->GetNode()->GetPosition().x_ - 0.0001f * timeStep,
+                                    menuCam->GetNode()->GetPosition().y_,
+                                    menuCam->GetNode()->GetPosition().z_));
+                }
+
+
+                auto* progressBar = menuScene_->GetChild("ProgressBar",LOCAL)->GetComponent<StaticModel>();
+                progressBar->GetNode()->SetScale(Vector3(1,1,loadProgress_*200.0f));
+            }
+        }
+
+    }
+
 
     if (started_) {
-
-        if (menuScene_) {
-            if (menuScene_->GetChild("menuCam", LOCAL)) {
-                // Get camera
-                auto *menuCam = menuScene_->GetChild("menuCam", LOCAL)->GetComponent<Camera>();
-
-                if (menuCam) {
-                    using namespace Update;
-                    // Take the frame time step, which is stored as a float
-                    float timeStep = eventData[P_TIMESTEP].GetFloat();
-
-                    Vector3 pos = menuCam->GetNode()->GetPosition();
-                    if (pos.x_ > -6.0f) {
-                        menuCam->GetNode()->SetPosition(
-                                Vector3(menuCam->GetNode()->GetPosition().x_ - 0.0001f * timeStep,
-                                        menuCam->GetNode()->GetPosition().y_,
-                                        menuCam->GetNode()->GetPosition().z_));
-                    }
-
-
-                    auto* progressBar = menuScene_->GetChild("ProgressBar",LOCAL)->GetComponent<StaticModel>();
-                    progressBar->GetNode()->SetScale(Vector3(1,1,loadProgress_*200.0f));
-                }
-            }
-
-        }
 
         loadProgress_ = Random(0.0f, 1.0f);
 
@@ -3012,6 +3008,19 @@ void MayaScape::CreateServerSubsystem() {
 }
 
 void MayaScape::CreateUI() {
+
+    Graphics *graphics = GetSubsystem<Graphics>();
+    auto* renderer = GetSubsystem<Renderer>();
+
+    // Viewports:
+    // 0 = front view
+    // 1 = rear view
+    // 2 = menu view
+    renderer->SetNumViewports(2);
+
+    // Setup menu viewport
+    //SetupMenuViewport();
+
     ResourceCache *cache = GetSubsystem<ResourceCache>();
     UI *ui = GetSubsystem<UI>();
     UIElement *root = ui->GetRoot();
@@ -3022,7 +3031,7 @@ void MayaScape::CreateUI() {
     SharedPtr<Cursor> cursor(new Cursor(context_));
     cursor->SetStyleAuto(uiStyle);
     ui->SetCursor(cursor);
-    Graphics *graphics = GetSubsystem<Graphics>();
+
     cursor->SetPosition(graphics->GetWidth() / 2, graphics->GetHeight() / 2);
 
     int textureWidth;
@@ -3184,18 +3193,19 @@ void MayaScape::CreateUI() {
     }
 
     buttonContainer_ = root->CreateChild<UIElement>();
-    buttonContainer_->SetFixedSize(1800, 600);
-    buttonContainer_->SetPosition(490, 340);
+    buttonContainer_->SetFixedSize(graphics->GetWidth(), graphics->GetHeight());
+
+    buttonContainer_->SetPosition(40, 240);
     buttonContainer_->SetHorizontalAlignment((HA_CENTER));
-    buttonContainer_->SetLayoutMode(LM_VERTICAL);
+    buttonContainer_->SetLayoutMode(Urho3D::LM_HORIZONTAL);
     buttonContainer_->SetLayoutSpacing(10.0);
     textEdit_ = buttonContainer_->CreateChild<LineEdit>();
     textEdit_->SetStyleAuto();
     textEdit_->SetVisible(false);
 
-    playButton_ = CreateButton("PLAY", 800);
-    startServerButton_ = CreateButton("START SERVER", 800);
-    exitButton_ = CreateButton("EXIT", 800);
+    playButton_ = CreateButton("PLAY", 380);
+    startServerButton_ = CreateButton("START SERVER", 380);
+    //exitButton_ = CreateButton("EXIT", 240);
 
 
 /*
@@ -3273,18 +3283,68 @@ void MayaScape::InitiateViewport(Context* context, Scene* scene, Camera* camera,
     renderer->SetViewport(id, viewport);
 }
 
-void MayaScape::SetupViewports()
+
+void MayaScape::SetupMenuViewport() {
+    auto* graphics = GetSubsystem<Graphics>();
+    auto* renderer = GetSubsystem<Renderer>();
+
+    // Load menu scene
+    ResourceCache *cache = GetSubsystem<ResourceCache>();
+    XMLFile *xmlLevel = cache->GetResource<XMLFile>("Scenes/MayaScapeMenu.xml");
+    menuScene_ = MakeShared<Scene>(context_);
+    menuScene_->SetName("MenuScene");
+
+    if (xmlLevel) {
+        menuScene_->LoadXML(xmlLevel->GetRoot());
+        menuScene_->SetEnabled(true);
+        menuScene_->SetUpdateEnabled(true);
+    }
+
+
+    // Get camera
+    auto* menuCam = menuScene_->GetChild("menuCam",LOCAL)->GetComponent<Camera>();
+    auto* progressBar = menuScene_->GetChild("ProgressBar",LOCAL)->GetComponent<StaticModel>();
+    progressBar->GetNode()->SetScale(Vector3(1,1,1));
+
+    // The viewport index must be greater in that case, otherwise the view would be left behind
+    menuViewport_ = new Viewport(context_, menuScene_, menuCam,
+                                 IntRect(32, 32, graphics->GetWidth() - 32, graphics->GetHeight() - 32));
+    renderer->SetViewport(2, menuViewport_);
+
+
+}
+
+void MayaScape::SetupGameViewports()
 {
 
     auto* graphics = GetSubsystem<Graphics>();
     auto* renderer = GetSubsystem<Renderer>();
 
-    renderer->SetNumViewports(3);
-
     // Viewports:
     // 0 = front view
     // 1 = rear view
     // 2 = menu view
+
+    // Load menu scene
+    ResourceCache *cache = GetSubsystem<ResourceCache>();
+    XMLFile *xmlLevel = cache->GetResource<XMLFile>("Scenes/MayaScapeMenu.xml");
+    if (xmlLevel) {
+        menuScene_->LoadXML(xmlLevel->GetRoot());
+        menuScene_->SetEnabled(true);
+        menuScene_->SetUpdateEnabled(true);
+    }
+
+
+    // Get camera
+    auto* menuCam = menuScene_->GetChild("menuCam",LOCAL)->GetComponent<Camera>();
+    auto* progressBar = menuScene_->GetChild("ProgressBar",LOCAL)->GetComponent<StaticModel>();
+    progressBar->GetNode()->SetScale(Vector3(1,1,1));
+
+    // The viewport index must be greater in that case, otherwise the view would be left behind
+    menuViewport_ = new Viewport(context_, menuScene_, menuCam,
+                                 IntRect(32, 32, graphics->GetWidth() - 32, graphics->GetHeight() - 32));
+    renderer->SetViewport(2, menuViewport_);
+
 
     SharedPtr<Camera> rearCam;
     if (isServer_) {
@@ -3315,23 +3375,6 @@ void MayaScape::SetupViewports()
 //    renderer->SetViewport(1, nullptr);
 
 
-    // Load menu scene
-    ResourceCache *cache = GetSubsystem<ResourceCache>();
-    XMLFile *xmlLevel = cache->GetResource<XMLFile>("Scenes/MayaScapeMenu.xml");
-    if (xmlLevel) {
-        menuScene_->LoadXML(xmlLevel->GetRoot());
-        menuScene_->SetEnabled(true);
-        menuScene_->SetUpdateEnabled(true);
-    }
-
-
-    // Get camera
-    auto* menuCam = menuScene_->GetChild("menuCam",LOCAL)->GetComponent<Camera>();
-    //menuCam->GetNode()->SetRotation(Quaternion(0, -serverCam_->GetNode()->GetRotation().YawAngle(), 0));
-    //menuCam->GetNode()->SetRotation(Quaternion(90, -90, 0));
-
-    auto* progressBar = menuScene_->GetChild("ProgressBar",LOCAL)->GetComponent<StaticModel>();
-    progressBar->GetNode()->SetScale(Vector3(1,1,1));
 
     //menuCam->SetFarClip(48000.0f);
     //rearCam->SetFillMode(Urho3D::FILL_SOLID);
@@ -3342,10 +3385,7 @@ void MayaScape::SetupViewports()
                                                      IntRect(graphics->GetWidth() * 2 / 3, 32, graphics->GetWidth() - 32, graphics->GetHeight() / 3)));
     renderer->SetViewport(1, rearViewport);
 
-    // The viewport index must be greater in that case, otherwise the view would be left behind
-    menuViewport_ = new Viewport(context_, menuScene_, menuCam,
-                                                  IntRect(32, 32, graphics->GetWidth() - 32, graphics->GetHeight() - 32));
-    renderer->SetViewport(2, menuViewport_);
+
 
 }
 
@@ -3377,13 +3417,13 @@ Button *MayaScape::CreateButton(const String &text, int width) {
 
     Button *button = buttonContainer_->CreateChild<Button>();
     button->SetStyleAuto();
-    button->SetFixedHeight(110);
+    button->SetFixedHeight(300);
     button->SetFixedWidth(width);
     //button->SetHeight(5);
 
     Text *buttonText = button->CreateChild<Text>();
     buttonText->SetName("text");
-    buttonText->SetFont(font, 40);
+    buttonText->SetFont(INGAME_FONT4, 40);
     buttonText->SetAlignment(HA_CENTER, VA_CENTER);
     buttonText->SetText(text);
 
@@ -3398,8 +3438,7 @@ void MayaScape::UpdateButtons() {
 
     playButton_->SetVisible(!serverConnection && !serverRunning);
     startServerButton_->SetVisible(!serverConnection && !serverRunning);
-    exitButton_->SetVisible(!serverConnection && !serverRunning);
-
+    //exitButton_->SetVisible(!serverConnection && !serverRunning);
     //  textEdit_->SetVisible(!serverConnection && !serverRunning);
 }
 
@@ -3979,9 +4018,8 @@ void MayaScape::HandleConnect(StringHash eventType, VariantMap &eventData) {
         cameraNode_->SetPosition(Vector3(heliCamView_));
         clientCam_->GetNode()->SetRotation(Quaternion(90.0f, 0.0f, 0.0f));
 
-        // Setup viewport
-        SetupViewports();
-
+        // Setup game viewport
+        SetupGameViewports();
 
         URHO3D_LOGINFOF("client identity name=%s", name.CString());
         URHO3D_LOGINFOF("MayaScape::HandleConnect - data: [%s, %d]", name.CString(), idx);
@@ -4454,8 +4492,9 @@ SharedPtr<Node> MayaScape::SpawnPlayer() {
     //SoundListener *listener = serverCam_->GetNode()->CreateComponent<SoundListener>();
     //GetSubsystem<Audio>()->SetListener(listener);
 
-    // Set viewport
-    SetupViewports();
+    // Setup game viewport
+    SetupGameViewports();
+
 
     return networkActorNode;
 }
