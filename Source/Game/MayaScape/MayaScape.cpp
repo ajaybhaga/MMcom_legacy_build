@@ -156,6 +156,7 @@ const int MSG_NODE_ERROR = 156;
 #define INGAME_FONT4 "Fonts/HopeGold.ttf"
 
 
+#define SHOW_STATS 1
 
 //#define GAME_SERVER_ADDRESS "10.0.2.2" // android server address
 //#define GAME_SERVER_ADDRESS "192.168.4.58" // neko
@@ -1474,129 +1475,9 @@ void MayaScape::HandleRenderUpdate(StringHash eventType, VariantMap &eventData) 
     float timeStep = eventData[P_TIMESTEP].GetFloat();
     HandleUpdateParticlePool(timeStep);
 
-
     DebugRenderer *dbgRenderer = scene_->GetComponent<DebugRenderer>(REPLICATED);
 
-
-
-//    float zoom_ = cameraNode_->GetComponent<Camera>()->GetZoom();
     float deltaSum;
-
-        // **note** the buttons controls are handled in the character class update fn.
-/*
-        // right stick - camera
-        Variant rStick = player_->controls_->extraData_[VAR_AXIS_1];
-
-        if (!rStick.IsEmpty()) {
-            Vector2 axisInput = rStick.GetVector2();
-            player_->controls_->yaw_ += axisInput.x_ * YAW_SENSITIVITY;
-            player_->controls_->pitch_ += axisInput.y_ * YAW_SENSITIVITY;
-        }
-*/
-        // Limit pitch
-        // player_->controls_.pitch_ = Clamp(player_->controls_.pitch_, -80.0f, 80.0f);
-        // Set rotation already here so that it's updated every rendering frame instead of every physics frame
-        //   player_->GetNode()->SetRotation(Quaternion(player_->controls_.yaw_, Vector3::UP));
-        //  player_->GetNode()->SetRotation(Quaternion(0.0f, -180.0f-player_->heading_, 0.0f));
-/*
-        player_->GetNode()->SetRotation(Quaternion(0.0f, player_->heading_, 0.0));
-        auto *model_ = player_->GetNode()->GetComponent<AnimatedModel>(true);
-/*
-//        model_->GetNode()->SetRotation(Quaternion(0, 90, 0));
-        Skeleton &skeleton = model_->GetSkeleton();
-        Bone *rootBone = skeleton.GetRootBone();
-        Bone *startBone = rootBone;
-*/
-
-
-        // Set animal scale
-      //  player_->GetNode()->GetChildren()[0]->SetScale(20.0f);
-/*
-        // AI
-        if (agents_) {
-            for (int i = 0; i < EvolutionManager::getInstance()->getAgents().size(); i++) {
-                // Set rotation already here so that it's updated every rendering frame instead of every physics frame
-                agents_[i]->GetNode()->SetRotation(Quaternion(agents_[i]->controls_.yaw_, Vector3::UP));
-                //ai_[i]->GetNode()->SetRotation(Quaternion(0.0f, -180.0f-ai_[i]->heading_, 0.0f));
-                //ai_[i]->GetNode()->SetRotation(Quaternion(-90.0f, ai_[i]->heading_+180.0f, 0.0f));
-                agents_[i]->GetNode()->SetRotation(Quaternion(0.0f, agents_[i]->heading_, 0.0));
-*/
-    /*
-            static int _sndCnt = 0;
-            float r = Random(-0.0f,5.0f);
-            if (r > 2.5f) {
-                _sndCnt++;
-            }
-
-            if (_sndCnt > 5) {
-                sample2D_->PlaySoundEffect("enemy01-laugh.wav");
-            }
-
-
-                // Update billboards (genotype, powerbar)
-
-                const float BILLBOARD_ROTATION_SPEED = 50.0f;
-
-                // Genotype
-
-                // Rotate the individual billboards within the billboard sets, then recommit to make the changes visible
-                for (unsigned j = 0; j < agents_[i]->genotypeBBSet_->GetNumBillboards(); ++j) {
-                    Billboard *bb = agents_[i]->genotypeBBSet_->GetBillboard(j);
-                    //  bb->rotation_ += BILLBOARD_ROTATION_SPEED * timeStep;
-                    if (agents_[i]) {
-                        Vector3 aiPos = agents_[i]->GetNode()->GetPosition();
-                        bb->position_ = Vector3(aiPos.x_ + (j * 0.02), aiPos.y_, 0.0f);
-
-                        // Already set size in initialization (based on parameter)
-                        //bb->size_ = Vector2((1.0f) * 0.05f, (0.1f) * 0.05f);
-
-
-                        //       bb->position_ = Vector3(player_->GetNode()->GetPosition().x_, player_->GetNode()->GetPosition().y_, -5.0f);
-                    }
-
-                }
-
-                agents_[i]->genotypeBBSet_->Commit();
-
-
-                // Powerbar
-
-                // Rotate the individual billboards within the billboard sets, then recommit to make the changes visible
-                for (unsigned j = 0; j < agents_[i]->powerbarBBSet_->GetNumBillboards(); ++j) {
-                    Billboard *bb = agents_[i]->powerbarBBSet_->GetBillboard(j);
-                    //  bb->rotation_ += BILLBOARD_ROTATION_SPEED * timeStep;
-                    if (agents_[i]) {
-                        Vector3 aiPos = agents_[i]->GetNode()->GetPosition();
-                        bb->position_ = Vector3(aiPos.x_ + (j * 0.02), aiPos.y_+0.2f, 0.0f);
-
-                        bb->size_ = Vector2((0.4f) * 0.05f, (4.0f) * 0.05f);
-
-                        //       bb->position_ = Vector3(player_->GetNode()->GetPosition().x_, player_->GetNode()->GetPosition().y_, -5.0f);
-                    }
-
-                }
-
-                agents_[i]->powerbarBBSet_->Commit();
-
-            }
-        }
-
-        player_->life_ = 50;
-         */
-
-
-//    float maxX = terrain_->GetPatchSize()*terrain_->GetNumPatches().x_;
-//    float maxY = terrain_->GetPatchSize()*terrain_->GetNumPatches().y_;
-        //
-        // Position
-        //Vector3 position((float)x * spacing_.x_, GetRawHeight(xPos, zPos), (float)z * spacing_.z_);
-
-
-        //    if (isServer_) {
-
-
-//    float maxX = terrain_->GetHeightMap()->GetWidth()*terrain_->GetPatchSize();
-//    float maxY = terrain_->GetHeightMap()->GetHeight()*terrain_->GetPatchSize();
 
 
      if (!isServer_) {
@@ -1662,141 +1543,8 @@ void MayaScape::HandleRenderUpdate(StringHash eventType, VariantMap &eventData) 
                      }
                  }
              }
-
-
-             // Locate vehicle node
-             if (vehicleNode) {
-
-                 // Retrieve Vehicle
-                 ClientObj *vehicle = vehicleNode->GetDerivedComponent<ClientObj>();
-
-                 if (vehicle) {
-                     // Snap camera to vehicle once available
-                     Vector3 startPos = vehicle->GetNode()->GetNetPositionAttr();
-                     MemoryBuffer buf(vehicle->GetNode()->GetNetRotationAttr());
-                     Quaternion rotation = buf.ReadPackedQuaternion();
-
-
-                     // Only show once vehicle is activated
-
-                     /*
-                     // Calculate mini map position
-                     Vector3 shiftedRange =
-                             startPos + Vector3(mapSize / 2, mapSize / 2, mapSize / 2);
-
-                     // 1600+1600
-                     float xRange = (shiftedRange.x_ / mapSize) * miniMapWidth;
-                     float zRange = (shiftedRange.z_ / mapSize) * miniMapHeight;
-
-                     float miniMapP1X = miniMapBkgSprite_->GetPosition().x_;
-                     float miniMapP1Y = miniMapBkgSprite_->GetPosition().y_;
-
-                     // Update mini map for P1 position
-                     //    miniMapP1Sprite_->SetPosition(Vector2(776.0f-16.0f, 300.0f));
-                     float startRotOffset = 180.0f;
-                     miniMapP1Sprite_->SetPosition(Vector2(miniMapP1X - xRange + 0.0f, miniMapP1Y - zRange + 0.0f));
-                     miniMapP1Sprite_->SetRotation(vehicleRot_.YawAngle() + startRotOffset);
-
-                     float wpOffsetX = -mapSize / 2;
-                     float wpOffsetY = -mapSize / 2;
-
-                     int index = 0;//player_->wpActiveIndex_;
-
-                     if (index < 0) index = 0;
-                     /*     // Convert marker position to world position for waypoint
-                          float wpPosX =
-                                  (((float) waypoints_[index].x_ / (float) terrain_->GetMarkerMap()->GetWidth()) * mapSize) +
-                                  wpOffsetX;
-                          float wpPosZ =
-                                  (((float) waypoints_[index].z_ / (float) terrain_->GetMarkerMap()->GetHeight()) * mapSize) +
-                                  wpOffsetY;
-              */
-                     // Calculate mini map position for waypoint
-                     //  shiftedRange = Vector3(wpPosX, 0.0f, wpPosZ) + Vector3(mapSize / 2, mapSize / 2, mapSize / 2);
-/*
-                     // 1600+1600
-                     xRange = (shiftedRange.x_ / mapSize) * miniMapWidth;
-                     zRange = (shiftedRange.z_ / mapSize) * miniMapHeight;
-
-                     float miniMapWPX = miniMapBkgSprite_->GetPosition().x_;
-                     float miniMapWPY = miniMapBkgSprite_->GetPosition().y_;
-
-
-                     // Update mini map for WP position
-                     //    miniMapP1Sprite_->SetPosition(Vector2(776.0f-16.0f, 300.0f));
-                     miniMapWPSprite_->SetPosition(Vector2(miniMapWPX - xRange, miniMapWPY - zRange));
-                     //    miniMapWPSprite_->SetRotation(vehicleRot_.YawAngle());
-*/
-
-
-
-                     /* DISABLED HEADLAMP RENABLE AFTER UPDATE
-                      player_->GetVehicleHeadLamp()->SetPosition(Vector3(player_->GetVehicle()->GetNode()->GetPosition().x_,
-                                                                         player_->GetVehicle()->GetNode()->GetPosition().y_ + 5.0f,
-                                                                         player_->GetVehicle()->GetNode()->GetPosition().z_));
-                      player_->GetVehicleHeadLamp()->SetDirection(Vector3(player_->GetVehicle()->GetNode()->GetRotation().x_, 1.0f,
-                                                                          player_->GetVehicle()->GetNode()->GetRotation().z_));
-
-
-                      // Update vehicle head lamp lighting
-                      Light *light = player_->GetVehicleHeadLamp()->GetComponent<Light>();
-                      // Light* light = vehicleHeadLamp_->CreateComponent<Light>();
-                      //light->SetLightType(LIGHT_SPOT)
-                      light->SetLightType(LIGHT_POINT);
-                      light->SetRange(30.0f);
-
-                      float rpmLightFactor = 40.0f;
-                      float rpmLight = rpm / 4500.0f;
-                      if (rpmLight > 0.8f) rpmLight = 0.8f;
-                      light->SetBrightness(0.2f + (rpmLight * rpmLightFactor));
-                      light->SetCastShadows(true);
-                      //   light->SetShadowBias(BiasParameters(0.00025f, 0.5f));
-              */
-                     // Update focus objects
-//            focusObjects_[0] = player_->GetVehicle()->GetNode()->GetPosition(); // Vehicle
-                 }
-             }
          }
-         }
-
-        int i = 0;
-
-        //URHO3D_LOGINFOF("player_ position x=%f, y=%f, z=%f", player_->GetNode()->GetPosition().x_, player_->GetNode()->GetPosition().y_, player_->GetNode()->GetPosition().z_);
-
-        //
-
-
-
-    // stat
-#ifdef SHOW_STATS
-    framesCount_++;
-    if ( fpsTimer_.GetMSec(false) >= ONE_SEC_DURATION )
-    {
-        Renderer *renderer = GetSubsystem<Renderer>();
-        String stat;
-
-        stat.AppendWithFormat( "tris: %d fps: %d",
-                               renderer->GetNumPrimitives(),
-                               framesCount_);
-
-#ifdef SHOW_CAM_POS
-        String x, y, z;
-        char buff[20];
-        sprintf(buff, ", cam: %.1f, ", cameraNode_->GetPosition().x_);
-        x = String(buff);
-        sprintf(buff, "%.1f, ", cameraNode_->GetPosition().y_);
-        y = String(buff);
-        sprintf(buff, "%.1f", cameraNode_->GetPosition().z_);
-        z = String(buff);
-        stat += x + y + z;
-#endif
-
-        textStatus_->SetText(stat);
-        framesCount_ = 0;
-        fpsTimer_.Reset();
-    }
-#endif
-
+     }
 }
 
 float ticks = 0;
@@ -2305,62 +2053,8 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
         scene_->SaveXML(saveFile);
     }
 
-
-    // stat
-#ifdef SHOW_STATS
-    framesCount_++;
-    if ( fpsTimer_.GetMSec(false) >= ONE_SEC_DURATION )
-    {
-        Renderer *renderer = GetSubsystem<Renderer>();
-        String stat;
-
-        stat.AppendWithFormat( "tris: %d fps: %d",
-                               renderer->GetNumPrimitives(),
-                               framesCount_);
-
-#ifdef SHOW_CAM_POS
-        String x, y, z;
-        char buff[20];
-        sprintf(buff, ", cam: %.1f, ", cameraNode_->GetPosition().x_);
-        x = String(buff);
-        sprintf(buff, "%.1f, ", cameraNode_->GetPosition().y_);
-        y = String(buff);
-        sprintf(buff, "%.1f", cameraNode_->GetPosition().z_);
-        z = String(buff);
-        stat += x + y + z;
-#endif
-
-        textStatus_->SetText(stat);
-        framesCount_ = 0;
-        fpsTimer_.Reset();
-    }
-#endif
-
-
-
-    // Locate node
-    Node *node = scene_->GetChild(clientName_);
-
-    if (node) {
-
-        // Retrieve NetworkActor
-        ClientObj *networkActor = node->GetDerivedComponent<ClientObj>();
-        if (networkActor) {
-
-            // Snap camera to vehicle once available
-            Vector3 startPos = networkActor->GetPosition();
-
-
-
-
-        }
-    }
-
     // Call our render update
     HandleRenderUpdate(eventType, eventData);
-
-    //scene_->GetComponent<Octree>()->DrawDebugGeometry(true);
-
 }
 
 void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
