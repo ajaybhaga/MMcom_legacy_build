@@ -160,9 +160,9 @@ const int MSG_NODE_ERROR = 156;
 
 //#define GAME_SERVER_ADDRESS "10.0.2.2" // android server address
 //#define GAME_SERVER_ADDRESS "192.168.4.58" // neko
-#define GAME_SERVER_ADDRESS "192.168.4.77" // lady
+//#define GAME_SERVER_ADDRESS "192.168.4.77" // lady
 // At-home local server
-//#define GAME_SERVER_ADDRESS "localhost"
+#define GAME_SERVER_ADDRESS "localhost"
 //#define GAME_SERVER_ADDRESS "www.monkeymaya.com"
 // TODO: need to add increased move step to network actor (on remote server)
 
@@ -2163,10 +2163,6 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                     // Position dir around actor
                                     dir = SmoothStepAngle(dir, actorRot, timeStep * rotLerpRate);
 
-                                    //Quaternion dir(actorRot.YawAngle(), Vector3::UP);
-                                    //dir = dir * Quaternion(vehicle_->controls_.yaw_, Vector3::UP);
-                                    //dir = dir * Quaternion(vehicle_->controls_.pitch_, Vector3::RIGHT);
-
                                     // On foot controls
                                     float z = controlYawAngle;
                                     if (abs(controlYawAngle) < 90.0f) {
@@ -2179,16 +2175,7 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                     } else {
                                         // Do not apply force
                                     }
-/*                                } else {
 
-                                 /*   // Set the left and right for move
-                                    actor->setMove(Vector3(lStick.GetVector2().x_, 0, lStick.GetVector2().y_));
-
-                                    // Next move
-                                    move_ = move_.Normalized() * Pow(move_.Length() * 1.05f, 2.0f);
-                                    if (move_.LengthSquared() > 0.0f)
-                                        move_.Normalize();
-*/
                                 }
 
                                 String clientName = actorMap_[connection]->GetUserName();
