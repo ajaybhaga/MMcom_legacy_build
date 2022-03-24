@@ -2980,6 +2980,8 @@ void MayaScape::PlaySoundEffectLocal(const String &soundName) {
 
 void MayaScape::HandlePlayButton(StringHash eventType, VariantMap &eventData) {
 
+    // CLIENT CODE STARTS
+
     // Remove fullscreen UI and unfreeze the scene
     auto *ui = GetSubsystem<UI>();
     if (static_cast<Text *>(ui->GetRoot()->GetChild("FullUI", true))) {
@@ -4041,6 +4043,8 @@ void MayaScape::HandleDisconnect(StringHash eventType, VariantMap &eventData) {
 }
 
 void MayaScape::HandleStartServer(StringHash eventType, VariantMap &eventData) {
+
+    // SERVER CODE STARTS
 
     Server *server = GetSubsystem<Server>();
     if (!server->StartServer(SERVER_PORT)) {
