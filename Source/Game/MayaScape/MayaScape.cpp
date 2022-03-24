@@ -3964,8 +3964,24 @@ void MayaScape::HandleConnect(StringHash eventType, VariantMap &eventData) {
     Network* network = GetSubsystem<Network>();
 
     scene_->Clear(true, true);
+
+
     // Client connect to server
     if (network->Connect(address, SERVER_PORT, scene_, identity)) {
+
+        // TODO: Update to new loading page here
+
+        // Set camera node for viewport
+        cameraNode_ = scene_->CreateChild("Camera", LOCAL);
+        clientCam_ = cameraNode_->CreateComponent<Camera>();
+        clientCam_->SetFarClip(24000.0f);
+        //clientCam_->SetFillMode(Urho3D::FILL_WIREFRAME);
+        cameraNode_->SetPosition(Vector3(heliCamView_));
+        clientCam_->GetNode()->SetRotation(Quaternion(90.0f, 0.0f, 0.0f));
+
+        // Setup viewport
+        SetupViewports();
+
 
         URHO3D_LOGINFOF("client identity name=%s", name.CString());
         URHO3D_LOGINFOF("MayaScape::HandleConnect - data: [%s, %d]", name.CString(), idx);
@@ -3975,8 +3991,6 @@ void MayaScape::HandleConnect(StringHash eventType, VariantMap &eventData) {
 
         // Change UI -> hide menu and show game
         UpdateButtons();
-        // Switch to game mode
-        //UpdateUIState(true);
         started_ = true;
         // Set logo sprite alignment
         logoSprite_->SetAlignment(HA_RIGHT, VA_TOP);
@@ -3997,25 +4011,12 @@ void MayaScape::HandleConnect(StringHash eventType, VariantMap &eventData) {
         instructionsText_->SetAlignment(HA_CENTER, VA_BOTTOM);
         instructionsText_->SetPosition(0, -20);
 
-
-
         String address = textEdit_->GetText().Trimmed();
         // Empty the text edit after reading the address to connect to
         textEdit_->SetText(String::EMPTY);
 
         UpdateButtons();
 
-        /*
-                // Create a directional light with shadows
-                Node* lightNode = scene_->CreateChild("DirectionalLight", LOCAL);
-                lightNode->SetDirection(Vector3(0.3f, -0.5f, 0.425f));
-                Light* light = lightNode->CreateComponent<Light>();
-                light->SetLightType(LIGHT_DIRECTIONAL);
-                light->SetCastShadows(true);
-                light->SetShadowBias(BiasParameters(0.00025f, 0.5f));
-                light->SetShadowCascade(CascadeParameters(10.0f, 50.0f, 200.0f, 0.0f, 0.8f));
-                light->SetSpecularIntensity(0.5f);
-        */
         URHO3D_LOGINFOF("client idx=%i, username=%s", idx, name.CString());
 
     } else {
@@ -5801,17 +5802,6 @@ void MayaScape::HandlePlayerRespawned(StringHash eventType, VariantMap& eventDat
     //network->GetServerConnection()->SendRemoteEvent(E_PLAYERSPAWNED, true);
     // Create camera and define viewport. We will be doing load / save, so it's convenient to create the camera outside the scene,
     // so that it won't be destroyed and recreated, and we don't have to redefine the viewport on load
-
-    // Set camera node
-    cameraNode_ = scene_->CreateChild("Camera", LOCAL);
-    clientCam_ = cameraNode_->CreateComponent<Camera>();
-    clientCam_->SetFarClip(24000.0f);
-    //clientCam_->SetFillMode(Urho3D::FILL_WIREFRAME);
-    cameraNode_->SetPosition(Vector3(heliCamView_));
-    clientCam_->GetNode()->SetRotation(Quaternion(90.0f, 0.0f, 0.0f));
-
-    // Setup viewport
-    SetupViewports();
 
 
     // Enable for 3D sounds to work (attach to camera node)
