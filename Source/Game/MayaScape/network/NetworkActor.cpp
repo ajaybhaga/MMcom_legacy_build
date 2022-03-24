@@ -338,6 +338,10 @@ void NetworkActor::SetControls(const Controls &controls) {
 }
 
 void NetworkActor::Flip() {
+
+    Quaternion modRot = vehicle_->GetRaycastVehicle()->GetBody()->GetRotation() * Quaternion(0,0,90);
+    vehicle_->GetRaycastVehicle()->GetBody()->SetRotation(modRot);
+
 /*
     float qx;
     float qy;
@@ -691,6 +695,10 @@ void NetworkActor::FixedUpdate(float timeStep) {
                 // ENTER CAR (if close enough)
                 EnterVehicle();
                 URHO3D_LOGDEBUGF("**NETWORK ACTOR ENTER** -> %l", controls_.buttons_);
+
+                // On not enter, flip vehicle
+                if (!entered_)
+                    Flip();
             }
             lastEnter_ = 0;
         }
@@ -925,6 +933,12 @@ void NetworkActor::ComputeSteerForce() {
 
 
 void NetworkActor::Fire() {
+
+    //
+
+    //Quaternion modRot = vehicle_->GetRaycastVehicle()->GetBody()->GetRotation() * Quaternion(0,90,0);
+    //vehicle_->GetRaycastVehicle()->GetBody()->SetRotation(modRot);
+
     Fire(toTarget_);
 
 }
