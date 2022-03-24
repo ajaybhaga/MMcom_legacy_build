@@ -2982,14 +2982,6 @@ void MayaScape::HandlePlayButton(StringHash eventType, VariantMap &eventData) {
 
     // CLIENT CODE STARTS
 
-    // Remove fullscreen UI and unfreeze the scene
-    auto *ui = GetSubsystem<UI>();
-    if (static_cast<Text *>(ui->GetRoot()->GetChild("FullUI", true))) {
-        ui->GetRoot()->GetChild("FullUI", true)->Remove();
-    } else
-        // Reload scene
-        ReloadScene(true);
-
     // Hide mouse cursor
     auto *input = GetSubsystem<Input>();
     input->SetMouseVisible(false);
@@ -4053,9 +4045,6 @@ void MayaScape::HandleStartServer(StringHash eventType, VariantMap &eventData) {
 
     // Load base scene
     ReloadScene(true);
-
-    //GetSubsystem<Renderer>()->GetDefaultZone()->SetFogColor(Color(0.0f, 0.0f, 0.0f));
-    //GetSubsystem<Renderer>()->GetDefaultZone()->SetAmbientColor(Color(0.0f, 0.0f, 0.0f));
 
 
     // Setup Client-Side Prediction
@@ -5196,8 +5185,16 @@ void MayaScape::InitiateGameMap(Scene *scene) {
         // Create static scene content. First create a zone for ambient lighting and fog control
         Node *zoneNode = scene_->CreateChild("Zone", REPLICATED);
         Zone *zone = zoneNode->CreateComponent<Zone>();
-        zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
-        zone->SetFogColor(Color(0.5f, 0.5f, 0.7f));
+//        zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
+//        zone->SetFogColor(Color(0.5f, 0.5f, 0.7f));
+
+
+    float r1 = Random(0.01f,0.1f);
+    float r2 = Random(0.01f,0.1f);
+    float r3 = Random(0.01f,0.3f);
+    zone->SetAmbientColor(Color(r1, r2, r3));
+    zone->SetFogColor(Color(r1*2.0f, r2*2.0f, r3*2.0f));
+
         zone->SetFogStart(700.0f);
         zone->SetFogEnd(58000.0f);
         zone->SetBoundingBox(BoundingBox(-60000.0f, 60000.0f));
