@@ -59,6 +59,8 @@ class Text;
 class UIElement;
 class Node;
 class LineEdit;
+class DropDownList;
+
 //class Controls;
 class RigidBody;
 
@@ -482,6 +484,8 @@ private:
     SharedPtr<Button> disconnectButton_;
     SharedPtr<Button> startServerButton_;
     SharedPtr<Button> exitButton_;
+    SharedPtr<DropDownList> gameServerDropDownList_;
+    int gameServerSelected_ = 0;
 
     SharedPtr<Text> instructionsText_;
     Vector<SharedPtr<Text>> hudTextList_;

@@ -427,7 +427,8 @@ void NetworkActor::ApplyMovement(float timeStep) {
         // If in air, allow control, but slower than when on ground
         //body_->ApplyImpulse(rot * move_ * (softGrounded ? MOVE_FORCE : INAIR_MOVE_FORCE));
 //        const float MOVE_FORCE = 0.45f;
-        const float MOVE_FORCE = 40.5f;
+        //const float MOVE_FORCE = 13.5f;
+        const float MOVE_FORCE = 588.5f;
 
 
         Vector3 impulse;

@@ -36,6 +36,7 @@
 #include <Urho3D/Scene/Scene.h>
 #include <Urho3D/UI/Font.h>
 #include <Urho3D/UI/Text.h>
+#include <Urho3D/UI/DropDownList.h>
 #include <Urho3D/Audio/SoundSource3D.h>
 #include <Urho3D/Audio/Sound.h>
 #include <Urho3D/Audio/SoundListener.h>
@@ -160,10 +161,20 @@ const int MSG_NODE_ERROR = 156;
 
 //#define GAME_SERVER_ADDRESS "10.0.2.2" // android server address
 //#define GAME_SERVER_ADDRESS "192.168.4.58" // neko
-#define GAME_SERVER_ADDRESS "192.168.4.77" // lady
+//#define GAME_SERVER_ADDRESS "192.168.4.77" // lady
 // At-home local server
 //#define GAME_SERVER_ADDRESS "localhost"
 //#define GAME_SERVER_ADDRESS "www.monkeymaya.com"
+
+std::vector<std::string> gameServers = {
+"10.0.2.2", // android server address
+"192.168.4.58", // neko (dev)
+"192.168.4.77", // lady (remote local game server)
+// At-home local server
+"localhost", // local game server
+"www.monkeymaya.com", // remote game server
+};
+
 // TODO: need to add increased move step to network actor (on remote server)
 
 std::vector<std::string> bzRadioTracksArtistName = {
@@ -2978,6 +2989,14 @@ void MayaScape::HandlePlayButton(StringHash eventType, VariantMap &eventData) {
 
     // CLIENT CODE STARTS
 
+    //gameServers
+    Graphics *graphics = GetSubsystem<Graphics>();
+    auto* renderer = GetSubsystem<Renderer>();
+    ResourceCache *cache = GetSubsystem<ResourceCache>();
+    UI *ui = GetSubsystem<UI>();
+    UIElement *root = ui->GetRoot();
+
+
     // Hide mouse cursor
     auto *input = GetSubsystem<Input>();
     input->SetMouseVisible(false);
@@ -3181,7 +3200,7 @@ void MayaScape::CreateUI() {
         // Construct the text element
         SharedPtr<Text> hudText_ = static_cast<SharedPtr<Text>>(ui->GetRoot()->CreateChild<Text>());
         hudText_->SetText("");
-        hudText_->SetFont(cache->GetResource<Font>(INGAME_FONT2), 17);
+        hudText_->SetFont(cache->GetResource<Font>(INGAME_FONT4), 17);
         hudText_->SetColor(Color::WHITE);
         // Position the text relative to the screen center
         hudText_->SetHorizontalAlignment(HA_CENTER);
@@ -3197,15 +3216,33 @@ void MayaScape::CreateUI() {
 
     buttonContainer_->SetPosition(40, 240);
     buttonContainer_->SetHorizontalAlignment((HA_CENTER));
-    buttonContainer_->SetLayoutMode(Urho3D::LM_HORIZONTAL);
+    buttonContainer_->SetLayoutMode(Urho3D::LM_VERTICAL);
     buttonContainer_->SetLayoutSpacing(10.0);
-    textEdit_ = buttonContainer_->CreateChild<LineEdit>();
-    textEdit_->SetStyleAuto();
-    textEdit_->SetVisible(false);
+    //textEdit_ = buttonContainer_->CreateChild<LineEdit>();
+    //textEdit_->SetStyleAuto();
+    //textEdit_->SetVisible(false);
 
-    playButton_ = CreateButton("PLAY", 380);
-    startServerButton_ = CreateButton("START SERVER", 380);
-    //exitButton_ = CreateButton("EXIT", 240);
+
+
+    gameServerDropDownList_ = static_cast<SharedPtr<DropDownList>>(ui->GetRoot()->CreateChild<DropDownList>());
+    gameServerDropDownList_->SetStyleAuto();
+    gameServerDropDownList_->SetFixedSize(600, 54);
+    gameServerDropDownList_->SetMinWidth(600);
+    for (int i = 0; i < gameServers.size(); i++) {
+        Text* text = new Text(context_);
+        text->SetFont(INGAME_FONT4, 46);
+        text->SetText(gameServers[i].c_str());
+        text->SetFixedSize(200, 50);
+        text->SetColor(Color::WHITE);
+        text->SetEffectStrokeThickness(5);
+        gameServerDropDownList_->AddItem(text);
+
+    }
+
+    buttonContainer_->AddChild(gameServerDropDownList_);
+    playButton_ = CreateButton("PLAY", 580);
+    startServerButton_ = CreateButton("START SERVER", 580);
+    exitButton_ = CreateButton("EXIT", 580);
 
 
 /*
@@ -3393,11 +3430,11 @@ void MayaScape::ChangeDebugHudText() {
 
 Button *MayaScape::CreateButton(const String &text, int width) {
     ResourceCache *cache = GetSubsystem<ResourceCache>();
-    Font *font = cache->GetResource<Font>(INGAME_FONT);
+    Font *font = cache->GetResource<Font>(INGAME_FONT4);
 
     Button *button = buttonContainer_->CreateChild<Button>();
     button->SetStyleAuto();
-    button->SetFixedHeight(300);
+    button->SetFixedHeight(120);
     button->SetFixedWidth(width);
     //button->SetHeight(5);
 
@@ -3960,7 +3997,7 @@ void MayaScape::HandleConnect(StringHash eventType, VariantMap &eventData) {
     // Client code
     isServer_ = false;
     Server *server = GetSubsystem<Server>();
-    String address = GAME_SERVER_ADDRESS;
+    String address = gameServers[gameServerSelected_].c_str();
 
 //    String address = textEdit_->GetText().Trimmed();
 
