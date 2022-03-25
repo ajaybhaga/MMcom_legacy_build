@@ -781,7 +781,7 @@ void MayaScape::SubscribeToEvents() {
 //    SubscribeToEvent(connectButton_, E_RELEASED, URHO3D_HANDLER(MayaScape, HandleConnect));
     SubscribeToEvent(disconnectButton_, E_RELEASED, URHO3D_HANDLER(MayaScape, HandleDisconnect));
     SubscribeToEvent(startServerButton_, E_RELEASED, URHO3D_HANDLER(MayaScape, HandleStartServer));
-    //SubscribeToEvent(exitButton_, E_RELEASED, URHO3D_HANDLER(MayaScape, HandleExit));
+    SubscribeToEvent(exitButton_, E_RELEASED, URHO3D_HANDLER(MayaScape, HandleExit));
 
     SubscribeToEvent(E_CONNECTFAILED, URHO3D_HANDLER(MayaScape, HandleConnectionFailed));
 
@@ -3214,8 +3214,10 @@ void MayaScape::CreateUI() {
     buttonContainer_ = root->CreateChild<UIElement>();
     buttonContainer_->SetFixedSize(graphics->GetWidth(), graphics->GetHeight());
 
-    buttonContainer_->SetPosition(40, 240);
-    buttonContainer_->SetHorizontalAlignment((HA_CENTER));
+    buttonContainer_->SetPosition(graphics->GetWidth()/5, graphics->GetHeight()/5);
+    buttonContainer_->SetHorizontalAlignment(HA_CENTER);
+    buttonContainer_->SetVerticalAlignment(VA_CENTER);
+
     buttonContainer_->SetLayoutMode(Urho3D::LM_VERTICAL);
     buttonContainer_->SetLayoutSpacing(10.0);
     //textEdit_ = buttonContainer_->CreateChild<LineEdit>();
@@ -3226,8 +3228,8 @@ void MayaScape::CreateUI() {
 
     gameServerDropDownList_ = static_cast<SharedPtr<DropDownList>>(ui->GetRoot()->CreateChild<DropDownList>());
     gameServerDropDownList_->SetStyleAuto();
-    gameServerDropDownList_->SetFixedSize(600, 54);
-    gameServerDropDownList_->SetMinWidth(600);
+    gameServerDropDownList_->SetFixedSize(580, 54);
+    gameServerDropDownList_->SetMinWidth(580);
     for (int i = 0; i < gameServers.size(); i++) {
         Text* text = new Text(context_);
         text->SetFont(INGAME_FONT4, 46);
@@ -3243,23 +3245,6 @@ void MayaScape::CreateUI() {
     playButton_ = CreateButton("PLAY", 580);
     startServerButton_ = CreateButton("START SERVER", 580);
     exitButton_ = CreateButton("EXIT", 580);
-
-
-/*
-    std::string mmlogoMdlPath = "Models/logo/Models/mm_logo.mdl";
-    auto* nodeLG = ui->GetRoot()->->CreateChild("MM Logo", LOCAL);
-    nodeLG->SetPosition(Vector3(0, 0, 0));
-    nodeLG->SetScale(30.0f);
-    auto* adjNode = nodeLG->CreateChild("AdjNode");
-    auto *objectLG = adjNode->CreateComponent<StaticModel>(LOCAL);
-    auto *modelLG = cache->GetResource<Model>(mmlogoMdlPath.c_str());
-    objectLG->SetModel(modelLG);
-    //object->ApplyMaterialList(matPath.c_str());
-    objectLG->SetCastShadows(true);
-    adjNode->SetRotation(Quaternion(0.0, 0.0, 0.0f));
-*/
-
-
 
     // Get logo texture
     Texture2D *logoTexture = cache->GetResource<Texture2D>("Textures/logo.png");
