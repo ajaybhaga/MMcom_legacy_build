@@ -449,7 +449,7 @@ void NetworkActor::ApplyMovement(float timeStep) {
                     MOVE_FORCE * moveMag;
         }
         lastImpulse_ = impulse;
-        body_->ApplyImpulse(impulse);
+        body_->ApplyImpulse(impulse*timeStep);
         //body_->ApplyImpulse(Vector3(impulse.x_, 0, impulse.z_));
       //  GetNode()->SetPosition(body_->GetNode()->GetWorldPosition());
 

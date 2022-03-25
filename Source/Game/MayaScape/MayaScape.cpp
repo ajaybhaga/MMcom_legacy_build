@@ -160,9 +160,9 @@ const int MSG_NODE_ERROR = 156;
 
 //#define GAME_SERVER_ADDRESS "10.0.2.2" // android server address
 //#define GAME_SERVER_ADDRESS "192.168.4.58" // neko
-//#define GAME_SERVER_ADDRESS "192.168.4.77" // lady
+#define GAME_SERVER_ADDRESS "192.168.4.77" // lady
 // At-home local server
-#define GAME_SERVER_ADDRESS "localhost"
+//#define GAME_SERVER_ADDRESS "localhost"
 //#define GAME_SERVER_ADDRESS "www.monkeymaya.com"
 // TODO: need to add increased move step to network actor (on remote server)
 
