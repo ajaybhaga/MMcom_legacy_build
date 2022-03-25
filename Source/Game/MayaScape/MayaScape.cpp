@@ -3982,7 +3982,11 @@ void MayaScape::HandleConnect(StringHash eventType, VariantMap &eventData) {
     // Client code
     isServer_ = false;
     Server *server = GetSubsystem<Server>();
-    String address = gameServers[gameServerSelected_].c_str();
+//..    String address = gameServers[gameServerSelected_].c_str();
+
+     UIElement *ui = gameServerDropDownList_->GetSelectedItem();
+     auto *text = static_cast<Text *>(ui);
+     String address = text->GetText();
 
 //    String address = textEdit_->GetText().Trimmed();
 
@@ -4051,9 +4055,10 @@ void MayaScape::HandleConnect(StringHash eventType, VariantMap &eventData) {
         instructionsText_->SetAlignment(HA_CENTER, VA_BOTTOM);
         instructionsText_->SetPosition(0, -20);
 
-        String address = textEdit_->GetText().Trimmed();
+        // TODO CAN use this to get user input later for name
+//        String address = textEdit_->GetText().Trimmed();
         // Empty the text edit after reading the address to connect to
-        textEdit_->SetText(String::EMPTY);
+//        textEdit_->SetText(String::EMPTY);
 
         UpdateButtons();
 
