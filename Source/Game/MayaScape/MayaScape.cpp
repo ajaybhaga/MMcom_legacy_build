@@ -3228,15 +3228,16 @@ void MayaScape::CreateUI() {
 
     gameServerDropDownList_ = static_cast<SharedPtr<DropDownList>>(ui->GetRoot()->CreateChild<DropDownList>());
     gameServerDropDownList_->SetStyleAuto();
+
     gameServerDropDownList_->SetFixedSize(580, 54);
     gameServerDropDownList_->SetMinWidth(580);
     for (int i = 0; i < gameServers.size(); i++) {
         Text* text = new Text(context_);
-        text->SetFont(INGAME_FONT4, 46);
+        text->SetFont(INGAME_FONT4, 24);
         text->SetText(gameServers[i].c_str());
         text->SetFixedSize(200, 50);
         text->SetColor(Color::WHITE);
-        text->SetEffectStrokeThickness(5);
+        text->SetEffectStrokeThickness(2);
         gameServerDropDownList_->AddItem(text);
 
     }
