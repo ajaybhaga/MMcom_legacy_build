@@ -241,7 +241,7 @@ private:
 
     bool enableControls_;
 
-    float antiRoll = 28.5f; // 28.5% applied
+    float antiRoll = 38.5f; // 38.5% applied
     float travelFL;
     float travelFR;
     float travelBL;
