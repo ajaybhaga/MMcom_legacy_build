@@ -1594,45 +1594,47 @@ void Vehicle::ApplyAntiRollBar()
 
     if (raycastVehicle_) {
 
-        if (raycastVehicle_->GetNumWheels() == 4) {
+        if (raycastVehicle_->GetSpeedKm() > 10.0f) {
+            if (raycastVehicle_->GetNumWheels() == 4) {
 
-            for (int i = 0; i < numWheels_; ++i) {
-                btWheelInfo whInfo = raycastVehicle_->GetWheel(i);
+                Vector3 vel = raycastVehicle_->GetBody()->GetLinearVelocity();
+                for (int i = 0; i < numWheels_; ++i) {
+                    btWheelInfo whInfo = raycastVehicle_->GetWheel(i);
 
-                if (raycastVehicle_->WheelIsGrounded(i)) {
+                    if (raycastVehicle_->WheelIsGrounded(i)) {
 
-                    switch (i) {
-                        case 0: {
-                            // FRONT LEFT
-                            groundFL = true;
-                            travelFL = whInfo.m_raycastInfo.m_suspensionLength / whInfo.getSuspensionRestLength();
-                            break;
+                        switch (i) {
+                            case 0: {
+                                // FRONT LEFT
+                                groundFL = true;
+                                travelFL = whInfo.m_raycastInfo.m_suspensionLength / whInfo.getSuspensionRestLength();
+                                break;
+                            }
+
+                            case 1: {
+                                // FRONT RIGHT
+                                groundFR = true;
+                                travelFR = whInfo.m_raycastInfo.m_suspensionLength / whInfo.getSuspensionRestLength();
+                                break;
+                            }
+
+                            case 2: {
+                                // BACK LEFT
+                                groundBL = true;
+                                travelBL = whInfo.m_raycastInfo.m_suspensionLength / whInfo.getSuspensionRestLength();
+                                break;
+                            }
+
+                            case 3: {
+                                // BACK RIGHT
+                                groundBR = true;
+                                travelBR = whInfo.m_raycastInfo.m_suspensionLength / whInfo.getSuspensionRestLength();
+                                break;
+                            }
                         }
 
-                        case 1: {
-                            // FRONT RIGHT
-                            groundFR = true;
-                            travelFR = whInfo.m_raycastInfo.m_suspensionLength / whInfo.getSuspensionRestLength();
-                            break;
-                        }
 
-                        case 2: {
-                            // BACK LEFT
-                            groundBL = true;
-                            travelBL = whInfo.m_raycastInfo.m_suspensionLength / whInfo.getSuspensionRestLength();
-                            break;
-                        }
-
-                        case 3: {
-                            // BACK RIGHT
-                            groundBR = true;
-                            travelBR = whInfo.m_raycastInfo.m_suspensionLength / whInfo.getSuspensionRestLength();
-                            break;
-                        }
-                    }
-
-
-                    //    } // End of Grounded wheel
+                    } // End of Grounded wheel
 
 
                 } // End of wheel loop
@@ -1676,13 +1678,13 @@ void Vehicle::ApplyAntiRollBar()
                             3).m_worldTransform.getOrigin()));
                 }
 
+            } // 4 wheels exist
+        } // At least 10 km/h
 
-            }
-
-        }
     }
-
 }
+
+
 
 void Vehicle::ApplyDownwardForce()
 {
