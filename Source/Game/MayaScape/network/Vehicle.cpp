@@ -488,12 +488,6 @@ void Vehicle::PostUpdate(float timeStep)
             debug->AddLine(normPosWheel1,
                            normPosWheel1 + (normWheel1*pushMag), Color(Urho3D::Color::WHITE));
 
-            float antiRoll = 100.0f;
-            float travelFL = 1.0f;
-            float travelFR = 1.0f;
-            float travelBL = 1.0f;
-            float travelBR = 1.0f;
-
             bool groundFL = false;
             bool groundFR = false;
             bool groundBL = false;
@@ -505,7 +499,7 @@ void Vehicle::PostUpdate(float timeStep)
 
                 if (raycastVehicle_->GetNumWheels() == 4) {
 
-                    /*
+
                     for (int i = 0; i < numWheels_; ++i) {
                         btWheelInfo whInfo = raycastVehicle_->GetWheel(i);
 
@@ -550,7 +544,7 @@ void Vehicle::PostUpdate(float timeStep)
 
 
                     } // End of wheel loop
-                     */
+
 
                     // Apply force at front
                     float antiRollForceF = (travelFL - travelFR) * antiRoll;
@@ -559,14 +553,14 @@ void Vehicle::PostUpdate(float timeStep)
                         Vector3 force = Vector3(0, raycastVehicle_->GetWheel(0).m_worldTransform.getOrigin().y() * -antiRollForceF, 0);
                         // Front wheel
                         debug->AddLine(Vector3(raycastVehicle_->GetWheel(0).m_worldTransform.getOrigin()),
-                                       Vector3(raycastVehicle_->GetWheel(0).m_worldTransform.getOrigin()) + (force), Color(Urho3D::Color::YELLOW));
+                                       Vector3(raycastVehicle_->GetWheel(0).m_worldTransform.getOrigin()) + (force), Color(Urho3D::Color::BLUE));
                     }
 
                     if (groundFR) {
                         Vector3 force = Vector3(0, raycastVehicle_->GetWheel(1).m_worldTransform.getOrigin().y() * antiRollForceF, 0);
                         // Front wheel
                         debug->AddLine(Vector3(raycastVehicle_->GetWheel(1).m_worldTransform.getOrigin()),
-                                       Vector3(raycastVehicle_->GetWheel(1).m_worldTransform.getOrigin()) + (force), Color(Urho3D::Color::YELLOW));
+                                       Vector3(raycastVehicle_->GetWheel(1).m_worldTransform.getOrigin()) + (force), Color(Urho3D::Color::BLUE));
                     }
 
 
@@ -577,14 +571,14 @@ void Vehicle::PostUpdate(float timeStep)
                         Vector3 force = Vector3(0, raycastVehicle_->GetWheel(2).m_worldTransform.getOrigin().y() * -antiRollForceB, 0);
                         // Back wheel
                         debug->AddLine(Vector3(raycastVehicle_->GetWheel(2).m_worldTransform.getOrigin()),
-                                       Vector3(raycastVehicle_->GetWheel(2).m_worldTransform.getOrigin()) + (force), Color(Urho3D::Color::YELLOW));
+                                       Vector3(raycastVehicle_->GetWheel(2).m_worldTransform.getOrigin()) + (force), Color(Urho3D::Color::BLUE));
                     }
 
                     if (groundBR) {
                         Vector3 force = Vector3(0, raycastVehicle_->GetWheel(3).m_worldTransform.getOrigin().y() * antiRollForceB, 0);
                         // Back wheel
                         debug->AddLine(Vector3(raycastVehicle_->GetWheel(3).m_worldTransform.getOrigin()),
-                                       Vector3(raycastVehicle_->GetWheel(3).m_worldTransform.getOrigin()) + (force), Color(Urho3D::Color::YELLOW));
+                                       Vector3(raycastVehicle_->GetWheel(3).m_worldTransform.getOrigin()) + (force), Color(Urho3D::Color::BLUE));
                     }
 
 
@@ -1590,12 +1584,6 @@ bool Vehicle::ApplyStiction(float steering, float acceleration, bool braking)
 void Vehicle::ApplyAntiRollBar()
 {
 
-    float antiRoll = 100.0f;
-    float travelFL = 1.0f;
-    float travelFR = 1.0f;
-    float travelBL = 1.0f;
-    float travelBR = 1.0f;
-
     bool groundFL = false;
     bool groundFR = false;
     bool groundBL = false;
@@ -1609,84 +1597,89 @@ void Vehicle::ApplyAntiRollBar()
         if (raycastVehicle_->GetNumWheels() == 4) {
 
             for (int i = 0; i < numWheels_; ++i) {
-                    btWheelInfo whInfo = raycastVehicle_->GetWheel(i);
-/*
-                    if (raycastVehicle_->WheelIsGrounded(i)) {
+                btWheelInfo whInfo = raycastVehicle_->GetWheel(i);
 
-                        switch (i) {
-                            case 0:
-                            {
-                                // FRONT LEFT
-                                groundFL = true;
-                                travelFL = whInfo.m_raycastInfo.m_suspensionLength/whInfo.getSuspensionRestLength();
-                                break;
-                            }
+                if (raycastVehicle_->WheelIsGrounded(i)) {
 
-                            case 1:
-                            {
-                                // FRONT RIGHT
-                                groundFR = true;
-                                travelFR = whInfo.m_raycastInfo.m_suspensionLength/whInfo.getSuspensionRestLength();
-                                break;
-                            }
-
-                            case 2:
-                            {
-                                // BACK LEFT
-                                groundBL = true;
-                                travelBL = whInfo.m_raycastInfo.m_suspensionLength/whInfo.getSuspensionRestLength();
-                                break;
-                            }
-
-                            case 3:
-                            {
-                                // BACK RIGHT
-                                groundBR = true;
-                                travelBR = whInfo.m_raycastInfo.m_suspensionLength/whInfo.getSuspensionRestLength();
-                                break;
-                            }
+                    switch (i) {
+                        case 0: {
+                            // FRONT LEFT
+                            groundFL = true;
+                            travelFL = whInfo.m_raycastInfo.m_suspensionLength / whInfo.getSuspensionRestLength();
+                            break;
                         }
-*/
 
-                //    } // End of Grounded wheel
+                        case 1: {
+                            // FRONT RIGHT
+                            groundFR = true;
+                            travelFR = whInfo.m_raycastInfo.m_suspensionLength / whInfo.getSuspensionRestLength();
+                            break;
+                        }
+
+                        case 2: {
+                            // BACK LEFT
+                            groundBL = true;
+                            travelBL = whInfo.m_raycastInfo.m_suspensionLength / whInfo.getSuspensionRestLength();
+                            break;
+                        }
+
+                        case 3: {
+                            // BACK RIGHT
+                            groundBR = true;
+                            travelBR = whInfo.m_raycastInfo.m_suspensionLength / whInfo.getSuspensionRestLength();
+                            break;
+                        }
+                    }
 
 
-            } // End of wheel loop
+                    //    } // End of Grounded wheel
 
-            // Apply force at front
-            float antiRollForceF = (travelFL - travelFR) * antiRoll;
 
-            if (groundFL) {
-                Vector3 force = Vector3(0, raycastVehicle_->GetWheel(0).m_worldTransform.getOrigin().y() * -antiRollForceF, 0);
-                // Front wheel
-                raycastVehicle_->GetBody()->ApplyForce(force, Vector3(raycastVehicle_->GetWheel(0).m_worldTransform.getOrigin()));
+                } // End of wheel loop
+
+                // Apply force at front
+                float antiRollForceF = (travelFL - travelFR) * antiRoll;
+
+                if (groundFL) {
+                    Vector3 force = Vector3(0, raycastVehicle_->GetWheel(0).m_worldTransform.getOrigin().y() *
+                                               -antiRollForceF, 0);
+                    // Front wheel
+                    raycastVehicle_->GetBody()->ApplyForce(force, Vector3(raycastVehicle_->GetWheel(
+                            0).m_worldTransform.getOrigin()));
+                }
+
+                if (groundFR) {
+                    Vector3 force = Vector3(0, raycastVehicle_->GetWheel(1).m_worldTransform.getOrigin().y() *
+                                               antiRollForceF, 0);
+                    // Front wheel
+                    raycastVehicle_->GetBody()->ApplyForce(force, Vector3(raycastVehicle_->GetWheel(
+                            1).m_worldTransform.getOrigin()));
+                }
+
+
+                // Apply force at back
+                float antiRollForceB = (travelBL - travelBR) * antiRoll;
+
+                if (groundBL) {
+                    Vector3 force = Vector3(0, raycastVehicle_->GetWheel(2).m_worldTransform.getOrigin().y() *
+                                               -antiRollForceB, 0);
+                    // Back wheel
+                    raycastVehicle_->GetBody()->ApplyForce(force, Vector3(raycastVehicle_->GetWheel(
+                            2).m_worldTransform.getOrigin()));
+                }
+
+                if (groundBR) {
+                    Vector3 force = Vector3(0, raycastVehicle_->GetWheel(3).m_worldTransform.getOrigin().y() *
+                                               antiRollForceB, 0);
+                    // Back wheel
+                    raycastVehicle_->GetBody()->ApplyForce(force, Vector3(raycastVehicle_->GetWheel(
+                            3).m_worldTransform.getOrigin()));
+                }
+
+
             }
-
-            if (groundFR) {
-                Vector3 force = Vector3(0, raycastVehicle_->GetWheel(1).m_worldTransform.getOrigin().y() * antiRollForceF, 0);
-                // Front wheel
-                raycastVehicle_->GetBody()->ApplyForce(force, Vector3(raycastVehicle_->GetWheel(1).m_worldTransform.getOrigin()));
-            }
-
-
-            // Apply force at back
-            float antiRollForceB = (travelBL - travelBR) * antiRoll;
-
-            if (groundBL) {
-                Vector3 force = Vector3(0, raycastVehicle_->GetWheel(2).m_worldTransform.getOrigin().y() * -antiRollForceB, 0);
-                // Back wheel
-                raycastVehicle_->GetBody()->ApplyForce(force, Vector3(raycastVehicle_->GetWheel(2).m_worldTransform.getOrigin()));
-            }
-
-            if (groundBR) {
-                Vector3 force = Vector3(0, raycastVehicle_->GetWheel(3).m_worldTransform.getOrigin().y() * antiRollForceB, 0);
-                // Back wheel
-                raycastVehicle_->GetBody()->ApplyForce(force, Vector3(raycastVehicle_->GetWheel(3).m_worldTransform.getOrigin()));
-            }
-
 
         }
-
     }
 
 }

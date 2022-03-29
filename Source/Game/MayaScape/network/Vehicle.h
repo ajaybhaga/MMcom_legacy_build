@@ -240,6 +240,13 @@ private:
     float   m_fYAngularVelocity;
 
     bool enableControls_;
+
+    float antiRoll = 16.5f; // 16.5% applied
+    float travelFL;
+    float travelFR;
+    float travelBL;
+    float travelBR;
+
 public:
     void setEnableControls(bool enableControls);
 
