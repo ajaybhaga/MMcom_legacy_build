@@ -3383,9 +3383,11 @@ void MayaScape::SetupGameViewports()
     //rearCam->SetFillMode(Urho3D::FILL_SOLID);
 
     // Set up the rear camera viewport on top of the front view ("rear view mirror")
+    float widthHalf = 240.0f;
+    float height = 120.0f;
     // The viewport index must be greater in that case, otherwise the view would be left behind
         SharedPtr<Viewport> rearViewport(new Viewport(context_, scene_, rearCam,
-                                                     IntRect(graphics->GetWidth() * 2 / 3, 32, graphics->GetWidth() - 32, graphics->GetHeight() / 3)));
+                                                     IntRect((graphics->GetWidth() / 2)-widthHalf, 32, (graphics->GetWidth()/2)+widthHalf - 16, 32+height)));
     renderer->SetViewport(1, rearViewport);
 
 
@@ -4521,7 +4523,7 @@ void MayaScape::CreateClientUI() {
     clientPhysicsWorld_->SetDebugRenderer(dbgRenderer);
     // Disable interpolation (need determinism)
     clientPhysicsWorld_->SetInterpolation(false);
-    // TODO: Determine when to enable client physics system to avoid bullet collision error
+
     clientPhysicsWorld_->SetEnabled(false);
     clientPhysicsWorld_->SetUpdateEnabled(false);
 
