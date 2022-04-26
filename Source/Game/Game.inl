@@ -65,11 +65,7 @@ Game::Game(Context* context) :
 void Game::Setup() {
     // Modify engine startup parameters
     engineParameters_[EP_WINDOW_TITLE] = GetTypeName();
-//    engineParameters_[EP_WINDOW_WIDTH] = 1080;
-//    engineParameters_[EP_WINDOW_HEIGHT] = 768;
 
-    engineParameters_[EP_WINDOW_WIDTH] = 1920;
-    engineParameters_[EP_WINDOW_HEIGHT] = 1080;
 
     //1920 x 1080
     engineParameters_[EP_LOG_NAME] = GetSubsystem<FileSystem>()->GetProgramDir() + "mayascape.log";
@@ -105,6 +101,19 @@ void Game::Setup() {
             }
         }
     }
+
+    if (autoStartServer_) {
+        // Server resolution
+        engineParameters_[EP_WINDOW_WIDTH] = 1080;
+        engineParameters_[EP_WINDOW_HEIGHT] = 768;
+
+
+    } else {
+        // Player resolution
+        engineParameters_[EP_WINDOW_WIDTH] = 1920;
+        engineParameters_[EP_WINDOW_HEIGHT] = 1080;
+    }
+
 }
 
 void Game::Start()
@@ -131,6 +140,17 @@ void Game::Start()
     SubscribeToEvent(E_KEYUP, URHO3D_HANDLER(Game, HandleKeyUp));
     // Subscribe scene update event
     SubscribeToEvent(E_SCENEUPDATE, URHO3D_HANDLER(Game, HandleSceneUpdate));
+
+
+    if (autoStartServer_) {
+        Renderer *renderer = GetSubsystem<Renderer>();
+        // Reduce graphics
+        renderer->SetTextureQuality(QUALITY_LOW);
+        renderer->SetMaterialQuality(QUALITY_LOW);
+        renderer->SetSpecularLighting(false);
+        renderer->SetDrawShadows(false);
+    }
+
 }
 
 void Game::Stop()
