@@ -93,6 +93,9 @@ protected:
     /// Mouse mode option to use in the sample.
     MouseMode useMouseMode_;
 
+    // Auto start server flag (from command line argument)
+    bool autoStartServer_;
+
 private:
     /// Create logo.
     void CreateLogo();

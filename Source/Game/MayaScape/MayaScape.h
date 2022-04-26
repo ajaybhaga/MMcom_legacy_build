@@ -232,7 +232,10 @@ private:
 
     void ShowChatText(const String& row);
 
-    // Creates ////
+    // Start Server
+    void DoStartServer();
+
+        // Creates ////
     /// Construct the scene content.
     //void CreateScene();
     void CreateEmptyScene(Context* context);

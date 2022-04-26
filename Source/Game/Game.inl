@@ -62,8 +62,7 @@ Game::Game(Context* context) :
 {
 }
 
-void Game::Setup()
-{
+void Game::Setup() {
     // Modify engine startup parameters
     engineParameters_[EP_WINDOW_TITLE] = GetTypeName();
 //    engineParameters_[EP_WINDOW_WIDTH] = 1080;
@@ -73,25 +72,39 @@ void Game::Setup()
     engineParameters_[EP_WINDOW_HEIGHT] = 1080;
 
     //1920 x 1080
-    engineParameters_[EP_LOG_NAME]       = GetSubsystem<FileSystem>()->GetProgramDir() + "mayascape.log";
+    engineParameters_[EP_LOG_NAME] = GetSubsystem<FileSystem>()->GetProgramDir() + "mayascape.log";
 //    engineParameters_[EP_LOG_NAME]     = GetSubsystem<FileSystem>()->GetAppPreferencesDir("urho3d", "logs") + GetTypeName() + ".log";
-    engineParameters_[EP_FULL_SCREEN]  = false;
-    engineParameters_[EP_HEADLESS]     = false;
-    engineParameters_[EP_SOUND]        = true;
+    engineParameters_[EP_FULL_SCREEN] = false;
+    engineParameters_[EP_HEADLESS] = false;
+    engineParameters_[EP_SOUND] = true;
 
     // Construct a search path to find the resource prefix with two entries:
     // The first entry is an empty path which will be substituted with program/bin directory -- this entry is for binary when it is still in build tree
     // The second and third entries are possible relative paths from the installed program/bin directory to the asset directory -- these entries are for binary when it is in the Urho3D SDK installation location
 //    if (!engineParameters_.Contains(EP_RESOURCE_PREFIX_PATHS))
- //       engineParameters_[EP_RESOURCE_PREFIX_PATHS] = ";../share/Resources;../share/Urho3D/Resources";
+    //       engineParameters_[EP_RESOURCE_PREFIX_PATHS] = ";../share/Resources;../share/Urho3D/Resources";
 //    engineParameters_["ResourcePaths"] = "Data;;Data/NetDemo;";
 
     engineParameters_[EP_RESOURCE_PATHS] = "Data;CoreData";
 
     // Theme song
 //    String trackName = bzRadioTracksTrackName[7].c_str();
- //   PlayMusic(trackName);
+    //   PlayMusic(trackName);
 
+
+    // Check for auto start server
+    if (!GetArguments().Empty()) {
+
+        for (unsigned i = 0; i < GetArguments().Size(); ++i) {
+            if (GetArguments()[i].Length() > 1 && GetArguments()[i][0] == '-') {
+                String argument = GetArguments()[i].Substring(1);
+                String value = i + 1 < GetArguments().Size() ? GetArguments()[i + 1] : String::EMPTY;
+
+                if (argument == "startServer")
+                    autoStartServer_ = true;
+            }
+        }
+    }
 }
 
 void Game::Start()

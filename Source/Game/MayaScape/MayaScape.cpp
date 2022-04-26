@@ -408,6 +408,11 @@ void MayaScape::Start() {
     ChangeDebugHudText();
 
     Game::InitMouseMode(MM_FREE);
+
+    // startServer
+    if(autoStartServer_) {
+        DoStartServer();
+    }
 }
 
 
@@ -815,6 +820,7 @@ void MayaScape::SubscribeToEvents() {
 
     // Subscribe to fixed timestep physics updates for setting or applying controls
     SubscribeToEvent(E_PHYSICSPRESTEP, URHO3D_HANDLER(MayaScape, HandlePhysicsPreStep));
+
 }
 
 // CLIENT CODE
@@ -4083,10 +4089,8 @@ void MayaScape::HandleDisconnect(StringHash eventType, VariantMap &eventData) {
     UpdateButtons();
 }
 
-void MayaScape::HandleStartServer(StringHash eventType, VariantMap &eventData) {
 
-    // SERVER CODE STARTS
-
+void MayaScape::DoStartServer() {
     Server *server = GetSubsystem<Server>();
     if (!server->StartServer(SERVER_PORT)) {
         engine_->Exit();
@@ -4150,7 +4154,11 @@ void MayaScape::HandleStartServer(StringHash eventType, VariantMap &eventData) {
     //LoadLevel(4);
     //LoadLevel(5);
     LoadLevel(6);
+}
 
+void MayaScape::HandleStartServer(StringHash eventType, VariantMap &eventData) {
+    // SERVER CODE STARTS
+    DoStartServer();
 }
 
 void MayaScape::HandleConnectionStatus(StringHash eventType, VariantMap &eventData) {
