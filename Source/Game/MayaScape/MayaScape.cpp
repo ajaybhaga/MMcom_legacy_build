@@ -369,46 +369,48 @@ void MayaScape::Start() {
     // Reset focus index
     focusIndex_ = 0;
 
-    // Generate UI client for network management
-    CreateUI();
-
     // Create empty scene
     CreateEmptyScene(context_);
 
-    // Enable for 3D sounds to work (attach to camera node)
-    SoundListener *listener = scene_->CreateComponent<SoundListener>(LOCAL);
-    GetSubsystem<Audio>()->SetListener(listener);
+    if (!headless_) {
+        // Generate UI client for network management
+        CreateUI();
 
-    // you can set master volumes for the different kinds if sounds, 30% for music
-    GetSubsystem<Audio>()->SetMasterGain(SOUND_MUSIC, 0.3);
-    GetSubsystem<Audio>()->SetMasterGain(SOUND_EFFECT, 0.6);
+        // Enable for 3D sounds to work (attach to camera node)
+        SoundListener *listener = scene_->CreateComponent<SoundListener>(LOCAL);
+        GetSubsystem<Audio>()->SetListener(listener);
 
-    // Theme song
-    String trackName = "Sounds/BZradio/mm-theme-rp01.ogg";
-            //bzRadioTracksTrackName[7].c_str();
-    PlayMusic(trackName);
+        // you can set master volumes for the different kinds if sounds, 30% for music
+        GetSubsystem<Audio>()->SetMasterGain(SOUND_MUSIC, 0.3);
+        GetSubsystem<Audio>()->SetMasterGain(SOUND_EFFECT, 0.6);
 
+        // Theme song
+        String trackName = "Sounds/BZradio/mm-theme-rp01.ogg";
+        //bzRadioTracksTrackName[7].c_str();
+        PlayMusic(trackName);
 
-    // Start in menu mode
-    //UpdateUIState(false);
+        // Start in menu mode
+        //UpdateUIState(false);
 
-    /*
-    // Create boids
-    for (int i = 0; i < numOfBoidsets; i++)
-    {
-        boids[i].Initialise(cache, scene_, Vector3(0.0f, 20.0f, 0.0f));
-    }*/
+        /*
+        // Create boids
+        for (int i = 0; i < numOfBoidsets; i++)
+        {
+            boids[i].Initialise(cache, scene_, Vector3(0.0f, 20.0f, 0.0f));
+        }*/
 
-    // targetCameraPos_ = Vector3(0.0f, 40.0f, CAMERA_DISTANCE);
+        // targetCameraPos_ = Vector3(0.0f, 40.0f, CAMERA_DISTANCE);
+
+        ChangeDebugHudText();
+
+        Game::InitMouseMode(MM_FREE);
+    }
+
     fpsTimer_.Reset();
     framesCount_ = 0;
 
     // Hook up to the frame update events
     SubscribeToEvents();
-
-    ChangeDebugHudText();
-
-    Game::InitMouseMode(MM_FREE);
 
     // startServer
     if(autoStartServer_) {
@@ -634,13 +636,19 @@ void MayaScape::HandleResourceBackgroundLoaded(StringHash eventType, VariantMap&
     for (int i = 0; i < sticks; i++) {
         progressBar += "|";
     }
-    progressText_->SetText(progressBar);
 
-
-    auto* resource = static_cast<Resource*>(eventData[P_RESOURCE].GetPtr());
+    auto *resource = static_cast<Resource *>(eventData[P_RESOURCE].GetPtr());
     String resourceName = resource->GetName();
-    progressResText_->SetText(progressStr + String("% ") + resourceName);
-    progressResText_->SetVisible(levelLoading_);
+
+    if (!headless_) {
+        progressText_->SetText(progressBar);
+        progressResText_->SetText(progressStr + String("% ") + resourceName);
+        progressResText_->SetVisible(levelLoading_);
+    } else {
+        // HEADLESS MODE
+        String progStr = progressStr + String("% ") + resourceName;
+        URHO3D_LOGINFOF("%s", progStr.CString());
+    }
 }
 
 
@@ -655,16 +663,20 @@ void MayaScape::HandleClientResourceLoadAttempt(StringHash eventType, VariantMap
     for (int i = 0; i < sticks; i++) {
         progressBar += "|";
     }
-    progressText_->SetText(progressBar);
-
 
     String resourceName = eventData[P_RESOURCENAME].GetString();
-    //String resourceName = resource->GetName();
-    progressResText_->SetText(progressStr + String("% ") + resourceName);
-    progressText_->SetVisible(true);
-    progressResText_->SetVisible(true);
 
-
+    if (!headless_) {
+        progressText_->SetText(progressBar);
+        //String resourceName = resource->GetName();
+        progressResText_->SetText(progressStr + String("% ") + resourceName);
+        progressText_->SetVisible(true);
+        progressResText_->SetVisible(true);
+    } else {
+        // HEADLESS MODE
+        String progStr = progressStr + String("% ") + resourceName;
+        URHO3D_LOGINFOF("%s", progStr.CString());
+    }
 
     if (clientLevelLoading_) {
         // Show updated frame
@@ -695,14 +707,24 @@ void MayaScape::HandleClientResourceLoadFinished(StringHash eventType, VariantMa
     for (int i = 0; i < sticks; i++) {
         progressBar += "|";
     }
-    progressText_->SetText(progressBar);
-
 
     String resourceName = eventData[P_RESOURCENAME].GetString();
-    //String resourceName = resource->GetName();
-    progressResText_->SetText(progressStr + String("% ") + resourceName);
-    progressText_->SetVisible(true);
-    progressResText_->SetVisible(true);
+
+    if (!headless_) {
+        progressText_->SetText(progressBar);
+
+
+        //String resourceName = resource->GetName();
+        progressResText_->SetText(progressStr + String("% ") + resourceName);
+        progressText_->SetVisible(true);
+        progressResText_->SetVisible(true);
+
+    } else {
+        // HEADLESS MODE
+        String progStr = progressStr + String("% ") + resourceName;
+        URHO3D_LOGINFOF("%s", progStr.CString());
+    }
+
 
     if (clientLevelLoading_) {
         // Show updated frame
@@ -2877,7 +2899,8 @@ void MayaScape::ReloadScene(bool reInit) {
                                                tmpNode->GetWorldRotation())) {
                    // prevent the trigger to reload while already loading
                    levelLoadPending_ = levelPathFile;
-                   progressText_->SetText("");
+                   if (!headless_)
+                    progressText_->SetText("");
                } else {
                    URHO3D_LOGERROR("InstantiateXMLAsync failed to init, level=" + levelPathFile);
                }
@@ -3912,8 +3935,9 @@ void MayaScape::HandleLevelLoaded(StringHash eventType, VariantMap& eventData)
     // Spawn the player to server itself
     SpawnPlayer();
 
-    // Start in game mode
-    UpdateUIState(true);
+    if (!headless_)
+        // Start in game mode
+        UpdateUIState(true);
 
     // Attach agent bot list to server (for login list)
     Vector<String> botList;
@@ -3962,9 +3986,11 @@ void MayaScape::HandleLevelLoaded(StringHash eventType, VariantMap& eventData)
     }
 
 
-    // Clear menu
-    Renderer *renderer = GetSubsystem<Renderer>();
-    renderer->SetViewport(2, nullptr);
+    if (!headless_) {
+        // Clear menu
+        Renderer *renderer = GetSubsystem<Renderer>();
+        renderer->SetViewport(2, nullptr);
+    }
 
 }
 
@@ -4109,19 +4135,23 @@ void MayaScape::DoStartServer() {
 //    CreateAdminPlayer();
     isServer_ = true;
 
-    UpdateButtons();
+    if (!headless_)
+        UpdateButtons();
+
     // Switch to game mode
     //UpdateUIState(true);
     started_ = true;
 
-    // Set logo sprite alignment
-    logoSprite_->SetAlignment(HA_RIGHT, VA_TOP);
-    logoSprite_->SetPosition(-15, 180);
-    logoSprite_->SetScale(0.33f);
+    if (!headless_) {
+        // Set logo sprite alignment
+        logoSprite_->SetAlignment(HA_RIGHT, VA_TOP);
+        logoSprite_->SetPosition(-15, 180);
+        logoSprite_->SetScale(0.33f);
 
 
-    // Make logo not fully opaque to show the scene underneath
-    logoSprite_->SetOpacity(0.5f);
+        // Make logo not fully opaque to show the scene underneath
+        logoSprite_->SetOpacity(0.5f);
+    }
 
     StartMultiplayerGameSession();
 
@@ -4339,7 +4369,8 @@ void MayaScape::ShowChatText(const String &row) {
 void MayaScape::HandleLogMessage(StringHash /*eventType*/, VariantMap &eventData) {
     using namespace LogMessage;
 
-    ShowChatText(eventData[P_MESSAGE].GetString());
+    if (!headless_)
+        ShowChatText(eventData[P_MESSAGE].GetString());
 }
 
 void MayaScape::HandleSend(StringHash /*eventType*/, VariantMap &eventData) {
@@ -4512,7 +4543,8 @@ SharedPtr<Node> MayaScape::SpawnPlayer() {
     //GetSubsystem<Audio>()->SetListener(listener);
 
     // Setup game viewport
-    SetupGameViewports();
+    if (!headless_)
+        SetupGameViewports();
 
 
     return networkActorNode;

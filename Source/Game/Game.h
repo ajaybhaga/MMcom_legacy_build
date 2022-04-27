@@ -96,6 +96,9 @@ protected:
     // Auto start server flag (from command line argument)
     bool autoStartServer_;
 
+    // Headless instance
+    bool headless_;
+
 private:
     /// Create logo.
     void CreateLogo();

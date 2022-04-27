@@ -66,12 +66,13 @@ void Game::Setup() {
     // Modify engine startup parameters
     engineParameters_[EP_WINDOW_TITLE] = GetTypeName();
 
-
+    autoStartServer_ = false;
+    headless_ = false;
     //1920 x 1080
     engineParameters_[EP_LOG_NAME] = GetSubsystem<FileSystem>()->GetProgramDir() + "mayascape.log";
 //    engineParameters_[EP_LOG_NAME]     = GetSubsystem<FileSystem>()->GetAppPreferencesDir("urho3d", "logs") + GetTypeName() + ".log";
     engineParameters_[EP_FULL_SCREEN] = false;
-    engineParameters_[EP_HEADLESS] = false;
+    engineParameters_[EP_HEADLESS] = headless_;
     engineParameters_[EP_SOUND] = true;
 
     // Construct a search path to find the resource prefix with two entries:
@@ -98,6 +99,9 @@ void Game::Setup() {
 
                 if (argument == "startServer")
                     autoStartServer_ = true;
+
+                if (argument == "headless")
+                    headless_ = true;
             }
         }
     }
@@ -125,23 +129,26 @@ void Game::Start()
         // On desktop platform, do not detect touch when we already got a joystick
         SubscribeToEvent(E_TOUCHBEGIN, URHO3D_HANDLER(Game, HandleTouchBegin));
 
-    // Create logo
-    CreateLogo();
+    if (!headless_) {
+        // Create logo
+        CreateLogo();
 
-    // Set custom window Title & Icon
-    SetWindowTitleAndIcon();
+        // Set custom window Title & Icon
+        SetWindowTitleAndIcon();
 
-    // Create console and debug HUD
-    CreateConsoleAndDebugHud();
+        // Create console and debug HUD
+        CreateConsoleAndDebugHud();
 
-    // Subscribe key down event
-    SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(Game, HandleKeyDown));
-    // Subscribe key up event
-    SubscribeToEvent(E_KEYUP, URHO3D_HANDLER(Game, HandleKeyUp));
-    // Subscribe scene update event
-    SubscribeToEvent(E_SCENEUPDATE, URHO3D_HANDLER(Game, HandleSceneUpdate));
+        // Subscribe key down event
+        SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(Game, HandleKeyDown));
+        // Subscribe key up event
+        SubscribeToEvent(E_KEYUP, URHO3D_HANDLER(Game, HandleKeyUp));
+        // Subscribe scene update event
+        SubscribeToEvent(E_SCENEUPDATE, URHO3D_HANDLER(Game, HandleSceneUpdate));
+    }
 
-
+    /*
+     * // not required with headless auto start server
     if (autoStartServer_) {
         Renderer *renderer = GetSubsystem<Renderer>();
         // Reduce graphics
@@ -149,7 +156,7 @@ void Game::Start()
         renderer->SetMaterialQuality(QUALITY_LOW);
         renderer->SetSpecularLighting(false);
         renderer->SetDrawShadows(false);
-    }
+    }*/
 
 }
 
@@ -271,12 +278,15 @@ void Game::SetWindowTitleAndIcon()
     ResourceCache* cache = GetSubsystem<ResourceCache>();
     Graphics* graphics = GetSubsystem<Graphics>();
     Image* icon = cache->GetResource<Image>("Textures/UrhoIcon.png");
-    graphics->SetWindowIcon(icon);
 
-    std::string s;
-    s = s.append("Monkey Maya Studios: MayaScape Build ").append(datetime()).append(" (demo)");
+    if (graphics) {
+        graphics->SetWindowIcon(icon);
 
-    graphics->SetWindowTitle(s.c_str());
+        std::string s;
+        s = s.append("Monkey Maya Studios: MayaScape Build ").append(datetime()).append(" (demo)");
+
+        graphics->SetWindowTitle(s.c_str());
+    }
     //sprintf("MayaSpace Engine Build " " by Ajay Bhaga", __DATE__));
 }
 
