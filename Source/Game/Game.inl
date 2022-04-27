@@ -72,8 +72,8 @@ void Game::Setup() {
     engineParameters_[EP_LOG_NAME] = GetSubsystem<FileSystem>()->GetProgramDir() + "mayascape.log";
 //    engineParameters_[EP_LOG_NAME]     = GetSubsystem<FileSystem>()->GetAppPreferencesDir("urho3d", "logs") + GetTypeName() + ".log";
     engineParameters_[EP_FULL_SCREEN] = false;
-    engineParameters_[EP_HEADLESS] = headless_;
     engineParameters_[EP_SOUND] = true;
+
 
     // Construct a search path to find the resource prefix with two entries:
     // The first entry is an empty path which will be substituted with program/bin directory -- this entry is for binary when it is still in build tree
@@ -106,11 +106,17 @@ void Game::Setup() {
         }
     }
 
+
+    //engineParameters_[EP_HEADLESS] = headless_;
+// DO NOT USE URHO3D HEADLESS WILL DISABLE too much
+    //engineParameters_[EP_HEADLESS] = true;
+    engineParameters_[EP_HEADLESS] = false; // TODO: Investigate how to use true headless
+    engineParameters_[EP_WINDOW_RESIZABLE] = true;
+
     if (autoStartServer_) {
         // Server resolution
         engineParameters_[EP_WINDOW_WIDTH] = 1080;
         engineParameters_[EP_WINDOW_HEIGHT] = 768;
-
 
     } else {
         // Player resolution
@@ -132,20 +138,18 @@ void Game::Start()
     if (!headless_) {
         // Create logo
         CreateLogo();
-
         // Set custom window Title & Icon
         SetWindowTitleAndIcon();
-
         // Create console and debug HUD
         CreateConsoleAndDebugHud();
-
-        // Subscribe key down event
-        SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(Game, HandleKeyDown));
-        // Subscribe key up event
-        SubscribeToEvent(E_KEYUP, URHO3D_HANDLER(Game, HandleKeyUp));
-        // Subscribe scene update event
-        SubscribeToEvent(E_SCENEUPDATE, URHO3D_HANDLER(Game, HandleSceneUpdate));
     }
+
+    // Subscribe key down event
+    SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(Game, HandleKeyDown));
+    // Subscribe key up event
+    SubscribeToEvent(E_KEYUP, URHO3D_HANDLER(Game, HandleKeyUp));
+    // Subscribe scene update event
+    SubscribeToEvent(E_SCENEUPDATE, URHO3D_HANDLER(Game, HandleSceneUpdate));
 
     /*
      * // not required with headless auto start server
