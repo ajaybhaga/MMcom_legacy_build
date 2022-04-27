@@ -5254,7 +5254,7 @@ void MayaScape::InitiateGameMap(Scene *scene) {
     for (int i = 0; i < NUM_DEBUG_FIELDS; i++) {
         debugText_[i] = ui->GetRoot()->CreateChild<Text>("DebugText");
         debugText_[i]->SetAlignment(HA_LEFT, VA_CENTER);
-        debugText_[i]->SetPosition(10.0f, 10.0 + (i * 26));
+        debugText_[i]->SetPosition(10.0f, 10.0 + (i * 30));
         debugText_[i]->SetFont(cache->GetResource<Font>(INGAME_FONT2), 22);
         debugText_[i]->SetTextEffect(TE_SHADOW);
         debugText_[i]->SetVisible(true);
