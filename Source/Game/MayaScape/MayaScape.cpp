@@ -4870,8 +4870,20 @@ void MayaScape::CreateClientUI() {
     textureWidth = steerWheelTexture->GetWidth();
     textureHeight = steerWheelTexture->GetHeight();
 
-    float steerWheelX = 900.0f;
-    float steerWheelY = 600.0f - 15.0f;
+    //float steerWheelX = 900.0f;
+    //float steerWheelY = 600.0f - 15.0f;
+
+//    auto* graphics = GetSubsystem<Graphics>();
+//    auto* camera = pCamera;
+// Adjust with delta for mouse
+
+  //  Input *input = GetSubsystem<Input>();
+
+    //IntVector2 mouseMove = input->GetMousePosition();
+
+    float steerWheelX = graphics->GetWidth()-140.0f;
+    float steerWheelY = graphics->GetHeight()-140.0f;
+
 
     steerWheelSprite_->SetScale(256.0f / textureWidth);
     steerWheelSprite_->SetSize(textureWidth, textureHeight);
