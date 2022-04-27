@@ -171,6 +171,7 @@ std::vector<std::string> gameServers = {
 "192.168.4.58", // neko (dev)
 "192.168.4.77", // lady (remote local game server)
 "192.168.4.99", // guinea
+"192.168.4.27", // studio
 // At-home local server
 "localhost", // local game server
 "www.monkeymaya.com", // remote game server
