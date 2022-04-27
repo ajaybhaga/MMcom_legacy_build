@@ -402,9 +402,9 @@ void MayaScape::Start() {
         // targetCameraPos_ = Vector3(0.0f, 40.0f, CAMERA_DISTANCE);
 
         ChangeDebugHudText();
-
-        Game::InitMouseMode(MM_FREE);
     }
+
+    Game::InitMouseMode(MM_FREE);
 
     fpsTimer_.Reset();
     framesCount_ = 0;
