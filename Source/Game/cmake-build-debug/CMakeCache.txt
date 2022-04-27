@@ -14,6 +14,9 @@
 # EXTERNAL cache entries
 ########################
 
+//No help, variable specified on the command line.
+ANDROID:UNINITIALIZED=0
+
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line
 
@@ -215,6 +218,24 @@ EXECUTABLE_OUTPUT_PATH:PATH=
 
 //Single output directory for building all libraries.
 LIBRARY_OUTPUT_PATH:PATH=
+
+//No help, variable specified on the command line.
+MINGW:UNINITIALIZED=1
+
+//No help, variable specified on the command line.
+MINGW_SYSROOT:UNINITIALIZED=/
+
+//No help, variable specified on the command line.
+URHO3D_LUA:UNINITIALIZED=1
+
+//No help, variable specified on the command line.
+URHO3D_OPENGL:UNINITIALIZED=1
+
+//No help, variable specified on the command line.
+URHO3D_TRACY_PROFILING:UNINITIALIZED=1
+
+//No help, variable specified on the command line.
+URHO3D_WIN32_CONSOLE:UNINITIALIZED=1
 
 //Value Computed by CMake
 Urho3D-Game_BINARY_DIR:STATIC=/code/dev/MonkeyMaya_com/Source/Game/cmake-build-debug

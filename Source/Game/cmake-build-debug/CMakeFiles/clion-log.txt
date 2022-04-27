@@ -1,4 +1,4 @@
-/code/tools/clion-2021.3.1/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/code/tools/clion-2021.3.1/bin/ninja/linux/ninja -G Ninja /code/dev/MonkeyMaya_com/Source/Game
+/code/tools/clion-2021.3.1/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/code/tools/clion-2021.3.1/bin/ninja/linux/ninja -D URHO3D_TRACY_PROFILING=1 -D URHO3D_LUA=1 -D ANDROID=0 -DURHO3D_OPENGL=1 -D MINGW=1 -DURHO3D_WIN32_CONSOLE=1 -DMINGW_SYSROOT=/ -G Ninja /code/dev/MonkeyMaya_com/Source/Game
 -- The C compiler identification is GNU 9.3.0
 -- The CXX compiler identification is GNU 9.3.0
 -- Detecting C compiler ABI info
@@ -11,7 +11,7 @@
 -- Check for working CXX compiler: /usr/bin/c++ - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
-CMake Error at CMakeLists.txt:29 (find_package):
+CMake Error at CMakeLists.txt:28 (find_package):
   By not providing "FindUrho3D.cmake" in CMAKE_MODULE_PATH this project has
   asked CMake to find a package configuration file provided by "Urho3D", but
   CMake did not find one.

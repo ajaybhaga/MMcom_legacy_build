@@ -2806,12 +2806,15 @@ void MayaScape::HandleEndRendering(StringHash eventType, VariantMap &eventData) 
         for (int i = 0; i < sticks; i++) {
             progressBar += "|";
         }
-        progressText_->SetText(progressBar);
+        if (!headless_)
+            progressText_->SetText(progressBar);
     }
 
     if (!clientLevelLoading_) {
-        progressText_->SetVisible(levelLoading_);
-        progressResText_->SetVisible(levelLoading_);
+        if (!headless_) {
+            progressText_->SetVisible(levelLoading_);
+            progressResText_->SetVisible(levelLoading_);
+        }
     } else {
         int b = 0;
 
