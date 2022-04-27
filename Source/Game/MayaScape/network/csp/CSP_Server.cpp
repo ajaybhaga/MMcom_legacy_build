@@ -103,8 +103,8 @@ void CSP_Server::sendStateUpdate(Connection * connection)
 	// Set the last input ID per connection
 	//unsigned int last_id = client_inputs[connection].extraData_["id"].GetUInt();
 	unsigned int last_id = clientLastIDs[connection];
-	
-	GetSubsystem<DebugHud>()->SetAppStats("last_id: ", last_id);
+
+	//GetSubsystem<DebugHud>()->SetAppStats("last_id: ", last_id);
 
 	state.Seek(0);
 	state.WriteUInt(last_id);

@@ -1183,7 +1183,8 @@ void MayaScape::HandlePhysicsPreStep(StringHash eventType, VariantMap &eventData
             // update last used ID
             cspServer_->clientLastIDs[connection] = controls.extraData_.Find("id")->second_.GetUInt();
 
-            GetSubsystem<DebugHud>()->SetAppStats("num_inputs: ", ++cspServer_->usedInputs);
+            if (!headless_)
+                GetSubsystem<DebugHud>()->SetAppStats("num_inputs: ", ++cspServer_->usedInputs);
 
             // reset controls
             controls = Controls();
