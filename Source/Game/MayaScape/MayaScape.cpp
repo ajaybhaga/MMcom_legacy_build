@@ -1593,6 +1593,7 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
     float timeStep = eventData[P_TIMESTEP].GetFloat();
 
     ticks += timeStep;
+    upTime_ += timeStep;
 
     // Skip on loading
     if (levelLoading_) return;
@@ -1641,13 +1642,25 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
             }
         }
 
+
+        // Calculate uptime
+        int seconds = Round(upTime_);
+        int minutes = seconds / 60;
+        seconds %= 60;
+        int hours = minutes / 60;
+        minutes %= 60;
+
         int k = 0;
         debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
         debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
         debugText_[k]->SetVisible(true);
+        debugText_[k]->SetText(String("Uptime: ") + String(hours) + String("h ") + String(minutes) + String("m ") + String(seconds) + String("s"));
+
+        k++;
+        debugText_[k]->SetAlignment(HA_LEFT, VA_TOP);
+        debugText_[k]->SetPosition(10.0f, 400 + (k * 12));
+        debugText_[k]->SetVisible(true);
         debugText_[k]->SetText(String("Cam Mode: ") + String(camMode_));
-
-
 
         float botSpeedKm = 0;
         float botAvgSpeedKm = 0;
@@ -5241,8 +5254,8 @@ void MayaScape::InitiateGameMap(Scene *scene) {
     for (int i = 0; i < NUM_DEBUG_FIELDS; i++) {
         debugText_[i] = ui->GetRoot()->CreateChild<Text>("DebugText");
         debugText_[i]->SetAlignment(HA_LEFT, VA_CENTER);
-        debugText_[i]->SetPosition(10.0f, 10.0 + (i * 12));
-        debugText_[i]->SetFont(cache->GetResource<Font>(INGAME_FONT2), 12);
+        debugText_[i]->SetPosition(10.0f, 10.0 + (i * 26));
+        debugText_[i]->SetFont(cache->GetResource<Font>(INGAME_FONT2), 22);
         debugText_[i]->SetTextEffect(TE_SHADOW);
         debugText_[i]->SetVisible(true);
         std::string debugData1;

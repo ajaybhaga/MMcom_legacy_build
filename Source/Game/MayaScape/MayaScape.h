@@ -480,6 +480,8 @@ private:
     Timer          fpsTimer_;
     int            framesCount_;
 
+    float upTime_ = 0; // Server uptime calculation
+
     // Network objects
     HashMap<Connection*, WeakPtr<Node> > serverObjects_;
     SharedPtr<UIElement> buttonContainer_;
