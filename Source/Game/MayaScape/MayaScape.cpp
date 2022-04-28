@@ -483,7 +483,10 @@ void MayaScape::UpdateUIState(bool state) {
     //studioText_->SetVisible(!state);
    // instructionsText_->SetVisible(!state);
   //  hudText_->SetVisible(!state);
-    buttonContainer_->SetVisible(!state);
+
+  if (showMenu_) {
+      buttonContainer_->SetVisible(!state);
+  }
 
     bkgSprite_->SetVisible(!state);
 
@@ -3033,11 +3036,7 @@ void MayaScape::PlaySoundEffectLocal(const String &soundName) {
     }
 }
 
-void MayaScape::HandlePlayButton(StringHash eventType, VariantMap &eventData) {
-
-    // CLIENT CODE STARTS
-
-    //gameServers
+void MayaScape::DoPlay() {
     Graphics *graphics = GetSubsystem<Graphics>();
     auto* renderer = GetSubsystem<Renderer>();
     ResourceCache *cache = GetSubsystem<ResourceCache>();
@@ -3050,7 +3049,12 @@ void MayaScape::HandlePlayButton(StringHash eventType, VariantMap &eventData) {
     input->SetMouseVisible(false);
 
     // Call on connect to server
-    HandleConnect(eventType, eventData);
+    DoConnect();
+}
+
+void MayaScape::HandlePlayButton(StringHash eventType, VariantMap &eventData) {
+    // CLIENT CODE STARTS
+    DoPlay();
 }
 
 // Network functions
@@ -3259,42 +3263,44 @@ void MayaScape::CreateUI() {
         hudTextList_.Push(hudText_);
     }
 
-    buttonContainer_ = root->CreateChild<UIElement>();
-    buttonContainer_->SetFixedSize(graphics->GetWidth(), graphics->GetHeight());
+    if (showMenu_) {
+        buttonContainer_ = root->CreateChild<UIElement>();
+        buttonContainer_->SetFixedSize(graphics->GetWidth(), graphics->GetHeight());
 
-    buttonContainer_->SetPosition(graphics->GetWidth()/5, graphics->GetHeight()/5);
-    buttonContainer_->SetHorizontalAlignment(HA_CENTER);
-    buttonContainer_->SetVerticalAlignment(VA_CENTER);
+        buttonContainer_->SetPosition(graphics->GetWidth() / 5, graphics->GetHeight() / 5);
+        buttonContainer_->SetHorizontalAlignment(HA_CENTER);
+        buttonContainer_->SetVerticalAlignment(VA_CENTER);
 
-    buttonContainer_->SetLayoutMode(Urho3D::LM_VERTICAL);
-    buttonContainer_->SetLayoutSpacing(10.0);
-    //textEdit_ = buttonContainer_->CreateChild<LineEdit>();
-    //textEdit_->SetStyleAuto();
-    //textEdit_->SetVisible(false);
+        buttonContainer_->SetLayoutMode(Urho3D::LM_VERTICAL);
+        buttonContainer_->SetLayoutSpacing(10.0);
+        //textEdit_ = buttonContainer_->CreateChild<LineEdit>();
+        //textEdit_->SetStyleAuto();
+        //textEdit_->SetVisible(false);
 
 
 
-    gameServerDropDownList_ = static_cast<SharedPtr<DropDownList>>(ui->GetRoot()->CreateChild<DropDownList>());
-    gameServerDropDownList_->SetStyleAuto();
+        gameServerDropDownList_ = static_cast<SharedPtr<DropDownList>>(ui->GetRoot()->CreateChild<DropDownList>());
+        gameServerDropDownList_->SetStyleAuto();
 
-    gameServerDropDownList_->SetFixedSize(580, 54);
-    gameServerDropDownList_->SetMinWidth(580);
-    for (int i = 0; i < gameServers.size(); i++) {
-        Text* text = new Text(context_);
-        text->SetFont(INGAME_FONT4, 24);
-        text->SetText(gameServers[i].c_str());
-        text->SetFixedSize(200, 50);
-        text->SetColor(Color::WHITE);
-        text->SetEffectStrokeThickness(2);
-        gameServerDropDownList_->AddItem(text);
+        gameServerDropDownList_->SetFixedSize(580, 54);
+        gameServerDropDownList_->SetMinWidth(580);
+        for (int i = 0; i < gameServers.size(); i++) {
+            Text *text = new Text(context_);
+            text->SetFont(INGAME_FONT4, 24);
+            text->SetText(gameServers[i].c_str());
+            text->SetFixedSize(200, 50);
+            text->SetColor(Color::WHITE);
+            text->SetEffectStrokeThickness(2);
+            gameServerDropDownList_->AddItem(text);
 
+        }
+        gameServerDropDownList_->SetSelection(0);
+
+        buttonContainer_->AddChild(gameServerDropDownList_);
+        playButton_ = CreateButton("PLAY", 580);
+        startServerButton_ = CreateButton("START SERVER", 580);
+        exitButton_ = CreateButton("EXIT", 580);
     }
-    gameServerDropDownList_->SetSelection(0);
-
-    buttonContainer_->AddChild(gameServerDropDownList_);
-    playButton_ = CreateButton("PLAY", 580);
-    startServerButton_ = CreateButton("START SERVER", 580);
-    exitButton_ = CreateButton("EXIT", 580);
 
     // Get logo texture
     Texture2D *logoTexture = cache->GetResource<Texture2D>("Textures/logo.png");
@@ -3346,6 +3352,13 @@ void MayaScape::CreateUI() {
 
     // No viewports or scene is defined. However, the default zone's fog color controls the fill color
     GetSubsystem<Renderer>()->GetDefaultZone()->SetFogColor(Color(0.0f, 0.0f, 0.1f));
+
+
+
+    if (!showMenu_) {
+        // Auto-play
+        DoPlay();
+    }
 }
 
 void MayaScape::InitiateViewport(Context* context, Scene* scene, Camera* camera, int id)
@@ -3490,10 +3503,12 @@ void MayaScape::UpdateButtons() {
     bool serverRunning = network->IsServerRunning();
 
 
-    playButton_->SetVisible(!serverConnection && !serverRunning);
-    startServerButton_->SetVisible(!serverConnection && !serverRunning);
-    //exitButton_->SetVisible(!serverConnection && !serverRunning);
-    //  textEdit_->SetVisible(!serverConnection && !serverRunning);
+    if (showMenu_) {
+        playButton_->SetVisible(!serverConnection && !serverRunning);
+        startServerButton_->SetVisible(!serverConnection && !serverRunning);
+        //exitButton_->SetVisible(!serverConnection && !serverRunning);
+        //  textEdit_->SetVisible(!serverConnection && !serverRunning);
+    }
 }
 
 // Manage camera movement for Client
@@ -4018,7 +4033,7 @@ void MayaScape::HandleConnectionFailed(StringHash eventType, VariantMap &eventDa
     InitMsgWindow("Connection failure", "Connection to server failed!");
 }
 
-void MayaScape::HandleConnect(StringHash eventType, VariantMap &eventData) {
+void MayaScape::DoConnect() {
     static const int MAX_ARRAY_SIZE = 10;
     static String colorArray[MAX_ARRAY_SIZE] =
             {
@@ -4039,9 +4054,14 @@ void MayaScape::HandleConnect(StringHash eventType, VariantMap &eventData) {
     Server *server = GetSubsystem<Server>();
 //..    String address = gameServers[gameServerSelected_].c_str();
 
-     UIElement *ui = gameServerDropDownList_->GetSelectedItem();
-     auto *text = static_cast<Text *>(ui);
-     String address = text->GetText();
+    String address;
+    if (gameServerDropDownList_) {
+        UIElement *ui = gameServerDropDownList_->GetSelectedItem();
+        auto *text = static_cast<Text *>(ui);
+        address = text->GetText();
+    } else {
+        address = gameServers[0].c_str();
+    }
 
 //    String address = textEdit_->GetText().Trimmed();
 
@@ -4088,8 +4108,10 @@ void MayaScape::HandleConnect(StringHash eventType, VariantMap &eventData) {
         // Store in local login list
         loginList_.Push(name.CString());
 
-        // Change UI -> hide menu and show game
-        UpdateButtons();
+        if (showMenu_) {
+            // Change UI -> hide menu and show game
+            UpdateButtons();
+        }
         started_ = true;
         // Set logo sprite alignment
         logoSprite_->SetAlignment(HA_RIGHT, VA_TOP);
@@ -4126,6 +4148,10 @@ void MayaScape::HandleConnect(StringHash eventType, VariantMap &eventData) {
 
     /// Subscribe the ServerConnected Event
     SubscribeToEvent(E_SERVERCONNECTED, URHO3D_HANDLER(MayaScape, HandleServerConnected));
+}
+
+void MayaScape::HandleConnect(StringHash eventType, VariantMap &eventData) {
+   DoConnect();
 }
 
 void MayaScape::HandleDisconnect(StringHash eventType, VariantMap &eventData) {

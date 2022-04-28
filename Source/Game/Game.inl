@@ -74,6 +74,9 @@ void Game::Setup() {
     engineParameters_[EP_FULL_SCREEN] = false;
     engineParameters_[EP_SOUND] = true;
 
+    // Default to not show menu
+    showMenu_ = false;
+
 
     // Construct a search path to find the resource prefix with two entries:
     // The first entry is an empty path which will be substituted with program/bin directory -- this entry is for binary when it is still in build tree
@@ -102,7 +105,12 @@ void Game::Setup() {
 
                 if (argument == "headless")
                     headless_ = true;
+
+                if (argument == "showMenu")
+                    showMenu_ = true;
+
             }
+
         }
     }
 

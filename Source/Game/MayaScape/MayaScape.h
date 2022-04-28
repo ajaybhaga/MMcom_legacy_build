@@ -234,6 +234,10 @@ private:
 
     // Start Server
     void DoStartServer();
+    // Play button
+    void DoPlay();
+    // Connect to server (client start)
+    void DoConnect();
 
         // Creates ////
     /// Construct the scene content.

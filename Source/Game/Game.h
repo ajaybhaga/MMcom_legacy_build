@@ -99,6 +99,9 @@ protected:
     // Headless instance
     bool headless_;
 
+    // Show menu?
+    bool showMenu_;
+
 private:
     /// Create logo.
     void CreateLogo();
