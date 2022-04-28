@@ -167,14 +167,14 @@ const int MSG_NODE_ERROR = 156;
 //#define GAME_SERVER_ADDRESS "www.monkeymaya.com"
 
 std::vector<std::string> gameServers = {
-"10.0.2.2", // android server address
-"192.168.4.58", // neko (dev)
-"192.168.4.77", // lady (remote local game server)
-"192.168.4.99", // guinea
-"192.168.4.27", // studio
-// At-home local server
-"localhost", // local game server
-"www.monkeymaya.com", // remote game server
+    "www.monkeymaya.com", // remote game server (default)
+    "10.0.2.2", // android server address
+    "192.168.4.58", // neko (dev)
+    "192.168.4.77", // lady (remote local game server)
+    "192.168.4.99", // guinea
+    "192.168.4.27", // studio
+    // At-home local server
+    "localhost", // local game server
 };
 
 // TODO: need to add increased move step to network actor (on remote server)
@@ -3289,6 +3289,7 @@ void MayaScape::CreateUI() {
         gameServerDropDownList_->AddItem(text);
 
     }
+    gameServerDropDownList_->SetSelection(0);
 
     buttonContainer_->AddChild(gameServerDropDownList_);
     playButton_ = CreateButton("PLAY", 580);
