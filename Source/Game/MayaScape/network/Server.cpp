@@ -144,6 +144,8 @@ void Server::SendLoginListRefreshMsg(Connection* connection)
 
     newEventData[P_LOGINLIST] = packedStr;
     connection->SendRemoteEvent(E_LOGINLISTREFRESH, true, newEventData);
+
+    URHO3D_LOGINFOF("E_LOGINLISTREFRESH -> %s", packedStr.CString());
 }
 
 
