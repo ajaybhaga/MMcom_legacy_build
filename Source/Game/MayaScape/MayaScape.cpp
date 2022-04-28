@@ -1225,7 +1225,16 @@ void MayaScape::HandleLoginListRefresh(StringHash eventType, VariantMap &eventDa
             k++;
         }
 
+
+        // Reload login list if text exists
+        for (int k = 0; k < loginList_.Size(); k++) {
+            // Load login list
+            if (loginListText_[k]) {
+                loginListText_[k]->SetText(loginList_[k]);
+            }
+        }
     }
+
 }
 
 // CLIENT CODE
@@ -5065,6 +5074,10 @@ void MayaScape::DestroyPlayer(Connection *connection) {
 
     // Push update to clients
     connection->SendServerUpdate();
+
+    // Send server login list refresh
+    Server *server = GetSubsystem<Server>();
+    server->SendLoginListRefreshMsg(connection);
 }
 
 // Spawn Player (NetworkActor on Server for Client)
@@ -5982,6 +5995,7 @@ void MayaScape::HandlePlayerRespawned(StringHash eventType, VariantMap& eventDat
     PlaySoundEffectLocal(driveAudioEffect[SOUND_FX_ENGINE_START].c_str());
 
 
+    // Initial refresh of login list
     for (int k = 0; k < loginList_.Size(); k++) {
         // Load login list
         if (loginListText_) {

@@ -99,14 +99,13 @@ public:
     }
 
     void SendRadioTrackNextMsg(Connection* connection, String trackArtist, String trackArtistLink, String trackName);
-
+    void SendLoginListRefreshMsg(Connection* connection);
 
 
 protected:
     void SubscribeToEvents();
     void SendStatusMsg(StringHash msg);
     void SendPlayerStateMsg(Connection* connection);
-    void SendLoginListRefreshMsg(Connection* connection);
 
     /// Handle connection status change (just update the buttons that should be shown.)
     void HandleConnectionStatus(StringHash eventType, VariantMap& eventData);
