@@ -462,6 +462,10 @@ private:
     // Debug text
     Text* debugText_[NUM_DEBUG_FIELDS];
 
+    #define NUM_LOGIN_FIELDS 16
+    // Login List text
+    Text* loginListText_[NUM_LOGIN_FIELDS];
+
     #define NUM_RADIO_TRACK_FIELDS 3
     // Radio text
     Text* radioText_[NUM_RADIO_TRACK_FIELDS];

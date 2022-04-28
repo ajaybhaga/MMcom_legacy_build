@@ -1215,10 +1215,16 @@ void MayaScape::HandleLoginListRefresh(StringHash eventType, VariantMap &eventDa
         // Store in local login list
         loginList_.Clear();
 
+        loginList_.Push("PLAYER LIST:");
+        loginList_.Push("============");
+
+        int k = 0;
         for (String login: rcvLoginList) {
             // Store in local login list
             loginList_.Push(login.CString());
+            k++;
         }
+
     }
 }
 
@@ -4113,11 +4119,11 @@ void MayaScape::DoConnect() {
             UpdateButtons();
         }
         started_ = true;
-        // Set logo sprite alignment
-        logoSprite_->SetAlignment(HA_RIGHT, VA_TOP);
-        logoSprite_->SetPosition(-15, 200);
-        logoSprite_->SetScale(0.33f);
 
+        // Set logo sprite alignment
+        logoSprite_->SetAlignment(HA_RIGHT, VA_BOTTOM);
+        logoSprite_->SetPosition(3, 3);
+        logoSprite_->SetScale(0.33f);
         // Make logo not fully opaque to show the scene underneath
         logoSprite_->SetOpacity(0.5f);
 
@@ -4618,16 +4624,16 @@ void MayaScape::CreateClientUI() {
     packetsIn_ = ui->GetRoot()->CreateChild<Text>();
     packetsIn_->SetText("Packets in : 0");
     packetsIn_->SetFont(cache->GetResource<Font>(INGAME_FONT2), 14);
-    packetsIn_->SetHorizontalAlignment(HA_RIGHT);
+    packetsIn_->SetHorizontalAlignment(HA_LEFT);
     packetsIn_->SetVerticalAlignment(VA_CENTER);
-    packetsIn_->SetPosition(-50, -5);
+    packetsIn_->SetPosition(10, -5);
 
     packetsOut_ = ui->GetRoot()->CreateChild<Text>();
     packetsOut_->SetText("Packets out: 0");
     packetsOut_->SetFont(cache->GetResource<Font>(INGAME_FONT2), 14);
-    packetsOut_->SetHorizontalAlignment(HA_RIGHT);
+    packetsOut_->SetHorizontalAlignment(HA_LEFT);
     packetsOut_->SetVerticalAlignment(VA_CENTER);
-    packetsOut_->SetPosition(-50, 5);
+    packetsOut_->SetPosition(10, 5);
 
 
     // Set the default UI style and font
@@ -4988,14 +4994,28 @@ void MayaScape::CreateClientUI() {
     for (int i = 0; i < NUM_DEBUG_FIELDS; i++) {
         debugText_[i] = ui->GetRoot()->CreateChild<Text>("DebugText");
         debugText_[i]->SetAlignment(HA_LEFT, VA_CENTER);
-        debugText_[i]->SetPosition(10.0f, 500.0 + (i * 14));
-        debugText_[i]->SetFont(font, 12);
+        debugText_[i]->SetPosition(10.0f, 500.0 + (i * 20));
+        debugText_[i]->SetFont(font, 18);
         debugText_[i]->SetTextEffect(TE_SHADOW);
         debugText_[i]->SetVisible(true);
         std::string debugData1;
         debugData1.append("-");
         debugText_[i]->SetText(debugData1.c_str());
     }
+
+    //loginList_
+    for (int i = 0; i < NUM_LOGIN_FIELDS; i++) {
+        loginListText_[i] = ui->GetRoot()->CreateChild<Text>("LoginListText");
+        loginListText_[i]->SetAlignment(HA_RIGHT, VA_TOP);
+        loginListText_[i]->SetPosition(-40.0f, 110.0 + (i * 24));
+        loginListText_[i]->SetFont(font, 20);
+        loginListText_[i]->SetTextEffect(TE_SHADOW);
+        loginListText_[i]->SetVisible(true);
+        std::string blnkData1;
+        blnkData1.append("");
+        loginListText_[i]->SetText(blnkData1.c_str());
+    }
+
 
     // Music radio track text
     for (int i = 0; i < NUM_RADIO_TRACK_FIELDS; i++) {
@@ -5267,14 +5287,14 @@ void MayaScape::InitiateGameMap(Scene *scene) {
     packetsIn_ = ui->GetRoot()->CreateChild<Text>();
     packetsIn_->SetText("Packets in : 0");
     packetsIn_->SetFont(cache->GetResource<Font>(INGAME_FONT2), 12);
-    packetsIn_->SetHorizontalAlignment(HA_RIGHT);
+    packetsIn_->SetHorizontalAlignment(HA_LEFT);
     packetsIn_->SetVerticalAlignment(VA_CENTER);
     packetsIn_->SetPosition(-50, -10);
 
     packetsOut_ = ui->GetRoot()->CreateChild<Text>();
     packetsOut_->SetText("Packets out: 0");
     packetsOut_->SetFont(cache->GetResource<Font>(INGAME_FONT2), 12);
-    packetsOut_->SetHorizontalAlignment(HA_RIGHT);
+    packetsOut_->SetHorizontalAlignment(HA_LEFT);
     packetsOut_->SetVerticalAlignment(VA_CENTER);
     packetsOut_->SetPosition(-50, 10);
 
@@ -5960,6 +5980,14 @@ void MayaScape::HandlePlayerRespawned(StringHash eventType, VariantMap& eventDat
 
     // Start engine
     PlaySoundEffectLocal(driveAudioEffect[SOUND_FX_ENGINE_START].c_str());
+
+
+    for (int k = 0; k < loginList_.Size(); k++) {
+        // Load login list
+        if (loginListText_) {
+            loginListText_[k]->SetText(loginList_[k]);
+        }
+    }
 }
 
 void MayaScape::HandlePlayerLoaded(StringHash eventType, VariantMap &eventData) {
