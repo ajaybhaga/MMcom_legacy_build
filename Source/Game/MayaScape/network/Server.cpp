@@ -144,9 +144,22 @@ void Server::SendLoginListRefreshMsg(Connection* connection)
 
     newEventData[P_LOGINLIST] = packedStr;
     connection->SendRemoteEvent(E_LOGINLISTREFRESH, true, newEventData);
+    String clientId = connection->ToString().CString();
 
-    URHO3D_LOGINFOF("E_LOGINLISTREFRESH -> %s", packedStr.CString());
+    URHO3D_LOGINFOF("E_LOGINLISTREFRESH -> %s to -> %s", packedStr.CString(), clientId.CString());
 }
+
+
+void Server::SendLoginListRefreshToClients() {
+    // Send refreshed login list to clients
+    Vector<Connection*> connList = loginList_.Values();
+    for (Connection *c : connList) {
+        if (c) {
+            SendLoginListRefreshMsg(c);
+        }
+    }
+}
+
 
 
 // SERVER: Send clients next radio track

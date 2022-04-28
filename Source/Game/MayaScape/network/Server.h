@@ -101,8 +101,10 @@ public:
     void SendRadioTrackNextMsg(Connection* connection, String trackArtist, String trackArtistLink, String trackName);
     void SendLoginListRefreshMsg(Connection* connection);
 
+    void SendLoginListRefreshToClients();
 
-protected:
+
+        protected:
     void SubscribeToEvents();
     void SendStatusMsg(StringHash msg);
     void SendPlayerStateMsg(Connection* connection);

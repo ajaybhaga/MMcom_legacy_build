@@ -5077,7 +5077,8 @@ void MayaScape::DestroyPlayer(Connection *connection) {
 
     // Send server login list refresh
     Server *server = GetSubsystem<Server>();
-    server->SendLoginListRefreshMsg(connection);
+    // Send refreshed login list to clients
+    server->SendLoginListRefreshToClients();
 }
 
 // Spawn Player (NetworkActor on Server for Client)
