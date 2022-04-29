@@ -790,7 +790,8 @@ void Vehicle::Init(Node* node) {
         //int carType = Random(5,12);
         //int carType = 11;//Random(8,9); police
 
-        int carType = 6;//Random(8,9); jeep
+        //int carType = 6; // Yugo
+        int carType = 12; // Kart
 
 
 
@@ -904,7 +905,7 @@ void Vehicle::Init(Node* node) {
             }
 
 
-            case 6 ... 11: {
+            case 6 ... 12: {
 
                 if (carType == 6) {
                     // CAR TYPE: YUGO
@@ -1161,25 +1162,10 @@ void Vehicle::Init(Node* node) {
 
                     // CAR TYPE: KART
 
-/*                    v3BoxExtents.x_ *= 15.0f;
-                    v3BoxExtents.y_ *= 6.5f;
-                    v3BoxExtents.z_ *= 14.1f;
-
-
-*/
-
                     float scaleF = 0.1f;
                     float scaleF2 = 0.4f;
 
-                    ///node_->SetScale(Vector3(0.2f,0.2f,0.2f));
-                    //adjNode->SetScale(Vector3(0.2f,0.2f,0.2f));
                     adjNode->SetScale(Vector3(scaleF, scaleF, scaleF));
-/*                    v3BoxExtents.x_ *= 3.0f;
-                    v3BoxExtents.y_ *= 1.3f;
-                    v3BoxExtents.z_ *= 2.82f;
-*
- */
-
 
                     v3BoxExtents.x_ *= 3.0f * scaleF2;
                     v3BoxExtents.y_ *= 1.3f * scaleF2;
@@ -1195,47 +1181,10 @@ void Vehicle::Init(Node* node) {
 
                     vehiclePrefab_->SetParent(node_);
 
-                    /*
-                    Node *adjNode2 = adjNode->CreateChild("Model");
-                    hullObjectTurrent_ = adjNode2->CreateComponent<StaticModel>();
-                    hullObjectTurrent_->SetCastShadows(true);
 
-                    //adjNode3->SetRotation(Quaternion(0.0f, -180.0f, -90.0f));
-                    hullObjectTurrent_->SetModel(cache->GetResource<Model>("Models/Vehicles/SetA/Models/Turrent.mdl"));
-                    hullObjectTurrent_->ApplyMaterialList("Models/Vehicles/SetA/Models/Turrent.txt");
-                    adjNode->SetPosition(Vector3(node_->GetPosition().x_, node_->GetPosition().y_ + 2.3f,
-                                                 node_->GetPosition().z_ - forwardWeightOffset - 4.0f));
-                    adjNode2->SetPosition(Vector3(-14.0f, -220.0f, 0.0f));
-                    adjNode2->SetScale(Vector3(0.4f, 0.4f, 0.4f));
-
-                    //towards_ = Vector3(towards_.x_*cos(turningVelocity_*timeStep) - towards_.y_*sin(turningVelocity_*timeStep), towards_.x_*sin(turningVelocity_*timeStep) + towards_.y_*cos(turningVelocity_*timeStep), 0.0f);
-                    //node->Rotate2D(turningVelocity_*timeStep);
-                    // The angle between rotation2d and x-axis
-                    //float angle = 90.0f + node->GetRotation2D();
-
-
-                    // apply to x
-                    adjNode2->SetRotation(Quaternion(-90.0f, 180.0f, 0.0f));
-*/
-/*
-                    //connectionHeight = -4.74f;
-                    //connectionHeight = -4.2f;
-                    connectionHeight = -1.4f;//-2.2f;
-                    //wheelSpace = 2.4f;
-                    wheelSpace = 17.1f*scaleF;
-                    // chassis width -> 35 * 20% -> 7
-                    //wheelX = ((7 / 2.0f) + wheelWidth_);
-                    wheelX = ((2.6f / 2.0f) + wheelWidth_);
-*/
-
-                    //connectionHeight = -1.4f;//-2.2f; // Sahin
-                    //wheelSpace = 17.1f*scaleF; // Sahin
-                    //wheelX = ((2.6f / 2.0f) + wheelWidth_); // Sahin
-
-                    connectionHeight = -1.4f;//-2.2f; // Yugo
-                    wheelSpace = 24.1f * scaleF; // Yugo
-                    wheelX = ((2.6f / 2.0f) + wheelWidth_); // Yugo
-
+                    connectionHeight = -0.2f; // Kart
+                    wheelSpace = 24.1f * scaleF; // Kart
+                    wheelX = ((2.6f / 2.0f) + wheelWidth_); // Kart
 
 
                     hullColShape_->SetBox(v3BoxExtents);
@@ -1243,8 +1192,6 @@ void Vehicle::Init(Node* node) {
                     // Important for vehicle physics balancing
                     //node_->SetScale(Vector3(3.3, 2.6f, 3.3f));
                     node_->SetScale(Vector3(0.4f, 0.35f, 0.4f));
-
-
 
 
                     // Front left
