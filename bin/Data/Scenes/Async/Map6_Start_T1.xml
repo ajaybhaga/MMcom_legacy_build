@@ -5,10 +5,10 @@
 	<attribute name="Smoothing Constant" value="50" />
 	<attribute name="Snap Threshold" value="5" />
 	<attribute name="Elapsed Time" value="8.737" />
-	<attribute name="Next Replicated Node ID" value="204" />
-	<attribute name="Next Replicated Component ID" value="161" />
-	<attribute name="Next Local Node ID" value="16777245" />
-	<attribute name="Next Local Component ID" value="16777564" />
+	<attribute name="Next Replicated Node ID" value="205" />
+	<attribute name="Next Replicated Component ID" value="162" />
+	<attribute name="Next Local Node ID" value="16777246" />
+	<attribute name="Next Local Component ID" value="16777576" />
 	<attribute name="Variables" />
 	<attribute name="Variable Names" value="" />
 	<component type="Octree" id="1" />
@@ -143,6 +143,21 @@
 				<attribute name="Scale" value="100 100 100" />
 				<attribute name="Variables" />
 				<component type="StaticModel" id="38">
+					<attribute name="Model" value="Model;Models/AssetPack/starfish_T.mdl" />
+					<attribute name="Material" value="Material;Materials/ORANGE YELLOW.xml" />
+				</component>
+			</node>
+			<node id="204">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="build_tentA" />
+				<attribute name="Tags">
+					<string value="levelLoadTrigger" />
+				</attribute>
+				<attribute name="Position" value="981.433 123.457 416.039" />
+				<attribute name="Rotation" value="0.704927 0.704927 -0.055479 0.055479" />
+				<attribute name="Scale" value="100 100 100" />
+				<attribute name="Variables" />
+				<component type="StaticModel" id="161">
 					<attribute name="Model" value="Model;Models/AssetPack/starfish_T.mdl" />
 					<attribute name="Material" value="Material;Materials/ORANGE YELLOW.xml" />
 				</component>

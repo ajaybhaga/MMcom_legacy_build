@@ -515,6 +515,13 @@ private:
     bool starBMarkerSet_;
 
 
+    Vector3 tentAMarker_;
+    bool buildTentAMarkerSet_;
+
+
+
+
+
     Vector2 joySteer_;
 
 

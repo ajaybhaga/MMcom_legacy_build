@@ -256,8 +256,10 @@ MayaScape::MayaScape(Context *context) :
         sndFx_(true),
         starAMarker_(Vector3(0,0,0)),
         starBMarker_(Vector3(0,0,0)),
+        tentAMarker_(Vector3(0,0,0)),
         starAMarkerSet_(false),
         starBMarkerSet_(false),
+        buildTentAMarkerSet_(false),
         levelLoading_(false)
 {
 
@@ -5806,6 +5808,29 @@ void MayaScape::InitiateGameMap(Scene *scene) {
         }
         starBMarkerSet_ = true;
     }
+
+
+
+    // Locate tent A
+    if (!buildTentAMarkerSet_) {
+
+        Node *starNode = scene_->GetChild("build_tentA", true);
+        if (starNode) {
+            URHO3D_LOGINFOF("build tent a -> located at -> [%f,%f,%f]", starNode->GetWorldPosition().x_,
+                            starNode->GetWorldPosition().y_, starNode->GetWorldPosition().z_);
+            tentAMarker_ = starNode->GetWorldPosition();
+        }
+
+        buildTentAMarkerSet_ = true;
+
+        // Build prefabs
+        XMLFile *f = cache->GetResource<XMLFile>("Objects/Tent_Building.xml");
+        Vector3 pos = Vector3(tentAMarker_);
+        Quaternion q = Quaternion(0, 90, 0);
+        Node *buildPrefab_ = scene_->InstantiateXML(f->GetRoot(), pos, q, REPLICATED);
+        buildPrefab_->SetParent(starNode);
+    }
+
 
     // Locate track
     Node *track1Node = scene_->GetChild("track1", true);
