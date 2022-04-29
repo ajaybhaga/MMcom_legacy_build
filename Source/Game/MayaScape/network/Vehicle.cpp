@@ -1173,8 +1173,6 @@ void Vehicle::Init(Node* node) {
 
 
                     XMLFile *f = cache->GetResource<XMLFile>("Objects/Kart_Vehicle.xml");
-//                    XMLFile *f = cache->GetResource<XMLFile>("Objects/Sahin_Vehicle.xml");
-                    //Vector3 pos = Vector3(0,0,42.0f); // Sahin
                     Vector3 pos = Vector3(0, 0, 0.0f); // Yugo
                     Quaternion q = Quaternion(0, 90, 0);
                     Node *vehiclePrefab_ = GetScene()->InstantiateXML(f->GetRoot(), pos, q, REPLICATED);
