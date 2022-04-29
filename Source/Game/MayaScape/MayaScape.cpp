@@ -3462,11 +3462,11 @@ void MayaScape::SetupGameViewports()
     //rearCam->SetFillMode(Urho3D::FILL_SOLID);
 
     // Set up the rear camera viewport on top of the front view ("rear view mirror")
-    float widthHalf = 240.0f;
-    float height = 120.0f;
+    float widthHalf = graphics->GetWidth()/6;
+    float height = graphics->GetHeight()/15;
     // The viewport index must be greater in that case, otherwise the view would be left behind
         SharedPtr<Viewport> rearViewport(new Viewport(context_, scene_, rearCam,
-                                                     IntRect((graphics->GetWidth() / 2)-widthHalf, 32, (graphics->GetWidth()/2)+widthHalf - 16, 32+height)));
+                                                     IntRect((graphics->GetWidth() / 2)-widthHalf, 2, (graphics->GetWidth()/2)+widthHalf - 16, 32+height)));
     renderer->SetViewport(1, rearViewport);
 
 
