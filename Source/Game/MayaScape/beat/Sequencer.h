@@ -4,7 +4,6 @@
 #define URHO3D_SEQUENCER_H
 
 #include "Beat.h"
-#include <Urho3D/Math/MathDefs.h>
 #include <Urho3D/Container/Vector.h>
 
 using namespace Urho3D;
@@ -20,7 +19,7 @@ protected:
 
 public:
 
-    Sequencer(int size_);
+    Sequencer();
     ~Sequencer();
     Vector<Beat*> GetSequence();
     void Play(float timeStep);

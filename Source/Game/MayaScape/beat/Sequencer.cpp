@@ -1,13 +1,14 @@
 #include "Sequencer.h"
 #include "Beat.h"
 
+#include <Urho3D/IO/Log.h>
+
 //=============================================================================
 // SEQUENCER
 //=============================================================================
 
-Sequencer::Sequencer(int size_) {
+Sequencer::Sequencer() : size_(8) {
     time_ = 0.0f;
-    this->size_ = size_;
     beat_ = 0;
 
     sequence_.Clear();
@@ -26,6 +27,8 @@ void Sequencer::Play(float timeStep) {
     time_ += timeStep;
     beat_++; // Increment beat
     beat_ = beat_ % size_; // Clamp by size
+
+    URHO3D_LOGDEBUGF("**SEQUENCER ** -> time %f, beat %d", time_, beat_);
 }
 
  Vector<Beat*> Sequencer::GetSequence() {

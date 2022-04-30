@@ -100,6 +100,8 @@ NetworkActor::NetworkActor(Context *context)
     acceleration_ = 0.0f;
 
     entered_ = false;
+
+    sequencer_ = Sequencer();
 }
 
 NetworkActor::~NetworkActor() {
@@ -480,6 +482,9 @@ void NetworkActor::FixedUpdate(float timeStep) {
 
     // DEBUG DRAW
     DebugDraw();
+
+    // Sequencer update: play time step
+    sequencer_.Play(timeStep);
 
     Vector3 localCenter = Vector3(0,0,0);
 
@@ -1191,4 +1196,8 @@ void NetworkActor::EnterVehicle() {
     // Submit updated attributes over network
     Urho3D::Component::MarkNetworkUpdate();
 
-};
+}
+/*
+const SharedPtr<Sequencer> &NetworkActor::getSequencer() const {
+    return sequencer_;
+};*/

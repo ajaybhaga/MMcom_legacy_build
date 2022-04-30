@@ -3,6 +3,8 @@
 #include <Urho3D/UI/Text3D.h>
 #include "ClientObj.h"
 #include "Vehicle.h"
+#include <MayaScape/beat/Sequencer.h>
+
 #include "../GameController.h"
 #include "../../../Urho3D/Graphics/AnimatedModel.h"
 #include "../../../Urho3D/Graphics/AnimationController.h"
@@ -150,6 +152,7 @@ public:
     virtual void FixedUpdate(float timeStep);
     // Mark NetworkActor disconnected, clean-up delayed
     void MarkDisconnected() { disconnected_ = true; }
+    const SharedPtr<Sequencer> &getSequencer() const;
 
     // PEER
     /// Movement controls. Assigned by the main program each physics update step.
@@ -254,6 +257,8 @@ public:
     SharedPtr<Text3D> floatingText_;
 
     float turrentAngle_ = 0;
+
+    Sequencer sequencer_;
 
 };
 
