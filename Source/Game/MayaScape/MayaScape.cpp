@@ -1364,7 +1364,12 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
     float velocity = eventData[P_VELOCITY].GetFloat();
     float steer = eventData[P_STEER].GetFloat();
 
-    URHO3D_LOGINFOF("Client -> HandlePlayerStateUpdate: %d %f, %f, %d, %f, %f, %f", wheelContactsNum, noWheelContactTime, distance, life, rpm, velocity, steer);
+    // Sequencer data
+    float currTime = eventData[P_SEQ_CURR_TIME].GetFloat();
+    float beatTimeStep = eventData[P_SEQ_BEAT_TIME].GetFloat();
+    int beat = eventData[P_SEQ_BEAT].GetInt();
+
+    URHO3D_LOGINFOF("Client -> HandlePlayerStateUpdate: %d %f, %f, %d, %f, %f, %f, %f, %f, %d", wheelContactsNum, noWheelContactTime, distance, life, rpm, velocity, steer, currTime, beatTimeStep, beat);
 
     // Update Client UI bars
 
