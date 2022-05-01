@@ -390,7 +390,7 @@ void MayaScape::Start() {
         // Theme song
         String trackName = "Sounds/BZradio/mm-theme-rp01.ogg";
         //bzRadioTracksTrackName[7].c_str();
-        PlayMusic(trackName);
+        //PlayMusic(trackName);
 
         // Start in menu mode
         //UpdateUIState(false);

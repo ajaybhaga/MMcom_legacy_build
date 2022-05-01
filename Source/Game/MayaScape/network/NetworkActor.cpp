@@ -101,7 +101,9 @@ NetworkActor::NetworkActor(Context *context)
 
     entered_ = false;
 
+    // Setup sequencer for user
     sequencer_ = Sequencer();
+    sequencer_.SetId(this->GetUserName());
 }
 
 NetworkActor::~NetworkActor() {

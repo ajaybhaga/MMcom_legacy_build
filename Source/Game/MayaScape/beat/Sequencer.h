@@ -4,10 +4,16 @@
 #define URHO3D_SEQUENCER_H
 
 #include "Beat.h"
+#include <Urho3D/Container/Str.h>
 #include <Urho3D/Container/Vector.h>
 
 using namespace Urho3D;
 class Sequencer {
+
+protected:
+    String id_;
+public:
+    const String &GetId() const;
 
 protected:
     Vector<Beat*> sequence_;
@@ -25,6 +31,14 @@ public:
     ~Sequencer();
     Vector<Beat*> GetSequence();
     void Play(float timeStep);
+
+    int GetSize() const;
+    int GetBeat() const;
+    float GetTime() const;
+    int GetBpm() const;
+    int GetBeatsPerBar() const;
+    float GetBeatTimeStep() const;
+    void SetId(const String &id);
 };
 
 
