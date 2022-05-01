@@ -352,6 +352,7 @@ private:
     SharedPtr<Camera> serverCam_;
     SharedPtr<Camera> clientCam_;
     SharedPtr<Camera> seqCam_;
+    float seqCamOffset_ = 0;
 
     SharedPtr<CollisionShape> terrainShape_;
 

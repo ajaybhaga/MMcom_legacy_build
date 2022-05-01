@@ -1371,6 +1371,18 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
         seqTimeCursorModel_->GetNode()->SetPosition(Vector3(seqTimeCursorModel_->GetNode()->GetPosition().x_, seqTimeCursorModel_->GetNode()->GetPosition().y_, 17.0f-beat*beatSpaceSize));
         beatModel_->GetNode()->SetPosition(Vector3(beatModel_->GetNode()->GetPosition().x_, beatModel_->GetNode()->GetPosition().y_, 17.0f-beat*beatSpaceSize));
         beatTimeCursorModel_->GetNode()->SetPosition(Vector3(beatTimeCursorModel_->GetNode()->GetPosition().x_, beatTimeCursorModel_->GetNode()->GetPosition().y_, 17.0f-beat*beatSpaceSize));
+
+        Vector3 acc = Vector3(0,0,0.0011f);
+        Vector3 v;
+        if (seqCamOffset_ < -0.165f) {
+            v = seqCam_->GetNode()->GetPosition();
+        } else {
+            seqCamOffset_ += acc.z_;
+            v = Vector3(seqCam_->GetNode()->GetPosition().x_, seqCam_->GetNode()->GetPosition().y_, seqCamOffset_);
+        }
+        seqCam_->GetNode()->SetPosition(Vector3(v.x_,v.y_,v.z_));
+
+        URHO3D_LOGINFOF("seqCamOffset: %f", seqCamOffset_);
     }
 
     // Update Client UI bars
