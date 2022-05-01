@@ -63,11 +63,11 @@ void Sequencer::Play(float timeStep) {
         if (beat_ > beatsPerBar_) {
             // Over bar limit
             bar_++;
-            beat_ = 0;
+            beat_ = 1;
             barTime_ = 0.0f;
         } else {
-            URHO3D_LOGDEBUGF("**SEQUENCER [%s] ** -> time %f, beat time: %f, bar time: %f, bar %d, beat %d", id_.CString(), currTime_,
-                             beatTime_, barTime_, bar_, beat_);
+ /*           URHO3D_LOGDEBUGF("**SEQUENCER [%s] ** -> time %f, beat time: %f, bar time: %f, bar %d, beat %d", id_.CString(), currTime_,
+                             beatTime_, barTime_, bar_, beat_);*/
         }
     }
 }

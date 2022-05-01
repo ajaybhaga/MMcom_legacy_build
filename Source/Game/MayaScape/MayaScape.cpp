@@ -2307,12 +2307,6 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                                 newEventData[P_RPM] = rpm;
                                                 newEventData[P_VELOCITY] = actor->vehicle_->GetRaycastVehicle()->GetSpeedKm();
                                                 newEventData[P_STEER] = actor->GetVehicle()->GetSteering();
-
-
-                                                // Finally send the object's node ID using a remote event
-                                                connection->SendRemoteEvent(E_PLAYERSTATE, true, newEventData);
-                                                // Reset timer
-                                                lastPlayerStateTime_ = 0.0f;
                                             }
 
                                             // Sequencer data
@@ -2320,6 +2314,10 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                             newEventData[P_SEQ_BEAT_TIME] = actor->GetSequencer().GetBeatTimeStep();
                                             newEventData[P_SEQ_BEAT] = actor->GetSequencer().GetBeat();
 
+                                            // Finally send the object's node ID using a remote event
+                                            connection->SendRemoteEvent(E_PLAYERSTATE, true, newEventData);
+                                            // Reset timer
+                                            lastPlayerStateTime_ = 0.0f;
 
                                         } // End of delayed send
 
