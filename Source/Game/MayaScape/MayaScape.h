@@ -246,7 +246,9 @@ private:
     // Viewport
     void InitiateViewport(Context* context, Scene* scene, Camera* camera, int id);
     void SetupMenuViewport(); // Setup menu view
+    void SetupSequencerViewport(); // Setup sequencer view
     void SetupGameViewports(); // Setup game view
+
 
     // Game Map
     void InitiateGameMap(Scene* scene);
@@ -349,6 +351,7 @@ private:
     // Camera objects
     SharedPtr<Camera> serverCam_;
     SharedPtr<Camera> clientCam_;
+    SharedPtr<Camera> seqCam_;
 
     SharedPtr<CollisionShape> terrainShape_;
 

@@ -81,7 +81,9 @@ protected:
     /// Scene.
     SharedPtr<Scene> scene_;
     SharedPtr<Scene> menuScene_;
+    SharedPtr<Scene> seqScene_;
     SharedPtr<Viewport> menuViewport_;
+    SharedPtr<Viewport> seqViewport_;
     /// Camera scene node.
     SharedPtr<Node> cameraNode_;
     /// Camera yaw angle.

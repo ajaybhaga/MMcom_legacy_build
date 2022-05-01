@@ -15,9 +15,9 @@ Sequencer::Sequencer() : size_(8) {
     beatsPerBar_ = 4;
 
     // 1 s = 1000 ms by beats in bar = beat time
-    beatTimeStep_ = (1.0f / beatsPerBar_) * 4.0f;
+    beatTimeStep_ = (1.0f / beatsPerBar_) * 4.0f; // 60 bpm
     // 8/4 beats/sec -> 2 beats/sec
-    // 4/4 beats/sec -> 1 beats/sec
+    // 4/4 beats/sec -> 1 beats/sec -> 60 beats in min -> 60 bpm
 
     // 4/4 = 250 ms time segment
 

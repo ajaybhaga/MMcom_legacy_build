@@ -3104,10 +3104,15 @@ void MayaScape::CreateUI() {
     // 0 = front view
     // 1 = rear view
     // 2 = menu view
-    renderer->SetNumViewports(2);
+    // 3 = sequencer view
+    renderer->SetNumViewports(4);
 
     // Setup menu viewport
     //SetupMenuViewport();
+
+    // Setup sequencer viewport
+    SetupSequencerViewport();
+
 
     ResourceCache *cache = GetSubsystem<ResourceCache>();
     UI *ui = GetSubsystem<UI>();
@@ -3386,6 +3391,36 @@ void MayaScape::InitiateViewport(Context* context, Scene* scene, Camera* camera,
 }
 
 
+
+void MayaScape::SetupSequencerViewport() {
+    auto* graphics = GetSubsystem<Graphics>();
+    auto* renderer = GetSubsystem<Renderer>();
+
+    // Load menu scene
+    ResourceCache *cache = GetSubsystem<ResourceCache>();
+    XMLFile *xmlLevel = cache->GetResource<XMLFile>("Scenes/MayaScapeSequencer.xml");
+    seqScene_ = MakeShared<Scene>(context_);
+    seqScene_->SetName("MenuScene");
+
+    if (xmlLevel) {
+        seqScene_->LoadXML(xmlLevel->GetRoot());
+        seqScene_->SetEnabled(true);
+        seqScene_->SetUpdateEnabled(true);
+    }
+
+
+    // Get camera
+    auto* seqCam = seqScene_->GetChild("seqCam",LOCAL)->GetComponent<Camera>();
+    auto* sequencer = seqScene_->GetChild("sequencer",LOCAL)->GetComponent<StaticModel>();
+    sequencer->GetNode()->SetScale(Vector3(1,1,1));
+
+    // The viewport index must be greater in that case, otherwise the view would be left behind
+    seqViewport_ = new Viewport(context_, seqScene_, seqCam,
+                                 IntRect(32, 32, graphics->GetWidth() - 32, graphics->GetHeight() - 32));
+    renderer->SetViewport(3, seqViewport_);
+}
+
+
 void MayaScape::SetupMenuViewport() {
     auto* graphics = GetSubsystem<Graphics>();
     auto* renderer = GetSubsystem<Renderer>();
@@ -3426,6 +3461,7 @@ void MayaScape::SetupGameViewports()
     // 0 = front view
     // 1 = rear view
     // 2 = menu view
+    // 3 = sequencer view
 
 
     SharedPtr<Camera> rearCam;
@@ -3456,21 +3492,38 @@ void MayaScape::SetupGameViewports()
 //    renderer->SetViewport(0, nullptr);
 //    renderer->SetViewport(1, nullptr);
 
+        SharedPtr<Camera> seqCam;
+        // Create camera opposite
+        Node* node = seqCam_->GetNode()->CreateChild("SequencerCamera", LOCAL);
+        seqCam = node->CreateComponent<Camera>();
+        seqCam->GetNode()->SetRotation(Quaternion(0, 180, 0));
+        seqCam->SetFarClip(48000.0f);
+        seqCam->SetFillMode(Urho3D::FILL_SOLID);
+
+
 
 
     //menuCam->SetFarClip(48000.0f);
     //rearCam->SetFillMode(Urho3D::FILL_SOLID);
 
     // Set up the rear camera viewport on top of the front view ("rear view mirror")
-    float widthHalf = graphics->GetWidth()/6;
-    float height = graphics->GetHeight()/15;
+    float widthP = graphics->GetWidth()/6;
+    float heightP = graphics->GetHeight()/15;
     // The viewport index must be greater in that case, otherwise the view would be left behind
         SharedPtr<Viewport> rearViewport(new Viewport(context_, scene_, rearCam,
-                                                     IntRect((graphics->GetWidth() / 2)-widthHalf, 2, (graphics->GetWidth()/2)+widthHalf - 16, 32+height)));
+                                                     IntRect((graphics->GetWidth() / 2)-widthP, 2, (graphics->GetWidth()/2)+widthP - 16, 32+heightP)));
     renderer->SetViewport(1, rearViewport);
 
 
 
+
+    // Set up the rear camera viewport on top of the front view ("rear view mirror")
+    float seqWidthP = graphics->GetWidth()/4;
+    float seqHeightP = graphics->GetHeight()/8;
+    // The viewport index must be greater in that case, otherwise the view would be left behind
+    SharedPtr<Viewport> seqViewport(new Viewport(context_, scene_, seqCam,
+                                                  IntRect(2, seqHeightP-140.0f, seqWidthP, seqHeightP+140.0f)));
+    renderer->SetViewport(3, seqViewport);
 }
 
 
