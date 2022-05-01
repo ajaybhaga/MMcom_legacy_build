@@ -1350,7 +1350,12 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
     using namespace ClientPlayerState;
     //int id = eventData[P_ID].GetUInt();
     //int vehicleId = eventData[P_VEHICLE_ID].GetUInt();
+/*
+ *     URHO3D_PARAM(P_SEQ_CURR_TIME, CurrSeqTime);     // float
+    URHO3D_PARAM(P_SEQ_BEAT_TIME, SeqBeatTime);     // float
+    URHO3D_PARAM(P_SEQ_BEAT, SeqBeat);              // int
 
+ */
     int wheelContactsNum = eventData[P_WHEEL_CONTACTS].GetUInt();
     float noWheelContactTime = eventData[P_NO_WHEEL_CONTACT_TIME].GetFloat();
     float distance = eventData[P_DISTANCE].GetFloat();
@@ -2283,12 +2288,15 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                             // Send the event forward
                                             VariantMap &newEventData = GetEventDataMap();
 
+                                            // Actor life
+                                            newEventData[P_LIFE] = actor->GetLife();
 
+                                            // Vehicle data
                                             newEventData[P_WHEEL_CONTACTS] = actor->vehicle_->GetRaycastVehicle()->getNumWheelsContact();
                                             newEventData[P_NO_WHEEL_CONTACT_TIME] = actor->vehicle_->GetRaycastVehicle()->getNoWheelContactTime();
                                             newEventData[P_DISTANCE] = actor->GetVehicle()->GetRaycastVehicle()->GetDistanceOnGround();
 
-                                            newEventData[P_LIFE] = actor->GetLife();
+                                            // Retrieve raycast vehicle
                                             if (actor->vehicle_->GetRaycastVehicle()) {
                                                 float rpm = actor->vehicle_->GetCurrentRPM();
                                                 newEventData[P_RPM] = rpm;
@@ -2301,6 +2309,13 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                                 // Reset timer
                                                 lastPlayerStateTime_ = 0.0f;
                                             }
+
+                                            // Sequencer data
+                                            newEventData[P_SEQ_CURR_TIME] = actor->GetSequencer().GetTime();
+                                            newEventData[P_SEQ_BEAT_TIME] = actor->GetSequencer().GetBeatTimeStep();
+                                            newEventData[P_SEQ_BEAT] = actor->GetSequencer().GetBeat();
+
+
                                         } // End of delayed send
 
 
