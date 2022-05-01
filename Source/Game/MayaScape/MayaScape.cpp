@@ -2283,9 +2283,8 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                         // Add time step to player state wait
                                         lastPlayerStateTime_ += timeStep;
 
-
-                                            // After wait send player state
-                                        if (lastPlayerStateTime_ >= 0.45f) {
+                                        // After wait of 150ms -> send player state
+                                        if (lastPlayerStateTime_ >= 0.15f) {
 
                                             // 1. Send update to client about vehicle stats
                                             using namespace ClientPlayerState;
