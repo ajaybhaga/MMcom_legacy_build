@@ -15,7 +15,9 @@ protected:
     int beat_; // Current beat
 
     float time_; // Current time
-
+    int bpm_; // Beats per minute
+    int beatsPerBar_; // Beats per bar
+    float beatTimeStep_; // Calculated beat time step
 
 public:
 
