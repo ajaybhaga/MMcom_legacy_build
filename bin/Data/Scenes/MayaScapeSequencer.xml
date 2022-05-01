@@ -7,8 +7,8 @@
 	<attribute name="Elapsed Time" value="8.737" />
 	<attribute name="Next Replicated Node ID" value="176" />
 	<attribute name="Next Replicated Component ID" value="141" />
-	<attribute name="Next Local Node ID" value="16777246" />
-	<attribute name="Next Local Component ID" value="16777442" />
+	<attribute name="Next Local Node ID" value="16777249" />
+	<attribute name="Next Local Component ID" value="16777445" />
 	<attribute name="Variables" />
 	<attribute name="Variable Names" value="" />
 	<component type="Octree" id="1" />
@@ -26,7 +26,7 @@
 			<attribute name="Is Enabled" value="true" />
 			<attribute name="Name" value="seqCam" />
 			<attribute name="Tags" />
-			<attribute name="Position" value="-26.5436 0.328883 0.371368" />
+			<attribute name="Position" value="-26.5436 0.328883 9.25968" />
 			<attribute name="Rotation" value="0.707107 -4.52743e-19 0.707107 4.52743e-19" />
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
@@ -65,15 +65,54 @@
 		</node>
 		<node id="16777244">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="Sequencer" />
+			<attribute name="Name" value="Beat" />
 			<attribute name="Tags" />
-			<attribute name="Position" value="0.841208 0.525776 0.110834" />
+			<attribute name="Position" value="-10.2927 0.525776 17.9455" />
 			<attribute name="Rotation" value="1 0 0 0" />
-			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Scale" value="0.7 0.7 0.7" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="16777429">
-				<attribute name="Model" value="Model;Models/Menu/v2/Models/ProgressText.mdl" />
-				<attribute name="Material" value="Material;Materials/Material.004.xml" />
+				<attribute name="Model" value="Model;Models/Sequencer/Models/Beat.mdl" />
+				<attribute name="Material" value="Material;Materials/BeatMat1.xml" />
+			</component>
+		</node>
+		<node id="16777246">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="SequencerPanel" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="-10.0636 -0.420196 -0.567599" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="0.5 10 23" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777442">
+				<attribute name="Model" value="Model;Models/Sequencer/Models/BeatPanel.mdl" />
+				<attribute name="Material" value="Material;Materials/SeqBeatPanelMat1.xml" />
+			</component>
+		</node>
+		<node id="16777247">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="SeqTimeCursor" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="-11.0013 1.51737 17.9501" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="10 10 10" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777443">
+				<attribute name="Model" value="Model;Models/Sequencer/Models/TimeCursor.mdl" />
+				<attribute name="Material" value="Material;Materials/seq.cursor.mat1.xml" />
+			</component>
+		</node>
+		<node id="16777248">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="BeatTimeCursor" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="-11.0013 -0.0681291 17.9501" />
+			<attribute name="Rotation" value="-4.37114e-08 0 -0 1" />
+			<attribute name="Scale" value="10 10 10" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777444">
+				<attribute name="Model" value="Model;Models/Sequencer/Models/BeatCursor.mdl" />
+				<attribute name="Material" value="Material;Materials/seq.cursor.mat2.xml" />
 			</component>
 		</node>
 	</node>

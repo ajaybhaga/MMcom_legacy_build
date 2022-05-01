@@ -1053,6 +1053,7 @@ void MayaScape::HandlePhysicsPreStep(StringHash eventType, VariantMap &eventData
                         lastControls_ = ntwkControls_;
 
 
+
                         // Apply local predictive physics until we get next update from server
 
                         // CLIENT SECTION
@@ -1194,6 +1195,14 @@ void MayaScape::HandlePhysicsPreStep(StringHash eventType, VariantMap &eventData
 
             // reset controls
             controls = Controls();
+
+
+            if (seqTimeCursorModel_) {
+                auto *actor = dynamic_cast<NetworkActor *>(actorMap_[connection].Get());
+                int beat = actor->GetSequencer().GetBeat();
+                seqTimeCursorModel_->GetNode()->SetPosition(seqTimeCursorModel_->GetNode()->GetPosition()+Vector3(beat*30.0f, 0, 0));
+            }
+
         }
     }
 }
@@ -1624,6 +1633,7 @@ void MayaScape::HandleUpdate(StringHash eventType, VariantMap &eventData) {
     lastCamRaycast += timeStep;
 
     HandleUpdateParticlePool(timeStep);
+
 
 
     auto *cache = GetSubsystem<ResourceCache>();
@@ -3393,8 +3403,8 @@ void MayaScape::InitiateViewport(Context* context, Scene* scene, Camera* camera,
 
 
 void MayaScape::SetupSequencerViewport() {
-    auto* graphics = GetSubsystem<Graphics>();
-    auto* renderer = GetSubsystem<Renderer>();
+    auto *graphics = GetSubsystem<Graphics>();
+    auto *renderer = GetSubsystem<Renderer>();
 
     // Load menu scene
     ResourceCache *cache = GetSubsystem<ResourceCache>();
@@ -3407,14 +3417,25 @@ void MayaScape::SetupSequencerViewport() {
     }
 
 
-    // Get camera
-    auto* seqCam = seqScene_->GetChild("seqCam",LOCAL)->GetComponent<Camera>();
-    auto* sequencer = seqScene_->GetChild("Sequencer",LOCAL)->GetComponent<StaticModel>();
-    sequencer->GetNode()->SetScale(Vector3(1,1,1));
+    // Get sequencer objects
+    seqCam_ = seqScene_->GetChild("seqCam", LOCAL)->GetComponent<Camera>();
+    beatModel_ = seqScene_->GetChild("Beat", LOCAL)->GetComponent<StaticModel>();
+    seqTimeCursorModel_ = seqScene_->GetChild("SeqTimeCursor", LOCAL)->GetComponent<StaticModel>();
+    beatTimeCursorModel_ = seqScene_->GetChild("BeatTimeCursor", LOCAL)->GetComponent<StaticModel>();
+
+    //Camera, StaticModel, StaticModel
+/*
+    for (int i = 0; i < 8; i++) {
+        auto *b = beat->G
+        StaticModel* m = b->CreateComponent<StaticModel>();
+        b->SetPosition(beat->GetNode()->GetPosition()+Vector3(i*1.0f, i, i));
+        m->SetModel(beat->GetModel());
+    }
+*/
 
     float seqHeight = 300.0f;
     // The viewport index must be greater in that case, otherwise the view would be left behind
-    seqViewport_ = new Viewport(context_, seqScene_, seqCam,
+    seqViewport_ = new Viewport(context_, seqScene_, seqCam_,
                                  IntRect(2, (graphics->GetHeight())-seqHeight, graphics->GetWidth()/3, graphics->GetHeight()));
     renderer->SetViewport(3, seqViewport_);
 }

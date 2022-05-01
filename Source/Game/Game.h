@@ -84,6 +84,10 @@ protected:
     SharedPtr<Scene> seqScene_;
     SharedPtr<Viewport> menuViewport_;
     SharedPtr<Viewport> seqViewport_;
+    SharedPtr<StaticModel> beatModel_;
+    SharedPtr<StaticModel> seqTimeCursorModel_;
+    SharedPtr<StaticModel> beatTimeCursorModel_;
+
     /// Camera scene node.
     SharedPtr<Node> cameraNode_;
     /// Camera yaw angle.
