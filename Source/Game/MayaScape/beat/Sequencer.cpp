@@ -8,15 +8,16 @@
 //=============================================================================
 
 Sequencer::Sequencer() : size_(8) {
-    time_ = 0.0f;
-    beat_ = 0;
-    bpm_ = 90;
+    // Init parameters
+    Reset();
 
     // Quarter note by default
     beatsPerBar_ = 4;
 
     // 1 s = 1000 ms by beats in bar = beat time
-    beatTimeStep_ = 1.0f / beatsPerBar_;
+    beatTimeStep_ = (1.0f / beatsPerBar_) * 4.0f;
+    // 8/4 beats/sec -> 2 beats/sec
+    // 4/4 beats/sec -> 1 beats/sec
 
     // 4/4 = 250 ms time segment
 
@@ -37,16 +38,37 @@ Sequencer::~Sequencer() {
 
 }
 
+void Sequencer::Reset() {
+    currTime_ = 0.0f;
+    beatTime_ = 0.0f;
+    barTime_ = 0.0f;
+    bar_ = 0;
+    beat_ = 0;
+    bpm_ = 90;
+    URHO3D_LOGDEBUGF("**SEQUENCER [%s] ** RESTART -> time %f, bar %d, beat %d", id_.CString(), currTime_, bar_, beat_);
+}
+
 // Sequencer Play: Move forward a time step
 void Sequencer::Play(float timeStep) {
     // Play a time step
-    time_ += timeStep;
+    currTime_ += timeStep;
+    beatTime_ += timeStep;
+    barTime_ += timeStep;
 
     // If time accumulation is past
-    if (time_ > beatTimeStep_) {
+    if (beatTime_ >= beatTimeStep_) {
         beat_++; // Increment beat
-        beat_ = beat_ % size_; // Clamp by size
-        URHO3D_LOGDEBUGF("**SEQUENCER [%s] ** -> time %f, beat %d", id_.CString(), time_, (beat_ + 1));
+        beatTime_ = 0.0f;
+
+        if (beat_ > beatsPerBar_) {
+            // Over bar limit
+            bar_++;
+            beat_ = 0;
+            barTime_ = 0.0f;
+        } else {
+            URHO3D_LOGDEBUGF("**SEQUENCER [%s] ** -> time %f, beat time: %f, bar time: %f, bar %d, beat %d", id_.CString(), currTime_,
+                             beatTime_, barTime_, bar_, beat_);
+        }
     }
 }
 
@@ -59,7 +81,7 @@ int Sequencer::GetBeat() const {
 }
 
 float Sequencer::GetTime() const {
-    return time_;
+    return currTime_;
 }
 
 int Sequencer::GetBpm() const {

@@ -18,9 +18,14 @@ public:
 protected:
     Vector<Beat*> sequence_;
     int size_; // 8 beats
-    int beat_; // Current beat
 
-    float time_; // Current time
+    // Current state
+    int beat_; // Current beat
+    float currTime_; // Current time
+    float beatTime_; // Current beat time
+    float barTime_; // Current bar time
+    int bar_; // Current bar
+
     int bpm_; // Beats per minute
     int beatsPerBar_; // Beats per bar
     float beatTimeStep_; // Calculated beat time step
@@ -30,8 +35,8 @@ public:
     Sequencer();
     ~Sequencer();
     Vector<Beat*> GetSequence();
+    void Reset();
     void Play(float timeStep);
-
     int GetSize() const;
     int GetBeat() const;
     float GetTime() const;
