@@ -26,7 +26,7 @@
 			<attribute name="Is Enabled" value="true" />
 			<attribute name="Name" value="seqCam" />
 			<attribute name="Tags" />
-			<attribute name="Position" value="-38.6609 0.328883 0.371368" />
+			<attribute name="Position" value="-26.5436 0.328883 0.371368" />
 			<attribute name="Rotation" value="0.707107 -4.52743e-19 0.707107 4.52743e-19" />
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />

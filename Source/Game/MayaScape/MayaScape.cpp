@@ -3412,9 +3412,10 @@ void MayaScape::SetupSequencerViewport() {
     auto* sequencer = seqScene_->GetChild("Sequencer",LOCAL)->GetComponent<StaticModel>();
     sequencer->GetNode()->SetScale(Vector3(1,1,1));
 
+    float seqHeight = 300.0f;
     // The viewport index must be greater in that case, otherwise the view would be left behind
     seqViewport_ = new Viewport(context_, seqScene_, seqCam,
-                                 IntRect(32, 32, graphics->GetWidth() - 32, graphics->GetHeight() - 32));
+                                 IntRect(2, (graphics->GetHeight())-seqHeight, graphics->GetWidth()/3, graphics->GetHeight()));
     renderer->SetViewport(3, seqViewport_);
 }
 
@@ -3497,7 +3498,7 @@ void MayaScape::SetupGameViewports()
     float widthP = graphics->GetWidth()/6;
     float heightP = graphics->GetHeight()/15;
     // The viewport index must be greater in that case, otherwise the view would be left behind
-        SharedPtr<Viewport> rearViewport(new Viewport(context_, scene_, rearCam,
+    SharedPtr<Viewport> rearViewport(new Viewport(context_, scene_, rearCam,
                                                      IntRect((graphics->GetWidth() / 2)-widthP, 2, (graphics->GetWidth()/2)+widthP - 16, 32+heightP)));
     renderer->SetViewport(1, rearViewport);
 
