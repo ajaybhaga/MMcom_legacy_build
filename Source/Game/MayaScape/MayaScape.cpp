@@ -4580,6 +4580,9 @@ SharedPtr<Node> MayaScape::SpawnPlayer() {
     String name = String(String("actor-SERVER"));
     actor->SetClientInfo(name, 99, Vector3(0,-6,0));
 
+    // Assign name for sequencer of network actor
+    actor->GetSequencer().SetId(name);
+
     // 2. Create a new camera following the actor
     Graphics* graphics = GetSubsystem<Graphics>();
     String cameraname = "camera_actor-server";
@@ -5106,7 +5109,8 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
 
     auto* body = networkActorNode->GetComponent<RigidBody>(true);
 
-
+    // Assign name for sequencer of network actor
+    actor->GetSequencer().SetId(username);
 
     // Set calculated network actor position
 
@@ -5248,6 +5252,10 @@ NetworkActor *MayaScape::SpawnPlayer(unsigned int id) {
     }
 
     actor->SetClientInfo(name, Random(1,100), actorPos);
+
+    // Assign name for sequencer of network actor
+    actor->GetSequencer().SetId(username);
+
 
     String vehicleName = "vehicle-" + username;
     // Create a new vehicle for the player

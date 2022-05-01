@@ -103,7 +103,6 @@ NetworkActor::NetworkActor(Context *context)
 
     // Setup sequencer for user
     sequencer_ = Sequencer();
-    sequencer_.SetId(this->GetUserName());
 }
 
 NetworkActor::~NetworkActor() {
@@ -1199,7 +1198,7 @@ void NetworkActor::EnterVehicle() {
     Urho3D::Component::MarkNetworkUpdate();
 
 }
-/*
-const SharedPtr<Sequencer> &NetworkActor::getSequencer() const {
+
+Sequencer &NetworkActor::GetSequencer() {
     return sequencer_;
-};*/
+};

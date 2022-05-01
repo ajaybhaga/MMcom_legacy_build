@@ -152,7 +152,7 @@ public:
     virtual void FixedUpdate(float timeStep);
     // Mark NetworkActor disconnected, clean-up delayed
     void MarkDisconnected() { disconnected_ = true; }
-    const SharedPtr<Sequencer> &getSequencer() const;
+    Sequencer &GetSequencer();
 
     // PEER
     /// Movement controls. Assigned by the main program each physics update step.
@@ -259,6 +259,8 @@ public:
     float turrentAngle_ = 0;
 
     Sequencer sequencer_;
+
+
 
 };
 
