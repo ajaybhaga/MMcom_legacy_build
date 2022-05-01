@@ -1196,13 +1196,6 @@ void MayaScape::HandlePhysicsPreStep(StringHash eventType, VariantMap &eventData
             // reset controls
             controls = Controls();
 
-
-            if (seqTimeCursorModel_) {
-                auto *actor = dynamic_cast<NetworkActor *>(actorMap_[connection].Get());
-                int beat = actor->GetSequencer().GetBeat();
-                seqTimeCursorModel_->GetNode()->SetPosition(seqTimeCursorModel_->GetNode()->GetPosition()+Vector3(beat*30.0f, 0, 0));
-            }
-
         }
     }
 }
@@ -1370,6 +1363,15 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
     int beat = eventData[P_SEQ_BEAT].GetInt();
 
     URHO3D_LOGINFOF("Client -> HandlePlayerStateUpdate: %d %f, %f, %d, %f, %f, %f, %f, %f, %d", wheelContactsNum, noWheelContactTime, distance, life, rpm, velocity, steer, currTime, beatTimeStep, beat);
+
+    // Update sequencer view based on player update
+    if (seqTimeCursorModel_) {
+        //currTime, beatTimeStep, beat
+        float beatSpaceSize = 4.7f;
+        seqTimeCursorModel_->GetNode()->SetPosition(Vector3(seqTimeCursorModel_->GetNode()->GetPosition().x_, seqTimeCursorModel_->GetNode()->GetPosition().y_, 17.0f-beat*beatSpaceSize));
+        beatModel_->GetNode()->SetPosition(Vector3(beatModel_->GetNode()->GetPosition().x_, beatModel_->GetNode()->GetPosition().y_, 17.0f-beat*beatSpaceSize));
+        beatTimeCursorModel_->GetNode()->SetPosition(Vector3(beatTimeCursorModel_->GetNode()->GetPosition().x_, beatTimeCursorModel_->GetNode()->GetPosition().y_, 17.0f-beat*beatSpaceSize));
+    }
 
     // Update Client UI bars
 
