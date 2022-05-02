@@ -1421,10 +1421,10 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
     // Update sequencer view based on player update
     if (seqTimeCursorModel_) {
         //currTime, beatTimeStep, beat
-        float beatSpaceSize = 6.4f;
-        seqTimeCursorModel_->GetNode()->SetPosition(Vector3(seqTimeCursorModel_->GetNode()->GetPosition().x_, seqTimeCursorModel_->GetNode()->GetPosition().y_, 24.0f-beat*beatSpaceSize));
+        float beatSpaceSize = 6.7f;
+        seqTimeCursorModel_->GetNode()->SetPosition(Vector3(seqTimeCursorModel_->GetNode()->GetPosition().x_, seqTimeCursorModel_->GetNode()->GetPosition().y_, 25.6f-beat*beatSpaceSize));
         beatModel_->GetNode()->SetPosition(Vector3(beatModel_->GetNode()->GetPosition().x_, beatModel_->GetNode()->GetPosition().y_, 17.0f-beat*beatSpaceSize));
-        beatTimeCursorModel_->GetNode()->SetPosition(Vector3(beatTimeCursorModel_->GetNode()->GetPosition().x_, beatTimeCursorModel_->GetNode()->GetPosition().y_, 24.0f-beat*beatSpaceSize));
+        beatTimeCursorModel_->GetNode()->SetPosition(Vector3(beatTimeCursorModel_->GetNode()->GetPosition().x_, beatTimeCursorModel_->GetNode()->GetPosition().y_, 25.6f-beat*beatSpaceSize));
 
         Vector3 v;
         v = seqCam_->GetNode()->GetPosition();
