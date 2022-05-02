@@ -42,7 +42,8 @@
 
 // Sound fx mappings
 #define SOUND_FX_ENGINE_START 0
-#define SOUND_FX_ENGINE_REV 1
+#define SOUND_FX_ENGINE_LOOP 1
+#define SOUND_FX_ENGINE_REV 2
 #define SOUND_FX_TIRE_SKID 2
 #define SOUND_FX_ENGINE_BRAKE 3
 #define SOUND_FX_ENGINE_ENGINE 4
@@ -275,9 +276,8 @@ private:
     void LoadLevel(int id);
     void PlaySoundEffect(const String& soundName);
     void PlaySoundEffectGlobal(const String& soundName);
-    void PlaySoundEffectLocal(const String& soundName);
+    SoundSource3D *PlaySoundEffectLocal(const String& soundName);
     void PlayMusic(const String &soundName);
-
 
     HashMap<String, float> sndFxPlay_;
 
@@ -312,6 +312,8 @@ private:
     String clientName_;
     Vector<SoundSource3D*> radioTrackQueue_;
     Vector<RadioTrack> radioTrackInfoQueue_;
+    bool accelSndPlaying_;
+    WeakPtr<SoundSource3D> lastSnd_;
 
     // Async level loading
     WeakPtr<Node> curLevel_;

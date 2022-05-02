@@ -215,7 +215,8 @@ std::vector<std::string> bzRadioTracksTrackName = {
 
 std::vector<std::string> driveAudioEffect = {
         "drive/008157265-car-engine-start.wav",
-        "drive/096202521-jeep-grand-cherokee-47-engine-.wav",
+        "drive/v1-engine-loop.ogg",
+        "drive/v1-engine-rev.ogg",
         "drive/102991590-car-skid-tires-dirt-without-en.wav",
         "drive/000788417-vintage-army-jeep.wav"
 };
@@ -251,7 +252,7 @@ MayaScape::MayaScape(Context *context) :
         isServer_(false),
         isSnapped_(false),
         drawDebug_(true),
-        bkgMusic_(true),
+        bkgMusic_(false),
         bkgMusicPlaying_(false),
         sndFx_(true),
         starAMarker_(Vector3(0,0,0)),
@@ -385,7 +386,7 @@ void MayaScape::Start() {
 
         // you can set master volumes for the different kinds if sounds, 30% for music
         GetSubsystem<Audio>()->SetMasterGain(SOUND_MUSIC, 0.3);
-        GetSubsystem<Audio>()->SetMasterGain(SOUND_EFFECT, 0.6);
+        GetSubsystem<Audio>()->SetMasterGain(SOUND_EFFECT, 0.3);
 
         // Theme song
         String trackName = "Sounds/BZradio/mm-theme-rp01.ogg";
@@ -771,7 +772,7 @@ void MayaScape::HandleClientSceneLoaded(StringHash eventType, VariantMap& eventD
 
         // you can set master volumes for the different kinds if sounds, 30% for music
         GetSubsystem<Audio>()->SetMasterGain(SOUND_MUSIC, 0.3);
-        GetSubsystem<Audio>()->SetMasterGain(SOUND_EFFECT, 0.6);
+        GetSubsystem<Audio>()->SetMasterGain(SOUND_EFFECT, 0.3);
 
     }
 
@@ -925,14 +926,28 @@ Controls MayaScape::SampleCSPControls()
     bool fire = input->GetKeyDown(KEY_SPACE) || ntwkControls_.IsDown(BUTTON_A);
     bool enter = input->GetKeyDown(KEY_F) || ntwkControls_.IsDown(BUTTON_Y);
     bool brake = (input->GetKeyDown(KEY_S) || ntwkControls_.IsDown(BUTTON_X));
-    if (accel) {
+
+    if (!accel) {
+        accelSndPlaying_ = false;
+        if (lastSnd_) {
+            if (lastSnd_->IsPlaying()) {
+                if (!lastSnd_.Expired())
+                    lastSnd_->Stop();
+            }
+        }
+    }
+
+    if (accel && !accelSndPlaying_) {
         // Rev
-        PlaySoundEffect(driveAudioEffect[SOUND_FX_ENGINE_REV].c_str());
+        SoundSource3D *snd = PlaySoundEffectLocal(driveAudioEffect[SOUND_FX_ENGINE_REV].c_str());
+//            PlaySoundEffectLocal(driveAudioEffect[SOUND_FX_ENGINE_REV].c_str());
+        accelSndPlaying_ = true;
+        lastSnd_ = snd;
     }
 
     if (brake) {
         // Brake
-        PlaySoundEffect(driveAudioEffect[SOUND_FX_ENGINE_BRAKE].c_str());
+        PlaySoundEffectLocal(driveAudioEffect[SOUND_FX_ENGINE_BRAKE].c_str());
     }
 
     bool left = input->GetKeyDown(KEY_A) || input->GetKeyDown(Urho3D::KEY_LEFT) || (lAxisVal.x_ < -0.4f);
@@ -3078,7 +3093,7 @@ void MayaScape::PlaySoundEffectGlobal(const String &soundName) {
 }
 
 
-void MayaScape::PlaySoundEffectLocal(const String &soundName) {
+SoundSource3D *MayaScape::PlaySoundEffectLocal(const String &soundName) {
 
     auto *cache = GetSubsystem<ResourceCache>();
     auto *source = scene_->CreateComponent<SoundSource3D>(LOCAL);
@@ -3091,6 +3106,7 @@ void MayaScape::PlaySoundEffectLocal(const String &soundName) {
     if (sound != nullptr) {
         source->SetAutoRemoveMode(REMOVE_COMPONENT);
         source->Play(sound);
+        return source;
     }
 }
 
@@ -3450,6 +3466,7 @@ void MayaScape::SetupSequencerViewport() {
 
     // Get sequencer objects
     seqCam_ = seqScene_->GetChild("seqCam", LOCAL)->GetComponent<Camera>();
+    seqCam_->SetOrthographic(true);
     beatModel_ = seqScene_->GetChild("Beat", LOCAL)->GetComponent<StaticModel>();
     seqTimeCursorModel_ = seqScene_->GetChild("SeqTimeCursor", LOCAL)->GetComponent<StaticModel>();
     beatTimeCursorModel_ = seqScene_->GetChild("BeatTimeCursor", LOCAL)->GetComponent<StaticModel>();
@@ -6110,6 +6127,9 @@ void MayaScape::HandlePlayerRespawned(StringHash eventType, VariantMap& eventDat
 
     // Start engine
     PlaySoundEffectLocal(driveAudioEffect[SOUND_FX_ENGINE_START].c_str());
+
+    // Start engine loop
+    PlaySoundEffectLocal(driveAudioEffect[SOUND_FX_ENGINE_LOOP].c_str());
 
 
     // Initial refresh of login list
