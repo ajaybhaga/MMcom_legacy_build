@@ -213,10 +213,6 @@ std::vector<std::string> bzRadioTracksTrackName = {
         "BZradio/mm-theme-rp01.ogg"
 };
 
-
-//#include <MayaScape/network/Vehicle.h>
-
-
 std::vector<std::string> driveAudioEffect = {
         "drive/v1-engine-start.ogg",
         "drive/v1-engine-loop.ogg",
@@ -935,28 +931,74 @@ Controls MayaScape::SampleCSPControls()
     bool enter = input->GetKeyDown(KEY_F) || ntwkControls_.IsDown(BUTTON_Y);
     bool brake = (input->GetKeyDown(KEY_S) || ntwkControls_.IsDown(BUTTON_X));
 
-    if (!accel) {
-        accelSndPlaying_ = false;
-        if (lastSnd_) {
-            if (lastSnd_->IsPlaying()) {
-                if (!lastSnd_.Expired())
-                    lastSnd_->Stop();
+
+    // Found network player
+    if (isSnapped_) {
+
+        String actorName = String("actor-") + clientName_;
+        Node *actorNode = scene_->GetChild(actorName);
+
+        String vehicleName = String("vehicle-") + clientName_;
+        Node *vehicleNode = scene_->GetChild(vehicleName);
+        //BLUE-304-vehicle
+
+        Vector3 bodyPos;
+        Quaternion rotation;
+
+        if (actorNode) {
+            // Retrieve Actor
+            ClientObj *actor = actorNode->GetDerivedComponent<ClientObj>();
+
+            if (actor) {
+                NetworkActor *na = actorNode->GetDerivedComponent<NetworkActor>();
+                Vehicle *v = vehicleNode->GetDerivedComponent<Vehicle>();
+                if (na) {
+                    auto *body = na->GetNode()->GetComponent<RigidBody>(true);
+                    if (body) {
+                        // CLIENT RIGID BODY RETRIEVED
+                        bodyPos = body->GetPosition();
+                        rotation = na->GetNode()->GetRotation();
+
+
+                        if (na->entered_) {
+
+
+                            // PLAY ENGINE SOUNDS IN VEHICLE ONLY
+
+                            if (accel && !accelSndPlaying_) {
+                                // Rev
+                                SoundSource3D *snd = PlaySoundEffectLocal(driveAudioEffect[SOUND_FX_ENGINE_REV].c_str());
+                                accelSndPlaying_ = true;
+                                lastSnd_ = snd;
+                            }
+
+
+                            if (brake) {
+                                // Brake
+                                SoundSource3D *snd = PlaySoundEffectLocal(driveAudioEffect[SOUND_FX_ENGINE_BRAKE].c_str());
+                                lastSnd_ = snd;
+                            }
+
+                        }
+                    }
+                }
             }
         }
     }
 
-    if (accel && !accelSndPlaying_) {
-        // Rev
-        SoundSource3D *snd = PlaySoundEffectLocal(driveAudioEffect[SOUND_FX_ENGINE_REV].c_str());
-//            PlaySoundEffectLocal(driveAudioEffect[SOUND_FX_ENGINE_REV].c_str());
-        accelSndPlaying_ = true;
-        lastSnd_ = snd;
+
+    // Stop accel sound on button up
+    if (!accel) {
+        if (lastSnd_) {
+            if (lastSnd_->IsPlaying()) {
+                if (!lastSnd_.Expired()) {
+                    lastSnd_->Stop();
+                }
+                accelSndPlaying_ = false;
+            }
+        }
     }
 
-    if (brake) {
-        // Brake
-        PlaySoundEffectLocal(driveAudioEffect[SOUND_FX_ENGINE_BRAKE].c_str());
-    }
 
     bool left = input->GetKeyDown(KEY_A) || input->GetKeyDown(Urho3D::KEY_LEFT) || (lAxisVal.x_ < -0.4f);
     bool right = input->GetKeyDown(KEY_D) || input->GetKeyDown(Urho3D::KEY_RIGHT) || (lAxisVal.x_ > 0.4f);
