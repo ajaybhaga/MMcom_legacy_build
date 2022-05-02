@@ -7,8 +7,8 @@
 	<attribute name="Elapsed Time" value="8.737" />
 	<attribute name="Next Replicated Node ID" value="176" />
 	<attribute name="Next Replicated Component ID" value="141" />
-	<attribute name="Next Local Node ID" value="16777354" />
-	<attribute name="Next Local Component ID" value="16777572" />
+	<attribute name="Next Local Node ID" value="16777355" />
+	<attribute name="Next Local Component ID" value="16777584" />
 	<attribute name="Variables" />
 	<attribute name="Variable Names" value="" />
 	<component type="Octree" id="1" />
@@ -130,7 +130,7 @@
 			<attribute name="Is Enabled" value="true" />
 			<attribute name="Name" value="ButtonPanel" />
 			<attribute name="Tags" />
-			<attribute name="Position" value="11.5871 6.68271 -11.4324" />
+			<attribute name="Position" value="11.6145 6.65992 -11.4324" />
 			<attribute name="Rotation" value="-3.12396e-08 0.707107 -0.707107 -3.05776e-08" />
 			<attribute name="Scale" value="100 100 100" />
 			<attribute name="Variables" />
@@ -196,7 +196,7 @@
 				<attribute name="Variables" />
 				<component type="StaticModel" id="16777475">
 					<attribute name="Model" value="Model;Models/Display.mdl" />
-					<attribute name="Material" value="Material;" />
+					<attribute name="Material" value="Material;Materials/buttons.channel.circ.xml" />
 				</component>
 			</node>
 			<node id="16777258">
@@ -248,7 +248,7 @@
 				<attribute name="Variables" />
 				<component type="StaticModel" id="16777479">
 					<attribute name="Model" value="Model;Models/button1.mdl" />
-					<attribute name="Material" value="Material;" />
+					<attribute name="Material" value="Material;Materials/buttons.led1.xml" />
 				</component>
 			</node>
 			<node id="16777262">
@@ -391,7 +391,7 @@
 				<attribute name="Variables" />
 				<component type="StaticModel" id="16777490">
 					<attribute name="Model" value="Model;Models/display_button.mdl" />
-					<attribute name="Material" value="Material;" />
+					<attribute name="Material" value="Material;Materials/buttons.channel.circ.xml" />
 				</component>
 			</node>
 			<node id="16777273">
@@ -404,7 +404,7 @@
 				<attribute name="Variables" />
 				<component type="StaticModel" id="16777491">
 					<attribute name="Model" value="Model;Models/round_button3.mdl" />
-					<attribute name="Material" value="Material;" />
+					<attribute name="Material" value="Material;Materials/buttons.channel.circ.xml" />
 				</component>
 			</node>
 			<node id="16777274">
@@ -417,7 +417,7 @@
 				<attribute name="Variables" />
 				<component type="StaticModel" id="16777492">
 					<attribute name="Model" value="Model;Models/round_button4.mdl" />
-					<attribute name="Material" value="Material;" />
+					<attribute name="Material" value="Material;Materials/buttons.channel.circ.xml" />
 				</component>
 			</node>
 			<node id="16777275">
@@ -430,7 +430,7 @@
 				<attribute name="Variables" />
 				<component type="StaticModel" id="16777493">
 					<attribute name="Model" value="Model;Models/round_button1.mdl" />
-					<attribute name="Material" value="Material;" />
+					<attribute name="Material" value="Material;Materials/buttons.channel.circ.active.xml" />
 				</component>
 			</node>
 			<node id="16777276">
@@ -482,7 +482,7 @@
 				<attribute name="Variables" />
 				<component type="StaticModel" id="16777497">
 					<attribute name="Model" value="Model;Models/led1.mdl" />
-					<attribute name="Material" value="Material;" />
+					<attribute name="Material" value="Material;Materials/leds.xml" />
 				</component>
 			</node>
 			<node id="16777280">
@@ -820,7 +820,7 @@
 				<attribute name="Variables" />
 				<component type="StaticModel" id="16777523">
 					<attribute name="Model" value="Model;Models/led4.mdl" />
-					<attribute name="Material" value="Material;" />
+					<attribute name="Material" value="Material;Materials/leds.xml" />
 				</component>
 			</node>
 			<node id="16777306">
@@ -937,7 +937,7 @@
 				<attribute name="Variables" />
 				<component type="StaticModel" id="16777532">
 					<attribute name="Model" value="Model;Models/led2.mdl" />
-					<attribute name="Material" value="Material;" />
+					<attribute name="Material" value="Material;Materials/leds.xml" />
 				</component>
 			</node>
 			<node id="16777315">
@@ -963,7 +963,7 @@
 				<attribute name="Variables" />
 				<component type="StaticModel" id="16777534">
 					<attribute name="Model" value="Model;Models/led3.mdl" />
-					<attribute name="Material" value="Material;" />
+					<attribute name="Material" value="Material;Materials/leds.xml" />
 				</component>
 			</node>
 			<node id="16777317">
@@ -1210,7 +1210,7 @@
 				<attribute name="Variables" />
 				<component type="StaticModel" id="16777553">
 					<attribute name="Model" value="Model;Models/pad1.mdl" />
-					<attribute name="Material" value="Material;Materials/BeatMat1.xml" />
+					<attribute name="Material" value="Material;Materials/buttons.active.xml" />
 				</component>
 			</node>
 			<node id="16777336">
@@ -1223,7 +1223,7 @@
 				<attribute name="Variables" />
 				<component type="StaticModel" id="16777554">
 					<attribute name="Model" value="Model;Models/round_button2.mdl" />
-					<attribute name="Material" value="Material;" />
+					<attribute name="Material" value="Material;Materials/buttons.channel.circ.xml" />
 				</component>
 			</node>
 			<node id="16777337">
