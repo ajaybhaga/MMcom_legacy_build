@@ -213,13 +213,21 @@ std::vector<std::string> bzRadioTracksTrackName = {
         "BZradio/mm-theme-rp01.ogg"
 };
 
+
+//#include <MayaScape/network/Vehicle.h>
+
+
 std::vector<std::string> driveAudioEffect = {
-        "drive/008157265-car-engine-start.wav",
+        "drive/v1-engine-start.ogg",
         "drive/v1-engine-loop.ogg",
         "drive/v1-engine-rev.ogg",
-        "drive/102991590-car-skid-tires-dirt-without-en.wav",
-        "drive/000788417-vintage-army-jeep.wav"
+        "drive/v1-engine-skid1.ogg",
+        "drive/v1-engine-skid2.ogg",
+        "drive/v1-engine-skid3.ogg",
+        "drive/v1-engine-brake.ogg",
+        "drive/v1-engine-boost.ogg"
 };
+
 
 int currTrack_ = 0;
 
@@ -3076,6 +3084,7 @@ void MayaScape::PlayMusic(const String &soundName) {
     }
 }
 
+// SERVER CODE
 void MayaScape::PlaySoundEffectGlobal(const String &soundName) {
 
     auto *cache = GetSubsystem<ResourceCache>();
@@ -3092,7 +3101,7 @@ void MayaScape::PlaySoundEffectGlobal(const String &soundName) {
     }
 }
 
-
+// CLIENT CODE
 SoundSource3D *MayaScape::PlaySoundEffectLocal(const String &soundName) {
 
     auto *cache = GetSubsystem<ResourceCache>();
