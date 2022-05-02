@@ -44,6 +44,7 @@ public:
     int GetBeatsPerBar() const;
     float GetBeatTimeStep() const;
     void SetId(const String &id);
+    float GetBeatTime() const;
 };
 
 

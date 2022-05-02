@@ -1413,18 +1413,19 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
 
     // Sequencer data
     float currTime = eventData[P_SEQ_CURR_TIME].GetFloat();
-    float beatTimeStep = eventData[P_SEQ_BEAT_TIME].GetFloat();
+    float beatTime = eventData[P_SEQ_BEAT_TIME].GetFloat();
     int beat = eventData[P_SEQ_BEAT].GetInt();
 
-    URHO3D_LOGINFOF("Client -> HandlePlayerStateUpdate: %d %f, %f, %d, %f, %f, %f, %f, %f, %d", wheelContactsNum, noWheelContactTime, distance, life, rpm, velocity, steer, currTime, beatTimeStep, beat);
+    URHO3D_LOGINFOF("Client -> HandlePlayerStateUpdate: %d %f, %f, %d, %f, %f, %f, %f, %f, %d", wheelContactsNum, noWheelContactTime, distance, life, rpm, velocity, steer, currTime, beatTime, beat);
 
     // Update sequencer view based on player update
     if (seqTimeCursorModel_) {
         //currTime, beatTimeStep, beat
         float beatSpaceSize = 6.7f;
+        float subBeatSpaceSize = 5.2f;
         seqTimeCursorModel_->GetNode()->SetPosition(Vector3(seqTimeCursorModel_->GetNode()->GetPosition().x_, seqTimeCursorModel_->GetNode()->GetPosition().y_, 25.6f-beat*beatSpaceSize));
         beatModel_->GetNode()->SetPosition(Vector3(beatModel_->GetNode()->GetPosition().x_, beatModel_->GetNode()->GetPosition().y_, 17.0f-beat*beatSpaceSize));
-        beatTimeCursorModel_->GetNode()->SetPosition(Vector3(beatTimeCursorModel_->GetNode()->GetPosition().x_, beatTimeCursorModel_->GetNode()->GetPosition().y_, 25.6f-beat*beatSpaceSize));
+        beatTimeCursorModel_->GetNode()->SetPosition(Vector3(beatTimeCursorModel_->GetNode()->GetPosition().x_, beatTimeCursorModel_->GetNode()->GetPosition().y_, 25.6f-(beat*beatSpaceSize)-(beatTime*subBeatSpaceSize)));
 
         Vector3 v;
         v = seqCam_->GetNode()->GetPosition();
@@ -2381,7 +2382,7 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
 
                                             // Sequencer data
                                             newEventData[P_SEQ_CURR_TIME] = actor->GetSequencer().GetTime();
-                                            newEventData[P_SEQ_BEAT_TIME] = actor->GetSequencer().GetBeatTimeStep();
+                                            newEventData[P_SEQ_BEAT_TIME] = actor->GetSequencer().GetBeatTime();
                                             newEventData[P_SEQ_BEAT] = actor->GetSequencer().GetBeat();
 
                                             // Finally send the object's node ID using a remote event

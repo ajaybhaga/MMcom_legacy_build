@@ -72,6 +72,10 @@ void Sequencer::Play(float timeStep) {
     }
 }
 
+float Sequencer::GetBeatTime() const {
+    return beatTime_;
+}
+
 int Sequencer::GetSize() const {
     return size_;
 }
