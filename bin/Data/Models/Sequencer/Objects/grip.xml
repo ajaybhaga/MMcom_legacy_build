@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<node id="1">
+	<attribute name="Is Enabled" value="true" />
+	<attribute name="Name" value="grip" />
+	<attribute name="Tags" />
+	<attribute name="Variables" />
+	<component id="1" type="StaticModel">
+		<attribute name="Model" value="Model;Models/grip.mdl" />
+		<attribute name="Material" value="Material;" />
+	</component>
+</node>

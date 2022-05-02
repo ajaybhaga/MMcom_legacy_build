@@ -245,7 +245,7 @@ MayaScape::MayaScape(Context *context) :
         isServer_(false),
         isSnapped_(false),
         drawDebug_(true),
-        bkgMusic_(false),
+        bkgMusic_(true),
         bkgMusicPlaying_(false),
         sndFx_(true),
         starAMarker_(Vector3(0,0,0)),
@@ -384,7 +384,7 @@ void MayaScape::Start() {
         // Theme song
         String trackName = "Sounds/BZradio/mm-theme-rp01.ogg";
         //bzRadioTracksTrackName[7].c_str();
-        //PlayMusic(trackName);
+        PlayMusic(trackName);
 
         // Start in menu mode
         //UpdateUIState(false);
