@@ -7,8 +7,8 @@
 	<attribute name="Elapsed Time" value="8.737" />
 	<attribute name="Next Replicated Node ID" value="176" />
 	<attribute name="Next Replicated Component ID" value="141" />
-	<attribute name="Next Local Node ID" value="16777355" />
-	<attribute name="Next Local Component ID" value="16777584" />
+	<attribute name="Next Local Node ID" value="16777356" />
+	<attribute name="Next Local Component ID" value="16777596" />
 	<attribute name="Variables" />
 	<attribute name="Variable Names" value="" />
 	<component type="Octree" id="1" />
@@ -38,7 +38,7 @@
 				<attribute name="Is Enabled" value="true" />
 				<attribute name="Name" value="seqCam" />
 				<attribute name="Tags" />
-				<attribute name="Position" value="0.0241946 0.205812 0.120661" />
+				<attribute name="Position" value="0.0241942 0.187624 0.208063" />
 				<attribute name="Rotation" value="0.5 0.5 -0.5 0.5" />
 				<attribute name="Scale" value="0.01 0.01 0.01" />
 				<attribute name="Variables" />
@@ -62,19 +62,6 @@
 					</component>
 				</node>
 			</node>
-		</node>
-		<node id="16777244">
-			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="Beat" />
-			<attribute name="Tags" />
-			<attribute name="Position" value="-10.2927 0.525776 17.9455" />
-			<attribute name="Rotation" value="1 0 0 0" />
-			<attribute name="Scale" value="0.7 0.7 0.7" />
-			<attribute name="Variables" />
-			<component type="StaticModel" id="16777429">
-				<attribute name="Model" value="Model;Models/Sequencer/Models/Beat.mdl" />
-				<attribute name="Material" value="Material;Materials/BeatMat1.xml" />
-			</component>
 		</node>
 		<node id="16777246">
 			<attribute name="Is Enabled" value="true" />
@@ -130,7 +117,7 @@
 			<attribute name="Is Enabled" value="true" />
 			<attribute name="Name" value="ButtonPanel" />
 			<attribute name="Tags" />
-			<attribute name="Position" value="11.6145 6.65992 -11.4324" />
+			<attribute name="Position" value="11.5794 6.65992 -11.4324" />
 			<attribute name="Rotation" value="-3.12396e-08 0.707107 -0.707107 -3.05776e-08" />
 			<attribute name="Scale" value="100 100 100" />
 			<attribute name="Variables" />

@@ -245,7 +245,7 @@ MayaScape::MayaScape(Context *context) :
         isServer_(false),
         isSnapped_(false),
         drawDebug_(true),
-        bkgMusic_(true),
+        bkgMusic_(false),
         bkgMusicPlaying_(false),
         sndFx_(true),
         starAMarker_(Vector3(0,0,0)),
@@ -384,7 +384,7 @@ void MayaScape::Start() {
         // Theme song
         String trackName = "Sounds/BZradio/mm-theme-rp01.ogg";
         //bzRadioTracksTrackName[7].c_str();
-        PlayMusic(trackName);
+        //PlayMusic(trackName);
 
         // Start in menu mode
         //UpdateUIState(false);
@@ -1424,7 +1424,7 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
         float beatSpaceSize = 6.7f;
         float subBeatSpaceSize = 6.5f;
         seqTimeCursorModel_->GetNode()->SetPosition(Vector3(seqTimeCursorModel_->GetNode()->GetPosition().x_, seqTimeCursorModel_->GetNode()->GetPosition().y_, 25.6f-beat*beatSpaceSize));
-        beatModel_->GetNode()->SetPosition(Vector3(beatModel_->GetNode()->GetPosition().x_, beatModel_->GetNode()->GetPosition().y_, 17.0f-beat*beatSpaceSize));
+        beatModel_->GetNode()->SetPosition(Vector3(beatModel_->GetNode()->GetPosition().x_, beatModel_->GetNode()->GetPosition().y_, -0.037f+(beat*0.04f)-(beatTime*0)));
         beatTimeCursorModel_->GetNode()->SetPosition(Vector3(beatTimeCursorModel_->GetNode()->GetPosition().x_, beatTimeCursorModel_->GetNode()->GetPosition().y_, 25.6f-(beat*beatSpaceSize)-(beatTime*subBeatSpaceSize)));
 
         Vector3 v;
@@ -3511,7 +3511,7 @@ void MayaScape::SetupSequencerViewport() {
     // Get sequencer objects
     seqCam_ = seqScene_->GetChild("seqCam", LOCAL)->GetComponent<Camera>();
     seqCam_->SetOrthographic(true);
-    beatModel_ = seqScene_->GetChild("Beat", LOCAL)->GetComponent<StaticModel>();
+    beatModel_ = seqScene_->GetChild("pad1", LOCAL)->GetComponent<StaticModel>();
     seqTimeCursorModel_ = seqScene_->GetChild("SeqTimeCursor", LOCAL)->GetComponent<StaticModel>();
     beatTimeCursorModel_ = seqScene_->GetChild("BeatTimeCursor", LOCAL)->GetComponent<StaticModel>();
 
