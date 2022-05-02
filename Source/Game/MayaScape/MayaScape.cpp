@@ -1425,7 +1425,9 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
         float subBeatSpaceSize = 6.5f;
         seqTimeCursorModel_->GetNode()->SetPosition(Vector3(seqTimeCursorModel_->GetNode()->GetPosition().x_, seqTimeCursorModel_->GetNode()->GetPosition().y_, 25.6f-beat*beatSpaceSize));
         float beatSpace = 0.069f;
-        beatModel_->GetNode()->SetPosition(Vector3(beatModel_->GetNode()->GetPosition().x_, beatModel_->GetNode()->GetPosition().y_, -beatSpace+(beat*beatSpace)-(beatTime*0)));
+//        beatModel_->GetNode()->SetPosition(Vector3(beatModel_->GetNode()->GetPosition().x_, beatModel_->GetNode()->GetPosition().y_, -beatSpace+(beat*beatSpace)-(beatTime*0)));
+
+        beatModel_->GetNode()->SetPosition(Vector3(beatModel_->GetNode()->GetPosition().x_, beatModel_->GetNode()->GetPosition().y_, 0));
         beatTimeCursorModel_->GetNode()->SetPosition(Vector3(beatTimeCursorModel_->GetNode()->GetPosition().x_, beatTimeCursorModel_->GetNode()->GetPosition().y_, 25.6f-(beat*beatSpaceSize)-(beatTime*subBeatSpaceSize)));
 
         Vector3 v;
