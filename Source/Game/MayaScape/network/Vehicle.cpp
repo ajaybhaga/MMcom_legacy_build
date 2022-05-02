@@ -52,6 +52,17 @@
 #include "Urho3D/DebugNew.h"
 #include "../../../ThirdParty/Bullet/src/BulletDynamics/Vehicle/btWheelInfo.h"
 
+std::vector<std::string> driveAudioEffect_ = {
+        "drive/v1-engine-start.ogg",
+        "drive/v1-engine-loop.ogg",
+        "drive/v1-engine-rev.ogg",
+        "drive/v1-engine-skid1.ogg",
+        "drive/v1-engine-skid2.ogg",
+        "drive/v1-engine-skid3.ogg",
+        "drive/v1-engine-brake.ogg",
+        "drive/v1-engine-boost.ogg"
+};
+
 
 //=============================================================================
 // VEHICLE
@@ -670,7 +681,7 @@ void Vehicle::PostUpdate(float timeStep)
     }
 
     // Sound effects update
-    //PostUpdateSound(timeStep);
+    PostUpdateSound(timeStep);
 }
 
 
@@ -1328,41 +1339,34 @@ void Vehicle::Init(Node* node) {
         light->SetCastShadows(true);
 
 
-        // TODO: Update sounds
         // Setup sounds
 
+        String prefix = "Sounds/";
         // init sound
         engineSoundSrc_ = node_->CreateComponent<SoundSource3D>();
-        engineSnd_ = cache->GetResource<Sound>("Offroad/Sounds/engine-prototype.ogg");
-      //  engineSnd_->SetLooped(true);
+        engineSnd_ = cache->GetResource<Sound>(prefix + driveAudioEffect_[SOUND_FX_ENGINE_LOOP].c_str());
+        engineSnd_->SetLooped(true);
 
         engineSoundSrc_->SetDistanceAttenuation( 1.0f, 30.0f, 0.1f );
         engineSoundSrc_->SetSoundType(SOUND_EFFECT);
         engineSoundSrc_->SetGain(0.7f);
-        //engineSoundSrc_->Play(engineSnd_);
+        engineSoundSrc_->Play(engineSnd_);
         engineSoundSrc_->SetFrequency(AUDIO_FIXED_FREQ_44K * 0.05f);
 
 
 
         skidSoundSrc_ = node_->CreateComponent<SoundSource3D>();
-        skidSnd_ = cache->GetResource<Sound>("Offroad/Sounds/skid-gravel.ogg");
+        skidSnd_ = cache->GetResource<Sound>(prefix + driveAudioEffect_[SOUND_FX_TIRE_SKID1].c_str());
         skidSoundSrc_->SetSoundType(SOUND_EFFECT);
         skidSoundSrc_->SetGain(0.4f);
         skidSoundSrc_->SetDistanceAttenuation( 1.0f, 30.0f, 0.1f );
         skidSoundSrc_->SetFrequency(AUDIO_FIXED_FREQ_44K * 1.4f );
 
         shockSoundSrc_ = node_->CreateComponent<SoundSource3D>();
-        shockSnd_ = cache->GetResource<Sound>("Offroad/Sounds/shocks-impact.ogg");
+        shockSnd_ = cache->GetResource<Sound>(prefix + driveAudioEffect_[SOUND_FX_TIRE_SKID3].c_str());
         shockSoundSrc_->SetSoundType(SOUND_EFFECT);
         shockSoundSrc_->SetGain(0.7f);
         shockSoundSrc_->SetDistanceAttenuation( 1.0f, 30.0f, 0.1f );
-
-        // acceleration sound while in air - most probably want this on
-        ///playAccelerationSoundInAir_ = false;
-
-
-
-
 
         SetUpdateEventMask(USE_FIXEDUPDATE | USE_POSTUPDATE);
 
@@ -1414,7 +1418,7 @@ void Vehicle::PostUpdateSound(float timeStep)
             // -if shifting rmps sounds off then change the normalization value. for the engine prototype sound,
             // the pitch sound is low, so it's normalized by diving by 8k instead of 10k
             const float rpmNormalizedForEnginePrototype = 8000.0f;
-            engineSoundSrc_->SetFrequency(AUDIO_FIXED_FREQ_44K * curRPM_ / rpmNormalizedForEnginePrototype);
+            //engineSoundSrc_->SetFrequency(AUDIO_FIXED_FREQ_44K * curRPM_ / rpmNormalizedForEnginePrototype);
 
             // shock impact when transitioning from partially off ground (or air borne) to landing
             if (numWheelContacts_ <= 2 && playShockImpactSound) {

@@ -50,6 +50,17 @@
 #define SOUND_FX_ENGINE_BRAKE 6
 #define SOUND_FX_ENGINE_BOOST 7
 
+std::vector<std::string> driveAudioEffect = {
+        "drive/v1-engine-start.ogg",
+        "drive/v1-engine-loop.ogg",
+        "drive/v1-engine-rev.ogg",
+        "drive/v1-engine-skid1.ogg",
+        "drive/v1-engine-skid2.ogg",
+        "drive/v1-engine-skid3.ogg",
+        "drive/v1-engine-brake.ogg",
+        "drive/v1-engine-boost.ogg"
+};
+
 
 #define CAM_RAYCAST_TIME_WAIT 0.02f
 

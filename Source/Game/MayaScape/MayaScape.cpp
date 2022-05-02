@@ -213,17 +213,6 @@ std::vector<std::string> bzRadioTracksTrackName = {
         "BZradio/mm-theme-rp01.ogg"
 };
 
-std::vector<std::string> driveAudioEffect = {
-        "drive/v1-engine-start.ogg",
-        "drive/v1-engine-loop.ogg",
-        "drive/v1-engine-rev.ogg",
-        "drive/v1-engine-skid1.ogg",
-        "drive/v1-engine-skid2.ogg",
-        "drive/v1-engine-skid3.ogg",
-        "drive/v1-engine-brake.ogg",
-        "drive/v1-engine-boost.ogg"
-};
-
 
 int currTrack_ = 0;
 
@@ -1432,11 +1421,14 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
     // Update sequencer view based on player update
     if (seqTimeCursorModel_) {
         //currTime, beatTimeStep, beat
-        float beatSpaceSize = 4.7f;
-        seqTimeCursorModel_->GetNode()->SetPosition(Vector3(seqTimeCursorModel_->GetNode()->GetPosition().x_, seqTimeCursorModel_->GetNode()->GetPosition().y_, 17.0f-beat*beatSpaceSize));
+        float beatSpaceSize = 6.4f;
+        seqTimeCursorModel_->GetNode()->SetPosition(Vector3(seqTimeCursorModel_->GetNode()->GetPosition().x_, seqTimeCursorModel_->GetNode()->GetPosition().y_, 24.0f-beat*beatSpaceSize));
         beatModel_->GetNode()->SetPosition(Vector3(beatModel_->GetNode()->GetPosition().x_, beatModel_->GetNode()->GetPosition().y_, 17.0f-beat*beatSpaceSize));
-        beatTimeCursorModel_->GetNode()->SetPosition(Vector3(beatTimeCursorModel_->GetNode()->GetPosition().x_, beatTimeCursorModel_->GetNode()->GetPosition().y_, 17.0f-beat*beatSpaceSize));
+        beatTimeCursorModel_->GetNode()->SetPosition(Vector3(beatTimeCursorModel_->GetNode()->GetPosition().x_, beatTimeCursorModel_->GetNode()->GetPosition().y_, 24.0f-beat*beatSpaceSize));
 
+        Vector3 v;
+        v = seqCam_->GetNode()->GetPosition();
+        /*
         Vector3 acc = Vector3(0,0,0.0011f);
         Vector3 v;
         if (seqCamOffset_ < -0.165f) {
@@ -1444,7 +1436,7 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
         } else {
             seqCamOffset_ += acc.z_;
             v = Vector3(seqCam_->GetNode()->GetPosition().x_, seqCam_->GetNode()->GetPosition().y_, seqCamOffset_);
-        }
+        }*/
         seqCam_->GetNode()->SetPosition(Vector3(v.x_,v.y_,v.z_));
 
         URHO3D_LOGINFOF("seqCamOffset: %f", seqCamOffset_);

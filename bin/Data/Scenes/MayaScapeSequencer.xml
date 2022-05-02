@@ -7,8 +7,8 @@
 	<attribute name="Elapsed Time" value="8.737" />
 	<attribute name="Next Replicated Node ID" value="176" />
 	<attribute name="Next Replicated Component ID" value="141" />
-	<attribute name="Next Local Node ID" value="16777249" />
-	<attribute name="Next Local Component ID" value="16777445" />
+	<attribute name="Next Local Node ID" value="16777250" />
+	<attribute name="Next Local Component ID" value="16777457" />
 	<attribute name="Variables" />
 	<attribute name="Variable Names" value="" />
 	<component type="Octree" id="1" />
@@ -22,46 +22,46 @@
 		<attribute name="Rotation" value="1 0 0 0" />
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
-		<node id="16777238">
-			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="seqCam" />
-			<attribute name="Tags" />
-			<attribute name="Position" value="-26.5436 0.328883 9.25968" />
-			<attribute name="Rotation" value="0.707107 -4.52743e-19 0.707107 4.52743e-19" />
-			<attribute name="Scale" value="1 1 1" />
-			<attribute name="Variables" />
-			<component type="Camera" id="16777423">
-				<attribute name="Aspect Ratio" value="1.77778" />
-			</component>
-			<node id="16777240">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="-0.437682 8.53563 3.19406" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="Light" id="16777424">
-					<attribute name="Brightness Multiplier" value="1.4" />
-					<attribute name="Radius" value="40" />
-					<attribute name="Length" value="30" />
-					<attribute name="Range" value="40" />
-					<attribute name="Light Shape Texture" value="TextureCube;" />
-				</component>
-			</node>
-		</node>
 		<node id="16777241">
 			<attribute name="Is Enabled" value="true" />
 			<attribute name="Name" value="BkgPanel" />
 			<attribute name="Tags" />
-			<attribute name="Position" value="-9.54135 -2.83084 -0.335629" />
-			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Position" value="-11.8022 3.07829 19.0353" />
+			<attribute name="Rotation" value="-3.12396e-08 0.707107 -0.707107 -3.05776e-08" />
 			<attribute name="Scale" value="100 100 100" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="16777425">
-				<attribute name="Model" value="Model;Models/Objects/Models/BillboardStand.mdl" />
-				<attribute name="Material" value="Material;Materials/Metal.xml;Materials/Material.001.xml" />
+				<attribute name="Model" value="Model;Models/Sequencer/Models/drum-machine.mdl" />
+				<attribute name="Material" value="Material;Materials/Metal.xml;Materials/Material.001.xml;;;;" />
 			</component>
+			<node id="16777238">
+				<attribute name="Is Enabled" value="true" />
+				<attribute name="Name" value="seqCam" />
+				<attribute name="Tags" />
+				<attribute name="Position" value="0.0241946 0.205812 0.120661" />
+				<attribute name="Rotation" value="0.5 0.5 -0.5 0.5" />
+				<attribute name="Scale" value="0.01 0.01 0.01" />
+				<attribute name="Variables" />
+				<component type="Camera" id="16777423">
+					<attribute name="Aspect Ratio" value="1.77778" />
+				</component>
+				<node id="16777240">
+					<attribute name="Is Enabled" value="true" />
+					<attribute name="Name" value="" />
+					<attribute name="Tags" />
+					<attribute name="Position" value="-0.437682 8.53563 3.19406" />
+					<attribute name="Rotation" value="1 0 0 0" />
+					<attribute name="Scale" value="1 1 1" />
+					<attribute name="Variables" />
+					<component type="Light" id="16777424">
+						<attribute name="Brightness Multiplier" value="1.4" />
+						<attribute name="Radius" value="40" />
+						<attribute name="Length" value="30" />
+						<attribute name="Range" value="40" />
+						<attribute name="Light Shape Texture" value="TextureCube;" />
+					</component>
+				</node>
+			</node>
 		</node>
 		<node id="16777244">
 			<attribute name="Is Enabled" value="true" />
@@ -93,9 +93,9 @@
 			<attribute name="Is Enabled" value="true" />
 			<attribute name="Name" value="SeqTimeCursor" />
 			<attribute name="Tags" />
-			<attribute name="Position" value="-11.0013 1.51737 17.9501" />
+			<attribute name="Position" value="-14.3501 3.73122 19.0047" />
 			<attribute name="Rotation" value="1 0 0 0" />
-			<attribute name="Scale" value="10 10 10" />
+			<attribute name="Scale" value="4 4 4" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="16777443">
 				<attribute name="Model" value="Model;Models/Sequencer/Models/TimeCursor.mdl" />
@@ -106,9 +106,9 @@
 			<attribute name="Is Enabled" value="true" />
 			<attribute name="Name" value="BeatTimeCursor" />
 			<attribute name="Tags" />
-			<attribute name="Position" value="-11.0013 -0.0681291 17.9501" />
+			<attribute name="Position" value="-22.2915 -5.06441 18.8422" />
 			<attribute name="Rotation" value="-4.37114e-08 0 -0 1" />
-			<attribute name="Scale" value="10 10 10" />
+			<attribute name="Scale" value="4 4 4" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="16777444">
 				<attribute name="Model" value="Model;Models/Sequencer/Models/BeatCursor.mdl" />
