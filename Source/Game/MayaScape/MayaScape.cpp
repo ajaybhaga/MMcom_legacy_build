@@ -1441,6 +1441,12 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
         }
 
 
+        if ((beat % 2) == 0) {
+            metronomeCursorModel_->SetMaterial(cache->GetResource<Material>("Materials/buttons.xml"));
+        } else {
+            metronomeCursorModel_->SetMaterial(cache->GetResource<Material>("Materials/buttons.active.xml"));
+        }
+
         beatTimeCursorModel_->GetNode()->SetPosition(Vector3(beatTimeCursorModel_->GetNode()->GetPosition().x_, beatTimeCursorModel_->GetNode()->GetPosition().y_, 25.6f-(beat*beatSpaceSize)-(beatTime*subBeatSpaceSize)));
 
 
@@ -3541,7 +3547,8 @@ void MayaScape::SetupSequencerViewport() {
 
     seqTimeCursorModel_ = seqScene_->GetChild("SeqTimeCursor", LOCAL)->GetComponent<StaticModel>();
     beatTimeCursorModel_ = seqScene_->GetChild("BeatTimeCursor", LOCAL)->GetComponent<StaticModel>();
-
+    metronomeCursorModel_ = seqScene_->GetChild("display_button", LOCAL)->GetComponent<StaticModel>();
+    metronomeCursorModel_->SetMaterial(cache->GetResource<Material>("Materials/buttons.xml"));
     //Camera, StaticModel, StaticModel
 /*
     for (int i = 0; i < 8; i++) {
