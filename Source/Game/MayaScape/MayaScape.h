@@ -64,6 +64,8 @@ std::vector<std::string> driveAudioEffect = {
 
 #define CAM_RAYCAST_TIME_WAIT 0.02f
 
+#define NUM_DRUM_MACHINE_PADS 64
+
 
 namespace Urho3D {
 

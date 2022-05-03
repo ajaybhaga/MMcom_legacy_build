@@ -85,7 +85,7 @@ protected:
     SharedPtr<Scene> seqScene_;
     SharedPtr<Viewport> menuViewport_;
     SharedPtr<Viewport> seqViewport_;
-    SharedPtr<StaticModel> beatModel_;
+    Vector<SharedPtr<StaticModel>> beatModelVec_;
     SharedPtr<StaticModel> seqTimeCursorModel_;
     SharedPtr<StaticModel> beatTimeCursorModel_;
 
