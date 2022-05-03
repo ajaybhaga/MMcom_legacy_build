@@ -213,6 +213,16 @@ std::vector<std::string> bzRadioTracksTrackName = {
         "BZradio/mm-theme-rp01.ogg"
 };
 
+#define SAMPLE_KICK 0
+#define SAMPLE_SNARE 1
+#define SAMPLE_HH 2
+
+std::vector<std::string> SAMPLE_PACK = {
+        "samples/SAMPLE1-BASSKICK.wav",
+        "samples/SAMPLE1-SNARE.wav",
+        "samples/SAMPLE1-HH.wav"
+};
+
 
 int currTrack_ = 0;
 
@@ -6229,9 +6239,36 @@ void MayaScape::HandlePlayerRespawned(StringHash eventType, VariantMap& eventDat
     // so that it won't be destroyed and recreated, and we don't have to redefine the viewport on load
 
 
-    // Enable for 3D sounds to work (attach to camera node)
+
+    // Found network player
+        String actorName = String("actor-") + clientName_;
+        Node *actorNode = scene_->GetChild(actorName);
+
+        String vehicleName = String("vehicle-") + clientName_;
+        Node *vehicleNode = scene_->GetChild(vehicleName);
+        //BLUE-304-vehicle
+
+        Vector3 bodyPos;
+        Quaternion rotation;
+
+        if (actorNode) {
+            // Retrieve Actor
+            ClientObj *actor = actorNode->GetDerivedComponent<ClientObj>();
+            // Load sequencer samples for client
+            ResourceCache *cache = GetSubsystem<ResourceCache>();
+            SoundSource3D *playSource = scene_->CreateComponent<SoundSource3D>(LOCAL);
+            String soundName = SAMPLE_PACK[0].c_str();
+            String prefix = "Sounds/";
+            Sound *sample = cache->GetResource<Sound>(prefix +soundName);
+            actor->GetSequencer().GetSampler().Load(sample);
+            actor->GetSequencer().SetPlaySource(playSource);
+        }
+
+                            // Enable for 3D sounds to work (attach to camera node)
     SoundListener *listener = clientCam_->GetNode()->CreateComponent<SoundListener>();
     GetSubsystem<Audio>()->SetListener(listener);
+
+
 
 
     clientLevelLoading_ = false;

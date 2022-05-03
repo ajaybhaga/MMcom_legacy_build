@@ -92,3 +92,7 @@ String ClientObj::GetUserName() {
 Vector3 ClientObj::GetPosition() {
     return position_;
 }
+
+Sequencer &ClientObj::GetSequencer() {
+    return sequencer_;
+}

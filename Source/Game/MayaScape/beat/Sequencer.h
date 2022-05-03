@@ -18,6 +18,7 @@ protected:
 
     int size_; // 8 beats
 
+
     // Current state
     int beat_; // Current beat
     float currTime_; // Current time
@@ -28,6 +29,10 @@ protected:
     int bpm_; // Beats per minute
     int beatsPerBar_; // Beats per bar
     float beatTimeStep_; // Calculated beat time step
+
+
+    SoundSource3D* playSource_;
+
 
 public:
 
@@ -46,6 +51,7 @@ public:
     float GetBeatTimeStep() const;
     void SetId(const String &id);
     float GetBeatTime() const;
+    void SetPlaySource(SoundSource3D* playSource);
 };
 
 

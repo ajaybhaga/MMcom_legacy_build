@@ -17,6 +17,7 @@ public:
 
 protected:
     Vector<Sound*> sampleQueue_;
+    bool loaded_;
 
     // Current state
     int playSampleIdx_; // Current beat
@@ -30,10 +31,10 @@ public:
     ~Sampler();
     Vector<Sound*> GetSampleQueue();
     void Reset();
-    void Play(int sampleIdx);
     void Play(SoundSource3D *source, int sampleIdx);
     void Load(Sound* sample);
     void Stop();
+    bool Loaded();
 };
 
 

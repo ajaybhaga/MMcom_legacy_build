@@ -59,15 +59,6 @@ String victoryAniFile = "Models/Player/Bino/Models/Victory.ani";
 String defeatAniFile = "Models/Player/Bino/Models/Defeat.ani";
 String matFile = "Models/Player/Bino/Models/f_8.txt";
 
-#define SAMPLE_KICK 0
-#define SAMPLE_SNARE 1
-#define SAMPLE_HH 2
-
-std::vector<std::string> SAMPLE_PACK = {
-        "samples/SAMPLE1-BASSKICK.wav",
-        "samples/SAMPLE1-SNARE.wav",
-        "samples/SAMPLE1-HH.wav"
-};
 
 
 //=============================================================================
@@ -113,13 +104,7 @@ NetworkActor::NetworkActor(Context *context)
     // Setup sequencer for user
     sequencer_ = Sequencer();
 
-    // Load sequencer samples for client
-    ResourceCache *cache = GetSubsystem<ResourceCache>();
-    //SoundSource3D *sample = scene_->CreateComponent<SoundSource3D>(LOCAL);
-    String soundName = SAMPLE_PACK[0].c_str();
-    String prefix = "Sounds/";
-    Sound *sample = cache->GetResource<Sound>(prefix +soundName);
-    sequencer_.GetSampler().Load(sample);
+
 }
 
 NetworkActor::~NetworkActor() {
@@ -212,7 +197,6 @@ void NetworkActor::Init(Node* node) {
 
     node_ = node;
     if (node_) {
-
 
 
         Node* objectNode = node_->CreateChild("Actor", REPLICATED);
@@ -1215,7 +1199,3 @@ void NetworkActor::EnterVehicle() {
     Urho3D::Component::MarkNetworkUpdate();
 
 }
-
-Sequencer &NetworkActor::GetSequencer() {
-    return sequencer_;
-};

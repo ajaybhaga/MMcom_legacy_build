@@ -36,15 +36,15 @@ void Sampler::Play(SoundSource3D *source, int sampleIdx) {
 }
 
 void Sampler::Load(Sound* sample) {
-
-//..    sample->SetNearDistance(1);  // distance up to where the volume is 100%
- //   sample->SetFarDistance(6000);  // distance from where the volume is at 0%
-  //  sample->SetSoundType(SOUND_MUSIC);
-
     // Store sample
     sampleQueue_.Push(sample);
+    loaded_ = true;
 }
 
 void Sampler::Stop() {
 
+}
+
+bool Sampler::Loaded() {
+    return loaded_;
 }

@@ -25,7 +25,7 @@
 #include <Urho3D/Scene/LogicComponent.h>
 #include <Urho3D/Core/Variant.h>
 #include <Urho3D/Input/Controls.h>
-
+#include <MayaScape/beat/Sequencer.h>
 namespace Urho3D
 {
 class Scene;
@@ -50,10 +50,9 @@ public:
     virtual Vector3 GetPosition();
     virtual void SetScene(Scene *scene);
     virtual void SetRootNode(Node *node);
+    virtual String GetUserName();
 
-
-
-        virtual String GetUserName();
+    Sequencer &GetSequencer();
 
 protected:
     /// Player Controls
@@ -67,5 +66,9 @@ protected:
 
     WeakPtr<Scene> scene_;
     SharedPtr<Node> node_;
+    Sequencer sequencer_;
+
+
+
 };
 

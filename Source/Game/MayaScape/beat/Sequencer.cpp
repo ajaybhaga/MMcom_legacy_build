@@ -66,6 +66,9 @@ void Sequencer::Play(float timeStep) {
         beat_++; // Increment beat
         beatTime_ = 0.0f;
 
+        if (sampler_.Loaded())
+            sampler_.Play(playSource_, 0);
+
         if (beat_ > beatsPerBar_) {
             // Over bar limit
             bar_++;
@@ -116,4 +119,8 @@ const String &Sequencer::GetId() const {
 
 Sampler &Sequencer::GetSampler() {
     return sampler_;
+}
+
+void Sequencer::SetPlaySource(SoundSource3D* playSource) {
+    playSource_ = WeakPtr(playSource);
 }
