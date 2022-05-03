@@ -799,7 +799,7 @@
 			</node>
 			<node id="16777306">
 				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad65" />
+				<attribute name="Name" value="pad54" />
 				<attribute name="Tags" />
 				<attribute name="Position" value="0 0 0" />
 				<attribute name="Rotation" value="1 0 0 0" />
@@ -1184,7 +1184,7 @@
 				<attribute name="Variables" />
 				<component type="StaticModel" id="16777553">
 					<attribute name="Model" value="Model;Models/pad1.mdl" />
-					<attribute name="Material" value="Material;Materials/buttons.active.xml" />
+					<attribute name="Material" value="Material;" />
 				</component>
 			</node>
 			<node id="16777336">

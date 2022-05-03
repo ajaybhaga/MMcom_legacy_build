@@ -1426,17 +1426,13 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
         float subBeatSpaceSize = 6.5f;
         seqTimeCursorModel_->GetNode()->SetPosition(Vector3(seqTimeCursorModel_->GetNode()->GetPosition().x_, seqTimeCursorModel_->GetNode()->GetPosition().y_, 25.6f-beat*beatSpaceSize));
         float beatSpace = 0.069f;
-//        beatModel_->GetNode()->SetPosition(Vector3(beatModel_->GetNode()->GetPosition().x_, beatModel_->GetNode()->GetPosition().y_, -beatSpace+(beat*beatSpace)-(beatTime*0)));
-
-        //beatModel_->GetNode()->SetPosition(Vector3(beatModel_->GetNode()->GetPosition().x_, beatModel_->GetNode()->GetPosition().y_, 0));
-
 
         for (int i = 0; i < NUM_DRUM_MACHINE_PADS; i++) {
 
             if (beatModelVec_[i]) {
                 beatModelVec_[i]->SetEnabled(true);
 
-                if (i == beat) {
+                if (i == (beat-1)) {
                     beatModelVec_[i]->SetMaterial(cache->GetResource<Material>("Materials/buttons.active.xml"));
                 } else {
                     beatModelVec_[i]->SetMaterial(cache->GetResource<Material>("Materials/buttons.xml"));
@@ -1444,11 +1440,12 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
             }
         }
 
-        //model->SetMaterial(cache->GetResource<Material>("Materials/buttons.active.xml"));
-
-
 
         beatTimeCursorModel_->GetNode()->SetPosition(Vector3(beatTimeCursorModel_->GetNode()->GetPosition().x_, beatTimeCursorModel_->GetNode()->GetPosition().y_, 25.6f-(beat*beatSpaceSize)-(beatTime*subBeatSpaceSize)));
+
+
+        seqTimeCursorModel_->SetEnabled(false);
+        beatTimeCursorModel_->SetEnabled(false);
 
         Vector3 v;
         v = seqCam_->GetNode()->GetPosition();
@@ -3535,8 +3532,8 @@ void MayaScape::SetupSequencerViewport() {
     seqCam_ = seqScene_->GetChild("seqCam", LOCAL)->GetComponent<Camera>();
     seqCam_->SetOrthographic(true);
 
-    for (int i = 1; i < NUM_DRUM_MACHINE_PADS; i++) {
-        String name = "pad" + String(i);
+    for (int i = 0; i < NUM_DRUM_MACHINE_PADS; i++) {
+        String name = "pad" + String(i+1);
         StaticModel* model = seqScene_->GetChild(name, LOCAL)->GetComponent<StaticModel>();
         model->SetMaterial(cache->GetResource<Material>("Materials/buttons.active.xml"));
         beatModelVec_.Push(static_cast<SharedPtr<StaticModel>>(model));
