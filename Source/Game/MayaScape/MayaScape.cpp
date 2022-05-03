@@ -959,17 +959,32 @@ Controls MayaScape::SampleCSPControls()
                         rotation = na->GetNode()->GetRotation();
 
 
+                        // LOAD SAMPLES INTO SAMPLER
                         if (actorNode) {
-                            if (!actor->GetSequencer().GetSampler().Loaded()) {
+                            // Check if not samples loaded
+                            if (!actor->GetSequencer().GetSampler()->Loaded()) {
                                 // Retrieve Actor
                                 ClientObj *actor = actorNode->GetDerivedComponent<ClientObj>();
                                 // Load sequencer samples for client
                                 ResourceCache *cache = GetSubsystem<ResourceCache>();
                                 SoundSource3D *playSource = scene_->CreateComponent<SoundSource3D>(LOCAL);
-                                String soundName = SAMPLE_PACK[0].c_str();
                                 String prefix = "Sounds/";
-                                Sound *sample = cache->GetResource<Sound>(prefix + soundName);
-                                actor->GetSequencer().GetSampler().Load(sample);
+
+                                String soundName;
+                                Sound *sample;
+                                soundName = SAMPLE_PACK[SAMPLE_KICK].c_str();
+                                sample = cache->GetResource<Sound>(prefix + soundName);
+                                actor->GetSequencer().GetSampler()->Load(sample);
+
+                                soundName = SAMPLE_PACK[SAMPLE_SNARE].c_str();
+                                sample = cache->GetResource<Sound>(prefix + soundName);
+                                actor->GetSequencer().GetSampler()->Load(sample);
+
+                                soundName = SAMPLE_PACK[SAMPLE_HH].c_str();
+                                sample = cache->GetResource<Sound>(prefix + soundName);
+                                actor->GetSequencer().GetSampler()->Load(sample);
+
+
                                 actor->GetSequencer().SetPlaySource(playSource);
                             }
                         }

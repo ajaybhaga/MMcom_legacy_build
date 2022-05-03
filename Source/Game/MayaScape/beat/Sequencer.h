@@ -4,7 +4,6 @@
 #define MM_SEQUENCER_H
 
 #include "Beat.h"
-#include "Sampler.h"
 #include <Urho3D/Container/Str.h>
 #include <Urho3D/Container/Vector.h>
 
@@ -13,10 +12,10 @@ class Sequencer {
 
 protected:
     String id_;
-    Vector<Beat*> sequence_;
-    Sampler sampler_;
-
-    int size_; // 8 beats
+    Vector<Beat*> sequenceByBeat_;
+    HashMap<String,Beat*> sequenceByTime_;
+    Sampler *sampler_;
+    int length_; // 16 beats
 
 
     // Current state
@@ -39,7 +38,7 @@ public:
     Sequencer();
     ~Sequencer();
     Vector<Beat*> GetSequence();
-    Sampler &GetSampler();
+    Sampler *GetSampler();
     const String &GetId() const;
     void Reset();
     void Play(float timeStep);

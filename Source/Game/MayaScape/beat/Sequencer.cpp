@@ -10,7 +10,7 @@
 // SEQUENCER
 //=============================================================================
 
-Sequencer::Sequencer() : size_(8) {
+Sequencer::Sequencer() : length_(16) {
     // Init parameters
     Reset();
 
@@ -24,16 +24,18 @@ Sequencer::Sequencer() : size_(8) {
 
     // 4/4 = 250 ms time segment
 
-    sequence_.Clear();
-    for (int i = 0; i < size_; i++) {
-        Beat *b = new Beat(1 / beatsPerBar_);
-        sequence_.Push(b);
+    // Load default samples for sequencer
+    sampler_ = new Sampler();
+
+    // Generate sequence -> instruction set to time beat
+    sequenceByBeat_.Clear();
+    for (int i = 0; i < length_; i++) {
+        Beat *b = new Beat(1 / beatsPerBar_, sampler_, 0, playSource_);
+        sequenceByBeat_.Push(b);
     }
 
     URHO3D_LOGDEBUGF("**SEQUENCER ** -> beatsPerBar_=%d,beatTimeStep_=%f", beatsPerBar_, beatTimeStep_);
 
-    // Load default samples for sequencer
-    sampler_ = Sampler();
 }
 
 void Sequencer::SetId(const String &id) {
@@ -66,8 +68,12 @@ void Sequencer::Play(float timeStep) {
         beat_++; // Increment beat
         beatTime_ = 0.0f;
 
-        if (sampler_.Loaded())
-            sampler_.Play(playSource_, 0);
+
+        // Sequencer moves forward
+        // Mapping of instruction set to timeStep (beat)
+
+        // Play beat sample
+        sequenceByBeat_[beat_]->Play();
 
         if (beat_ > beatsPerBar_) {
             // Over bar limit
@@ -86,7 +92,7 @@ float Sequencer::GetBeatTime() const {
 }
 
 int Sequencer::GetSize() const {
-    return size_;
+    return length_;
 }
 
 int Sequencer::GetBeat() const {
@@ -109,15 +115,11 @@ float Sequencer::GetBeatTimeStep() const {
     return beatTimeStep_;
 }
 
-Vector<Beat*> Sequencer::GetSequence() {
-    return sequence_;
-}
-
 const String &Sequencer::GetId() const {
     return id_;
 }
 
-Sampler &Sequencer::GetSampler() {
+Sampler *Sequencer::GetSampler() {
     return sampler_;
 }
 
