@@ -12,72 +12,72 @@
 		<attribute name="Variables" />
 		<node id="2">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad47" />
+			<attribute name="Name" value="knob3" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="4" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad47.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/knob3.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="3">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad6" />
+			<attribute name="Name" value="pad1" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="5" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad6.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad1.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="4">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button11" />
+			<attribute name="Name" value="pad57" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="6" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button11.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad57.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="5">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button4" />
+			<attribute name="Name" value="pad6" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="7" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button4.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad6.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="6">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="Display" />
+			<attribute name="Name" value="pad38" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="8" type="StaticModel">
-				<attribute name="Model" value="Model;Models/Display.mdl" />
-				<attribute name="Material" value="Material;Materials/display.xml" />
+				<attribute name="Model" value="Model;Models/pad38.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="7">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button16" />
+			<attribute name="Name" value="pad56" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="9" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button16.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad56.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="8">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad21" />
+			<attribute name="Name" value="pad59" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="10" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad21.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad59.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="9">
@@ -87,777 +87,777 @@
 			<attribute name="Variables" />
 			<component id="11" type="StaticModel">
 				<attribute name="Model" value="Model;Models/pad61.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="10">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button1" />
+			<attribute name="Name" value="led4" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="12" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button1.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.led1.xml" />
+				<attribute name="Model" value="Model;Models/led4.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="11">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button14" />
+			<attribute name="Name" value="button5" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="13" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button14.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/button5.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="12">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad18" />
+			<attribute name="Name" value="pad20" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="14" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad18.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad20.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="13">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad29" />
+			<attribute name="Name" value="button10" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="15" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad29.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/button10.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="14">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad58" />
+			<attribute name="Name" value="button20" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="16" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad58.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/button20.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="15">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button6" />
+			<attribute name="Name" value="pad31" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="17" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button6.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad31.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="16">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad34" />
+			<attribute name="Name" value="pad13" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="18" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad34.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad13.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="17">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad8" />
+			<attribute name="Name" value="display_button" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="19" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad8.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/display_button.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="18">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad54" />
+			<attribute name="Name" value="pad16" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="20" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad54.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad16.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="19">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button19" />
+			<attribute name="Name" value="pad7" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="21" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button19.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad7.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="20">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="round_button3" />
+			<attribute name="Name" value="pad49" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="22" type="StaticModel">
-				<attribute name="Model" value="Model;Models/round_button3.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.channel.circ.xml" />
+				<attribute name="Model" value="Model;Models/pad49.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="21">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="round_button4" />
+			<attribute name="Name" value="button12" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="23" type="StaticModel">
-				<attribute name="Model" value="Model;Models/round_button4.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.channel.circ.xml" />
+				<attribute name="Model" value="Model;Models/button12.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="22">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button3" />
+			<attribute name="Name" value="pad46" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="24" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button3.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad46.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="23">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad44" />
+			<attribute name="Name" value="pad52" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="25" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad44.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad52.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="24">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad20" />
+			<attribute name="Name" value="pad39" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="26" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad20.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad39.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="25">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad14" />
+			<attribute name="Name" value="button13" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="27" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad14.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/button13.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="26">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="led1" />
+			<attribute name="Name" value="pad33" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="28" type="StaticModel">
-				<attribute name="Model" value="Model;Models/led1.mdl" />
-				<attribute name="Material" value="Material;Materials/leds.xml" />
+				<attribute name="Model" value="Model;Models/pad33.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="27">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button15" />
+			<attribute name="Name" value="pad32" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="29" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button15.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad32.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="28">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button2" />
+			<attribute name="Name" value="button11" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="30" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button2.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/button11.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="29">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad50" />
+			<attribute name="Name" value="pad37" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="31" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad50.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad37.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="30">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad63" />
+			<attribute name="Name" value="pad47" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="32" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad63.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad47.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="31">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad52" />
+			<attribute name="Name" value="button2" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="33" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad52.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/button2.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="32">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad62" />
+			<attribute name="Name" value="button6" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="34" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad62.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/button6.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="33">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="knob4.001" />
+			<attribute name="Name" value="pad27" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="35" type="StaticModel">
-				<attribute name="Model" value="Model;Models/knob4.001.mdl" />
-				<attribute name="Material" value="Material;Materials/knobs.xml" />
+				<attribute name="Model" value="Model;Models/pad27.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="34">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="knob3" />
+			<attribute name="Name" value="round_button4" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="36" type="StaticModel">
-				<attribute name="Model" value="Model;Models/knob3.mdl" />
-				<attribute name="Material" value="Material;Materials/knobs.xml" />
+				<attribute name="Model" value="Model;Models/round_button4.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="35">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad43" />
+			<attribute name="Name" value="button17" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="37" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad43.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/button17.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="36">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button7" />
+			<attribute name="Name" value="button14" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="38" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button7.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.channel.sq.active.xml" />
+				<attribute name="Model" value="Model;Models/button14.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="37">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad33" />
+			<attribute name="Name" value="pad11" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="39" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad33.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad11.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="38">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button8" />
+			<attribute name="Name" value="pad18" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="40" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button8.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.channel.sq.xml" />
+				<attribute name="Model" value="Model;Models/pad18.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="39">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad15" />
+			<attribute name="Name" value="pad60" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="41" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad15.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad60.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="40">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad23" />
+			<attribute name="Name" value="pad42" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="42" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad23.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad42.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="41">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button18" />
+			<attribute name="Name" value="button1" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="43" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button18.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/button1.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="42">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad53" />
+			<attribute name="Name" value="pad58" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="44" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad53.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad58.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="43">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad32" />
+			<attribute name="Name" value="pad15" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="45" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad32.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad15.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="44">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad3" />
+			<attribute name="Name" value="pad43" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="46" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad3.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad43.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="45">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad42" />
+			<attribute name="Name" value="knob2" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="47" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad42.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/knob2.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="46">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad55" />
+			<attribute name="Name" value="pad9" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="48" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad55.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad9.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="47">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad30" />
+			<attribute name="Name" value="pad26" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="49" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad30.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad26.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="48">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="display_button" />
+			<attribute name="Name" value="pad40" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="50" type="StaticModel">
-				<attribute name="Model" value="Model;Models/display_button.mdl" />
-				<attribute name="Material" value="Material;Materials/display.001.xml" />
+				<attribute name="Model" value="Model;Models/pad40.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="49">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad26" />
+			<attribute name="Name" value="pad28" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="51" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad26.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad28.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="50">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad12" />
+			<attribute name="Name" value="pad19" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="52" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad12.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad19.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="51">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button12" />
+			<attribute name="Name" value="pad3" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="53" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button12.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad3.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="52">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad48" />
+			<attribute name="Name" value="pad24" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="54" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad48.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad24.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="53">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="led4" />
+			<attribute name="Name" value="button8" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="55" type="StaticModel">
-				<attribute name="Model" value="Model;Models/led4.mdl" />
-				<attribute name="Material" value="Material;Materials/leds.xml" />
+				<attribute name="Model" value="Model;Models/button8.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="54">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad65" />
+			<attribute name="Name" value="pad51" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="56" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad65.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad51.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="55">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad19" />
+			<attribute name="Name" value="led3" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="57" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad19.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/led3.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="56">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad5" />
+			<attribute name="Name" value="pad29" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="58" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad5.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad29.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="57">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad40" />
+			<attribute name="Name" value="pad64" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="59" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad40.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad64.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="58">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad25" />
+			<attribute name="Name" value="pad4" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="60" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad25.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad4.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="59">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button13" />
+			<attribute name="Name" value="round_button1" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="61" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button13.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/round_button1.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="60">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button10" />
+			<attribute name="Name" value="pad45" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="62" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button10.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.channel.sq.xml" />
+				<attribute name="Model" value="Model;Models/pad45.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="61">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="led2" />
+			<attribute name="Name" value="button7" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="63" type="StaticModel">
-				<attribute name="Model" value="Model;Models/led2.mdl" />
-				<attribute name="Material" value="Material;Materials/leds.xml" />
+				<attribute name="Model" value="Model;Models/button7.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="62">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="knob4" />
+			<attribute name="Name" value="pad23" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="64" type="StaticModel">
-				<attribute name="Model" value="Model;Models/knob4.mdl" />
-				<attribute name="Material" value="Material;Materials/knobs.xml" />
+				<attribute name="Model" value="Model;Models/pad23.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="63">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="led3" />
+			<attribute name="Name" value="pad22" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="65" type="StaticModel">
-				<attribute name="Model" value="Model;Models/led3.mdl" />
-				<attribute name="Material" value="Material;Materials/leds.xml" />
+				<attribute name="Model" value="Model;Models/pad22.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="64">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad59" />
+			<attribute name="Name" value="pad5" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="66" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad59.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad5.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="65">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad22" />
+			<attribute name="Name" value="pad34" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="67" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad22.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad34.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="66">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad51" />
+			<attribute name="Name" value="led1" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="68" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad51.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/led1.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="67">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad37" />
+			<attribute name="Name" value="button16" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="69" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad37.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/button16.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="68">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad13" />
+			<attribute name="Name" value="button15" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="70" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad13.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/button15.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="69">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad4" />
+			<attribute name="Name" value="pad21" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="71" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad4.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad21.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="70">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad16" />
+			<attribute name="Name" value="button19" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="72" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad16.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/button19.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="71">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad11" />
+			<attribute name="Name" value="pad62" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="73" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad11.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad62.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="72">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad46" />
+			<attribute name="Name" value="button9" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="74" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad46.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/button9.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="73">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad45" />
+			<attribute name="Name" value="led2" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="75" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad45.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/led2.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="74">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button17" />
+			<attribute name="Name" value="pad30" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="76" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button17.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad30.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="75">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad10" />
+			<attribute name="Name" value="pad25" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="77" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad10.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad25.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="76">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad31" />
+			<attribute name="Name" value="pad55" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="78" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad31.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad55.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="77">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad24" />
+			<attribute name="Name" value="pad36" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="79" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad24.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad36.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="78">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad49" />
+			<attribute name="Name" value="knob1" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="80" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad49.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/knob1.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="79">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button20" />
+			<attribute name="Name" value="pad44" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="81" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button20.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad44.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="80">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad57" />
+			<attribute name="Name" value="pad12" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="82" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad57.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad12.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="81">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad1" />
+			<attribute name="Name" value="pad2" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="83" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad1.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.active.xml" />
+				<attribute name="Model" value="Model;Models/pad2.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="82">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="round_button2" />
+			<attribute name="Name" value="pad54" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="84" type="StaticModel">
-				<attribute name="Model" value="Model;Models/round_button2.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.channel.circ.xml" />
+				<attribute name="Model" value="Model;Models/pad54.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="83">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="knob2" />
+			<attribute name="Name" value="knob4" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="85" type="StaticModel">
-				<attribute name="Model" value="Model;Models/knob2.mdl" />
-				<attribute name="Material" value="Material;Materials/knobs.xml" />
+				<attribute name="Model" value="Model;Models/knob4.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="84">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad41" />
+			<attribute name="Name" value="button4" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="86" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad41.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/button4.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="85">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button5" />
+			<attribute name="Name" value="pad63" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="87" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button5.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad63.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="86">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad28" />
+			<attribute name="Name" value="pad14" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="88" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad28.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad14.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="87">
@@ -867,137 +867,137 @@
 			<attribute name="Variables" />
 			<component id="89" type="StaticModel">
 				<attribute name="Model" value="Model;Models/pad35.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="88">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad27" />
+			<attribute name="Name" value="pad17" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="90" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad27.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad17.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="89">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="knob1" />
+			<attribute name="Name" value="button3" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="91" type="StaticModel">
-				<attribute name="Model" value="Model;Models/knob1.mdl" />
-				<attribute name="Material" value="Material;Materials/knobs.xml" />
+				<attribute name="Model" value="Model;Models/button3.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="90">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad17" />
+			<attribute name="Name" value="knob4.001" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="92" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad17.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/knob4.001.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="91">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad7" />
+			<attribute name="Name" value="pad48" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="93" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad7.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad48.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="92">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad39" />
+			<attribute name="Name" value="pad8" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="94" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad39.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad8.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="93">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad2" />
+			<attribute name="Name" value="round_button2" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="95" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad2.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/round_button2.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="94">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="button9" />
+			<attribute name="Name" value="pad50" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="96" type="StaticModel">
-				<attribute name="Model" value="Model;Models/button9.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.channel.sq.xml" />
+				<attribute name="Model" value="Model;Models/pad50.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="95">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad36" />
+			<attribute name="Name" value="Display" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="97" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad36.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/Display.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="96">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="round_button1" />
+			<attribute name="Name" value="button18" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="98" type="StaticModel">
-				<attribute name="Model" value="Model;Models/round_button1.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.channel.circ.active.xml" />
+				<attribute name="Model" value="Model;Models/button18.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="97">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad38" />
+			<attribute name="Name" value="pad10" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="99" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad38.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad10.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="98">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad9" />
+			<attribute name="Name" value="pad53" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="100" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad9.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad53.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="99">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad56" />
+			<attribute name="Name" value="round_button3" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="101" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad56.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/round_button3.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 		<node id="100">
 			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="pad60" />
+			<attribute name="Name" value="pad41" />
 			<attribute name="Tags" />
 			<attribute name="Variables" />
 			<component id="102" type="StaticModel">
-				<attribute name="Model" value="Model;Models/pad60.mdl" />
-				<attribute name="Material" value="Material;Materials/buttons.xml" />
+				<attribute name="Model" value="Model;Models/pad41.mdl" />
+				<attribute name="Material" value="Material;" />
 			</component>
 		</node>
 	</node>

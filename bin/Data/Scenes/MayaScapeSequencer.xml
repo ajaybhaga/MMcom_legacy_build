@@ -7,8 +7,8 @@
 	<attribute name="Elapsed Time" value="8.737" />
 	<attribute name="Next Replicated Node ID" value="176" />
 	<attribute name="Next Replicated Component ID" value="141" />
-	<attribute name="Next Local Node ID" value="16777358" />
-	<attribute name="Next Local Component ID" value="16777620" />
+	<attribute name="Next Local Node ID" value="16777564" />
+	<attribute name="Next Local Component ID" value="16777858" />
 	<attribute name="Variables" />
 	<attribute name="Variable Names" value="" />
 	<component type="Octree" id="1" />
@@ -65,7 +65,7 @@
 			<attribute name="Is Enabled" value="true" />
 			<attribute name="Name" value="seqCam" />
 			<attribute name="Tags" />
-			<attribute name="Position" value="-35.5397 0.286367 5.87039" />
+			<attribute name="Position" value="-35.5397 0.286367 7.354" />
 			<attribute name="Rotation" value="0.707107 -1.79826e-07 0.707107 -1.79826e-07" />
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
@@ -108,1319 +108,1302 @@
 			<attribute name="Rotation" value="-3.12396e-08 0.707107 -0.707107 -3.05776e-08" />
 			<attribute name="Scale" value="100 100 100" />
 			<attribute name="Variables" />
-			<node id="16777253">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad47" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777471">
-					<attribute name="Model" value="Model;Models/pad47.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777254">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad6" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777472">
-					<attribute name="Model" value="Model;Models/pad6.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777255">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button11" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777473">
-					<attribute name="Model" value="Model;Models/button11.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777256">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button3" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777474">
-					<attribute name="Model" value="Model;Models/button3.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777257">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="Display" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777475">
-					<attribute name="Model" value="Model;Models/Display.mdl" />
-					<attribute name="Material" value="Material;Materials/buttons.channel.circ.xml" />
-				</component>
-			</node>
-			<node id="16777258">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button16" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777476">
-					<attribute name="Model" value="Model;Models/button16.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777259">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad21" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777477">
-					<attribute name="Model" value="Model;Models/pad21.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777260">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad61" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777478">
-					<attribute name="Model" value="Model;Models/pad61.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777261">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button1" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777479">
-					<attribute name="Model" value="Model;Models/button1.mdl" />
-					<attribute name="Material" value="Material;Materials/buttons.led1.xml" />
-				</component>
-			</node>
-			<node id="16777262">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad8" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777480">
-					<attribute name="Model" value="Model;Models/pad8.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777263">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button14" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777481">
-					<attribute name="Model" value="Model;Models/button14.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777264">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad18" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777482">
-					<attribute name="Model" value="Model;Models/pad18.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777265">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad29" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777483">
-					<attribute name="Model" value="Model;Models/pad29.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777266">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad58" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777484">
-					<attribute name="Model" value="Model;Models/pad58.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777267">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="grip" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777485">
-					<attribute name="Model" value="Model;Models/grip.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777268">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad34" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777486">
-					<attribute name="Model" value="Model;Models/pad34.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777269">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad45" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777487">
-					<attribute name="Model" value="Model;Models/pad45.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777270">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad54" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777488">
-					<attribute name="Model" value="Model;Models/pad54.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777271">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="USB" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777489">
-					<attribute name="Model" value="Model;Models/USB.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777272">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="display_button" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777490">
-					<attribute name="Model" value="Model;Models/display_button.mdl" />
-					<attribute name="Material" value="Material;Materials/buttons.channel.circ.xml" />
-				</component>
-			</node>
-			<node id="16777273">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="round_button3" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777491">
-					<attribute name="Model" value="Model;Models/round_button3.mdl" />
-					<attribute name="Material" value="Material;Materials/buttons.channel.circ.xml" />
-				</component>
-			</node>
-			<node id="16777274">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="round_button4" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777492">
-					<attribute name="Model" value="Model;Models/round_button4.mdl" />
-					<attribute name="Material" value="Material;Materials/buttons.channel.circ.xml" />
-				</component>
-			</node>
-			<node id="16777275">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="round_button1" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777493">
-					<attribute name="Model" value="Model;Models/round_button1.mdl" />
-					<attribute name="Material" value="Material;Materials/buttons.channel.circ.active.xml" />
-				</component>
-			</node>
-			<node id="16777276">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad44" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777494">
-					<attribute name="Model" value="Model;Models/pad44.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777277">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad20" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777495">
-					<attribute name="Model" value="Model;Models/pad20.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777278">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad14" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777496">
-					<attribute name="Model" value="Model;Models/pad14.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777279">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="led1" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777497">
-					<attribute name="Model" value="Model;Models/led1.mdl" />
-					<attribute name="Material" value="Material;Materials/leds.xml" />
-				</component>
-			</node>
-			<node id="16777280">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button15" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777498">
-					<attribute name="Model" value="Model;Models/button15.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777281">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button2" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777499">
-					<attribute name="Model" value="Model;Models/button2.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777282">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad50" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777500">
-					<attribute name="Model" value="Model;Models/pad50.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777283">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button17" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777501">
-					<attribute name="Model" value="Model;Models/button17.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777284">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad52" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777502">
-					<attribute name="Model" value="Model;Models/pad52.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777285">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad62" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777503">
-					<attribute name="Model" value="Model;Models/pad62.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777286">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="knob4.001" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777504">
-					<attribute name="Model" value="Model;Models/knob4.001.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777287">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="knob3" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777505">
-					<attribute name="Model" value="Model;Models/knob3.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777288">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad43" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777506">
-					<attribute name="Model" value="Model;Models/pad43.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777289">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button7" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777507">
-					<attribute name="Model" value="Model;Models/button7.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777290">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad33" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777508">
-					<attribute name="Model" value="Model;Models/pad33.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777291">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button8" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777509">
-					<attribute name="Model" value="Model;Models/button8.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777292">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad15" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777510">
-					<attribute name="Model" value="Model;Models/pad15.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777293">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad23" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777511">
-					<attribute name="Model" value="Model;Models/pad23.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777294">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button18" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777512">
-					<attribute name="Model" value="Model;Models/button18.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777295">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad53" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777513">
-					<attribute name="Model" value="Model;Models/pad53.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777296">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad32" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777514">
-					<attribute name="Model" value="Model;Models/pad32.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777297">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad3" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777515">
-					<attribute name="Model" value="Model;Models/pad3.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777298">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad42" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777516">
-					<attribute name="Model" value="Model;Models/pad42.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777299">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad55" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777517">
-					<attribute name="Model" value="Model;Models/pad55.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777300">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad30" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777518">
-					<attribute name="Model" value="Model;Models/pad30.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777301">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad26" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777519">
-					<attribute name="Model" value="Model;Models/pad26.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777302">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad12" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777520">
-					<attribute name="Model" value="Model;Models/pad12.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777303">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button12" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777521">
-					<attribute name="Model" value="Model;Models/button12.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777304">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad48" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777522">
-					<attribute name="Model" value="Model;Models/pad48.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777305">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="led4" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777523">
-					<attribute name="Model" value="Model;Models/led4.mdl" />
-					<attribute name="Material" value="Material;Materials/leds.xml" />
-				</component>
-			</node>
-			<node id="16777306">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad54" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777524">
-					<attribute name="Model" value="Model;Models/pad65.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777307">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad19" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777525">
-					<attribute name="Model" value="Model;Models/pad19.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777308">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad5" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777526">
-					<attribute name="Model" value="Model;Models/pad5.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777309">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad40" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777527">
-					<attribute name="Model" value="Model;Models/pad40.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777310">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad25" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777528">
-					<attribute name="Model" value="Model;Models/pad25.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777311">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad63" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777529">
-					<attribute name="Model" value="Model;Models/pad63.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777312">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button13" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777530">
-					<attribute name="Model" value="Model;Models/button13.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777313">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button10" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777531">
-					<attribute name="Model" value="Model;Models/button10.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777314">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="led2" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777532">
-					<attribute name="Model" value="Model;Models/led2.mdl" />
-					<attribute name="Material" value="Material;Materials/leds.xml" />
-				</component>
-			</node>
-			<node id="16777315">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="knob4" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777533">
-					<attribute name="Model" value="Model;Models/knob4.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777316">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="led3" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777534">
-					<attribute name="Model" value="Model;Models/led3.mdl" />
-					<attribute name="Material" value="Material;Materials/leds.xml" />
-				</component>
-			</node>
-			<node id="16777317">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad59" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777535">
-					<attribute name="Model" value="Model;Models/pad59.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777318">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad22" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777536">
-					<attribute name="Model" value="Model;Models/pad22.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777319">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad51" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777537">
-					<attribute name="Model" value="Model;Models/pad51.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777320">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad37" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777538">
-					<attribute name="Model" value="Model;Models/pad37.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777321">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad13" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777539">
-					<attribute name="Model" value="Model;Models/pad13.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777322">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad4" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777540">
-					<attribute name="Model" value="Model;Models/pad4.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777323">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad16" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777541">
-					<attribute name="Model" value="Model;Models/pad16.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777324">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button4" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777542">
-					<attribute name="Model" value="Model;Models/button4.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777325">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad46" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777543">
-					<attribute name="Model" value="Model;Models/pad46.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777326">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button19" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777544">
-					<attribute name="Model" value="Model;Models/button19.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777327">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad11" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777545">
-					<attribute name="Model" value="Model;Models/pad11.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777328">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button6" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777546">
-					<attribute name="Model" value="Model;Models/button6.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777329">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad10" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777547">
-					<attribute name="Model" value="Model;Models/pad10.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777330">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad31" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777548">
-					<attribute name="Model" value="Model;Models/pad31.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777331">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad24" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777549">
-					<attribute name="Model" value="Model;Models/pad24.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777332">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad49" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777550">
-					<attribute name="Model" value="Model;Models/pad49.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777333">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button20" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777551">
-					<attribute name="Model" value="Model;Models/button20.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777334">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad57" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777552">
-					<attribute name="Model" value="Model;Models/pad57.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777335">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad1" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777553">
-					<attribute name="Model" value="Model;Models/pad1.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777336">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="round_button2" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777554">
-					<attribute name="Model" value="Model;Models/round_button2.mdl" />
-					<attribute name="Material" value="Material;Materials/buttons.channel.circ.xml" />
-				</component>
-			</node>
-			<node id="16777337">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="knob2" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777555">
-					<attribute name="Model" value="Model;Models/knob2.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777338">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad41" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777556">
-					<attribute name="Model" value="Model;Models/pad41.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777339">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button5" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777557">
-					<attribute name="Model" value="Model;Models/button5.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777340">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad27" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777558">
-					<attribute name="Model" value="Model;Models/pad28.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777341">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad35" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777559">
-					<attribute name="Model" value="Model;Models/pad35.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777342">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad28" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777560">
-					<attribute name="Model" value="Model;Models/pad27.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777343">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="knob1" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777561">
-					<attribute name="Model" value="Model;Models/knob1.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777345">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad7" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777563">
-					<attribute name="Model" value="Model;Models/pad7.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-				<node id="16777344">
-					<attribute name="Is Enabled" value="true" />
-					<attribute name="Name" value="pad17" />
-					<attribute name="Tags" />
-					<attribute name="Position" value="0 0 4.47576e-11" />
-					<attribute name="Rotation" value="1 2.77556e-17 -3.55271e-15 2.90867e-15" />
-					<attribute name="Scale" value="1 1 1" />
-					<attribute name="Variables" />
-					<component type="StaticModel" id="16777562">
-						<attribute name="Model" value="Model;Models/pad17.mdl" />
-						<attribute name="Material" value="Material;" />
-					</component>
-				</node>
-			</node>
-			<node id="16777346">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad39" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777564">
-					<attribute name="Model" value="Model;Models/pad39.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777347">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad2" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777565">
-					<attribute name="Model" value="Model;Models/pad2.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777348">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="button9" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777566">
-					<attribute name="Model" value="Model;Models/button9.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777349">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad36" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777567">
-					<attribute name="Model" value="Model;Models/pad36.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777350">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad38" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777568">
-					<attribute name="Model" value="Model;Models/pad38.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777351">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad9" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777569">
-					<attribute name="Model" value="Model;Models/pad9.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777352">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad56" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777570">
-					<attribute name="Model" value="Model;Models/pad56.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
-			<node id="16777353">
-				<attribute name="Is Enabled" value="true" />
-				<attribute name="Name" value="pad60" />
-				<attribute name="Tags" />
-				<attribute name="Position" value="0 0 0" />
-				<attribute name="Rotation" value="1 0 0 0" />
-				<attribute name="Scale" value="1 1 1" />
-				<attribute name="Variables" />
-				<component type="StaticModel" id="16777571">
-					<attribute name="Model" value="Model;Models/pad60.mdl" />
-					<attribute name="Material" value="Material;" />
-				</component>
-			</node>
+		</node>
+	</node>
+	<node id="16777464">
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Name" value="ButtonPanel" />
+		<attribute name="Tags" />
+		<attribute name="Position" value="-8.7297 1.01777 6.95318" />
+		<attribute name="Rotation" value="-3.12396e-08 0.707107 -0.707107 -3.05776e-08" />
+		<attribute name="Scale" value="100 100 100" />
+		<attribute name="Variables" />
+		<node id="16777465">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="knob3" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777759">
+				<attribute name="Model" value="Model;Models/knob3.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777466">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777760">
+				<attribute name="Model" value="Model;Models/pad1.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777467">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad57" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777761">
+				<attribute name="Model" value="Model;Models/pad57.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777468">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad6" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777762">
+				<attribute name="Model" value="Model;Models/pad6.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777469">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad38" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777763">
+				<attribute name="Model" value="Model;Models/pad38.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777470">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad56" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777764">
+				<attribute name="Model" value="Model;Models/pad56.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777471">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad59" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777765">
+				<attribute name="Model" value="Model;Models/pad59.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777472">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad61" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777766">
+				<attribute name="Model" value="Model;Models/pad61.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777473">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="led4" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777767">
+				<attribute name="Model" value="Model;Models/led4.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777474">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button5" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777768">
+				<attribute name="Model" value="Model;Models/button5.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777475">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad20" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777769">
+				<attribute name="Model" value="Model;Models/pad20.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777476">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button10" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777770">
+				<attribute name="Model" value="Model;Models/button10.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777477">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button20" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777771">
+				<attribute name="Model" value="Model;Models/button20.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777478">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad31" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777772">
+				<attribute name="Model" value="Model;Models/pad31.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777479">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad13" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777773">
+				<attribute name="Model" value="Model;Models/pad13.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777480">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="display_button" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777774">
+				<attribute name="Model" value="Model;Models/display_button.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777481">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad16" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777775">
+				<attribute name="Model" value="Model;Models/pad16.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777482">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad7" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777776">
+				<attribute name="Model" value="Model;Models/pad7.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777483">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad49" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777777">
+				<attribute name="Model" value="Model;Models/pad49.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777484">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button12" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777778">
+				<attribute name="Model" value="Model;Models/button12.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777485">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad46" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777779">
+				<attribute name="Model" value="Model;Models/pad46.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777486">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad52" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777780">
+				<attribute name="Model" value="Model;Models/pad52.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777487">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad39" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777781">
+				<attribute name="Model" value="Model;Models/pad39.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777488">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button13" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777782">
+				<attribute name="Model" value="Model;Models/button13.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777489">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad33" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777783">
+				<attribute name="Model" value="Model;Models/pad33.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777490">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad32" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777784">
+				<attribute name="Model" value="Model;Models/pad32.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777491">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button11" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777785">
+				<attribute name="Model" value="Model;Models/button11.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777492">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad37" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777786">
+				<attribute name="Model" value="Model;Models/pad37.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777493">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad47" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777787">
+				<attribute name="Model" value="Model;Models/pad47.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777494">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button2" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777788">
+				<attribute name="Model" value="Model;Models/button2.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777495">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button6" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777789">
+				<attribute name="Model" value="Model;Models/button6.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777496">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad27" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777790">
+				<attribute name="Model" value="Model;Models/pad27.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777497">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="round_button4" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777791">
+				<attribute name="Model" value="Model;Models/round_button4.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777498">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button17" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777792">
+				<attribute name="Model" value="Model;Models/button17.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777499">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button14" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777793">
+				<attribute name="Model" value="Model;Models/button14.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777500">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad11" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777794">
+				<attribute name="Model" value="Model;Models/pad11.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777501">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad18" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777795">
+				<attribute name="Model" value="Model;Models/pad18.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777502">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad60" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777796">
+				<attribute name="Model" value="Model;Models/pad60.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777503">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad42" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777797">
+				<attribute name="Model" value="Model;Models/pad42.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777504">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777798">
+				<attribute name="Model" value="Model;Models/button1.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777505">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad58" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777799">
+				<attribute name="Model" value="Model;Models/pad58.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777506">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad15" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777800">
+				<attribute name="Model" value="Model;Models/pad15.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777507">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad43" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777801">
+				<attribute name="Model" value="Model;Models/pad43.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777508">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="knob2" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777802">
+				<attribute name="Model" value="Model;Models/knob2.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777509">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad9" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777803">
+				<attribute name="Model" value="Model;Models/pad9.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777510">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad26" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777804">
+				<attribute name="Model" value="Model;Models/pad26.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777511">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad40" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777805">
+				<attribute name="Model" value="Model;Models/pad40.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777512">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad28" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777806">
+				<attribute name="Model" value="Model;Models/pad28.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777513">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad19" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777807">
+				<attribute name="Model" value="Model;Models/pad19.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777514">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad3" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777808">
+				<attribute name="Model" value="Model;Models/pad3.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777515">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad24" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777809">
+				<attribute name="Model" value="Model;Models/pad24.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777516">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button8" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777810">
+				<attribute name="Model" value="Model;Models/button8.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777517">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad51" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777811">
+				<attribute name="Model" value="Model;Models/pad51.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777518">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="led3" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777812">
+				<attribute name="Model" value="Model;Models/led3.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777519">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad29" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777813">
+				<attribute name="Model" value="Model;Models/pad29.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777520">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad64" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777814">
+				<attribute name="Model" value="Model;Models/pad64.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777521">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad4" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777815">
+				<attribute name="Model" value="Model;Models/pad4.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777522">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="round_button1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777816">
+				<attribute name="Model" value="Model;Models/round_button1.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777523">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad45" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777817">
+				<attribute name="Model" value="Model;Models/pad45.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777524">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button7" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777818">
+				<attribute name="Model" value="Model;Models/button7.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777525">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad23" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777819">
+				<attribute name="Model" value="Model;Models/pad23.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777526">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad22" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777820">
+				<attribute name="Model" value="Model;Models/pad22.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777527">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad5" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777821">
+				<attribute name="Model" value="Model;Models/pad5.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777528">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad34" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777822">
+				<attribute name="Model" value="Model;Models/pad34.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777529">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="led1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777823">
+				<attribute name="Model" value="Model;Models/led1.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777530">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button16" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777824">
+				<attribute name="Model" value="Model;Models/button16.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777531">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button15" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777825">
+				<attribute name="Model" value="Model;Models/button15.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777532">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad21" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777826">
+				<attribute name="Model" value="Model;Models/pad21.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777533">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button19" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777827">
+				<attribute name="Model" value="Model;Models/button19.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777534">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad62" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777828">
+				<attribute name="Model" value="Model;Models/pad62.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777535">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button9" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777829">
+				<attribute name="Model" value="Model;Models/button9.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777536">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="led2" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777830">
+				<attribute name="Model" value="Model;Models/led2.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777537">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad30" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777831">
+				<attribute name="Model" value="Model;Models/pad30.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777538">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad25" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777832">
+				<attribute name="Model" value="Model;Models/pad25.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777539">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad55" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777833">
+				<attribute name="Model" value="Model;Models/pad55.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777540">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad36" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777834">
+				<attribute name="Model" value="Model;Models/pad36.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777541">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="knob1" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777835">
+				<attribute name="Model" value="Model;Models/knob1.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777542">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad44" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777836">
+				<attribute name="Model" value="Model;Models/pad44.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777543">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad12" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777837">
+				<attribute name="Model" value="Model;Models/pad12.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777544">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad2" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777838">
+				<attribute name="Model" value="Model;Models/pad2.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777545">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad54" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777839">
+				<attribute name="Model" value="Model;Models/pad54.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777546">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="knob4" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777840">
+				<attribute name="Model" value="Model;Models/knob4.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777547">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button4" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777841">
+				<attribute name="Model" value="Model;Models/button4.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777548">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad63" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777842">
+				<attribute name="Model" value="Model;Models/pad63.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777549">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad14" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777843">
+				<attribute name="Model" value="Model;Models/pad14.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777550">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad35" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777844">
+				<attribute name="Model" value="Model;Models/pad35.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777551">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad17" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777845">
+				<attribute name="Model" value="Model;Models/pad17.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777552">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button3" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777846">
+				<attribute name="Model" value="Model;Models/button3.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777553">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="knob4.001" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777847">
+				<attribute name="Model" value="Model;Models/knob4.001.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777554">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad48" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777848">
+				<attribute name="Model" value="Model;Models/pad48.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777555">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad8" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777849">
+				<attribute name="Model" value="Model;Models/pad8.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777556">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="round_button2" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777850">
+				<attribute name="Model" value="Model;Models/round_button2.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777557">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad50" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777851">
+				<attribute name="Model" value="Model;Models/pad50.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777558">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="Display" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777852">
+				<attribute name="Model" value="Model;Models/Display.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777559">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="button18" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777853">
+				<attribute name="Model" value="Model;Models/button18.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777560">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad10" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777854">
+				<attribute name="Model" value="Model;Models/pad10.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777561">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad53" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777855">
+				<attribute name="Model" value="Model;Models/pad53.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777562">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="round_button3" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777856">
+				<attribute name="Model" value="Model;Models/round_button3.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
+		</node>
+		<node id="16777563">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="pad41" />
+			<attribute name="Tags" />
+			<attribute name="Position" value="0 0 0" />
+			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Scale" value="1 1 1" />
+			<attribute name="Variables" />
+			<component type="StaticModel" id="16777857">
+				<attribute name="Model" value="Model;Models/pad41.mdl" />
+				<attribute name="Material" value="Material;" />
+			</component>
 		</node>
 	</node>
 </scene>

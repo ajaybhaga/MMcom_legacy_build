@@ -2,6 +2,9 @@
 #include "Beat.h"
 
 #include <Urho3D/IO/Log.h>
+#include <Urho3D/Core/Context.h>
+#include <Urho3D/Core/Object.h>
+#include <Urho3D/Resource/ResourceCache.h>
 
 //=============================================================================
 // SEQUENCER
@@ -27,7 +30,10 @@ Sequencer::Sequencer() : size_(8) {
         sequence_.Push(b);
     }
 
-//    URHO3D_LOGDEBUGF("**SEQUENCER ** -> beatTimeStep_ %f", beatTimeStep_);
+    URHO3D_LOGDEBUGF("**SEQUENCER ** -> beatsPerBar_=%d,beatTimeStep_=%f", beatsPerBar_, beatTimeStep_);
+
+    // Load default samples for sequencer
+    sampler_ = Sampler();
 }
 
 void Sequencer::SetId(const String &id) {
@@ -106,4 +112,8 @@ Vector<Beat*> Sequencer::GetSequence() {
 
 const String &Sequencer::GetId() const {
     return id_;
+}
+
+Sampler &Sequencer::GetSampler() {
+    return sampler_;
 }

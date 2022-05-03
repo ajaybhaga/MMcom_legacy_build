@@ -1,9 +1,10 @@
 #pragma once
 
-#ifndef URHO3D_SEQUENCER_H
-#define URHO3D_SEQUENCER_H
+#ifndef MM_SEQUENCER_H
+#define MM_SEQUENCER_H
 
 #include "Beat.h"
+#include "Sampler.h"
 #include <Urho3D/Container/Str.h>
 #include <Urho3D/Container/Vector.h>
 
@@ -12,11 +13,9 @@ class Sequencer {
 
 protected:
     String id_;
-public:
-    const String &GetId() const;
-
-protected:
     Vector<Beat*> sequence_;
+    Sampler sampler_;
+
     int size_; // 8 beats
 
     // Current state
@@ -35,6 +34,8 @@ public:
     Sequencer();
     ~Sequencer();
     Vector<Beat*> GetSequence();
+    Sampler &GetSampler();
+    const String &GetId() const;
     void Reset();
     void Play(float timeStep);
     int GetSize() const;
@@ -48,4 +49,4 @@ public:
 };
 
 
-#endif //URHO3D_SEQUENCER_H
+#endif //MM_SEQUENCER_H

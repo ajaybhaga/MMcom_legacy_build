@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef URHO3D_BEAT_H
-#define URHO3D_BEAT_H
+#ifndef MM_BEAT_H
+#define MM_BEAT_H
 
 
 class Beat {
