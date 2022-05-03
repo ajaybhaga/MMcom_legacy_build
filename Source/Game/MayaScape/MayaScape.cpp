@@ -1432,12 +1432,15 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
             if (beatModelVec_[i]) {
                 beatModelVec_[i]->SetEnabled(true);
 
+
+                // Channel 1
                 if (i == (beat-1)*4) {
                     beatModelVec_[i]->SetMaterial(cache->GetResource<Material>("Materials/buttons.active.xml"));
                 } else {
                     beatModelVec_[i]->SetMaterial(cache->GetResource<Material>("Materials/buttons.xml"));
                 }
 
+                // Channel 2
                 if ((i >= 16) && (i < 32)) {
                     int subBeatIdx = ((beat - 1) * 4)+16 + Round(beatTime * 4.0f);
                     if (i == subBeatIdx) {
@@ -1447,7 +1450,15 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
                     }
                 }
 
-
+                // Channel 3
+                if ((i >= 32) && (i < 64)) {
+                    int subBeatIdx = ((beat - 1) * 4)+32 + Round(beatTime * 4.0f);
+                    if (i == subBeatIdx) {
+                        beatModelVec_[i]->SetMaterial(cache->GetResource<Material>("Materials/buttons.active.xml"));
+                    } else {
+                        beatModelVec_[i]->SetMaterial(cache->GetResource<Material>("Materials/buttons.xml"));
+                    }
+                }
 
             }
         }
