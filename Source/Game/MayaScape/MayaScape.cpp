@@ -1432,11 +1432,23 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
             if (beatModelVec_[i]) {
                 beatModelVec_[i]->SetEnabled(true);
 
-                if (i == (beat-1)) {
+                if (i == (beat-1)*4) {
                     beatModelVec_[i]->SetMaterial(cache->GetResource<Material>("Materials/buttons.active.xml"));
                 } else {
                     beatModelVec_[i]->SetMaterial(cache->GetResource<Material>("Materials/buttons.xml"));
                 }
+
+                if ((i >= 16) && (i < 32)) {
+                    int subBeatIdx = ((beat - 1) * 4)+16 + Round(beatTime * 4.0f);
+                    if (i == subBeatIdx) {
+                        beatModelVec_[i]->SetMaterial(cache->GetResource<Material>("Materials/buttons.active.xml"));
+                    } else {
+                        beatModelVec_[i]->SetMaterial(cache->GetResource<Material>("Materials/buttons.xml"));
+                    }
+                }
+
+
+
             }
         }
 
@@ -1466,7 +1478,7 @@ void MayaScape::HandlePlayerStateUpdate(StringHash eventType, VariantMap& eventD
         }*/
         seqCam_->GetNode()->SetPosition(Vector3(v.x_,v.y_,v.z_));
 
-        URHO3D_LOGINFOF("seqCamOffset: %f", seqCamOffset_);
+        //URHO3D_LOGINFOF("seqCamOffset: %f", seqCamOffset_);
     }
 
     // Update Client UI bars
