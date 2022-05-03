@@ -26,9 +26,13 @@ void Sampler::Reset() {
 }
 
 void Sampler::Play(SoundSource3D *source, int sampleIdx) {
+
+    if (sampleQueue_.Size() <= sampleIdx)
+        return;
+
     // Play sample
     if (sampleQueue_[sampleIdx] != nullptr) {
-        if (source) {
+        if (source != nullptr) {
             source->SetAutoRemoveMode(REMOVE_COMPONENT);
             source->Play(sampleQueue_[sampleIdx]);
         }

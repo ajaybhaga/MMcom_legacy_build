@@ -9,7 +9,13 @@ Beat::Beat(float beatLength_, Sampler *sampler_, int beatSampleIdx_, SoundSource
     this->sampler_ = sampler_;
     this->beatSampleIdx_ = beatSampleIdx_;
     this->playSource_ = playSource_;
+
+    if (sampler_->Loaded())
+        sampler_->Play(playSource_, beatSampleIdx_);
+
 }
+
+
 
 Beat::~Beat() {
 
