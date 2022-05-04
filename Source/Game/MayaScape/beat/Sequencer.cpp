@@ -28,7 +28,8 @@ void Sequencer::Start()
 
 void Sequencer::FixedUpdate(float timeStep)
 {
-
+    // Play on fixed update time step
+    Play(timeStep);
 }
 
 Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
@@ -44,9 +45,6 @@ Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
     // 4/4 beats/sec -> 1 beats/sec -> 60 beats in min -> 60 bpm
 
     // 4/4 = 250 ms time segment
-
-    // Load default samples for sequencer
-//    sampler_ = Sampler(context);
 
     // Create a new sampler for client object
     sampler_ = context->CreateObject<Sampler>();
