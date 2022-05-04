@@ -5366,9 +5366,6 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
 
     auto* body = networkActorNode->GetComponent<RigidBody>(true);
 
-    // Assign name for sequencer of network actor
-    actor->GetSequencer()->SetId(username);
-
     // Set calculated network actor position
 
     Vector3 actorPos = Vector3(0,0,0);
