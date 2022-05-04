@@ -1,6 +1,7 @@
 #include "Sequencer.h"
 #include "Beat.h"
 
+#include <string>
 #include <Urho3D/IO/Log.h>
 #include <Urho3D/Core/Context.h>
 #include <Urho3D/Core/Object.h>
