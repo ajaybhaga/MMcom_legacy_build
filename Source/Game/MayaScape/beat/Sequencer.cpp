@@ -4,6 +4,9 @@
 #include <Urho3D/IO/Log.h>
 #include <Urho3D/Core/Context.h>
 #include <Urho3D/Core/Object.h>
+#include <Urho3D/Core/Context.h>
+#include <Urho3D/Core/CoreEvents.h>
+#include <Urho3D/Scene/Scene.h>
 #include <Urho3D/Resource/ResourceCache.h>
 #include <Urho3D/Container/HashMap.h>
 
@@ -11,7 +14,24 @@
 // SEQUENCER
 //=============================================================================
 
-Sequencer::Sequencer() : length_(16) {
+
+
+void Sequencer::RegisterObject(Context *context)
+{
+    context->RegisterFactory<Sequencer>();
+}
+
+void Sequencer::Start()
+{
+}
+
+
+void Sequencer::FixedUpdate(float timeStep)
+{
+
+}
+
+Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
     // Init parameters
     Reset();
 
@@ -26,7 +46,11 @@ Sequencer::Sequencer() : length_(16) {
     // 4/4 = 250 ms time segment
 
     // Load default samples for sequencer
-    sampler_ = new Sampler();
+//    sampler_ = Sampler(context);
+
+    // Create a new sampler for client object
+    SharedPtr<Node> samplerNode(node_->CreateChild("client-SAMPLER"));
+    sampler_ = samplerNode->CreateComponent<Sampler>();
 
     // Generate sequence -> instruction set to time beat
     sequenceByBeat_.Clear();
@@ -53,6 +77,8 @@ Sequencer::Sequencer() : length_(16) {
 
     URHO3D_LOGDEBUGF("**SEQUENCER ** -> beatsPerBar_=%d,beatTimeStep_=%f", beatsPerBar_, beatTimeStep_);
 
+    // register
+    SetUpdateEventMask(USE_FIXEDUPDATE);
 }
 
 void Sequencer::SetId(const String &id) {
@@ -60,7 +86,8 @@ void Sequencer::SetId(const String &id) {
 }
 
 Sequencer::~Sequencer() {
-
+    if (sampler_)
+        delete sampler_;
 }
 
 void Sequencer::Reset() {
@@ -93,14 +120,16 @@ void Sequencer::Play(float timeStep) {
 
         Vector<Beat*> channel_;
         // Play each channel
+
+        // KICK
         channel_ = sequenceByBeat_.Find("KICK")->second_;
         channel_[beat_]->Play();
 
-        // Play each channel
+        // SNARE
         channel_ = sequenceByBeat_.Find("SNARE")->second_;
         channel_[beat_]->Play();
 
-        // Play each channel
+        // HI-HAT
         channel_ = sequenceByBeat_.Find("HH")->second_;
         channel_[beat_]->Play();
 

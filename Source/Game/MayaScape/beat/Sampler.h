@@ -7,9 +7,14 @@
 #include <Urho3D/Container/Vector.h>
 #include <Urho3D/Audio/Sound.h>
 #include <Urho3D/Audio/SoundSource3D.h>
+#include <Urho3D/Scene/LogicComponent.h>
 
 using namespace Urho3D;
-class Sampler {
+class Sampler : Object {
+
+    URHO3D_OBJECT(Sampler, Object);
+public:
+
 protected:
     String id_;
 public:
@@ -27,8 +32,15 @@ protected:
 
 public:
 
-    Sampler();
+    Sampler(Context* context);
     ~Sampler();
+    /// Register object factory and attributes.
+    static void RegisterObject(Context* context);
+    /// Handle startup. Called by LogicComponent base class.
+    void Start();
+    /// Handle physics world update. Called by LogicComponent base class.
+    void FixedUpdate(float timeStep);
+
     Vector<Sound*> GetSampleQueue();
     void Reset();
     void Play(SoundSource3D *source, int sampleIdx);

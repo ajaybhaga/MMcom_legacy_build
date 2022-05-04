@@ -51,8 +51,7 @@ public:
     virtual void SetScene(Scene *scene);
     virtual void SetRootNode(Node *node);
     virtual String GetUserName();
-
-    Sequencer &GetSequencer();
+    SharedPtr<Sequencer> GetSequencer();
 
 protected:
     /// Player Controls
@@ -66,7 +65,7 @@ protected:
 
     WeakPtr<Scene> scene_;
     SharedPtr<Node> node_;
-    Sequencer sequencer_;
+    SharedPtr<Sequencer> sequencer_;
 
 
 

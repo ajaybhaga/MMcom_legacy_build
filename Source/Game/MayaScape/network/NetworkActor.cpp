@@ -101,10 +101,6 @@ NetworkActor::NetworkActor(Context *context)
 
     entered_ = false;
 
-    // Setup sequencer for user
-    sequencer_ = Sequencer();
-
-
 }
 
 NetworkActor::~NetworkActor() {
@@ -486,7 +482,7 @@ void NetworkActor::FixedUpdate(float timeStep) {
     DebugDraw();
 
     // Sequencer update: play time step
-    sequencer_.Play(timeStep);
+    //sequencer_->Play(timeStep); // should happen automatic -> with sequencer to object -> update mask set
 
     Vector3 localCenter = Vector3(0,0,0);
 

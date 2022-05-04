@@ -2,15 +2,34 @@
 #include "Sequencer.h"
 #include "Beat.h"
 
-
 #include <Urho3D/IO/Log.h>
+#include <Urho3D/Core/Context.h>
+#include <Urho3D/Core/Object.h>
 
 
 //=============================================================================
 // SAMPLER
 //=============================================================================
-Sampler::Sampler() {
 
+void Sampler::RegisterObject(Context *context)
+{
+    context->RegisterFactory<Sampler>();
+}
+
+void Sampler::Start()
+{
+
+}
+
+
+void Sampler::FixedUpdate(float timeStep)
+{
+
+}
+
+Sampler::Sampler(Context *context) : LogicComponent(context) {
+    // register
+    SetUpdateEventMask(USE_FIXEDUPDATE);
 }
 
 Sampler::~Sampler() {

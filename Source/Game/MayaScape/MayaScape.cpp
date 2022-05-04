@@ -962,7 +962,7 @@ Controls MayaScape::SampleCSPControls()
                         // LOAD SAMPLES INTO SAMPLER
                         if (actorNode) {
                             // Check if not samples loaded
-                            if (!actor->GetSequencer().GetSampler()->Loaded()) {
+                            if (!actor->GetSequencer()->GetSampler()->Loaded()) {
                                 // Retrieve Actor
                                 ClientObj *actor = actorNode->GetDerivedComponent<ClientObj>();
                                 // Load sequencer samples for client
@@ -974,18 +974,18 @@ Controls MayaScape::SampleCSPControls()
                                 Sound *sample;
                                 soundName = SAMPLE_PACK[SAMPLE_KICK].c_str();
                                 sample = cache->GetResource<Sound>(prefix + soundName);
-                                actor->GetSequencer().GetSampler()->Load(sample);
+                                actor->GetSequencer()->GetSampler()->Load(sample);
 
                                 soundName = SAMPLE_PACK[SAMPLE_SNARE].c_str();
                                 sample = cache->GetResource<Sound>(prefix + soundName);
-                                actor->GetSequencer().GetSampler()->Load(sample);
+                                actor->GetSequencer()->GetSampler()->Load(sample);
 
                                 soundName = SAMPLE_PACK[SAMPLE_HH].c_str();
                                 sample = cache->GetResource<Sound>(prefix + soundName);
-                                actor->GetSequencer().GetSampler()->Load(sample);
+                                actor->GetSequencer()->GetSampler()->Load(sample);
 
 
-                                actor->GetSequencer().SetPlaySource(playSource);
+                                actor->GetSequencer()->SetPlaySource(playSource);
                             }
                         }
 
@@ -2481,9 +2481,9 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                             }
 
                                             // Sequencer data
-                                            newEventData[P_SEQ_CURR_TIME] = actor->GetSequencer().GetTime();
-                                            newEventData[P_SEQ_BEAT_TIME] = actor->GetSequencer().GetBeatTime();
-                                            newEventData[P_SEQ_BEAT] = actor->GetSequencer().GetBeat();
+                                            newEventData[P_SEQ_CURR_TIME] = actor->GetSequencer()->GetTime();
+                                            newEventData[P_SEQ_BEAT_TIME] = actor->GetSequencer()->GetBeatTime();
+                                            newEventData[P_SEQ_BEAT] = actor->GetSequencer()->GetBeat();
 
                                             // Finally send the object's node ID using a remote event
                                             connection->SendRemoteEvent(E_PLAYERSTATE, true, newEventData);
@@ -3294,6 +3294,11 @@ void MayaScape::CreateServerSubsystem() {
     // Client-side Prediction
     CSP_Server::RegisterObject(context_);
     CSP_Client::RegisterObject(context_);
+
+    // Sequencer
+    Sampler::RegisterObject(context_);
+    Sequencer::RegisterObject(context_);
+
 }
 
 void MayaScape::CreateUI() {
@@ -4833,7 +4838,7 @@ SharedPtr<Node> MayaScape::SpawnPlayer() {
     actor->SetClientInfo(name, 99, Vector3(0,-6,0));
 
     // Assign name for sequencer of network actor
-    actor->GetSequencer().SetId(name);
+    actor->GetSequencer()->SetId(name);
 
     // 2. Create a new camera following the actor
     Graphics* graphics = GetSubsystem<Graphics>();
@@ -5362,7 +5367,7 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
     auto* body = networkActorNode->GetComponent<RigidBody>(true);
 
     // Assign name for sequencer of network actor
-    actor->GetSequencer().SetId(username);
+    actor->GetSequencer()->SetId(username);
 
     // Set calculated network actor position
 
@@ -5506,7 +5511,7 @@ NetworkActor *MayaScape::SpawnPlayer(unsigned int id) {
     actor->SetClientInfo(name, Random(1,100), actorPos);
 
     // Assign name for sequencer of network actor
-    actor->GetSequencer().SetId(username);
+    actor->GetSequencer()->SetId(username);
 
 
     String vehicleName = "vehicle-" + username;

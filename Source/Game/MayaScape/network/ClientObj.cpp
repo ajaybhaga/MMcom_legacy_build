@@ -35,9 +35,10 @@
 //=============================================================================
 ClientObj::ClientObj(Context *context)
     : LogicComponent(context)
-    , userName_("Client1")
+    , userName_("DefaultClient")
     , colorIdx_(0)
 {
+
 }
 
 ClientObj::~ClientObj()
@@ -67,6 +68,10 @@ void ClientObj::SetClientInfo(const String &usrName, int colorIdx, Vector3 posit
     userName_ = usrName;
     colorIdx_ = colorIdx;
     position_ = position;
+
+    // Create a new sequencer for client object
+    SharedPtr<Node> seqNode(scene_->CreateChild("client-SEQUENCER-" + userName_));
+    sequencer_ = seqNode->CreateComponent<Sequencer>();
 }
 
 void ClientObj::UpdateClientInfo(Vector3 position)
@@ -93,6 +98,6 @@ Vector3 ClientObj::GetPosition() {
     return position_;
 }
 
-Sequencer &ClientObj::GetSequencer() {
+SharedPtr<Sequencer> ClientObj::GetSequencer() {
     return sequencer_;
 }

@@ -6,16 +6,21 @@
 #include "Beat.h"
 #include <Urho3D/Container/Str.h>
 #include <Urho3D/Container/Vector.h>
+#include <Urho3D/Scene/LogicComponent.h>
 
 using namespace Urho3D;
-class Sequencer {
+class Sequencer : public LogicComponent {
+
+    URHO3D_OBJECT(Sequencer, LogicComponent);
+public:
 
 protected:
     String id_;
     HashMap<String,Vector<Beat*>> sequenceByBeat_;
     HashMap<String,Beat*> sequenceByTime_;
-    Sampler *sampler_;
+    SharedPtr<Sampler> sampler_;
     int length_; // 16 beats
+    SharedPtr<SoundSource3D> playSource_;
 
 
     // Current state
@@ -30,13 +35,21 @@ protected:
     float beatTimeStep_; // Calculated beat time step
 
 
-    SoundSource3D* playSource_;
+
 
 
 public:
 
-    Sequencer();
+    Sequencer(Context* context);
     ~Sequencer();
+    /// Register object factory and attributes.
+    static void RegisterObject(Context* context);
+    /// Handle startup. Called by LogicComponent base class.
+    void Start();
+    /// Handle physics world update. Called by LogicComponent base class.
+    void FixedUpdate(float timeStep);
+
+
     Vector<Beat*> GetSequence();
     Sampler *GetSampler();
     const String &GetId() const;
@@ -51,6 +64,7 @@ public:
     void SetId(const String &id);
     float GetBeatTime() const;
     void SetPlaySource(SoundSource3D* playSource);
+
 };
 
 
