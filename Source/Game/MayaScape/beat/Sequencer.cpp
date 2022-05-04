@@ -49,8 +49,7 @@ Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
 //    sampler_ = Sampler(context);
 
     // Create a new sampler for client object
-    SharedPtr<Node> samplerNode(node_->CreateChild("client-SAMPLER"));
-    sampler_ = samplerNode->CreateComponent<Sampler>();
+    sampler_ = context->CreateObject<Sampler>();
 
     // Generate sequence -> instruction set to time beat
     sequenceByBeat_.Clear();

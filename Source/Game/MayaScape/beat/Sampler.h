@@ -10,11 +10,8 @@
 #include <Urho3D/Scene/LogicComponent.h>
 
 using namespace Urho3D;
-class Sampler : Object {
-
+class Sampler : public Object {
     URHO3D_OBJECT(Sampler, Object);
-public:
-
 protected:
     String id_;
 public:

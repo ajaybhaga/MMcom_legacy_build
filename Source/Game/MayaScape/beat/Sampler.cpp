@@ -27,9 +27,7 @@ void Sampler::FixedUpdate(float timeStep)
 
 }
 
-Sampler::Sampler(Context *context) : LogicComponent(context) {
-    // register
-    SetUpdateEventMask(USE_FIXEDUPDATE);
+Sampler::Sampler(Context *context) : Object(context) {
 }
 
 Sampler::~Sampler() {
