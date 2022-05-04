@@ -14,6 +14,7 @@
 // SEQUENCER
 //=============================================================================
 
+#define SAMPLE_REST -1
 #define SAMPLE_KICK 0
 #define SAMPLE_SNARE 1
 #define SAMPLE_HH 2
@@ -84,8 +85,10 @@ Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
 
     URHO3D_LOGDEBUGF("**SEQUENCER ** -> beatsPerBar_=%d,beatTimeStep_=%f", beatsPerBar_, beatTimeStep_);
 
-    // register
+    // Register
     SetUpdateEventMask(USE_FIXEDUPDATE);
+
+    // Load default samples
     LoadSamples();
 }
 
@@ -162,15 +165,22 @@ void Sequencer::Play(float timeStep) {
 
         // KICK
         channel_ = sequenceByBeat_.Find("KICK")->second_;
-        channel_[beat_]->Play();
+        if (channel_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
+            channel_[beat_]->Play();
+        }
+
 
         // SNARE
         channel_ = sequenceByBeat_.Find("SNARE")->second_;
-        channel_[beat_]->Play();
+        if (channel_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
+            channel_[beat_]->Play();
+        }
 
         // HI-HAT
         channel_ = sequenceByBeat_.Find("HH")->second_;
-        channel_[beat_]->Play();
+        if (channel_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
+            channel_[beat_]->Play();
+        }
 
         if (beat_ > beatsPerBar_) {
             // Over bar limit

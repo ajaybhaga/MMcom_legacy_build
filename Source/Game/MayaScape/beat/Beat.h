@@ -15,6 +15,10 @@ class Beat {
 protected:
     float beatLength_; // Beat length (1/4, 1/8, 1/16)
     int beatSampleIdx_;
+public:
+    int GetBeatSampleIdx() const;
+
+protected:
     SharedPtr<Sampler> sampler_;
 
 public:
