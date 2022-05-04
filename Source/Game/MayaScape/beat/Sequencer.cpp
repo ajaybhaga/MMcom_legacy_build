@@ -5,6 +5,7 @@
 #include <Urho3D/Core/Context.h>
 #include <Urho3D/Core/Object.h>
 #include <Urho3D/Resource/ResourceCache.h>
+#include <Urho3D/Container/HashMap.h>
 
 //=============================================================================
 // SEQUENCER
@@ -29,10 +30,26 @@ Sequencer::Sequencer() : length_(16) {
 
     // Generate sequence -> instruction set to time beat
     sequenceByBeat_.Clear();
+    Vector<Beat*> channel_;
     for (int i = 0; i < length_; i++) {
         Beat *b = new Beat(1 / beatsPerBar_, sampler_, 0, playSource_);
-        sequenceByBeat_.Push(b);
+        channel_.Push(b);
     }
+    sequenceByBeat_.Populate("KICK",channel_);
+
+    for (int i = 0; i < length_; i++) {
+        Beat *b = new Beat(1 / beatsPerBar_, sampler_, 1, playSource_);
+        channel_.Push(b);
+    }
+    sequenceByBeat_.Populate("SNARE",channel_);
+
+    for (int i = 0; i < length_; i++) {
+        Beat *b = new Beat(1 / beatsPerBar_, sampler_, 2, playSource_);
+        channel_.Push(b);
+    }
+    sequenceByBeat_.Populate("HH",channel_);
+
+
 
     URHO3D_LOGDEBUGF("**SEQUENCER ** -> beatsPerBar_=%d,beatTimeStep_=%f", beatsPerBar_, beatTimeStep_);
 
@@ -73,7 +90,19 @@ void Sequencer::Play(float timeStep) {
         // Mapping of instruction set to timeStep (beat)
 
         // Play beat sample
-        sequenceByBeat_[beat_]->Play();
+
+        Vector<Beat*> channel_;
+        // Play each channel
+        channel_ = sequenceByBeat_.Find("KICK")->second_;
+        channel_[beat_]->Play();
+
+        // Play each channel
+        channel_ = sequenceByBeat_.Find("SNARE")->second_;
+        channel_[beat_]->Play();
+
+        // Play each channel
+        channel_ = sequenceByBeat_.Find("HH")->second_;
+        channel_[beat_]->Play();
 
         if (beat_ > beatsPerBar_) {
             // Over bar limit

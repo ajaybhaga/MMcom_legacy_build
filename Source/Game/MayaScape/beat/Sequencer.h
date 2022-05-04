@@ -12,7 +12,7 @@ class Sequencer {
 
 protected:
     String id_;
-    Vector<Beat*> sequenceByBeat_;
+    HashMap<String,Vector<Beat*>> sequenceByBeat_;
     HashMap<String,Beat*> sequenceByTime_;
     Sampler *sampler_;
     int length_; // 16 beats
