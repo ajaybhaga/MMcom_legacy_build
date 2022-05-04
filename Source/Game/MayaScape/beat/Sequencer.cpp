@@ -60,23 +60,35 @@ Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
     // Create a new sampler for client object
     sampler_ = context->CreateObject<Sampler>();
 
+    int idx;
     // Generate sequence -> instruction set to time beat
     sequenceByBeat_.Clear();
     Vector<Beat*> channel_;
     for (int i = 0; i < length_; i++) {
-        Beat *b = new Beat(1 / beatsPerBar_, sampler_, 0);
+        if ((i % 1) == 0) {
+            idx = SAMPLE_KICK;
+        } else {
+            idx = SAMPLE_REST;
+        }
+        Beat *b = new Beat(1 / beatsPerBar_, sampler_, idx);
         channel_.Push(b);
     }
     sequenceByBeat_.Populate("KICK",channel_);
 
     for (int i = 0; i < length_; i++) {
-        Beat *b = new Beat(1 / beatsPerBar_, sampler_, 1);
+        if ((i % 3) == 0) {
+            idx = SAMPLE_SNARE;
+        } else {
+            idx = SAMPLE_REST;
+        }
+        Beat *b = new Beat(1 / beatsPerBar_, sampler_, idx);
         channel_.Push(b);
     }
     sequenceByBeat_.Populate("SNARE",channel_);
 
     for (int i = 0; i < length_; i++) {
-        Beat *b = new Beat(1 / beatsPerBar_, sampler_, 2);
+        idx = 2;
+        Beat *b = new Beat(1 / beatsPerBar_, sampler_, idx);
         channel_.Push(b);
     }
     sequenceByBeat_.Populate("HH",channel_);
