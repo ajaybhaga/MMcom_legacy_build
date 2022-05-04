@@ -25,6 +25,7 @@ protected:
     int playSampleIdx_; // Current beat
     float currTime_; // Current time
     float freqMod_; // Frequency modulator
+    SharedPtr<SoundSource3D> playSource_;
 
 
 public:
@@ -33,17 +34,15 @@ public:
     ~Sampler();
     /// Register object factory and attributes.
     static void RegisterObject(Context* context);
-    /// Handle startup. Called by LogicComponent base class.
-    void Start();
-    /// Handle physics world update. Called by LogicComponent base class.
-    void FixedUpdate(float timeStep);
 
     Vector<Sound*> GetSampleQueue();
     void Reset();
-    void Play(SoundSource3D *source, int sampleIdx);
+    void Play(int sampleIdx);
     void Load(Sound* sample);
     void Stop();
     bool Loaded();
+    void SetPlaySource(SoundSource3D* playSource);
+
 };
 
 

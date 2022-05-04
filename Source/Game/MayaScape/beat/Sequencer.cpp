@@ -32,6 +32,14 @@ void Sequencer::RegisterObject(Context *context)
 
 void Sequencer::Start()
 {
+
+    auto *cache = GetSubsystem<ResourceCache>();
+    playSource_ = node_->CreateComponent<SoundSource3D>(LOCAL);
+    playSource_->SetNearDistance(1);  // distance up to where the volume is 100%
+    playSource_->SetFarDistance(6000);  // distance from where the volume is at 0%
+    playSource_->SetSoundType(SOUND_MUSIC);
+    sampler_->SetPlaySource(playSource_);
+
 }
 
 
@@ -48,7 +56,6 @@ void Sequencer::FixedUpdate(float timeStep)
 Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
     // Init parameters
     Reset();
-
     // Create a new sampler for client object
     sampler_ = context->CreateObject<Sampler>();
 
@@ -56,19 +63,19 @@ Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
     sequenceByBeat_.Clear();
     Vector<Beat*> channel_;
     for (int i = 0; i < length_; i++) {
-        Beat *b = new Beat(1 / beatsPerBar_, sampler_, 0, playSource_);
+        Beat *b = new Beat(1 / beatsPerBar_, sampler_, 0);
         channel_.Push(b);
     }
     sequenceByBeat_.Populate("KICK",channel_);
 
     for (int i = 0; i < length_; i++) {
-        Beat *b = new Beat(1 / beatsPerBar_, sampler_, 1, playSource_);
+        Beat *b = new Beat(1 / beatsPerBar_, sampler_, 1);
         channel_.Push(b);
     }
     sequenceByBeat_.Populate("SNARE",channel_);
 
     for (int i = 0; i < length_; i++) {
-        Beat *b = new Beat(1 / beatsPerBar_, sampler_, 2, playSource_);
+        Beat *b = new Beat(1 / beatsPerBar_, sampler_, 2);
         channel_.Push(b);
     }
     sequenceByBeat_.Populate("HH",channel_);

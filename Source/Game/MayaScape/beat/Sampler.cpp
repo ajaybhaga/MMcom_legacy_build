@@ -16,17 +16,6 @@ void Sampler::RegisterObject(Context *context)
     context->RegisterFactory<Sampler>();
 }
 
-void Sampler::Start()
-{
-
-}
-
-
-void Sampler::FixedUpdate(float timeStep)
-{
-
-}
-
 Sampler::Sampler(Context *context) : Object(context) {
 }
 
@@ -42,16 +31,16 @@ void Sampler::Reset() {
 
 }
 
-void Sampler::Play(SoundSource3D *source, int sampleIdx) {
+void Sampler::Play(int sampleIdx) {
 
     if (sampleQueue_.Size() <= sampleIdx)
         return;
 
     // Play sample
     if (sampleQueue_[sampleIdx] != nullptr) {
-        if (source != nullptr) {
-            source->SetAutoRemoveMode(REMOVE_COMPONENT);
-            source->Play(sampleQueue_[sampleIdx]);
+        if (playSource_ != nullptr) {
+            playSource_->SetAutoRemoveMode(REMOVE_COMPONENT);
+            playSource_->Play(sampleQueue_[sampleIdx]);
         }
     }
 }
@@ -68,4 +57,8 @@ void Sampler::Stop() {
 
 bool Sampler::Loaded() {
     return loaded_;
+}
+
+void Sampler::SetPlaySource(SoundSource3D *playSource) {
+    playSource_ = playSource;
 }

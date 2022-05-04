@@ -168,7 +168,9 @@ private:
     // Process Client-side Prediction controls
     Controls SampleCSPControls();
 
-    // SERVER CALLS
+    void PlayDrumMachine();
+
+        // SERVER CALLS
     // Raycast from mouse position
     bool Raycast(Camera* pCamera, float maxDistance, Vector3& hitPos, Drawable*& hitDrawable);
     // Place object node based on raycast
@@ -330,6 +332,7 @@ private:
     Vector<RadioTrack> radioTrackInfoQueue_;
     bool accelSndPlaying_;
     WeakPtr<SoundSource3D> lastSnd_;
+    bool playDrumMachine_;
 
     // Async level loading
     WeakPtr<Node> curLevel_;

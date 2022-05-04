@@ -99,5 +99,12 @@ Vector3 ClientObj::GetPosition() {
 }
 
 SharedPtr<Sequencer> ClientObj::GetSequencer() {
+
+    if (!sequencer_) {
+        // Create a new sequencer for client object
+        SharedPtr<Node> seqNode(node_->CreateChild("client-SEQUENCER-" + userName_));
+        sequencer_ = seqNode->CreateComponent<Sequencer>();
+    }
+
     return sequencer_;
 }

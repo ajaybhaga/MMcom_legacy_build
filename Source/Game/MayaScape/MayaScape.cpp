@@ -255,7 +255,8 @@ MayaScape::MayaScape(Context *context) :
         starAMarkerSet_(false),
         starBMarkerSet_(false),
         buildTentAMarkerSet_(false),
-        levelLoading_(false)
+        levelLoading_(false),
+        playDrumMachine_(false)
 {
 
 }
@@ -924,6 +925,10 @@ Controls MayaScape::SampleCSPControls()
 
     // Found network player
     if (isSnapped_) {
+
+        if (!playDrumMachine_)
+            // Set play source for client object sequencer
+            PlayDrumMachine();
 
         String actorName = String("actor-") + clientName_;
         Node *actorNode = scene_->GetChild(actorName);
@@ -3141,6 +3146,36 @@ void MayaScape::ReloadScene(bool reInit) {
            source->SetAutoRemoveMode(REMOVE_COMPONENT);
            source->Play(sound);
        }*/
+}
+
+void MayaScape::PlayDrumMachine() {
+    // CLIENT CODE
+
+    // Play music on client
+
+
+    // Get sequencers and set play source
+    // Found network player
+    if (isSnapped_) {
+
+        String actorName = String("actor-") + clientName_;
+        Node * actorNode = scene_->GetChild(actorName);
+
+        String vehicleName = String("vehicle-") + clientName_;
+        Node * vehicleNode = scene_->GetChild(vehicleName);
+
+        Vector3 bodyPos;
+        Quaternion rotation;
+
+        if (actorNode) {
+            // Retrieve Actor
+            ClientObj *actor = actorNode->GetDerivedComponent<ClientObj>();
+//            if (actor->GetSequencer()) {
+ //               actor->GetSequencer()->SetPlaySource(source);
+  //              playDrumMachine_ = true;
+   //         }
+        }
+    }
 }
 
 
@@ -6230,15 +6265,9 @@ void MayaScape::HandlePlayerRespawned(StringHash eventType, VariantMap& eventDat
     // Create camera and define viewport. We will be doing load / save, so it's convenient to create the camera outside the scene,
     // so that it won't be destroyed and recreated, and we don't have to redefine the viewport on load
 
-
-
-
-
-                            // Enable for 3D sounds to work (attach to camera node)
+    // Enable for 3D sounds to work (attach to camera node)
     SoundListener *listener = clientCam_->GetNode()->CreateComponent<SoundListener>();
     GetSubsystem<Audio>()->SetListener(listener);
-
-
 
 
     clientLevelLoading_ = false;
