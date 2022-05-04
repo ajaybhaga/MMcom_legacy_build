@@ -14,6 +14,15 @@
 // SEQUENCER
 //=============================================================================
 
+#define SAMPLE_KICK 0
+#define SAMPLE_SNARE 1
+#define SAMPLE_HH 2
+
+std::vector<std::string> SAMPLE_PACK = {
+        "samples/SAMPLE1-BASSKICK.wav",
+        "samples/SAMPLE1-SNARE.wav",
+        "samples/SAMPLE1-HH.wav"
+};
 
 
 void Sequencer::RegisterObject(Context *context)
@@ -28,6 +37,10 @@ void Sequencer::Start()
 
 void Sequencer::FixedUpdate(float timeStep)
 {
+    // SERVER & CLIENT CODE
+
+    // Sequencer update
+
     // Play on fixed update time step
     Play(timeStep);
 }
@@ -35,16 +48,6 @@ void Sequencer::FixedUpdate(float timeStep)
 Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
     // Init parameters
     Reset();
-
-    // Quarter note by default
-    beatsPerBar_ = 4;
-
-    // 1 s = 1000 ms by beats in bar = beat time
-    beatTimeStep_ = (1.0f / beatsPerBar_) * 4.0f; // 60 bpm
-    // 8/4 beats/sec -> 2 beats/sec
-    // 4/4 beats/sec -> 1 beats/sec -> 60 beats in min -> 60 bpm
-
-    // 4/4 = 250 ms time segment
 
     // Create a new sampler for client object
     sampler_ = context->CreateObject<Sampler>();
@@ -95,6 +98,37 @@ void Sequencer::Reset() {
     beat_ = 0;
     bpm_ = 90;
     URHO3D_LOGDEBUGF("**SEQUENCER [%s] ** RESTART -> time %f, bar %d, beat %d", id_.CString(), currTime_, bar_, beat_);
+
+    // Quarter note by default
+    beatsPerBar_ = 4;
+
+    // 1 s = 1000 ms by beats in bar = beat time
+    beatTimeStep_ = (1.0f / beatsPerBar_) * 4.0f; // 60 bpm
+    // 8/4 beats/sec -> 2 beats/sec
+    // 4/4 beats/sec -> 1 beats/sec -> 60 beats in min -> 60 bpm
+
+    // 4/4 = 250 ms time segment
+}
+
+void Sequencer::LoadSamples() {
+    // LOAD DEFAULT SAMPLES INTO SAMPLER
+
+    // Load sequencer samples for client
+    ResourceCache *cache = GetSubsystem<ResourceCache>();
+    String prefix = "Sounds/";
+    String soundName;
+    Sound *sample;
+    soundName = SAMPLE_PACK[SAMPLE_KICK].c_str();
+    sample = cache->GetResource<Sound>(prefix + soundName);
+    sampler_->Load(sample);
+
+    soundName = SAMPLE_PACK[SAMPLE_SNARE].c_str();
+    sample = cache->GetResource<Sound>(prefix + soundName);
+    sampler_->Load(sample);
+
+    soundName = SAMPLE_PACK[SAMPLE_HH].c_str();
+    sample = cache->GetResource<Sound>(prefix + soundName);
+    sampler_->Load(sample);
 }
 
 // Sequencer Play: Move forward a time step

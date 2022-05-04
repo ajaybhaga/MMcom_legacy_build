@@ -213,15 +213,6 @@ std::vector<std::string> bzRadioTracksTrackName = {
         "BZradio/mm-theme-rp01.ogg"
 };
 
-#define SAMPLE_KICK 0
-#define SAMPLE_SNARE 1
-#define SAMPLE_HH 2
-
-std::vector<std::string> SAMPLE_PACK = {
-        "samples/SAMPLE1-BASSKICK.wav",
-        "samples/SAMPLE1-SNARE.wav",
-        "samples/SAMPLE1-HH.wav"
-};
 
 
 int currTrack_ = 0;
@@ -957,38 +948,6 @@ Controls MayaScape::SampleCSPControls()
                         // CLIENT RIGID BODY RETRIEVED
                         bodyPos = body->GetPosition();
                         rotation = na->GetNode()->GetRotation();
-
-/*
-                        // LOAD SAMPLES INTO SAMPLER
-                        if (actorNode) {
-                            // Check if not samples loaded
-                            if (!actor->GetSequencer()->GetSampler()->Loaded()) {
-                                // Retrieve Actor
-                                ClientObj *actor = actorNode->GetDerivedComponent<ClientObj>();
-                                // Load sequencer samples for client
-                                ResourceCache *cache = GetSubsystem<ResourceCache>();
-                                SoundSource3D *playSource = scene_->CreateComponent<SoundSource3D>(LOCAL);
-                                String prefix = "Sounds/";
-
-                                String soundName;
-                                Sound *sample;
-                                soundName = SAMPLE_PACK[SAMPLE_KICK].c_str();
-                                sample = cache->GetResource<Sound>(prefix + soundName);
-                                actor->GetSequencer()->GetSampler()->Load(sample);
-
-                                soundName = SAMPLE_PACK[SAMPLE_SNARE].c_str();
-                                sample = cache->GetResource<Sound>(prefix + soundName);
-                                actor->GetSequencer()->GetSampler()->Load(sample);
-
-                                soundName = SAMPLE_PACK[SAMPLE_HH].c_str();
-                                sample = cache->GetResource<Sound>(prefix + soundName);
-                                actor->GetSequencer()->GetSampler()->Load(sample);
-
-
-                                actor->GetSequencer()->SetPlaySource(playSource);
-                            }
-                        }
-*/
 
                         if (na->entered_) {
 

@@ -64,7 +64,7 @@ public:
     void SetId(const String &id);
     float GetBeatTime() const;
     void SetPlaySource(SoundSource3D* playSource);
-
+    void LoadSamples();
 };
 
 
