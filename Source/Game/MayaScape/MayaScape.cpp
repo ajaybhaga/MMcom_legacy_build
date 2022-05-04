@@ -958,7 +958,7 @@ Controls MayaScape::SampleCSPControls()
                         bodyPos = body->GetPosition();
                         rotation = na->GetNode()->GetRotation();
 
-
+/*
                         // LOAD SAMPLES INTO SAMPLER
                         if (actorNode) {
                             // Check if not samples loaded
@@ -988,7 +988,7 @@ Controls MayaScape::SampleCSPControls()
                                 actor->GetSequencer()->SetPlaySource(playSource);
                             }
                         }
-
+*/
 
                         if (na->entered_) {
 

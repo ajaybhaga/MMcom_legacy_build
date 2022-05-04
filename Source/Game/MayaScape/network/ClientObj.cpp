@@ -70,7 +70,7 @@ void ClientObj::SetClientInfo(const String &usrName, int colorIdx, Vector3 posit
     position_ = position;
 
     // Create a new sequencer for client object
-    SharedPtr<Node> seqNode(scene_->CreateChild("client-SEQUENCER-" + userName_));
+    SharedPtr<Node> seqNode(node_->CreateChild("client-SEQUENCER-" + userName_));
     sequencer_ = seqNode->CreateComponent<Sequencer>();
 }
 
