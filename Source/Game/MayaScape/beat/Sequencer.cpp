@@ -79,6 +79,7 @@ Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
 
     // register
     SetUpdateEventMask(USE_FIXEDUPDATE);
+    LoadSamples();
 }
 
 void Sequencer::SetId(const String &id) {
