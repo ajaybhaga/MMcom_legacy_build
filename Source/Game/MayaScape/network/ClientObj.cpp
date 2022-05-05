@@ -43,6 +43,7 @@ ClientObj::ClientObj(Context *context)
 
 ClientObj::~ClientObj()
 {
+
 }
 
 void ClientObj::SetScene(Scene *scene) {

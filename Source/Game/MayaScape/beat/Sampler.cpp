@@ -20,7 +20,8 @@ Sampler::Sampler(Context *context) : Object(context) {
 }
 
 Sampler::~Sampler() {
-
+    if (playSource_)
+        playSource_->ReleaseRef();
 }
 
 Vector<Sound*> Sampler::GetSampleQueue() {

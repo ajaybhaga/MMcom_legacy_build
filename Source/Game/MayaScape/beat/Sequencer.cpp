@@ -110,8 +110,11 @@ void Sequencer::SetId(const String &id) {
 }
 
 Sequencer::~Sequencer() {
+    if (playSource_)
+        playSource_->ReleaseRef();
+
     if (sampler_)
-        delete sampler_;
+        sampler_->ReleaseRef();
 }
 
 void Sequencer::Reset() {
