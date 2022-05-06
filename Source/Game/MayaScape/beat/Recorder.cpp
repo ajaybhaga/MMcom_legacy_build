@@ -28,6 +28,10 @@ Vector<Sound*> Recorder::GetSampleQueue() {
 }
 
 void Recorder::Reset() {
+    // Restart recording
+
+
+    // Create new buffer block
 
 }
 
@@ -63,7 +67,7 @@ void Recorder::SetPlaySource(SoundSource3D *playSource) {
     playSource_ = playSource;
 }
 
-void Recorder::Capture(Vector<Beat *> channel1_, Vector<Beat *> channel2_, Vector<Beat *> channel3_, float currTime_,
+void Recorder::Capture(Beat * channel1_, Beat * channel2_, Beat * channel3_, float currTime_,
                        float beatTime_, float barTime_) {
 
     // TODO: 1. RECORD SAMPLE INTO BUFFER BLOCK (SHORT STORE)

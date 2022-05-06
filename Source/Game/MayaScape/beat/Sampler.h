@@ -10,6 +10,16 @@
 #include <Urho3D/Scene/LogicComponent.h>
 
 using namespace Urho3D;
+
+/*
+  __   __
+ /  \/  \
+/__/ /__/ AYA SCAPE
+
+ BEAT: SAMPLER
+
+Written by Ajay Bhaga 2022
+*/
 class Sampler : public Object {
     URHO3D_OBJECT(Sampler, Object);
 protected:

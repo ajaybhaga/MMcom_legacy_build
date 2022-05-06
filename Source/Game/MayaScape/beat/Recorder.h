@@ -12,6 +12,16 @@
 #include "Beat.h"
 
 using namespace Urho3D;
+
+/*
+  __   __
+ /  \/  \
+/__/ /__/ AYA SCAPE
+
+ BEAT: RECORDER
+
+Written by Ajay Bhaga 2022
+*/
 class Recorder : public Object {
 URHO3D_OBJECT(Recorder, Object);
 protected:
@@ -40,7 +50,7 @@ public:
 
     Vector<Sound*> GetSampleQueue();
     void Reset();
-    void Capture(Vector<Beat*> channel1_, Vector<Beat*> channel2_, Vector<Beat*> channel3_, float currTime_, float beatTime_, float barTime_);
+    void Capture(Beat* channel1_, Beat* channel2_, Beat* channel3_, float currTime_, float beatTime_, float barTime_);
     void Play(int sampleIdx);
     void Load(Sound* sample);
     void Stop();

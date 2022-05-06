@@ -212,7 +212,7 @@ void Sequencer::Play(float timeStep) {
         }
 
         // CAPTURE RECORDING
-        recorder_->Capture(channel1_, channel2_, channel3_, currTime_, beatTime_, barTime_);
+        recorder_->Capture(channel1_[beat_], channel2_[beat_], channel3_[beat_], currTime_, beatTime_, barTime_);
         //
 
         if (beat_ > beatsPerBar_) {

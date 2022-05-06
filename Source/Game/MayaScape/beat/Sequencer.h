@@ -10,6 +10,17 @@
 #include <Urho3D/Scene/LogicComponent.h>
 
 using namespace Urho3D;
+
+/*
+  __   __
+ /  \/  \
+/__/ /__/ AYA SCAPE
+
+ BEAT: SEQUENCER
+
+Written by Ajay Bhaga 2022
+*/
+
 class Sequencer : public LogicComponent {
 
     URHO3D_OBJECT(Sequencer, LogicComponent);
