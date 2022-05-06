@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef URHO3D_BUFFERDATA_H
 #define URHO3D_BUFFERDATA_H
 
@@ -8,6 +10,7 @@
 #include <Urho3D/Audio/SoundSource3D.h>
 #include <Urho3D/Scene/LogicComponent.h>
 #include <Urho3D/Database/Database.h>
+#include "Time.h"
 #include "Beat.h"
 
 using namespace Urho3D;
@@ -29,8 +32,8 @@ public:
     const String &GetId() const;
 
 protected:
-    HashMap<float,Vector<Beat*>> bufferBeat_;
-    HashMap<float,Vector<float>> bufferTime_;
+    HashMap<Time*,Vector<Beat*>> bufferBeat_;
+    HashMap<Time*,Vector<Time*>> bufferTime_;
 
 
 public:
@@ -38,7 +41,7 @@ public:
     ~BufferData();
     /// Register object factory and attributes.
     static void RegisterObject(Context* context);
-    void SetData(Beat* channel1_, Beat* channel2_, Beat* channel3_, float currTime_, float beatTime_, float barTime_);
+    void SetData(Beat* channel1_, Beat* channel2_, Beat* channel3_, Time *time_);
     virtual void Persist(); // Write to long term
 
 };
