@@ -53,15 +53,10 @@ public:
     /// Register object factory and attributes.
     static void RegisterObject(Context* context);
 
-    Vector<Sound*> GetSampleQueue();
     void Reset(Context *context);
     void Capture(Beat* channel1_, Beat* channel2_, Beat* channel3_, float currTime_, float beatTime_, float barTime_);
-    void Play(int sampleIdx);
-    void Load(Sound* sample);
-    void Stop();
-    bool Loaded();
     void SetPlaySource(SoundSource3D* playSource);
-
+    int GetBufferSize();
 };
 
 

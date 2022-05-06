@@ -24,10 +24,6 @@ Recorder::~Recorder() {
         playSource_->ReleaseRef();
 }
 
-Vector<Sound*> Recorder::GetSampleQueue() {
-    return sampleQueue_;
-}
-
 void Recorder::Reset(Context *context) {
     // Restart recording
     data_.Clear();
@@ -37,34 +33,6 @@ void Recorder::Reset(Context *context) {
     // Create new buffer block
     SharedPtr<BufferData> bufData = context->CreateObject<BufferData>();
     data_.Push(bufData.Get());
-}
-
-void Recorder::Play(int sampleIdx) {
-
-    if (sampleQueue_.Size() <= sampleIdx)
-        return;
-
-    // Play sample
-    if (sampleQueue_[sampleIdx] != nullptr) {
-        if (playSource_ != nullptr) {
-            playSource_->SetAutoRemoveMode(REMOVE_COMPONENT);
-            playSource_->Play(sampleQueue_[sampleIdx]);
-        }
-    }
-}
-
-void Recorder::Load(Sound* sample) {
-    // Store sample
-    sampleQueue_.Push(sample);
-    loaded_ = true;
-}
-
-void Recorder::Stop() {
-
-}
-
-bool Recorder::Loaded() {
-    return loaded_;
 }
 
 void Recorder::SetPlaySource(SoundSource3D *playSource) {
@@ -83,4 +51,8 @@ void Recorder::Capture(Beat * channel1_, Beat * channel2_, Beat * channel3_, flo
 
     data_.Push(bufData.Get());
     // TODO: 2. RECORD BUFFER BLOCK INTO DATABASE (LONG STORE)
+}
+
+int Recorder::GetBufferSize() {
+    return data_.Size();
 }
