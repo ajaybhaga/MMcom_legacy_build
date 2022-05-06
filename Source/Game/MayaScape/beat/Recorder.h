@@ -41,6 +41,7 @@ protected:
     SharedPtr<SoundSource3D> playSource_;
 
     SharedPtr<Database> db_;
+    SharedPtr<DbConnection> cxn_;
 
     Context* storeContext_;
     Vector<BufferData*> data_;

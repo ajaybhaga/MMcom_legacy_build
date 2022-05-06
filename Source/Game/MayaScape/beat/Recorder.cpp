@@ -16,8 +16,13 @@ void Recorder::RegisterObject(Context *context)
 
 Recorder::Recorder(Context *context) : Object(context) {
 
+    String dsn = "MAYASCAPE";
     db_ = GetSubsystem<Database>();
-    db_->Connect("DSN=MAYASCAPE");
+    cxn_ = db_->Connect("DSN=" + dsn);
+
+    if (cxn_->IsConnected()) {
+        URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC Connected! ** -> %s", dsn.CString());
+    }
 }
 
 Recorder::~Recorder() {
