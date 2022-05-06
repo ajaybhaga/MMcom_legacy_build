@@ -10,6 +10,7 @@
 #include <Urho3D/Scene/LogicComponent.h>
 #include <Urho3D/Database/Database.h>
 #include "Beat.h"
+#include "BufferData.h"
 
 using namespace Urho3D;
 
@@ -40,6 +41,8 @@ protected:
     SharedPtr<SoundSource3D> playSource_;
 
     SharedPtr<Database> db_;
+
+    Vector<BufferData> data_;
 
 public:
 
