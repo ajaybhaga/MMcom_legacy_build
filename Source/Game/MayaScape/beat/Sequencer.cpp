@@ -214,7 +214,7 @@ void Sequencer::Play(float timeStep) {
         recorder_->Capture(channel1_[beat_], channel2_[beat_], channel3_[beat_], currTime_, beatTime_, barTime_);
         //
 
-        URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER ** -> recorder_->GetBufferSize()=%d", recorder_->GetBufferSize());
+        //URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER ** -> recorder_->GetBufferSize()=%d", recorder_->GetBufferSize());
 
         if (beat_ > beatsPerBar_) {
             // Over bar limit
