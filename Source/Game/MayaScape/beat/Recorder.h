@@ -31,13 +31,7 @@ public:
     const String &GetId() const;
 
 protected:
-    Vector<Sound*> sampleQueue_;
-    bool loaded_;
-
-    // Current state
-    int playSampleIdx_; // Current beat
-    float currTime_; // Current time
-    float freqMod_; // Frequency modulator
+    bool odbcConnected_;
     SharedPtr<SoundSource3D> playSource_;
 
     SharedPtr<Database> db_;
@@ -58,6 +52,7 @@ public:
     void Capture(Beat* channel1_, Beat* channel2_, Beat* channel3_, float currTime_, float beatTime_, float barTime_);
     void SetPlaySource(SoundSource3D* playSource);
     int GetBufferSize();
+    bool IsODBCConnected();
 };
 
 

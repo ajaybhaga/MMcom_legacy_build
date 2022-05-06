@@ -22,6 +22,7 @@ Recorder::Recorder(Context *context) : Object(context) {
 
     if (cxn_->IsConnected()) {
         URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC Connected! ** -> %s", dsn.CString());
+        odbcConnected_ = true;
     }
 }
 
@@ -61,4 +62,8 @@ void Recorder::Capture(Beat * channel1_, Beat * channel2_, Beat * channel3_, flo
 
 int Recorder::GetBufferSize() {
     return data_.Size();
+}
+
+bool Recorder::IsODBCConnected() {
+    return odbcConnected_;
 }
