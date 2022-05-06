@@ -9,6 +9,7 @@
 #include <Urho3D/Audio/SoundSource3D.h>
 #include <Urho3D/Scene/LogicComponent.h>
 #include <Urho3D/Database/Database.h>
+#include "Beat.h"
 
 using namespace Urho3D;
 class Recorder : public Object {
@@ -39,6 +40,7 @@ public:
 
     Vector<Sound*> GetSampleQueue();
     void Reset();
+    void Capture(Vector<Beat*> channel1_, Vector<Beat*> channel2_, Vector<Beat*> channel3_, float currTime_, float beatTime_, float barTime_);
     void Play(int sampleIdx);
     void Load(Sound* sample);
     void Stop();

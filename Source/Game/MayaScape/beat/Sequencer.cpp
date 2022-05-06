@@ -56,12 +56,19 @@ void Sequencer::FixedUpdate(float timeStep)
 }
 
 Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
+
+    // Setup client sequencer
+
     // Init parameters
     Reset();
-    // Create a new sampler for client object
+
+    // Create a new sampler
     sampler_ = context->CreateObject<Sampler>();
+    // Create a new recorder
+    recorder_ = context->CreateObject<Recorder>();
 
     int idx;
+
     // Generate sequence -> instruction set to time beat
     sequenceByBeat_.Clear();
     Vector<Beat*> channel_;
@@ -103,6 +110,7 @@ Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
 
     // Load default samples
     LoadSamples();
+
 }
 
 void Sequencer::SetId(const String &id) {
@@ -135,6 +143,9 @@ void Sequencer::Reset() {
     // 4/4 beats/sec -> 1 beats/sec -> 60 beats in min -> 60 bpm
 
     // 4/4 = 250 ms time segment
+
+    // Restart recording -> new file -> sequence
+    recorder_->Reset();
 }
 
 void Sequencer::LoadSamples() {
@@ -160,6 +171,7 @@ void Sequencer::LoadSamples() {
 
 // Sequencer Play: Move forward a time step
 void Sequencer::Play(float timeStep) {
+
     // Play a time step
     currTime_ += timeStep;
     beatTime_ += timeStep;
@@ -176,27 +188,32 @@ void Sequencer::Play(float timeStep) {
 
         // Play beat sample
 
-        Vector<Beat*> channel_;
+        //Vector<Beat*> channel_;
+        Vector<Beat*> channel1_, channel2_, channel3_;
         // Play each channel
 
         // KICK
-        channel_ = sequenceByBeat_.Find("KICK")->second_;
-        if (channel_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
-            channel_[beat_]->Play();
+        channel1_ = sequenceByBeat_.Find("KICK")->second_;
+        if (channel1_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
+            channel1_[beat_]->Play();
         }
 
 
         // SNARE
-        channel_ = sequenceByBeat_.Find("SNARE")->second_;
-        if (channel_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
-            channel_[beat_]->Play();
+        channel2_ = sequenceByBeat_.Find("SNARE")->second_;
+        if (channel2_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
+            channel2_[beat_]->Play();
         }
 
         // HI-HAT
-        channel_ = sequenceByBeat_.Find("HH")->second_;
-        if (channel_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
-            channel_[beat_]->Play();
+        channel3_ = sequenceByBeat_.Find("HH")->second_;
+        if (channel3_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
+            channel3_[beat_]->Play();
         }
+
+        // CAPTURE RECORDING
+        recorder_->Capture(channel1_, channel2_, channel3_, currTime_, beatTime_, barTime_);
+        //
 
         if (beat_ > beatsPerBar_) {
             // Over bar limit

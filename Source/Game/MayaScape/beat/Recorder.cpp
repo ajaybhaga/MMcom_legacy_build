@@ -62,3 +62,12 @@ bool Recorder::Loaded() {
 void Recorder::SetPlaySource(SoundSource3D *playSource) {
     playSource_ = playSource;
 }
+
+void Recorder::Capture(Vector<Beat *> channel1_, Vector<Beat *> channel2_, Vector<Beat *> channel3_, float currTime_,
+                       float beatTime_, float barTime_) {
+
+    // TODO: 1. RECORD SAMPLE INTO BUFFER BLOCK (SHORT STORE)
+
+
+    // TODO: 2. RECORD BUFFER BLOCK INTO DATABASE (LONG STORE)
+}

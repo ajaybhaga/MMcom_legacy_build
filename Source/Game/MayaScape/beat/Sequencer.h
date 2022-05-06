@@ -4,6 +4,7 @@
 #define MM_SEQUENCER_H
 
 #include "Beat.h"
+#include "Recorder.h"
 #include <Urho3D/Container/Str.h>
 #include <Urho3D/Container/Vector.h>
 #include <Urho3D/Scene/LogicComponent.h>
@@ -21,6 +22,7 @@ protected:
     SharedPtr<Sampler> sampler_;
     int length_; // 16 beats
     SharedPtr<SoundSource3D> playSource_;
+    SharedPtr<Recorder> recorder_;
 
 
     // Current state
