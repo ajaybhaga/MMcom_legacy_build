@@ -46,7 +46,7 @@ void Recorder::Reset(Context *context) {
     data_.Push(bufData.Get());
 
     // On long store, create sequence
-    CreateSequence();
+    CreateSequence("seq");
 }
 
 void Recorder::SetPlaySource(SoundSource3D *playSource) {
@@ -98,13 +98,54 @@ void Recorder::Persist() {
     }
 }
 
-void Recorder::CreateSequence() {
+void Recorder::CreateSequence(String name) {
     if (!cxn_)
         return;
 
     seqId_++;
-    String seqName = id_ + "-SEQ-" + String(seqId_);
+    String seqName = id_ + "-" + name + "-" + String(seqId_);
     String sql = "INSERT INTO " + schema_ + ".ms_sequence (seq_id, seq_name, created) VALUES (" + String("nextval('" + schema_ + ".ms_seq_id')") + ", '" + seqName + "', current_timestamp);";
+
+    URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC EXECUTE ** -> %s", sql.CString());
+    // Pesist current buffer to long store -> ODBC Postgres
+    if (cxn_) {
+        if (cxn_->IsConnected()) {
+            DbResult result = cxn_->Execute(sql);
+            cxn_->Finalize();
+        }
+    }
+
+    int currSeq = GetSequence();
+}
+
+int Recorder::GetSequence() {
+    if (!cxn_)
+        return -1;
+
+    String sql = "SELECT currval('" + schema_ + ".ms_seq_id');";
+
+    URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC EXECUTE ** -> %s", sql.CString());
+    // Pesist current buffer to long store -> ODBC Postgres
+    if (cxn_) {
+        if (cxn_->IsConnected()) {
+            DbResult result = cxn_->Execute(sql);
+            VariantVector v = result.GetRows().At(0);
+            int size = v.Size();
+            String val = v.At(0).GetString();
+            URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC VALUE ** -> %s", val.CString());
+            int i = (result.GetRows().At(0))[0].GetInt();
+            cxn_->Finalize();
+        }
+    }
+}
+
+
+void Recorder::CreateTimeCode(float timeCode, float beat) {
+    if (!cxn_)
+        return;
+
+    //INSERT INTO world1.ms_time_code (time_code, beat, rec_date) VALUES(0, 0, '');
+    String sql = "INSERT INTO " + schema_ + ".ms_time_code (time_code, beat, rec_date) VALUES (" + String( timeCode ) + ", '" + String( beat ) + "', current_timestamp);";
 
     URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC EXECUTE ** -> %s", sql.CString());
     // Pesist current buffer to long store -> ODBC Postgres
@@ -116,13 +157,13 @@ void Recorder::CreateSequence() {
     }
 }
 
-void Recorder::CreateTimeCode() {
+void Recorder::CreatePattern(Beat* channel1_, Beat* channel2_, Beat* channel3_, float currTime_, float beatTime_, float barTime_) {
     if (!cxn_)
         return;
 
     seqId_++;
     String seqName = id_ + "-SEQ-" + String(seqId_);
-    String sql = "INSERT INTO " + schema_ + ".ms_time_code (seq_id, seq_name, created) VALUES (" + String("nextval('" + schema_ + ".ms_seq_id')") + ", '" + seqName + "', current_timestamp);";
+    String sql = "INSERT INTO " + schema_ + ".ms_pattern (seq_id, time_code, channel, sample_idx) VALUES (" + String("nextval('" + schema_ + ".ms_seq_id')") + ", '" + seqName + "', current_timestamp);";
 
     URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC EXECUTE ** -> %s", sql.CString());
     // Pesist current buffer to long store -> ODBC Postgres

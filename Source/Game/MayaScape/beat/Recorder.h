@@ -59,9 +59,12 @@ public:
     int GetBufferSize();
     bool IsODBCConnected();
     void Persist();
-    void CreateSequence();
-    void CreateTimeCode();
+    void CreateSequence(String name); // ms_sequence
+    int GetSequence(); // ms_sequence
+    void CreateTimeCode(float timeCode, float beat); // ms_time_code
+    void CreatePattern(Beat* channel1_, Beat* channel2_, Beat* channel3_, float currTime_, float beatTime_, float barTime_); // ms_pattern
 };
+
 
 
 #endif //MM_RECORDER_H
