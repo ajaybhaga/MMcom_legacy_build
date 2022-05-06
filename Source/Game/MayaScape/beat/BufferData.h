@@ -32,8 +32,8 @@ public:
     const String &GetId() const;
 
 protected:
-    HashMap<Time*,Vector<Beat*>> bufferBeat_;
-    HashMap<Time*,Vector<Time*>> bufferTime_;
+    HashMap<BeatTime*,Vector<Beat*>> bufferBeat_;
+    HashMap<BeatTime*,Vector<BeatTime*>> bufferTime_;
 
 
 public:
@@ -41,7 +41,7 @@ public:
     ~BufferData();
     /// Register object factory and attributes.
     static void RegisterObject(Context* context);
-    void SetData(Beat* channel1_, Beat* channel2_, Beat* channel3_, Time *time_);
+    void SetData(Beat* channel1_, Beat* channel2_, Beat* channel3_, BeatTime *time_);
     virtual void Persist(); // Write to long term
 
 };

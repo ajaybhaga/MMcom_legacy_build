@@ -23,7 +23,7 @@ BufferData::~BufferData() {
 }
 
 
-void BufferData::SetData(Beat *channel1_, Beat *channel2_, Beat *channel3_, Time *time_) {
+void BufferData::SetData(Beat *channel1_, Beat *channel2_, Beat *channel3_, BeatTime *time_) {
 
     Vector<Beat*> beatData;
     beatData.Push(channel1_);
@@ -31,9 +31,11 @@ void BufferData::SetData(Beat *channel1_, Beat *channel2_, Beat *channel3_, Time
     beatData.Push(channel3_);
     bufferBeat_.Populate(time_, beatData);
 
-    Vector<Variant> timeData;
-    timeData.Push(time_->GetC);
-    timeData.Push(beatTime_);
-    timeData.Push(barTime_);
-    bufferTime_.Populate(Variant(currTime_), timeData);
+    Vector<BeatTime*> timeData;
+    timeData.Push(time_);
+    bufferTime_.Populate(time_, timeData);
+}
+
+void BufferData::Persist() {
+
 }
