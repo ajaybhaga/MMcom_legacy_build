@@ -27,6 +27,7 @@ class Recorder : public Object {
 URHO3D_OBJECT(Recorder, Object);
 protected:
     String id_;
+    long seqId_ = 0;
 public:
     const String &GetId() const;
 
@@ -36,6 +37,7 @@ protected:
 
     SharedPtr<Database> db_;
     SharedPtr<DbConnection> cxn_;
+    String schema_;
 
     Context* storeContext_;
     Vector<BufferData*> data_;
@@ -57,6 +59,7 @@ public:
     int GetBufferSize();
     bool IsODBCConnected();
     void Persist();
+    void CreateSequence();
 };
 
 
