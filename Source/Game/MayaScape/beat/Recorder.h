@@ -60,6 +60,7 @@ public:
     bool IsODBCConnected();
     void Persist();
     void CreateSequence();
+    void CreateTimeCode();
 };
 
 
