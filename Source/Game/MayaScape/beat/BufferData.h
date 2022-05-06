@@ -10,7 +10,7 @@
 #include <Urho3D/Audio/SoundSource3D.h>
 #include <Urho3D/Scene/LogicComponent.h>
 #include <Urho3D/Database/Database.h>
-#include "Time.h"
+#include "BeatTime.h"
 #include "Beat.h"
 
 using namespace Urho3D;

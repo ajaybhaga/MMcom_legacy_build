@@ -1,4 +1,5 @@
 #include "BufferData.h"
+#include "BeatTime.h"
 #include <Urho3D/IO/Log.h>
 #include <Urho3D/Core/Context.h>
 #include <Urho3D/Core/Object.h>
@@ -28,7 +29,7 @@ void BufferData::SetData(Beat *channel1_, Beat *channel2_, Beat *channel3_, Time
     beatData.Push(channel1_);
     beatData.Push(channel2_);
     beatData.Push(channel3_);
-    bufferBeat_.Populate(time_->GetCurrentTime(), beatData);
+    bufferBeat_.Populate(time_, beatData);
 
     Vector<Variant> timeData;
     timeData.Push(time_->GetC);
