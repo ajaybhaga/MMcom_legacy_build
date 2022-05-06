@@ -66,6 +66,7 @@ Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
     sampler_ = context->CreateObject<Sampler>();
     // Create a new recorder
     recorder_ = context->CreateObject<Recorder>();
+    recorder_->Reset();
 
     int idx;
 
@@ -144,8 +145,6 @@ void Sequencer::Reset() {
 
     // 4/4 = 250 ms time segment
 
-    // Restart recording -> new file -> sequence
-    recorder_->Reset();
 }
 
 void Sequencer::LoadSamples() {

@@ -15,7 +15,7 @@ void Recorder::RegisterObject(Context *context)
 }
 
 Recorder::Recorder(Context *context) : Object(context) {
-    db_->Connect("wefwefw");
+    db_->Connect("DSN=MayaScapeLive");
 }
 
 Recorder::~Recorder() {
