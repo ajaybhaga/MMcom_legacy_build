@@ -8,6 +8,7 @@
 #include <Urho3D/Audio/Sound.h>
 #include <Urho3D/Audio/SoundSource3D.h>
 #include <Urho3D/Scene/LogicComponent.h>
+#include <Urho3D/Database/Database.h>
 
 using namespace Urho3D;
 class Recorder : public Object {
@@ -27,6 +28,7 @@ protected:
     float freqMod_; // Frequency modulator
     SharedPtr<SoundSource3D> playSource_;
 
+    SharedPtr<Database> db_;
 
 public:
 

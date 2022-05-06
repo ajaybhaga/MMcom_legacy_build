@@ -15,6 +15,7 @@ void Recorder::RegisterObject(Context *context)
 }
 
 Recorder::Recorder(Context *context) : Object(context) {
+    db_->Connect("wefwefw");
 }
 
 Recorder::~Recorder() {
