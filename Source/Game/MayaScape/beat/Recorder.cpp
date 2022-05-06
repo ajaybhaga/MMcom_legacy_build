@@ -15,8 +15,9 @@ void Recorder::RegisterObject(Context *context)
 }
 
 Recorder::Recorder(Context *context) : Object(context) {
-    // TODO: ODBC Postgres crashing, solve after for long term storage
-   // db_->Connect("DSN=MayaScapeLive");
+
+    db_ = GetSubsystem<Database>();
+    db_->Connect("DSN=MAYASCAPE");
 }
 
 Recorder::~Recorder() {
