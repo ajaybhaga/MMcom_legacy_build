@@ -139,6 +139,7 @@
 #include "../../Urho3D/Scene/SplinePath.h"
 #include "../../Urho3D/Resource/ResourceEvents.h"
 #include "Missile.h"
+#include "MayaScape/beat/BufferData.h"
 #include <MayaScape/Constants.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -3297,6 +3298,7 @@ void MayaScape::CreateServerSubsystem() {
     Sampler::RegisterObject(context_);
     Sequencer::RegisterObject(context_);
     Recorder::RegisterObject(context_);
+    BufferData::RegisterObject(context_);
 
 }
 
