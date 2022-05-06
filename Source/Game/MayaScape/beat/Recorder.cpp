@@ -3,6 +3,8 @@
 #include <Urho3D/IO/Log.h>
 #include <Urho3D/Core/Context.h>
 #include <Urho3D/Core/Object.h>
+#include <Urho3D/Database/Database.h>
+#include <Urho3D/Database/DatabaseEvents.h>
 
 
 //=============================================================================
@@ -28,6 +30,8 @@ Recorder::Recorder(Context *context) : Object(context) {
     schema_ = "world1";
 
     id_ = "RECORDER-" + String(Random(10000,99999));
+
+    SubscribeToEvent(E_DBCURSOR, URHO3D_HANDLER(Recorder, HandleDBCursor));
 }
 
 Recorder::~Recorder() {
@@ -98,6 +102,40 @@ void Recorder::Persist() {
     }
 }
 
+void Recorder::HandleDBCursor(StringHash eventType, VariantMap& eventData) {
+
+    using namespace DbCursor;
+
+//    URHO3D_PARAM(P_COLVALUES, ColValues);          // VariantVector
+//    URHO3D_PARAM(P_COLHEADERS, ColHeaders);        // StringVector
+
+
+    /*
+    eventData[P_DBCONNECTION] = this;
+    eventData[P_RESULTIMPL] = &result.resultImpl_;
+    eventData[P_SQL] = sql;
+    eventData[P_NUMCOLS] = numCols;
+    eventData[P_COLVALUES] = colValues;
+    eventData[P_COLHEADERS] = result.columns_;
+    eventData[P_FILTER] = false;
+    eventData[P_ABORT] = false;
+*/
+
+    VariantVector colValues = eventData[P_COLVALUES].GetVariantVector();
+    StringVector colHeaders = eventData[P_COLHEADERS].GetStringVector();
+
+    for (Variant h : colHeaders) {
+        String header = h.GetString();
+        for (Variant v : colValues) {
+            String value = v.GetString();
+            float fValue = v.GetFloat();
+            URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - HandleDBCursor value, fvalue ** -> %s, %f", value.CString(), fValue);
+        }
+    }
+
+
+}
+
 void Recorder::CreateSequence(String name) {
     if (!cxn_)
         return;
@@ -111,11 +149,11 @@ void Recorder::CreateSequence(String name) {
     if (cxn_) {
         if (cxn_->IsConnected()) {
             DbResult result = cxn_->Execute(sql);
-            cxn_->Finalize();
+            //cxn_->Finalize();
         }
     }
 
-    int currSeq = GetSequence();
+    //int currSeq = GetSequence();        // Subscribe for the newcomer recognition
 }
 
 int Recorder::GetSequence() {
@@ -129,12 +167,10 @@ int Recorder::GetSequence() {
     if (cxn_) {
         if (cxn_->IsConnected()) {
             DbResult result = cxn_->Execute(sql);
-            VariantVector v = result.GetRows().At(0);
-            int size = v.Size();
-            String val = v.At(0).GetString();
-            URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC VALUE ** -> %s", val.CString());
-            int i = (result.GetRows().At(0))[0].GetInt();
-            cxn_->Finalize();
+            //VariantVector v = result.GetRows().At(0);
+            //int size = v.Size();
+            //String val = v.At(0).GetString();
+            //URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC VALUE ** -> %s", val.CString());
         }
     }
 }

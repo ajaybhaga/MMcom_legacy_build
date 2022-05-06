@@ -63,6 +63,7 @@ public:
     int GetSequence(); // ms_sequence
     void CreateTimeCode(float timeCode, float beat); // ms_time_code
     void CreatePattern(Beat* channel1_, Beat* channel2_, Beat* channel3_, float currTime_, float beatTime_, float barTime_); // ms_pattern
+    void HandleDBCursor(StringHash eventType, VariantMap& eventData);
 };
 
 
