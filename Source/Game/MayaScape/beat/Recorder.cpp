@@ -28,13 +28,15 @@ Vector<Sound*> Recorder::GetSampleQueue() {
     return sampleQueue_;
 }
 
-void Recorder::Reset() {
+void Recorder::Reset(Context *context) {
     // Restart recording
     data_.Clear();
+    // Set store context
+    storeContext_ = context;
 
     // Create new buffer block
-    BufferData bufData = context->CreateObject<BufferData>();
-    data_.Push(bufData);
+    SharedPtr<BufferData> bufData = context->CreateObject<BufferData>();
+    data_.Push(bufData.Get());
 }
 
 void Recorder::Play(int sampleIdx) {
@@ -74,11 +76,11 @@ void Recorder::Capture(Beat * channel1_, Beat * channel2_, Beat * channel3_, flo
 
     BeatTime *t = new BeatTime(currTime_, beatTime_, barTime_);
     // Create new buffer block
-    BufferData bufData = context->CreateObject<BufferData>();
+    SharedPtr<BufferData> bufData = storeContext_->CreateObject<BufferData>();
 
     // 1. RECORD SAMPLE INTO BUFFER BLOCK (SHORT STORE)
-    bufData.SetData(channel1_, channel2_, channel3_, t);
+    bufData->SetData(channel1_, channel2_, channel3_, t);
 
-    data_.Push(bufData);
+    data_.Push(bufData.Get());
     // TODO: 2. RECORD BUFFER BLOCK INTO DATABASE (LONG STORE)
 }

@@ -3,7 +3,6 @@
 #ifndef MM_RECORDER_H
 #define MM_RECORDER_H
 
-#include <Urho3D/Container/Str.h>
 #include <Urho3D/Container/Vector.h>
 #include <Urho3D/Audio/Sound.h>
 #include <Urho3D/Audio/SoundSource3D.h>
@@ -11,6 +10,7 @@
 #include <Urho3D/Database/Database.h>
 #include "Beat.h"
 #include "BufferData.h"
+#include "Urho3D/Core/Context.h"
 
 using namespace Urho3D;
 
@@ -42,7 +42,9 @@ protected:
 
     SharedPtr<Database> db_;
 
-    Vector<BufferData> data_;
+    Context* storeContext_;
+    Vector<BufferData*> data_;
+
 
 public:
 
@@ -52,7 +54,7 @@ public:
     static void RegisterObject(Context* context);
 
     Vector<Sound*> GetSampleQueue();
-    void Reset();
+    void Reset(Context *context);
     void Capture(Beat* channel1_, Beat* channel2_, Beat* channel3_, float currTime_, float beatTime_, float barTime_);
     void Play(int sampleIdx);
     void Load(Sound* sample);

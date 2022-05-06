@@ -66,7 +66,7 @@ Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
     sampler_ = context->CreateObject<Sampler>();
     // Create a new recorder
     recorder_ = context->CreateObject<Recorder>();
-    recorder_->Reset();
+    recorder_->Reset(context);
 
     int idx;
 
