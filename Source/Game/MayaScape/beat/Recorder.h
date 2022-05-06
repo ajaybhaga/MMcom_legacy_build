@@ -40,6 +40,9 @@ protected:
     Context* storeContext_;
     Vector<BufferData*> data_;
 
+    // Persist markers
+    float pStartTime;
+    float pEndTime;
 
 public:
 
@@ -53,6 +56,7 @@ public:
     void SetPlaySource(SoundSource3D* playSource);
     int GetBufferSize();
     bool IsODBCConnected();
+    void Persist();
 };
 
 

@@ -67,3 +67,17 @@ int Recorder::GetBufferSize() {
 bool Recorder::IsODBCConnected() {
     return odbcConnected_;
 }
+
+void Recorder::Persist() {
+
+    // TODO: Generate SQL insert of buffer data
+    // Persist from pStartTime to pEndTime
+    String sql = "";
+
+    // Pesist current buffer to long store -> ODBC Postgres
+    if (cxn_) {
+        if (cxn_->IsConnected()) {
+            cxn_->Execute(sql);
+        }
+    }
+}
