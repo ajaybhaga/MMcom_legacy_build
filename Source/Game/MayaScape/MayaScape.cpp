@@ -3273,13 +3273,16 @@ void MayaScape::HandlePlayButton(StringHash eventType, VariantMap &eventData) {
 void MayaScape::CreateServerSubsystem() {
     context_->RegisterSubsystem(new Server(context_));
 
-    // register client objs
+    // Register base network client
     ClientObj::RegisterObject(context_);
+
+    // Register two implementations of ClientObj, NetworkActor and Vehicle
     NetworkActor::RegisterObject(context_);
     Vehicle::RegisterObject(context_);
 
     Mover::RegisterObject(context_);
 
+    // Vehicle & Projectiles
     RaycastVehicleBase::RegisterObject(context_);
     WheelTrackModel::RegisterObject(context_);
 //    Missile::RegisterObject(context_);
@@ -3289,9 +3292,11 @@ void MayaScape::CreateServerSubsystem() {
     CSP_Server::RegisterObject(context_);
     CSP_Client::RegisterObject(context_);
 
+    // Beat
     // Sequencer
     Sampler::RegisterObject(context_);
     Sequencer::RegisterObject(context_);
+    Recorder::RegisterObject(context_);
 
 }
 
