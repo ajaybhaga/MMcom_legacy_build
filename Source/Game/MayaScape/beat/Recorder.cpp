@@ -128,8 +128,7 @@ void Recorder::HandleDBCursor(StringHash eventType, VariantMap& eventData) {
         String header = h.GetString();
         for (Variant v : colValues) {
             String value = v.GetString();
-            float fValue = v.GetFloat();
-            URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - HandleDBCursor value, fvalue ** -> %s, %f", value.CString(), fValue);
+            URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - HandleDBCursor value ** -> %s = %s", header.CString(), value.CString());
         }
     }
 
@@ -153,7 +152,7 @@ void Recorder::CreateSequence(String name) {
         }
     }
 
-    //int currSeq = GetSequence();        // Subscribe for the newcomer recognition
+    int currSeq = GetSequence();
 }
 
 int Recorder::GetSequence() {
@@ -163,14 +162,17 @@ int Recorder::GetSequence() {
     String sql = "SELECT currval('" + schema_ + ".ms_seq_id');";
 
     URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC EXECUTE ** -> %s", sql.CString());
-    // Pesist current buffer to long store -> ODBC Postgres
+    // Persist current buffer to long store -> ODBC Postgres
     if (cxn_) {
         if (cxn_->IsConnected()) {
-            DbResult result = cxn_->Execute(sql);
-            //VariantVector v = result.GetRows().At(0);
-            //int size = v.Size();
-            //String val = v.At(0).GetString();
-            //URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC VALUE ** -> %s", val.CString());
+            DbResult result = cxn_->Execute(sql, true);
+          /*  VariantVector v = result.GetRows().At(0);
+
+            int value = v.At(0).GetInt();
+         ///   String val = v.At(0).GetString();
+            URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC VALUE ** -> %s", val.CString());
+            return value;*/
+          return 0;
         }
     }
 }
