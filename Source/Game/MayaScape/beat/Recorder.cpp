@@ -44,12 +44,6 @@ void Recorder::Reset(Context *context) {
     data_.Clear();
     // Set store context
     storeContext_ = context;
-
-    int lastUsedSeqId_ = GetSequence();
-    if (currSeqId_ < lastUsedSeqId_) {
-        // On long store, create sequence
-        CreateSequence("seq");
-    }
 }
 
 void Recorder::SetPlaySource(SoundSource3D *playSource) {
@@ -87,8 +81,16 @@ void Recorder::Persist() {
 
     if (!data_.Empty()) {
 
+        // Write sequence
+        int lastUsedSeqId_ = GetSequence();
+        if (currSeqId_ < lastUsedSeqId_) {
+            // On long store, create sequence
+            CreateSequence("seq");
+        }
+
         bool written_ = false;
         for (SharedPtr<BufferData> buf : data_) {
+
 
             if (buf.NotNull()) {
 
@@ -199,15 +201,19 @@ int Recorder::GetSequence() {
     if (cxn_) {
         if (cxn_->IsConnected()) {
             DbResult result = cxn_->Execute(sql);
-            VariantVector v = result.GetRows().At(0);
 
-          //  int value = v.At(0).GetInt();
-            String val = v.At(0).GetString();
-            URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC VALUE ** -> %s", val.CString());
-           /* return value;*/
-          return ToInt(String(val));
+/*
+            VariantVector v = result.GetRows().At(0);
+            if (!v.Empty()) {
+                //int value = v.At(0).GetInt();
+                String val = v.At(0).GetString();
+                URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC VALUE ** -> %s", val.CString());*/
+                /* return value;*/
+                //return ToInt(String(val));
+                return Random(1,1000);
+            }
         }
-    }
+
 }
 
 
