@@ -30,6 +30,7 @@ Recorder::Recorder(Context *context) : Object(context), currSeqId_(0) {
     schema_ = "world1";
 
     id_ = "RECORDER-" + String(Random(10000,99999));
+    sequence_ = false;
 
     SubscribeToEvent(E_DBCURSOR, URHO3D_HANDLER(Recorder, HandleDBCursor));
 }
@@ -82,10 +83,12 @@ void Recorder::Persist() {
         // Write sequence
         int lastUsedSeqId_ = GetSequence();
         URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - Data Buffer Size ** -> %d, Last Used Seq Id -> %d", GetBufferSize(), lastUsedSeqId_);
-        if (currSeqId_ < lastUsedSeqId_) {
+
+        if (!sequence_) {
             // On long store, create sequence
             CreateSequence("seq");
         }
+
 
         bool written_ = false;
         for (SharedPtr<BufferData> buf : data_) {
@@ -187,6 +190,7 @@ void Recorder::CreateSequence(String name) {
     }
 
     currSeqId_ = GetSequence();
+    sequence_ = true;
 }
 
 int Recorder::GetSequence() {

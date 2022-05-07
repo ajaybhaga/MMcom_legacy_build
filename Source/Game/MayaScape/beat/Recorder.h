@@ -39,6 +39,7 @@ protected:
     SharedPtr<DbConnection> cxn_;
     String schema_;
     int currSeqId_;
+    bool sequence_;
 
     Context* storeContext_;
     Vector<SharedPtr<BufferData>> data_;
