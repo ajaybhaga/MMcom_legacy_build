@@ -91,6 +91,8 @@ void Recorder::Persist() {
             HashMap<BeatTime*,Vector<BeatTime*>> bufferTime_ = buf->GetTimeData();
             HashMap<BeatTime*,Vector<Beat*>> bufferBeat_ = buf->GetBeatData();
 
+            // Vector containing set of channels, for each channel (3)
+
             for (BeatTime* t : bufferTime_.Keys()) {
                 // Iterate through each beat time
 
@@ -99,14 +101,15 @@ void Recorder::Persist() {
                 float beatTime_ = t->GetBeatTime();
                 float barTime_ = t->GetBarTime();
 
-                // Iterate through beats
-                for (Beat* b : bufferBeat_.Find(t)->second_) {
+                Vector<Beat*> vBeat = bufferBeat_.Find(t)->second_;
+                // For time, iterate through each channel beat
+                for (Beat* b : vBeat) {
                     int sampleIdx = b->GetBeatSampleIdx();
                 }
 
                 // Dump buffer to db
-                CreateTimeCode(buf->GetcurrTime_, beatTime_);
-                CreatePattern(channel1_, channel2_, channel3_, currTime_, beatTime_, barTime_);
+                CreateTimeCode(currTime_, beatTime_);
+                CreatePattern(vBeat[0], vBeat[1], vBeat[2], currTime_, beatTime_, barTime_);
             }
         }
     }
