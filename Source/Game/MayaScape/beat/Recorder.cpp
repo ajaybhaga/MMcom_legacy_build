@@ -152,7 +152,7 @@ void Recorder::CreateSequence(String name) {
         }
     }
 
-    int currSeq = GetSequence();
+    currSeqId_ = GetSequence();
 }
 
 int Recorder::GetSequence() {
@@ -165,14 +165,14 @@ int Recorder::GetSequence() {
     // Persist current buffer to long store -> ODBC Postgres
     if (cxn_) {
         if (cxn_->IsConnected()) {
-            DbResult result = cxn_->Execute(sql, true);
-          /*  VariantVector v = result.GetRows().At(0);
+            DbResult result = cxn_->Execute(sql);
+            VariantVector v = result.GetRows().At(0);
 
-            int value = v.At(0).GetInt();
-         ///   String val = v.At(0).GetString();
+          //  int value = v.At(0).GetInt();
+            String val = v.At(0).GetString();
             URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC VALUE ** -> %s", val.CString());
-            return value;*/
-          return 0;
+           /* return value;*/
+          return ToInt(String(val));
         }
     }
 }
