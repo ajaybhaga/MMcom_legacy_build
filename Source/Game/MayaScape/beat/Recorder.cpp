@@ -122,10 +122,13 @@ void Recorder::Persist() {
 
         // Clear written data buffers
         for (SharedPtr<BufferData> buf : data_) {
-            if (buf->IsOnLongStore()) {
-
-                URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - removing Buffer Data, long store persisted ** -> %s", buf->GetTypeName().CString());
-                data_.Remove(buf);
+            if (buf.NotNull()) {
+                if (buf->IsOnLongStore()) {
+                    URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - removing Buffer Data, long store persisted ** -> %s",
+                                     buf->GetTypeName().CString());
+                    data_.Remove(buf);
+    //                buf->ReleaseRef();
+                }
             }
         }
 
