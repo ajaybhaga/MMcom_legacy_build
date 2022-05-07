@@ -13,9 +13,7 @@ void BufferData::RegisterObject(Context *context)
     context->RegisterFactory<BufferData>();
 }
 
-BufferData::BufferData(Context *context) : Object(context) {
-    // TODO: ODBC Postgres crashing, solve after for long term storage
-    // db_->Connect("DSN=MayaScapeLive");
+BufferData::BufferData(Context *context) : Object(context), onLongStore_(false) {
 }
 
 BufferData::~BufferData() {
@@ -42,4 +40,12 @@ HashMap<BeatTime*,Vector<Beat*>> BufferData::GetBeatData() {
 
 HashMap<BeatTime*,Vector<BeatTime*>> BufferData::GetTimeData() {
     return bufferTime_;
+}
+
+void BufferData::SetOnLongStore(bool onLongStore) {
+    onLongStore_ = onLongStore;
+}
+
+bool BufferData::IsOnLongStore() const {
+    return onLongStore_;
 }

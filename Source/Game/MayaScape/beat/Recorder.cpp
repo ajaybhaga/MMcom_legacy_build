@@ -45,10 +45,6 @@ void Recorder::Reset(Context *context) {
     // Set store context
     storeContext_ = context;
 
-    // Create new buffer block
-    SharedPtr<BufferData> bufData = context->CreateObject<BufferData>();
-    data_.Push(bufData.Get());
-
     // On long store, create sequence
     CreateSequence("seq");
 }
@@ -67,7 +63,7 @@ void Recorder::Capture(Beat * channel1_, Beat * channel2_, Beat * channel3_, flo
     // 1. RECORD SAMPLE INTO BUFFER BLOCK (SHORT STORE)
     bufData->SetData(channel1_, channel2_, channel3_, t);
 
-    data_.Push(bufData.Get());
+    data_.Push(SharedPtr(bufData.Get()));
 
     // This can be pulled from data_ -> bufData
 
@@ -86,33 +82,56 @@ void Recorder::Persist() {
 
     if (!data_.Empty()) {
 
-        for (BufferData *buf : data_) {
+        bool written_ = false;
+        for (SharedPtr<BufferData> buf : data_) {
 
-            HashMap<BeatTime*,Vector<BeatTime*>> bufferTime_ = buf->GetTimeData();
-            HashMap<BeatTime*,Vector<Beat*>> bufferBeat_ = buf->GetBeatData();
+            if (buf.NotNull()) {
+                HashMap<BeatTime *, Vector<BeatTime *>> bufferTime_ = buf->GetTimeData();
+                HashMap<BeatTime *, Vector<Beat *>> bufferBeat_ = buf->GetBeatData();
 
-            // Vector containing set of channels, for each channel (3)
+                // Vector containing set of channels, for each channel (3)
 
-            for (BeatTime* t : bufferTime_.Keys()) {
-                // Iterate through each beat time
+                for (BeatTime *t: bufferTime_.Keys()) {
+                    // Iterate through each beat time
 
-                // Retrieve time attributes
-                float currTime_ = t->GetCurrentTime();
-                float beatTime_ = t->GetBeatTime();
-                float barTime_ = t->GetBarTime();
+                    // Retrieve time attributes
+                    float currTime_ = t->GetCurrentTime();
+                    float beatTime_ = t->GetBeatTime();
+                    float barTime_ = t->GetBarTime();
 
-                Vector<Beat*> vBeat = bufferBeat_.Find(t)->second_;
-                // For time, iterate through each channel beat
-                for (Beat* b : vBeat) {
+                    Vector<Beat *> vBeat = bufferBeat_.Find(t)->second_;
+                    // For time, iterate through each channel beat
+/*                for (Beat* b : vBeat) {
                     int sampleIdx = b->GetBeatSampleIdx();
+                }*/
+
+                    // Dump buffer to db
+                    CreateTimeCode(currTime_, beatTime_);
+                    CreatePattern(vBeat[0], vBeat[1], vBeat[2], currTime_, beatTime_, barTime_);
+                    written_ = true;
                 }
 
-                // Dump buffer to db
-                CreateTimeCode(currTime_, beatTime_);
-                CreatePattern(vBeat[0], vBeat[1], vBeat[2], currTime_, beatTime_, barTime_);
+
+                if (written_) {
+                    // Mark stored
+                    buf->SetOnLongStore(true);
+                }
             }
         }
+
+
+        // Clear written data buffers
+        for (SharedPtr<BufferData> buf : data_) {
+            if (buf->IsOnLongStore()) {
+
+                URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - removing Buffer Data, long store persisted ** -> %s", buf->GetTypeName().CString());
+                data_.Remove(buf);
+            }
+        }
+
     }
+
+
 }
 
 void Recorder::HandleDBCursor(StringHash eventType, VariantMap& eventData) {

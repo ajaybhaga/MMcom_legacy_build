@@ -212,9 +212,14 @@ void Sequencer::Play(float timeStep) {
             channel3_[beat_]->Play();
         }
 
-        // CAPTURE RECORDING
+        // CAPTURE RECORDING to memory buffer - short store
         recorder_->Capture(channel1_[beat_], channel2_[beat_], channel3_[beat_], currTime_, beatTime_, barTime_);
-        //
+
+        if (fmod(currTime_, 2.0f) > 1.0f) {
+            // Call persist to write to long store
+            recorder_->Persist();
+        }
+
 
         //URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER ** -> recorder_->GetBufferSize()=%d", recorder_->GetBufferSize());
 

@@ -28,15 +28,12 @@ class BufferData : public Object {
 URHO3D_OBJECT(BufferData, Object);
 protected:
     String id_;
-public:
-    const String &GetId() const;
-
-protected:
     HashMap<BeatTime*,Vector<Beat*>> bufferBeat_;
     HashMap<BeatTime*,Vector<BeatTime*>> bufferTime_;
-
+    bool onLongStore_;
 
 public:
+
     BufferData(Context* context);
     ~BufferData();
     /// Register object factory and attributes.
@@ -44,6 +41,10 @@ public:
     void SetData(Beat* channel1_, Beat* channel2_, Beat* channel3_, BeatTime *time_);
     HashMap<BeatTime*,Vector<Beat*>> GetBeatData();
     HashMap<BeatTime*,Vector<BeatTime*>> GetTimeData();
+    const String &GetId() const;
+    void SetOnLongStore(bool onLongStore);
+    bool IsOnLongStore() const;
+
 };
 
 #endif //URHO3D_BUFFERDATA_H

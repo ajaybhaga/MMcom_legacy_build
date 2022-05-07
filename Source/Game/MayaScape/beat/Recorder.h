@@ -41,7 +41,7 @@ protected:
     int currSeqId_;
 
     Context* storeContext_;
-    Vector<BufferData*> data_;
+    Vector<SharedPtr<BufferData>> data_;
 
     // Persist markers
     float pStartTime;
