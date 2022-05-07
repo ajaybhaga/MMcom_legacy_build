@@ -80,6 +80,8 @@ bool Recorder::IsODBCConnected() {
 void Recorder::Persist() {
     // 2. RECORD BUFFER BLOCK INTO DATABASE (LONG STORE)
 
+    URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - Data Buffer Size ** -> %d", GetBufferSize());
+
     if (!data_.Empty()) {
 
         bool written_ = false;
@@ -127,6 +129,7 @@ void Recorder::Persist() {
                     URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - removing Buffer Data, long store persisted ** -> %s",
                                      buf->GetTypeName().CString());
                     data_.Remove(buf);
+                    URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - Data Buffer Size ** -> %d", GetBufferSize());
     //                buf->ReleaseRef();
                 }
             }

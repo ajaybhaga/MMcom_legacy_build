@@ -48,6 +48,9 @@ protected:
     float beatTimeStep_; // Calculated beat time step
 
 
+    float lastLongStoreWrite_; // Last buffer data to long store write
+
+
 
 
 

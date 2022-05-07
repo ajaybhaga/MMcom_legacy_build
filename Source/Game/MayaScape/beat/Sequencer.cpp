@@ -135,6 +135,7 @@ void Sequencer::Reset() {
     bar_ = 0;
     beat_ = 0;
     bpm_ = 90;
+    lastLongStoreWrite_ = 0.0f;
     URHO3D_LOGDEBUGF("**SEQUENCER [%s] ** RESTART -> time %f, bar %d, beat %d", id_.CString(), currTime_, bar_, beat_);
 
     // Quarter note by default
@@ -215,9 +216,12 @@ void Sequencer::Play(float timeStep) {
         // CAPTURE RECORDING to memory buffer - short store
         recorder_->Capture(channel1_[beat_], channel2_[beat_], channel3_[beat_], currTime_, beatTime_, barTime_);
 
-        if (fmod(currTime_, 2.0f) > 1.0f) {
+        // After 10 seconds persist
+        if ((currTime_-lastLongStoreWrite_) > 10.0f) {
             // Call persist to write to long store
             recorder_->Persist();
+            // Store last write
+            lastLongStoreWrite_ = currTime_;
         }
 
 
