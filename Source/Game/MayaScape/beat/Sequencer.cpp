@@ -83,6 +83,7 @@ Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
         channel_.Push(b);
     }
     sequenceByBeat_.Populate("KICK",channel_);
+    channel_.Clear();
 
     for (int i = 0; i < length_; i++) {
         if ((i % 3) == 0) {
@@ -94,6 +95,7 @@ Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
         channel_.Push(b);
     }
     sequenceByBeat_.Populate("SNARE",channel_);
+    channel_.Clear();
 
     for (int i = 0; i < length_; i++) {
         idx = 2;
