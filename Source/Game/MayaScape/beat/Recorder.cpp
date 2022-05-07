@@ -77,12 +77,11 @@ bool Recorder::IsODBCConnected() {
 void Recorder::Persist() {
     // 2. RECORD BUFFER BLOCK INTO DATABASE (LONG STORE)
 
-    URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - Data Buffer Size ** -> %d", GetBufferSize());
-
     if (!data_.Empty()) {
 
         // Write sequence
         int lastUsedSeqId_ = GetSequence();
+        URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - Data Buffer Size ** -> %d, Last Used Seq Id -> %d", GetBufferSize(), lastUsedSeqId_);
         if (currSeqId_ < lastUsedSeqId_) {
             // On long store, create sequence
             CreateSequence("seq");
@@ -194,26 +193,24 @@ int Recorder::GetSequence() {
     if (!cxn_)
         return -1;
 
-    String sql = "SELECT currval('" + schema_ + ".ms_seq_id');";
+    String sql = "SELECT last_value FROM " + schema_ + ".ms_seq_id;";
+    //String sql = "SELECT seq_name FROM " + schema_ + ".ms_sequence;";
 
     URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC EXECUTE ** -> %s", sql.CString());
     // Persist current buffer to long store -> ODBC Postgres
     if (cxn_) {
         if (cxn_->IsConnected()) {
             DbResult result = cxn_->Execute(sql);
-
-/*
             VariantVector v = result.GetRows().At(0);
+
             if (!v.Empty()) {
                 //int value = v.At(0).GetInt();
                 String val = v.At(0).GetString();
-                URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC VALUE ** -> %s", val.CString());*/
-                /* return value;*/
-                //return ToInt(String(val));
-                return Random(1,1000);
+                URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC VALUE ** -> %s", val.CString());
+                return ToInt(String(val));
             }
         }
-
+    }
 }
 
 
