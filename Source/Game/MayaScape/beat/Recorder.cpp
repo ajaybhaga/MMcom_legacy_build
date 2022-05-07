@@ -68,6 +68,10 @@ void Recorder::Capture(Beat * channel1_, Beat * channel2_, Beat * channel3_, flo
     bufData->SetData(channel1_, channel2_, channel3_, t);
 
     data_.Push(bufData.Get());
+
+    // This can be pulled from data_ -> bufData
+    CreateTimeCode(currTime_, beatTime_);
+    CreatePattern(channel1_, channel2_, channel3_, currTime_, beatTime_, barTime_);
 }
 
 int Recorder::GetBufferSize() {
@@ -148,7 +152,7 @@ void Recorder::CreateSequence(String name) {
     if (cxn_) {
         if (cxn_->IsConnected()) {
             DbResult result = cxn_->Execute(sql);
-            //cxn_->Finalize();
+            cxn_->Finalize();
         }
     }
 
@@ -199,10 +203,8 @@ void Recorder::CreatePattern(Beat* channel1_, Beat* channel2_, Beat* channel3_, 
     if (!cxn_)
         return;
 
-    seqId_++;
-    String seqName = id_ + "-SEQ-" + String(seqId_);
-    String sql = "INSERT INTO " + schema_ + ".ms_pattern (seq_id, time_code, channel, sample_idx) VALUES (" + String("nextval('" + schema_ + ".ms_seq_id')") + ", '" + seqName + "', current_timestamp);";
-
+    String sql;
+    sql = "INSERT INTO " + schema_ + ".ms_pattern (seq_id, time_code, channel, sample_idx) VALUES (" + String("currval('" + schema_ + ".ms_seq_id')") + ", " + String(currTime_) + ",0," + String(channel1_->GetBeatSampleIdx()) + ");";
     URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC EXECUTE ** -> %s", sql.CString());
     // Pesist current buffer to long store -> ODBC Postgres
     if (cxn_) {
@@ -211,4 +213,26 @@ void Recorder::CreatePattern(Beat* channel1_, Beat* channel2_, Beat* channel3_, 
             cxn_->Finalize();
         }
     }
+
+    sql = "INSERT INTO " + schema_ + ".ms_pattern (seq_id, time_code, channel, sample_idx) VALUES (" + String("currval('" + schema_ + ".ms_seq_id')") + ", " + String(currTime_) + ",1," + String(channel2_->GetBeatSampleIdx()) + ");";
+    URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC EXECUTE ** -> %s", sql.CString());
+    // Pesist current buffer to long store -> ODBC Postgres
+    if (cxn_) {
+        if (cxn_->IsConnected()) {
+            cxn_->Execute(sql);
+            cxn_->Finalize();
+        }
+    }
+
+    sql = "INSERT INTO " + schema_ + ".ms_pattern (seq_id, time_code, channel, sample_idx) VALUES (" + String("currval('" + schema_ + ".ms_seq_id')") + ", " + String(currTime_) + ",2," + String(channel3_->GetBeatSampleIdx()) + ");";
+    URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC EXECUTE ** -> %s", sql.CString());
+    // Pesist current buffer to long store -> ODBC Postgres
+    if (cxn_) {
+        if (cxn_->IsConnected()) {
+            cxn_->Execute(sql);
+            cxn_->Finalize();
+        }
+    }
+
+
 }
