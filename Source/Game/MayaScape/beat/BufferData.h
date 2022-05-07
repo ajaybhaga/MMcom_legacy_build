@@ -42,8 +42,8 @@ public:
     /// Register object factory and attributes.
     static void RegisterObject(Context* context);
     void SetData(Beat* channel1_, Beat* channel2_, Beat* channel3_, BeatTime *time_);
-    virtual void Persist(); // Write to long term
-
+    HashMap<BeatTime*,Vector<Beat*>> GetBeatData();
+    HashMap<BeatTime*,Vector<BeatTime*>> GetTimeData();
 };
 
 #endif //URHO3D_BUFFERDATA_H

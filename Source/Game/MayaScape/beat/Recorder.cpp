@@ -70,8 +70,7 @@ void Recorder::Capture(Beat * channel1_, Beat * channel2_, Beat * channel3_, flo
     data_.Push(bufData.Get());
 
     // This can be pulled from data_ -> bufData
-    CreateTimeCode(currTime_, beatTime_);
-    CreatePattern(channel1_, channel2_, channel3_, currTime_, beatTime_, barTime_);
+
 }
 
 int Recorder::GetBufferSize() {
@@ -85,25 +84,37 @@ bool Recorder::IsODBCConnected() {
 void Recorder::Persist() {
     // 2. RECORD BUFFER BLOCK INTO DATABASE (LONG STORE)
 
-    //
-    /*
-     *
-     *
-     * INSERT INTO world1.ms_sequence (seq_id, seq_name, created) VALUES(1, 'Sequence Name 1', current_timestamp);
-       INSERT INTO world1.ms_pattern (seq_id, time_code, channel, sample_idx) VALUES(1, 0.00, 0, 0);
-     *
-     */
+    if (!data_.Empty()) {
 
-    // TODO: Generate SQL insert of buffer data
-    // Persist from pStartTime to pEndTime
-    String sql = "";
+        for (BufferData *buf : data_) {
 
-    // Pesist current buffer to long store -> ODBC Postgres
-    if (cxn_) {
-        if (cxn_->IsConnected()) {
-            cxn_->Execute(sql);
+            buf->GetTimeData();
+            buf->GetBeatData();
+
+            // Dump buffer to db
+            CreateTimeCode(buf->GetcurrTime_, beatTime_);
+            CreatePattern(channel1_, channel2_, channel3_, currTime_, beatTime_, barTime_);
+            /*
+             *
+              INSERT INTO world1.ms_sequence (seq_id, seq_name, created) VALUES(1, 'Sequence Name 1', current_timestamp);
+              INSERT INTO world1.ms_pattern (seq_id, time_code, channel, sample_idx) VALUES(1, 0.00, 0, 0);
+
+             */
+
+            // TODO: Generate SQL insert of buffer data
+            // Persist from pStartTime to pEndTime
+            String sql = "";
+
+            // Pesist current buffer to long store -> ODBC Postgres
+            if (cxn_) {
+                if (cxn_->IsConnected()) {
+                    cxn_->Execute(sql);
+                }
+            }
         }
     }
+
+
 }
 
 void Recorder::HandleDBCursor(StringHash eventType, VariantMap& eventData) {
@@ -112,18 +123,6 @@ void Recorder::HandleDBCursor(StringHash eventType, VariantMap& eventData) {
 
 //    URHO3D_PARAM(P_COLVALUES, ColValues);          // VariantVector
 //    URHO3D_PARAM(P_COLHEADERS, ColHeaders);        // StringVector
-
-
-    /*
-    eventData[P_DBCONNECTION] = this;
-    eventData[P_RESULTIMPL] = &result.resultImpl_;
-    eventData[P_SQL] = sql;
-    eventData[P_NUMCOLS] = numCols;
-    eventData[P_COLVALUES] = colValues;
-    eventData[P_COLHEADERS] = result.columns_;
-    eventData[P_FILTER] = false;
-    eventData[P_ABORT] = false;
-*/
 
     VariantVector colValues = eventData[P_COLVALUES].GetVariantVector();
     StringVector colHeaders = eventData[P_COLHEADERS].GetStringVector();

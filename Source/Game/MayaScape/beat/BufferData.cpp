@@ -36,6 +36,10 @@ void BufferData::SetData(Beat *channel1_, Beat *channel2_, Beat *channel3_, Beat
     bufferTime_.Populate(time_, timeData);
 }
 
-void BufferData::Persist() {
+HashMap<BeatTime*,Vector<Beat*>> BufferData::GetBeatData() {
+    return bufferBeat_;
+}
 
+HashMap<BeatTime*,Vector<BeatTime*>> BufferData::GetTimeData() {
+    return bufferTime_;
 }
