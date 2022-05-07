@@ -88,35 +88,39 @@ void Recorder::Persist() {
         for (SharedPtr<BufferData> buf : data_) {
 
             if (buf.NotNull()) {
-                HashMap<BeatTime *, Vector<BeatTime *>> bufferTime_ = buf->GetTimeData();
-                HashMap<BeatTime *, Vector<Beat *>> bufferBeat_ = buf->GetBeatData();
 
-                // Vector containing set of channels, for each channel (3)
+                // Only write what has not been written
+                if (!buf->IsOnLongStore()) {
+                    HashMap<BeatTime *, Vector<BeatTime *>> bufferTime_ = buf->GetTimeData();
+                    HashMap<BeatTime *, Vector<Beat *>> bufferBeat_ = buf->GetBeatData();
 
-                for (BeatTime *t: bufferTime_.Keys()) {
-                    // Iterate through each beat time
+                    // Vector containing set of channels, for each channel (3)
 
-                    // Retrieve time attributes
-                    float currTime_ = t->GetCurrentTime();
-                    float beatTime_ = t->GetBeatTime();
-                    float barTime_ = t->GetBarTime();
+                    for (BeatTime *t: bufferTime_.Keys()) {
+                        // Iterate through each beat time
 
-                    Vector<Beat *> vBeat = bufferBeat_.Find(t)->second_;
-                    // For time, iterate through each channel beat
+                        // Retrieve time attributes
+                        float currTime_ = t->GetCurrentTime();
+                        float beatTime_ = t->GetBeatTime();
+                        float barTime_ = t->GetBarTime();
+
+                        Vector<Beat *> vBeat = bufferBeat_.Find(t)->second_;
+                        // For time, iterate through each channel beat
 /*                for (Beat* b : vBeat) {
                     int sampleIdx = b->GetBeatSampleIdx();
                 }*/
 
-                    // Dump buffer to db
-                    CreateTimeCode(currTime_, beatTime_);
-                    CreatePattern(vBeat[0], vBeat[1], vBeat[2], currTime_, beatTime_, barTime_);
-                    written_ = true;
-                }
+                        // Dump buffer to db
+                        CreateTimeCode(currTime_, beatTime_);
+                        CreatePattern(vBeat[0], vBeat[1], vBeat[2], currTime_, beatTime_, barTime_);
+                        written_ = true;
+                    }
 
 
-                if (written_) {
-                    // Mark stored
-                    buf->SetOnLongStore(true);
+                    if (written_) {
+                        // Mark stored
+                        buf->SetOnLongStore(true);
+                    }
                 }
             }
         }
