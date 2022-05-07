@@ -1,3 +1,11 @@
+---
+--- CLEAR MUSIC DATA
+-- delete from world1.ms_time_code;
+-- delete from world1.ms_sequence;
+-- delete from world1.ms_pattern;
+---
+
+
 CREATE DATABASE mayascape;
 
 -- DROP SCHEMA world1;

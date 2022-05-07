@@ -16,7 +16,7 @@ void Recorder::RegisterObject(Context *context)
     context->RegisterFactory<Recorder>();
 }
 
-Recorder::Recorder(Context *context) : Object(context) {
+Recorder::Recorder(Context *context) : Object(context), currSeqId_(0) {
 
     String dsn = "MAYASCAPE";
     db_ = GetSubsystem<Database>();
@@ -45,8 +45,11 @@ void Recorder::Reset(Context *context) {
     // Set store context
     storeContext_ = context;
 
-    // On long store, create sequence
-    CreateSequence("seq");
+    int lastUsedSeqId_ = GetSequence();
+    if (currSeqId_ < lastUsedSeqId_) {
+        // On long store, create sequence
+        CreateSequence("seq");
+    }
 }
 
 void Recorder::SetPlaySource(SoundSource3D *playSource) {
