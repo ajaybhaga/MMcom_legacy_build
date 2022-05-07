@@ -88,33 +88,28 @@ void Recorder::Persist() {
 
         for (BufferData *buf : data_) {
 
-            buf->GetTimeData();
-            buf->GetBeatData();
+            HashMap<BeatTime*,Vector<BeatTime*>> bufferTime_ = buf->GetTimeData();
+            HashMap<BeatTime*,Vector<Beat*>> bufferBeat_ = buf->GetBeatData();
 
-            // Dump buffer to db
-            CreateTimeCode(buf->GetcurrTime_, beatTime_);
-            CreatePattern(channel1_, channel2_, channel3_, currTime_, beatTime_, barTime_);
-            /*
-             *
-              INSERT INTO world1.ms_sequence (seq_id, seq_name, created) VALUES(1, 'Sequence Name 1', current_timestamp);
-              INSERT INTO world1.ms_pattern (seq_id, time_code, channel, sample_idx) VALUES(1, 0.00, 0, 0);
+            for (BeatTime* t : bufferTime_.Keys()) {
+                // Iterate through each beat time
 
-             */
+                // Retrieve time attributes
+                float currTime_ = t->GetCurrentTime();
+                float beatTime_ = t->GetBeatTime();
+                float barTime_ = t->GetBarTime();
 
-            // TODO: Generate SQL insert of buffer data
-            // Persist from pStartTime to pEndTime
-            String sql = "";
-
-            // Pesist current buffer to long store -> ODBC Postgres
-            if (cxn_) {
-                if (cxn_->IsConnected()) {
-                    cxn_->Execute(sql);
+                // Iterate through beats
+                for (Beat* b : bufferBeat_.Find(t)->second_) {
+                    int sampleIdx = b->GetBeatSampleIdx();
                 }
+
+                // Dump buffer to db
+                CreateTimeCode(buf->GetcurrTime_, beatTime_);
+                CreatePattern(channel1_, channel2_, channel3_, currTime_, beatTime_, barTime_);
             }
         }
     }
-
-
 }
 
 void Recorder::HandleDBCursor(StringHash eventType, VariantMap& eventData) {
