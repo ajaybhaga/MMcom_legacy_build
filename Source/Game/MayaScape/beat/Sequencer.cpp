@@ -182,15 +182,12 @@ void Sequencer::Play(float timeStep) {
     // If time accumulation is past
     if (beatTime_ >= beatTimeStep_) {
         beat_++; // Increment beat
-        beatTime_ = 0.0f;
-
 
         // Sequencer moves forward
         // Mapping of instruction set to timeStep (beat)
 
         // Play beat sample
 
-        //Vector<Beat*> channel_;
         Vector<Beat*> channel1_, channel2_, channel3_;
         // Play each channel
 
@@ -236,6 +233,8 @@ void Sequencer::Play(float timeStep) {
  /*           URHO3D_LOGDEBUGF("**SEQUENCER [%s] ** -> time %f, beat time: %f, bar time: %f, bar %d, beat %d", id_.CString(), currTime_,
                              beatTime_, barTime_, bar_, beat_);*/
         }
+
+        beatTime_ = 0.0f; // Reset timer
     }
 }
 
