@@ -223,7 +223,7 @@ void Recorder::CreateTimeCode(float timeCode, float beat) {
         return;
 
     //INSERT INTO world1.ms_time_code (time_code, beat, rec_date) VALUES(0, 0, '');
-    String sql = "INSERT INTO " + schema_ + ".ms_time_code (time_code, beat, rec_date) VALUES (" + String( timeCode ) + ", '" + String( beat ) + "', current_timestamp);";
+    String sql = "INSERT INTO " + schema_ + ".ms_time_code (time_code, beat, rec_date) VALUES (" + String( timeCode ) + ", " + String( beat ) + ", current_timestamp);";
 
     URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER - ODBC EXECUTE ** -> %s", sql.CString());
     // Pesist current buffer to long store -> ODBC Postgres

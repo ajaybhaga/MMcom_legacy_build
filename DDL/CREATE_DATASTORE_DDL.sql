@@ -58,7 +58,7 @@ GRANT ALL ON TABLE world1.ms_sequence TO postgres;
 
 CREATE TABLE world1.ms_time_code (
                                      time_code float8 NOT NULL,
-                                     beat int8 NOT NULL,
+                                     beat float8 NOT NULL,
                                      rec_date timestamp NOT NULL,
                                      CONSTRAINT ms_time_code_pk PRIMARY KEY (rec_date, time_code)
 );
