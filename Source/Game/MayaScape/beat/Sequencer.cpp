@@ -20,6 +20,8 @@
 #define SAMPLE_SNARE 1
 #define SAMPLE_HH 2
 
+#define LONG_STORE_WRITE_TIME 120.0f
+
 std::vector<std::string> SAMPLE_PACK = {
         "samples/SAMPLE1-BASSKICK.wav",
         "samples/SAMPLE1-SNARE.wav",
@@ -215,7 +217,7 @@ void Sequencer::Play(float timeStep) {
         recorder_->Capture(channel1_[beat_], channel2_[beat_], channel3_[beat_], currTime_, beatTime_, barTime_);
 
         // After 10 seconds persist
-        if ((currTime_-lastLongStoreWrite_) > 10.0f) {
+        if ((currTime_-lastLongStoreWrite_) > LONG_STORE_WRITE_TIME) {
             // Call persist to write to long store
             recorder_->Persist();
             // Store last write
