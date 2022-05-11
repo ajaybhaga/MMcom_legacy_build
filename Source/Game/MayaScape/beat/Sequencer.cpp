@@ -50,11 +50,16 @@ void Sequencer::Start()
 void Sequencer::FixedUpdate(float timeStep)
 {
     // SERVER & CLIENT CODE
+    SharedPtr<Recorder> recorder_ = nullptr;
+
+    if (isServer_) {
+        recorder_ = serverRec_;
+    }
 
     // Sequencer update
 
     // Play on fixed update time step
-    Play(timeStep);
+    Play(timeStep, recorder_);
 }
 
 Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
@@ -66,9 +71,6 @@ Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
 
     // Create a new sampler
     sampler_ = context->CreateObject<Sampler>();
-    // Create a new recorder
-    recorder_ = context->CreateObject<Recorder>();
-    recorder_->Reset(context);
 
     int idx;
 
@@ -175,7 +177,7 @@ void Sequencer::LoadSamples() {
 }
 
 // Sequencer Play: Move forward a time step
-void Sequencer::Play(float timeStep) {
+void Sequencer::Play(float timeStep, SharedPtr<Recorder> recorder_) {
 
     // Play a time step
     currTime_ += timeStep;
@@ -213,15 +215,17 @@ void Sequencer::Play(float timeStep) {
             channel3_[beat_]->Play();
         }
 
-        // CAPTURE RECORDING to memory buffer - short store
-        recorder_->Capture(channel1_[beat_], channel2_[beat_], channel3_[beat_], currTime_, beatTime_, barTime_);
+        if (recorder_) {
+            // CAPTURE RECORDING to memory buffer - short store
+            recorder_->Capture(channel1_[beat_], channel2_[beat_], channel3_[beat_], currTime_, beatTime_, barTime_);
 
-        // After 10 seconds persist
-        if ((currTime_-lastLongStoreWrite_) > LONG_STORE_WRITE_TIME) {
-            // Call persist to write to long store
-            recorder_->Persist();
-            // Store last write
-            lastLongStoreWrite_ = currTime_;
+            // After 10 seconds persist
+            if ((currTime_ - lastLongStoreWrite_) > LONG_STORE_WRITE_TIME) {
+                // Call persist to write to long store
+                recorder_->Persist();
+                // Store last write
+                lastLongStoreWrite_ = currTime_;
+            }
         }
 
 
@@ -279,4 +283,20 @@ Sampler *Sequencer::GetSampler() {
 
 void Sequencer::SetPlaySource(SoundSource3D* playSource) {
     playSource_ = WeakPtr(playSource);
+}
+
+bool Sequencer::IsServer() const {
+    return isServer_;
+}
+
+void Sequencer::SetIsServer(bool isServer) {
+    isServer_ = isServer;
+}
+
+const SharedPtr<Recorder> &Sequencer::GetServerRec() const {
+    return serverRec_;
+}
+
+void Sequencer::SetServerRec(const SharedPtr<Recorder> &serverRec) {
+    serverRec_ = serverRec;
 }

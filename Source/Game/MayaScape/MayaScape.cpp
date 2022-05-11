@@ -4841,6 +4841,11 @@ SharedPtr<Node> MayaScape::SpawnPlayer() {
     // Assign name for sequencer of network actor
     actor->GetSequencer()->SetId(name);
 
+    // Assign server recorder to each client sequencer
+    Server *server = GetSubsystem<Server>();
+    SharedPtr<Recorder> serverRec_ = server->GetRecorder();
+    actor->GetSequencer()->SetServerRec(serverRec_);
+
     // 2. Create a new camera following the actor
     Graphics* graphics = GetSubsystem<Graphics>();
     String cameraname = "camera_actor-server";
@@ -5363,6 +5368,11 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
     NetworkActor *actor = networkActorNode->CreateComponent<NetworkActor>(REPLICATED);
     actor->Init(networkActorNode);
 
+    // Assign server recorder to each client sequencer
+    Server *server = GetSubsystem<Server>();
+    SharedPtr<Recorder> serverRec_ = server->GetRecorder();
+    actor->GetSequencer()->SetServerRec(serverRec_);
+
     //actor->SetClientInfo(name, Random(1,100), Vector3(Random(-400.0f,400.0f),Random(20.0f,80.0f),Random(-400.0f,400.0f)));
 
     auto* body = networkActorNode->GetComponent<RigidBody>(true);
@@ -5484,6 +5494,11 @@ NetworkActor *MayaScape::SpawnPlayer(unsigned int id) {
     NetworkActor *actor = networkActorNode->CreateComponent<NetworkActor>(REPLICATED);
     actor->Init(networkActorNode);
     String name = String(String("actor-") + username);
+
+    // Assign server recorder to each client sequencer
+    Server *server = GetSubsystem<Server>();
+    SharedPtr<Recorder> serverRec_ = server->GetRecorder();
+    actor->GetSequencer()->SetServerRec(serverRec_);
 
     Vector3 actorPos = Vector3(0,0,0);
     if (starAMarkerSet_) {

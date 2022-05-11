@@ -33,7 +33,6 @@ protected:
     SharedPtr<Sampler> sampler_;
     int length_; // 16 beats
     SharedPtr<SoundSource3D> playSource_;
-    SharedPtr<Recorder> recorder_;
 
 
     // Current state
@@ -50,8 +49,8 @@ protected:
 
     float lastLongStoreWrite_; // Last buffer data to long store write
 
-
-
+    bool isServer_;
+    SharedPtr<Recorder> serverRec_;
 
 
 public:
@@ -65,12 +64,17 @@ public:
     /// Handle physics world update. Called by LogicComponent base class.
     void FixedUpdate(float timeStep);
 
+    bool IsServer() const;
+    void SetIsServer(bool isServer);
+
+    const SharedPtr<Recorder> &GetServerRec() const;
+    void SetServerRec(const SharedPtr<Recorder> &serverRec);
 
     Vector<Beat*> GetSequence();
     Sampler *GetSampler();
     const String &GetId() const;
     void Reset();
-    void Play(float timeStep);
+    void Play(float timeStep, SharedPtr<Recorder> recorder_);
     int GetSize() const;
     int GetBeat() const;
     float GetTime() const;

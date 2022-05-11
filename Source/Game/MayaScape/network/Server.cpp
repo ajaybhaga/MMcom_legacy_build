@@ -47,6 +47,9 @@ void Server::InitializeScene(File &file)
 
 bool Server::StartServer(unsigned short port)
 {
+    // Create a new recorder
+    recorder_ = context_->CreateObject<Recorder>();
+    recorder_->Reset(context_);
     return GetSubsystem<Network>()->StartServer(port);
 }
 
@@ -290,4 +293,12 @@ void Server::OutputLoginListToConsole() {
 
     URHO3D_LOGINFO("******************************************************************************");
 
+}
+
+const SharedPtr<Recorder> &Server::GetRecorder() const {
+    return recorder_;
+}
+
+void Server::SetRecorder(const SharedPtr<Recorder> &recorder) {
+    recorder_ = recorder;
 }

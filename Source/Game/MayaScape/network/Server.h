@@ -106,8 +106,11 @@ public:
 
     void SendLoginListRefreshToClients();
 
+    const SharedPtr<Recorder> &GetRecorder() const;
+    void SetRecorder(const SharedPtr<Recorder> &recorder);
 
-        protected:
+
+protected:
     void SubscribeToEvents();
     void SendStatusMsg(StringHash msg);
     void SendPlayerStateMsg(Connection* connection);
@@ -130,4 +133,7 @@ protected:
     SharedPtr<Scene> scene_;
     HashMap<String, Connection*> loginList_;
     Vector<String> aiBotLoginList_;
+
+    SharedPtr<Recorder> recorder_;
+
 };

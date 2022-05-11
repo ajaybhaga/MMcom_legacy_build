@@ -11,6 +11,21 @@ CREATE DATABASE mayascape;
 -- DROP SCHEMA world1;
 
 CREATE SCHEMA world1 AUTHORIZATION postgres;
+
+
+-- world1.ms_seq_id definition
+
+-- DROP SEQUENCE world1.ms_seq_id;
+
+CREATE SEQUENCE world1.ms_seq_id
+    INCREMENT BY 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+	CACHE 1
+	NO CYCLE;
+
+
 -- world1.ms_pattern definition
 
 -- Drop table
