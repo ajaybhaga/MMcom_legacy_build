@@ -20,7 +20,8 @@
 #define SAMPLE_SNARE 1
 #define SAMPLE_HH 2
 
-#define LONG_STORE_WRITE_TIME 120.0f
+//#define LONG_STORE_WRITE_TIME 120.0f
+#define LONG_STORE_WRITE_TIME 30.0f
 
 std::vector<std::string> SAMPLE_PACK = {
         "samples/SAMPLE1-BASSKICK.wav",

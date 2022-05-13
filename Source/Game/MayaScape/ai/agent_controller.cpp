@@ -134,6 +134,10 @@ void AgentController::update(float duration) {
         return;
 
 
+    // Auto-enter, if not entered vehicle
+    if (!actor->entered_)
+        actor->EnterVehicle();
+
     // Load distance covered
     distanceCovered_ = actor->GetVehicle()->GetRaycastVehicle()->GetDistanceOnGround();
     // Get readings from sensors
