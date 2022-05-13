@@ -363,6 +363,7 @@ void AgentController::update(float duration) {
     // On side clear, drive with steer gradually reducing
     sensorSteer = sensorSteer*0.5f + sensorSteerTarget*0.5f;
     //sensorAccel = 1.0f;
+    sensorAccel = 0.0f;
     double controlInputsSensors[3];
     controlInputsSensors[0] = sensorSteer; // steering
     controlInputsSensors[1] = sensorAccel; // acceleration

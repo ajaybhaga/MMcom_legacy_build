@@ -138,7 +138,7 @@ void AgentMovement::setInputs(double *input, NetworkActor *actor) {
     accelInput_ = input[1]; // acceleration
 
     // Store limit
-    accelInputMin_ = -1.0f;
+    accelInputMin_ = 0.0f; // Set to 0, -1 is for reverse but it will normalize to 0.5
     accelInputMax_ = 1.0f;
 
 
