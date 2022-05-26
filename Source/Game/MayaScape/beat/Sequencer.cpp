@@ -77,8 +77,13 @@ Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
     int idx;
 
     // Generate sequence -> instruction set to time beat
+
+    // Clear sequence
     sequenceByBeat_.Clear();
+
     Vector<Beat*> channel_;
+
+    // Generate drum sequence
     for (int i = 0; i < length_; i++) {
         if ((i % 1) == 0) {
             idx = SAMPLE_KICK;
@@ -198,24 +203,36 @@ void Sequencer::Play(float timeStep, SharedPtr<Recorder> recorder_) {
         Vector<Beat*> channel1_, channel2_, channel3_;
         // Play each channel
 
+        //URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER ** -> recorder_->GetBufferSize()=%d", recorder_->GetBufferSize());
+
         // KICK
         channel1_ = sequenceByBeat_.Find("KICK")->second_;
-        if (channel1_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
-            channel1_[beat_]->Play();
-        }
-
 
         // SNARE
         channel2_ = sequenceByBeat_.Find("SNARE")->second_;
-        if (channel2_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
-            channel2_[beat_]->Play();
-        }
 
         // HI-HAT
         channel3_ = sequenceByBeat_.Find("HH")->second_;
+
+        URHO3D_LOGDEBUGF("** SEQUENCER: PLAY ** -> channel1=%d, channel2=%d, channel3=%d", channel1_[beat_]->GetBeatSampleIdx(), channel2_[beat_]->GetBeatSampleIdx(), channel3_[beat_]->GetBeatSampleIdx());
+
+        if (channel1_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
+            channel1_[beat_]->Play();
+            URHO3D_LOGDEBUG("** SEQUENCER: SAMPLE PLAY ** -> CHANNEL 1 [KICK]");
+
+        }
+
+        if (channel2_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
+            channel2_[beat_]->Play();
+            URHO3D_LOGDEBUG("** SEQUENCER: SAMPLE PLAY ** -> CHANNEL 2 [SNARE]");
+        }
+
         if (channel3_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
             channel3_[beat_]->Play();
+            URHO3D_LOGDEBUG("** SEQUENCER: SAMPLE PLAY ** -> CHANNEL 3 [HH]");
         }
+
+
 
         if (recorder_) {
             // CAPTURE RECORDING to memory buffer - short store
