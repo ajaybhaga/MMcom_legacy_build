@@ -302,7 +302,7 @@ void AgentController::update(float duration) {
     // Front - can override steering
     if (sensors[2].isHit()) {
         // Slow down
-        sensorAccel = 0.6f;
+        sensorAccel = 0.0004f;
 
         // Use steer target if chosen
         if (steerSet_)
@@ -312,13 +312,13 @@ void AgentController::update(float duration) {
         if ((leftClear) && (!rightClear)) {
             // Turn left and drive
             sensorSteerTarget = -1;
-            sensorAccel = 0.9f;
+            sensorAccel = 0.001f;
         }
 
         if ((!leftClear) && (rightClear)) {
             // Turn left and drive
             sensorSteerTarget = 1;
-            sensorAccel = 0.9f;
+            sensorAccel = 0.001f;
         }
 
         // For longer than 2 second block
@@ -339,7 +339,7 @@ void AgentController::update(float duration) {
         steerChoice_ = 0;
 
         // Accel
-        sensorAccel = Random(0.7f, 1.0f);
+        sensorAccel = Random(0.0001f, 0.001f);
         //sensorAccel = 1.0f;
 
         if (sideClear) {
@@ -363,10 +363,10 @@ void AgentController::update(float duration) {
     // On side clear, drive with steer gradually reducing
     sensorSteer = sensorSteer*0.5f + sensorSteerTarget*0.5f;
     //sensorAccel = 1.0f;
-    sensorAccel = 0.0f;
     double controlInputsSensors[3];
+    float accelDamp = 0.00007f;
     controlInputsSensors[0] = sensorSteer; // steering
-    controlInputsSensors[1] = sensorAccel; // acceleration
+    controlInputsSensors[1] = sensorAccel * accelDamp; // acceleration
     //controlInputsSensors[0] = steer; // action state
 
     // Store raw

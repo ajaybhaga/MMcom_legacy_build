@@ -543,10 +543,6 @@ private:
     Vector3 tentAMarker_;
     bool buildTentAMarkerSet_;
 
-
-
-
-
     Vector2 joySteer_;
 
 
