@@ -70,9 +70,11 @@ void ClientObj::SetClientInfo(const String &usrName, int colorIdx, Vector3 posit
     colorIdx_ = colorIdx;
     position_ = position;
 
+    String name = "client-SEQUENCER-" + userName_;
     // Create a new sequencer for client object
-    SharedPtr<Node> seqNode(node_->CreateChild("client-SEQUENCER-" + userName_));
+    SharedPtr<Node> seqNode(node_->CreateChild(name));
     sequencer_ = seqNode->CreateComponent<Sequencer>();
+    sequencer_->SetId(name);
 }
 
 void ClientObj::UpdateClientInfo(Vector3 position)

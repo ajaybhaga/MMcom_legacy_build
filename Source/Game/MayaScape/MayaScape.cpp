@@ -4838,9 +4838,6 @@ SharedPtr<Node> MayaScape::SpawnPlayer() {
     String name = String(String("actor-SERVER"));
     actor->SetClientInfo(name, 99, Vector3(0,-6,0));
 
-    // Assign name for sequencer of network actor
-    actor->GetSequencer()->SetId(name);
-
     // Assign server recorder to each client sequencer
     Server *server = GetSubsystem<Server>();
     SharedPtr<Recorder> serverRec_ = server->GetRecorder();
@@ -5397,8 +5394,6 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
 
     actor->SetClientInfo(username, Random(1,100), Vector3(actor->GetPosition()));
 
-    // Assign name for sequencer of network actor
-    actor->GetSequencer()->SetId(username);
 
     // Generate vehicle
 
@@ -5525,9 +5520,6 @@ NetworkActor *MayaScape::SpawnPlayer(unsigned int id) {
     }
 
     actor->SetClientInfo(name, Random(1,100), actorPos);
-
-    // Assign name for sequencer of network actor
-    actor->GetSequencer()->SetId(username);
 
 
     String vehicleName = "vehicle-" + username;
