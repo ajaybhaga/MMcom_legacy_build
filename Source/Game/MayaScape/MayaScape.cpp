@@ -5397,6 +5397,9 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
 
     actor->SetClientInfo(username, Random(1,100), Vector3(actor->GetPosition()));
 
+    // Assign name for sequencer of network actor
+    actor->GetSequencer()->SetId(username);
+
     // Generate vehicle
 
     String vehicleName = "vehicle-" + username;

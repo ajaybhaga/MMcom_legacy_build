@@ -214,7 +214,7 @@ void Sequencer::Play(float timeStep, SharedPtr<Recorder> recorder_) {
         // HI-HAT
         channel3_ = sequenceByBeat_.Find("HH")->second_;
 
-        URHO3D_LOGDEBUGF("** SEQUENCER: PLAY ** -> channel1=%d, channel2=%d, channel3=%d", channel1_[beat_]->GetBeatSampleIdx(), channel2_[beat_]->GetBeatSampleIdx(), channel3_[beat_]->GetBeatSampleIdx());
+        URHO3D_LOGDEBUGF("[%f] ** SEQUENCER [%s]: PLAY ** [timeStep: %f, beat: %d] -> channel1=%d, channel2=%d, channel3=%d", currTime_, id_.CString(), timeStep, beat_, channel1_[beat_]->GetBeatSampleIdx(), channel2_[beat_]->GetBeatSampleIdx(), channel3_[beat_]->GetBeatSampleIdx());
 
         if (channel1_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
             channel1_[beat_]->Play();
