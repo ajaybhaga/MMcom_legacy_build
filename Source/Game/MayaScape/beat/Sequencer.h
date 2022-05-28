@@ -53,6 +53,8 @@ protected:
     SharedPtr<Recorder> serverRec_;
 
 
+    bool mute_; // Mute playback
+
 public:
 
     Sequencer(Context* context);

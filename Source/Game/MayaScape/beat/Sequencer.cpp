@@ -80,6 +80,9 @@ Sequencer::Sequencer(Context *context) : LogicComponent(context), length_(16) {
 
     int idx;
 
+    // Default mute playback
+    mute_ = true;
+
     // Generate sequence -> instruction set to time beat
 
     // Clear sequence
@@ -190,6 +193,9 @@ void Sequencer::LoadSamples() {
 // Sequencer Play: Move forward a time step
 void Sequencer::Play(float timeStep, SharedPtr<Recorder> recorder_) {
 
+    // Sequencer moves forward
+    // Mapping of instruction set to timeStep (beat)
+
     // Play a time step
     currTime_ += timeStep;
     beatTime_ += timeStep;
@@ -199,58 +205,59 @@ void Sequencer::Play(float timeStep, SharedPtr<Recorder> recorder_) {
     if (beatTime_ >= beatTimeStep_) {
         beat_++; // Increment beat
 
-        // Sequencer moves forward
-        // Mapping of instruction set to timeStep (beat)
+        if (!mute_) {
+            // Play beat sample
 
-        // Play beat sample
+            Vector<Beat *> channel1_, channel2_, channel3_;
+            // Play each channel
 
-        Vector<Beat*> channel1_, channel2_, channel3_;
-        // Play each channel
+            //URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER ** -> recorder_->GetBufferSize()=%d", recorder_->GetBufferSize());
 
-        //URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER ** -> recorder_->GetBufferSize()=%d", recorder_->GetBufferSize());
+            // KICK
+            channel1_ = sequenceByBeat_.Find("KICK")->second_;
 
-        // KICK
-        channel1_ = sequenceByBeat_.Find("KICK")->second_;
+            // SNARE
+            channel2_ = sequenceByBeat_.Find("SNARE")->second_;
 
-        // SNARE
-        channel2_ = sequenceByBeat_.Find("SNARE")->second_;
+            // HI-HAT
+            channel3_ = sequenceByBeat_.Find("HH")->second_;
 
-        // HI-HAT
-        channel3_ = sequenceByBeat_.Find("HH")->second_;
+            URHO3D_LOGDEBUGF(
+                    "[%f] ** SEQUENCER [%s]: PLAY ** [timeStep: %f, beat: %d] -> channel1=%d, channel2=%d, channel3=%d",
+                    currTime_, id_.CString(), timeStep, beat_, channel1_[beat_]->GetBeatSampleIdx(),
+                    channel2_[beat_]->GetBeatSampleIdx(), channel3_[beat_]->GetBeatSampleIdx());
 
-        URHO3D_LOGDEBUGF("[%f] ** SEQUENCER [%s]: PLAY ** [timeStep: %f, beat: %d] -> channel1=%d, channel2=%d, channel3=%d", currTime_, id_.CString(), timeStep, beat_, channel1_[beat_]->GetBeatSampleIdx(), channel2_[beat_]->GetBeatSampleIdx(), channel3_[beat_]->GetBeatSampleIdx());
+            if (channel1_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
+                channel1_[beat_]->Play();
+                URHO3D_LOGDEBUG("** SEQUENCER: SAMPLE PLAY ** -> CHANNEL 1 [KICK]");
 
-        if (channel1_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
-            channel1_[beat_]->Play();
-            URHO3D_LOGDEBUG("** SEQUENCER: SAMPLE PLAY ** -> CHANNEL 1 [KICK]");
+            }
 
-        }
+            if (channel2_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
+                channel2_[beat_]->Play();
+                URHO3D_LOGDEBUG("** SEQUENCER: SAMPLE PLAY ** -> CHANNEL 2 [SNARE]");
+            }
 
-        if (channel2_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
-            channel2_[beat_]->Play();
-            URHO3D_LOGDEBUG("** SEQUENCER: SAMPLE PLAY ** -> CHANNEL 2 [SNARE]");
-        }
-
-        if (channel3_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
-            channel3_[beat_]->Play();
-            URHO3D_LOGDEBUG("** SEQUENCER: SAMPLE PLAY ** -> CHANNEL 3 [HH]");
-        }
+            if (channel3_[beat_]->GetBeatSampleIdx() > SAMPLE_REST) {
+                channel3_[beat_]->Play();
+                URHO3D_LOGDEBUG("** SEQUENCER: SAMPLE PLAY ** -> CHANNEL 3 [HH]");
+            }
 
 
+            if (recorder_) {
+                // CAPTURE RECORDING to memory buffer - short store
+                recorder_->Capture(channel1_[beat_], channel2_[beat_], channel3_[beat_], currTime_, beatTime_,
+                                   barTime_);
 
-        if (recorder_) {
-            // CAPTURE RECORDING to memory buffer - short store
-            recorder_->Capture(channel1_[beat_], channel2_[beat_], channel3_[beat_], currTime_, beatTime_, barTime_);
-
-            // After 10 seconds persist
-            if ((currTime_ - lastLongStoreWrite_) > LONG_STORE_WRITE_TIME) {
-                // Call persist to write to long store
-                recorder_->Persist();
-                // Store last write
-                lastLongStoreWrite_ = currTime_;
+                // After 10 seconds persist
+                if ((currTime_ - lastLongStoreWrite_) > LONG_STORE_WRITE_TIME) {
+                    // Call persist to write to long store
+                    recorder_->Persist();
+                    // Store last write
+                    lastLongStoreWrite_ = currTime_;
+                }
             }
         }
-
 
         //URHO3D_LOGDEBUGF("** SEQUENCER: RECORDER ** -> recorder_->GetBufferSize()=%d", recorder_->GetBufferSize());
 
