@@ -34,7 +34,6 @@ protected:
     int length_; // 16 beats
     SharedPtr<SoundSource3D> playSource_;
 
-
     // Current state
     int beat_; // Current beat
     float currTime_; // Current time
@@ -46,14 +45,12 @@ protected:
     int beatsPerBar_; // Beats per bar
     float beatTimeStep_; // Calculated beat time step
 
-
     float lastLongStoreWrite_; // Last buffer data to long store write
 
     bool isServer_;
     SharedPtr<Recorder> serverRec_;
-
-
     bool mute_;
+
 public:
     // Mute playback
     void SetMute(bool mute);

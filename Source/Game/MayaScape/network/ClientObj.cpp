@@ -38,7 +38,8 @@ ClientObj::ClientObj(Context *context)
     , userName_("DefaultClient")
     , colorIdx_(0)
 {
-
+    // register
+    SetUpdateEventMask(USE_UPDATE | USE_FIXEDUPDATE);
 }
 
 ClientObj::~ClientObj()
@@ -110,4 +111,8 @@ SharedPtr<Sequencer> ClientObj::GetSequencer() {
     }
 
     return sequencer_;
+}
+
+void ClientObj::FixedUpdate(float timeStep) {
+
 }
