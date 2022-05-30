@@ -5393,6 +5393,7 @@ Node *MayaScape::SpawnPlayer(Connection *connection) {
     }
 
     actor->SetClientInfo(username, Random(1,100), Vector3(actor->GetPosition()));
+    actor->GetSequencer()->SetMute(false);
 
 
     // Generate vehicle

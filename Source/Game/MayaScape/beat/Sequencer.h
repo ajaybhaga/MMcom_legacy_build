@@ -53,9 +53,12 @@ protected:
     SharedPtr<Recorder> serverRec_;
 
 
-    bool mute_; // Mute playback
-
+    bool mute_;
 public:
+    // Mute playback
+    void SetMute(bool mute);
+    bool IsMute() const;
+
 
     Sequencer(Context* context);
     ~Sequencer();

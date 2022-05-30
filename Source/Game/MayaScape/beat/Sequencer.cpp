@@ -330,3 +330,11 @@ const SharedPtr<Recorder> &Sequencer::GetServerRec() const {
 void Sequencer::SetServerRec(const SharedPtr<Recorder> &serverRec) {
     serverRec_ = serverRec;
 }
+
+void Sequencer::SetMute(bool mute) {
+    mute_ = mute;
+}
+
+bool Sequencer::IsMute() const {
+    return mute_;
+}
