@@ -36,6 +36,7 @@ void Sequencer::RegisterObject(Context *context)
     context->RegisterFactory<Sequencer>();
 
     URHO3D_ATTRIBUTE("id", String, id_, String::EMPTY, AM_DEFAULT | AM_NET);
+    URHO3D_ATTRIBUTE("mute", bool, mute_, true, AM_DEFAULT | AM_NET);
     //URHO3D_ATTRIBUTE("Color Index", int, colorIdx_, 0, AM_DEFAULT | AM_NET);
     //URHO3D_ATTRIBUTE("Position", Vector3, position_, Vector3(0,0,0), AM_DEFAULT | AM_NET);
 }
