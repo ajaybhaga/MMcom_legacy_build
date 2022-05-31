@@ -38,8 +38,7 @@ ClientObj::ClientObj(Context *context)
     , userName_("DefaultClient")
     , colorIdx_(0)
 {
-    // register
-    SetUpdateEventMask(USE_UPDATE | USE_FIXEDUPDATE);
+
 }
 
 ClientObj::~ClientObj()
@@ -76,6 +75,9 @@ void ClientObj::SetClientInfo(const String &usrName, int colorIdx, Vector3 posit
     SharedPtr<Node> seqNode(node_->CreateChild(name));
     sequencer_ = seqNode->CreateComponent<Sequencer>();
     sequencer_->SetId(name);
+
+    // register
+    SetUpdateEventMask(USE_UPDATE | USE_FIXEDUPDATE);
 }
 
 void ClientObj::UpdateClientInfo(Vector3 position)
