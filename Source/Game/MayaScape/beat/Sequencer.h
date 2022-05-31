@@ -72,6 +72,8 @@ public:
     const SharedPtr<Recorder> &GetServerRec() const;
     void SetServerRec(const SharedPtr<Recorder> &serverRec);
 
+    const SharedPtr<SoundSource3D> &GetPlaySource() const;
+
     Vector<Beat*> GetSequence();
     Sampler *GetSampler();
     const String &GetId() const;

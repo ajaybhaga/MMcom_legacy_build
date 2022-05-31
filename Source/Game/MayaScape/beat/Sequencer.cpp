@@ -65,9 +65,6 @@ void Sequencer::FixedUpdate(float timeStep)
 
     // Sequencer update
 
-    // Update play source position
-    //playSource_->GetNode()->SetPosition();
-
     // Play on fixed update time step
     Play(timeStep, recorder_);
 }
@@ -341,4 +338,8 @@ void Sequencer::SetMute(bool mute) {
 
 bool Sequencer::IsMute() const {
     return mute_;
+}
+
+const SharedPtr<SoundSource3D> &Sequencer::GetPlaySource() const {
+    return playSource_;
 }

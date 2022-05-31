@@ -114,5 +114,6 @@ SharedPtr<Sequencer> ClientObj::GetSequencer() {
 }
 
 void ClientObj::FixedUpdate(float timeStep) {
-
+    // Sequencer: Update play source position to client object node position
+    sequencer_->GetPlaySource()->GetNode()->SetPosition(position_);
 }
