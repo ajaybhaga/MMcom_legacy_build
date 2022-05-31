@@ -498,9 +498,12 @@ void NetworkActor::FixedUpdate(float timeStep) {
                 body_->SetRotation(vehicle_->GetRaycastVehicle()->GetBody()->GetRotation());
             }
 
-            if (body_->GetNode()) {
-                // Sequencer update
-                sequencer_->GetPlaySource()->GetNode()->SetPosition(body_->GetNode()->GetPosition());
+
+            if (sequencer_->GetPlaySource()->GetNode()) {
+                if (body_->GetNode()) {
+                    // Sequencer update
+                    sequencer_->GetPlaySource()->GetNode()->SetPosition(body_->GetNode()->GetPosition());
+                }
             }
 
             localCenter = body_->GetPosition();
