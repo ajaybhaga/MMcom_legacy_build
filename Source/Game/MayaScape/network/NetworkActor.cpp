@@ -484,6 +484,8 @@ void NetworkActor::FixedUpdate(float timeStep) {
     // Sequencer update: play time step
     //sequencer_->Play(timeStep); // should happen automatic -> with sequencer to object -> update mask set
 
+
+
     Vector3 localCenter = Vector3(0,0,0);
 
     if (body_) {
@@ -495,6 +497,10 @@ void NetworkActor::FixedUpdate(float timeStep) {
                 body_->SetPosition(vehicle_->GetRaycastVehicle()->GetBody()->GetPosition());
                 body_->SetRotation(vehicle_->GetRaycastVehicle()->GetBody()->GetRotation());
             }
+
+
+            // Sequencer update
+            sequencer_->GetPlaySource()->GetNode()->SetPosition(body_->GetPosition());
 
             localCenter = body_->GetPosition();
             Vector3 distToVehicle = vehicle_->GetRaycastVehicle()->GetBody()->GetPosition()-localCenter;

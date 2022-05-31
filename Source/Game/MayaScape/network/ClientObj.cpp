@@ -77,7 +77,8 @@ void ClientObj::SetClientInfo(const String &usrName, int colorIdx, Vector3 posit
     sequencer_->SetId(name);
 
     // register
-    SetUpdateEventMask(USE_UPDATE | USE_FIXEDUPDATE);
+    //SetUpdateEventMask(USE_UPDATE | USE_FIXEDUPDATE);
+    // AB: ClientObj doesn't get fixed update, everywhere else does - odd
 }
 
 void ClientObj::UpdateClientInfo(Vector3 position)
@@ -114,8 +115,11 @@ SharedPtr<Sequencer> ClientObj::GetSequencer() {
 
     return sequencer_;
 }
-
+/*
 void ClientObj::FixedUpdate(float timeStep) {
     // Sequencer: Update play source position to client object node position
     sequencer_->GetPlaySource()->GetNode()->SetPosition(position_);
-}
+}*/
+
+
+

@@ -51,7 +51,7 @@ public:
     virtual void SetScene(Scene *scene);
     virtual void SetRootNode(Node *node);
     virtual String GetUserName();
-    virtual void FixedUpdate(float timeStep);
+
     SharedPtr<Sequencer> GetSequencer();
 
 protected:
