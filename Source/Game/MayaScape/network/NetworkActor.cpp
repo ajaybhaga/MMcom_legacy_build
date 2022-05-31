@@ -498,8 +498,10 @@ void NetworkActor::FixedUpdate(float timeStep) {
                 body_->SetRotation(vehicle_->GetRaycastVehicle()->GetBody()->GetRotation());
             }
 
-             // Sequencer update
-             sequencer_->GetPlaySource()->GetNode()->SetPosition(body_->GetNode()->GetPosition());
+            if (body_->GetNode()) {
+                // Sequencer update
+                sequencer_->GetPlaySource()->GetNode()->SetPosition(body_->GetNode()->GetPosition());
+            }
 
             localCenter = body_->GetPosition();
             Vector3 distToVehicle = vehicle_->GetRaycastVehicle()->GetBody()->GetPosition()-localCenter;
