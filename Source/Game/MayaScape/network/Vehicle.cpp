@@ -1440,21 +1440,20 @@ void Vehicle::PostUpdateSound(float timeStep)
 }
 
 
-void Vehicle::HandleVehicleCollision(StringHash eventType, VariantMap & eventData)
-{
+void Vehicle::HandleVehicleCollision(StringHash eventType, VariantMap & eventData) {
     using namespace NodeCollision;
 
     // decrease health if player player collides with boids
-    Node* collidedNode = static_cast<Node*>(eventData[P_OTHERNODE].GetPtr());
+    Node *collidedNode = static_cast<Node *>(eventData[P_OTHERNODE].GetPtr());
 
-   // URHO3D_LOGDEBUGF("collide node name: [%s]", collidedNode->GetName().CString());
+    // URHO3D_LOGDEBUGF("collide node name: [%s]", collidedNode->GetName().CString());
     // Get the other colliding body, make sure it is moving (has nonzero mass)
-    auto* otherBody = static_cast<RigidBody*>(eventData[P_OTHERBODY].GetPtr());
+    auto *otherBody = static_cast<RigidBody *>(eventData[P_OTHERBODY].GetPtr());
 
     // Pull producer id from name
     Urho3D::String name = collidedNode->GetName();
     // Start after hyphen
-    Urho3D::String producerIdStr = name.Substring(name.Find("-")+1);
+    Urho3D::String producerIdStr = name.Substring(name.Find("-") + 1);
     int producerId = Urho3D::ToInt(producerIdStr.CString());
 
     /*
@@ -1463,21 +1462,28 @@ void Vehicle::HandleVehicleCollision(StringHash eventType, VariantMap & eventDat
     [Wed Aug 19 14:18:28 2020] DEBUG: Vehicle::HandleVehicleCollision() -> MISSILE: [Node, 1515, missile-1256]
     [Wed Aug 19 14:18:28 2020] DEBUG: Vehicle::HandleVehicleCollision() node [1256] -> OPPONENT COLLISION at node [1515]
 */
-    if (collidedNode->GetName().StartsWith("missile"))
-    {
-        auto* collidedRB = static_cast<RigidBody*>(eventData[P_OTHERBODY].GetPtr());
+
+    // MISSILE COLLISION
+    if (collidedNode->GetName().StartsWith("missile")) {
+        auto *collidedRB = static_cast<RigidBody *>(eventData[P_OTHERBODY].GetPtr());
 //        auto* collidedMissile = static_cast<Node*>(eventData[{P_OTHERNODE}].GetPtr());
 
-        URHO3D_LOGDEBUGF("Vehicle::HandleVehicleCollision() -> MISSILE: [%s, %d, %s] PRODUCER ID %d", collidedNode->GetTypeName().CString(), collidedNode->GetID(), collidedNode->GetName().CString(), producerId);
+        URHO3D_LOGDEBUGF("Vehicle::HandleVehicleCollision() -> MISSILE: [%s, %d, %s] PRODUCER ID %d",
+                         collidedNode->GetTypeName().CString(), collidedNode->GetID(),
+                         collidedNode->GetName().CString(), producerId);
 
         // Apply force against vehicle
         Vector3 collVel = otherBody->GetLinearVelocity();
 
         // Skip collision if with owner vehicle
         if (producerId == GetNode()->GetID()) {
-            URHO3D_LOGDEBUGF("Vehicle::HandleVehicleCollision() node [%d] -> SELF COLLISION at node %d with magnitude %f", GetNode()->GetID(), collidedNode->GetID(), collVel.Length());
+            URHO3D_LOGDEBUGF(
+                    "Vehicle::HandleVehicleCollision() node [%d] -> SELF COLLISION at node %d with magnitude %f",
+                    GetNode()->GetID(), collidedNode->GetID(), collVel.Length());
         } else {
-            URHO3D_LOGDEBUGF("Vehicle::HandleVehicleCollision() node [%d] -> OPPONENT COLLISION at node [%d] with magnitude %f", GetNode()->GetID(), collidedNode->GetID(), collVel.Length());
+            URHO3D_LOGDEBUGF(
+                    "Vehicle::HandleVehicleCollision() node [%d] -> OPPONENT COLLISION at node [%d] with magnitude %f",
+                    GetNode()->GetID(), collidedNode->GetID(), collVel.Length());
 
             if (raycastVehicle_) {
 
@@ -1500,6 +1506,71 @@ void Vehicle::HandleVehicleCollision(StringHash eventType, VariantMap & eventDat
             }*/
             }
 
+        }
+    } else {
+
+        // ALL OTHER COLLISIONS
+
+
+        auto *collidedRB = static_cast<RigidBody *>(eventData[P_OTHERBODY].GetPtr());
+//        auto* collidedMissile = static_cast<Node*>(eventData[{P_OTHERNODE}].GetPtr());
+
+
+        // THIS COULD BE NETWORK ACTOR TO VEHICLE COLLISION
+
+
+        URHO3D_LOGDEBUGF("Vehicle::HandleVehicleCollision() -> VEHICLE: [%s, %d, %s] PRODUCER ID %d",
+                         collidedNode->GetTypeName().CString(), collidedNode->GetID(),
+                         collidedNode->GetName().CString(), producerId);
+
+        // Apply force against vehicle
+        Vector3 collVel = otherBody->GetLinearVelocity();
+        float mag = collVel.Length();
+
+        // Moving collisions
+        if (mag > 1) {
+            // Skip collision if with owner vehicle
+            if (producerId == GetNode()->GetID()) {
+                URHO3D_LOGDEBUGF(
+                        "Vehicle::HandleVehicleCollision() node [%d] -> SELF COLLISION at node %d with magnitude %f",
+                        GetNode()->GetID(), collidedNode->GetID(), mag);
+            } else {
+                URHO3D_LOGDEBUGF(
+                        "Vehicle::HandleVehicleCollision() node [%d] -> OPPONENT COLLISION at node [%d] with magnitude %f",
+                        GetNode()->GetID(), collidedNode->GetID(), collVel.Length());
+
+                //if (raycastVehicle_) {
+
+
+                if (collidedNode->GetName().StartsWith("Actor")) {
+                    //
+                    URHO3D_LOGDEBUGF(
+                            "Vehicle::HandleVehicleCollision() node [%d] -> ******ACTOR HIT magnitude %f",
+                            GetNode()->GetID(), mag);
+                }
+
+                // Add upward forward
+                //collVel += Vector3(0.0, 40.0f, 0.0f);
+
+                //raycastVehicle_->ApplyImpulse(collVel * 30.0f);
+
+                // Remove missile
+//                    collidedNode->Remove();
+/*
+            // apply downward force when some wheels are grounded
+            if (numWheelContacts_ > 0 && numWheelContacts_ != numWheels_) {
+                // small arbitrary multiplier
+                const float velocityMultiplyer = 0.5f;
+                Vector3 downNormal = node_->GetUp() * -1.0f;
+                float velocityMag = raycastVehicle_->GetLinearVelocity().LengthSquared() * velocityMultiplyer;
+                velocityMag = Clamp(velocityMag, MIN_DOWN_FORCE, MAX_DOWN_FORCE);
+                raycastVehicle_->ApplyForce(velocityMag * downNormal);
+            }
+                }
+
+            }*/
+
+            }
         }
     }
 }
