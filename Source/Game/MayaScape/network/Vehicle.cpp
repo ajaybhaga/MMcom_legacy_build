@@ -1468,22 +1468,23 @@ void Vehicle::HandleVehicleCollision(StringHash eventType, VariantMap & eventDat
         auto *collidedRB = static_cast<RigidBody *>(eventData[P_OTHERBODY].GetPtr());
 //        auto* collidedMissile = static_cast<Node*>(eventData[{P_OTHERNODE}].GetPtr());
 
-        URHO3D_LOGDEBUGF("Vehicle::HandleVehicleCollision() -> MISSILE: [%s, %d, %s] PRODUCER ID %d",
+/*        URHO3D_LOGDEBUGF("Vehicle::HandleVehicleCollision() -> MISSILE: [%s, %d, %s] PRODUCER ID %d",
                          collidedNode->GetTypeName().CString(), collidedNode->GetID(),
                          collidedNode->GetName().CString(), producerId);
+*/
 
         // Apply force against vehicle
         Vector3 collVel = otherBody->GetLinearVelocity();
 
         // Skip collision if with owner vehicle
         if (producerId == GetNode()->GetID()) {
-            URHO3D_LOGDEBUGF(
+/*            URHO3D_LOGDEBUGF(
                     "Vehicle::HandleVehicleCollision() node [%d] -> SELF COLLISION at node %d with magnitude %f",
-                    GetNode()->GetID(), collidedNode->GetID(), collVel.Length());
+                    GetNode()->GetID(), collidedNode->GetID(), collVel.Length());*/
         } else {
-            URHO3D_LOGDEBUGF(
+            /*URHO3D_LOGDEBUGF(
                     "Vehicle::HandleVehicleCollision() node [%d] -> OPPONENT COLLISION at node [%d] with magnitude %f",
-                    GetNode()->GetID(), collidedNode->GetID(), collVel.Length());
+                    GetNode()->GetID(), collidedNode->GetID(), collVel.Length());*/
 
             if (raycastVehicle_) {
 
@@ -1543,6 +1544,8 @@ void Vehicle::HandleVehicleCollision(StringHash eventType, VariantMap & eventDat
 
 
                 if (collidedNode->GetName().StartsWith("Actor")) {
+
+                    lastCollVel_ = collVel;
                     //
                     URHO3D_LOGDEBUGF(
                             "Vehicle::HandleVehicleCollision() node [%d] -> ******ACTOR HIT magnitude %f",
@@ -2013,6 +2016,15 @@ void Vehicle::DebugDraw() {
 
 
             dbgRenderer->AddLine(localCenter, localCenter+GetNode()->GetUp()*400.0f, Color(1.0f, 1.0, 0.0));
+
+
+
+
+
+            /// DRAW COLLISION LINES
+            dbgRenderer->AddLine(nodePos, nodePos+lastCollVel_*300.0f, Color(0.0f, 1.0, 0.0));
+
+
 
         }
     }

@@ -168,6 +168,7 @@ private:
     /// Tmp storage for steering
     float vehicleSteering_;
     int steerIndex_ = 0;
+
 public:
     int getSteerIndex() const;
 
@@ -249,6 +250,8 @@ private:
     float travelFR;
     float travelBL;
     float travelBR;
+
+    Vector3 lastCollVel_;
 
 public:
     void setEnableControls(bool enableControls);
