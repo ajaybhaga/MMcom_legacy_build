@@ -119,7 +119,6 @@
 #include <Urho3D/DebugNew.h>
 
 #include "GameController.h"
-#include "Utilities2D/Mover.h"
 #include "MayaScape.h"
 #include <MayaScape/ai/evolution_manager.h>
 
@@ -132,9 +131,7 @@
 // AgentSim shared libs
 #include "shared_libs.h"
 #include "types.h"
-#include "Bullet.h"
 
-#include "boids.h"
 #include "../../Urho3D/Input/Controls.h"
 #include "../../Urho3D/Scene/SplinePath.h"
 #include "../../Urho3D/Resource/ResourceEvents.h"
@@ -229,10 +226,6 @@ int currTrack_ = 0;
  */
 
 ///
-
-int numOfBoidsets = 10; // needs to be an even number for the boid splitting to work properly
-int updateCycleIndex = 0;
-BoidSet boids[10]; // 10 x 20 boids
 
 
 URHO3D_DEFINE_APPLICATION_MAIN(MayaScape)
@@ -3281,13 +3274,10 @@ void MayaScape::CreateServerSubsystem() {
     NetworkActor::RegisterObject(context_);
     Vehicle::RegisterObject(context_);
 
-    Mover::RegisterObject(context_);
 
     // Vehicle & Projectiles
     RaycastVehicleBase::RegisterObject(context_);
     WheelTrackModel::RegisterObject(context_);
-//    Missile::RegisterObject(context_);
-    Bullet::RegisterObject(context_);
 
     // Client-side Prediction
     CSP_Server::RegisterObject(context_);

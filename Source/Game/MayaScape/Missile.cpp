@@ -18,12 +18,10 @@
 
 #include <Urho3D/Math/Quaternion.h>
 
-#include "GameObject.h"
 #include "Missile.h"
-#include "Toolkit.h"
 
 
-Missile::Missile(Context* context) : GameObject(context)
+Missile::Missile(Context* context) : LogicComponent(context)
 {
 	SetThrust(140.0f);
 	SetDetectionRange(3.0f);
@@ -166,10 +164,10 @@ void Missile::FixedUpdate(float timeStep)
             // If the target is in the boomrange,then boom!
             float distance = (node_->GetPosition() - targetnodes_[i]->GetPosition()).Length();
             if (distance < GetBoomRange()) {
-                GameObject *targetobject = targetnodes_[i]->GetDerivedComponent<GameObject>();
+                LogicComponent *targetobject = targetnodes_[i]->GetDerivedComponent<LogicComponent>();
 
                 if (targetobject) {
-                    targetobject->Damaged(GetDamage());
+//                    targetobject->Damaged(GetDamage());
                 }
                 UnsubscribeFromAllEvents();
                 node_->Remove();

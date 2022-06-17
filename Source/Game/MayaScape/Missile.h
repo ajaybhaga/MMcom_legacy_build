@@ -3,12 +3,11 @@
 #include <Urho3D/Scene/LogicComponent.h>
 #include <Urho3D/Graphics/StaticModel.h>
 #include <Urho3D/Graphics/ParticleEmitter.h>
-#include "GameObject.h"
 #include "MayaScape/network/NetworkActor.h"
 
 using namespace Urho3D;
 
-class Missile : public GameObject
+class Missile : public LogicComponent
 {
 	URHO3D_OBJECT(Missile, LogicComponent);
 

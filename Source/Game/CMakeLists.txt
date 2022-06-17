@@ -23,7 +23,6 @@
 # Set project name
 project (Urho3D-Game)
 
-
 # Find Urho3D library
 find_package (Urho3D REQUIRED)
 include_directories (${URHO3D_INCLUDE_DIRS})
