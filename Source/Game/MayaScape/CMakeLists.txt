@@ -23,6 +23,10 @@
 # Set project name
 project (MayaScape)
 
+# Enable ODBC Database (Server logging)
+set(ODBC_INCLUDE_DIRS "/usr/include/")
+set (URHO3D_DATABASE_ODBC 1)
+
 # Find Urho3D library
 find_package (Urho3D REQUIRED)
 include_directories (${URHO3D_INCLUDE_DIRS})
