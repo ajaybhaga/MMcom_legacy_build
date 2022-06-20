@@ -203,6 +203,7 @@ public:
 
     bool enableControls_;
     Vector3 move_;
+    float upThrust_;
 
     const Vector3 &getMove() const;
 

@@ -404,7 +404,7 @@ void NetworkActor::ApplyMovement(float timeStep) {
     Variant rStick = controls_.extraData_[VAR_AXIS_1];
     Vector2 rAxisVal = rStick.GetVector2();
 
-    setMove(Vector3(lStick.GetVector2().x_, 0, lStick.GetVector2().y_));
+    setMove(Vector3(lStick.GetVector2().x_, upThrust_, lStick.GetVector2().y_));
 
     // Next move
     move_ = move_.Normalized() * Pow(move_.Length() * 1.05f, 2.0f);
@@ -626,11 +626,14 @@ void NetworkActor::FixedUpdate(float timeStep) {
                 animCtrl_->SetStartBone(idleAniFile, "Ctrl_all");
             }
 
+            upThrust_ = 0;
         } else {
 
             animCtrl_->PlayExclusive(jumpAniFile, 1, false, 0.15f);
             animCtrl_->SetStartBone(jumpAniFile, "Ctrl_all");
             doJump_ = false;
+
+            upThrust_ = 10.0f;
         }
 
 
