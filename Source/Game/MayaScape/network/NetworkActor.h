@@ -26,6 +26,8 @@ static const unsigned NTWK_CTRL_LEFT    = (1<<2);
 static const unsigned NTWK_CTRL_RIGHT   = (1<<3);
 static const unsigned NTWK_CTRL_ENTER     = (1<<5);
 static const unsigned NTWK_CTRL_FIRE     = (1<<7);
+static const unsigned NTWK_CTRL_JUMP     = (1<<8);
+
 
 static const unsigned NETWORKACTOR_COL_LAYER = 2;
 static const int MAX_MAT_COUNT = 9;
@@ -135,6 +137,7 @@ public:
 
     void Run();
     void Walk();
+    void Jump();
 
     void ApplyMovement(float timeStep);
 
@@ -154,7 +157,7 @@ public:
     void MarkDisconnected() { disconnected_ = true; }
     //Sequencer &GetSequencer();
 
-    // PEER
+        // PEER
     /// Movement controls. Assigned by the main program each physics update step.
     bool disconnected_;
     Controls controls_;

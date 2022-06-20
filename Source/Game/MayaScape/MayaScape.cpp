@@ -912,9 +912,10 @@ Controls MayaScape::SampleCSPControls()
     ntwkControls_.yaw_ = joyAngle;
 
     bool accel = (input->GetKeyDown(Urho3D::KEY_AC_FORWARD) || input->GetKeyDown(KEY_W) || ntwkControls_.IsDown(BUTTON_B) || (actorAccel < -0.9f));
-    bool fire = input->GetKeyDown(KEY_SPACE) || ntwkControls_.IsDown(BUTTON_A);
+    bool fire = input->GetKeyDown(KEY_SPACE) || ntwkControls_.IsDown(BUTTON_X);
     bool enter = input->GetKeyDown(KEY_F) || ntwkControls_.IsDown(BUTTON_Y);
-    bool brake = (input->GetKeyDown(KEY_S) || ntwkControls_.IsDown(BUTTON_X));
+    bool brake = (input->GetKeyDown(KEY_S) || ntwkControls_.IsDown(BUTTON_A));
+    bool jump = (input->GetKeyDown(Urho3D::KEY_ALT) || ntwkControls_.IsDown(BUTTON_A));
 
 
     // Found network player
@@ -967,6 +968,15 @@ Controls MayaScape::SampleCSPControls()
                                 lastSnd_ = snd;
                             }
 
+                        } else {
+                            // Outside vehicle
+
+                            // JUMP
+                            if (jump) {
+                                // Jump
+                                SoundSource3D *snd = PlaySoundEffectLocal(driveAudioEffect[SOUND_FX_ENGINE_BOOST].c_str());
+                                lastSnd_ = snd;
+                            }
                         }
                     }
                 }
@@ -997,6 +1007,7 @@ Controls MayaScape::SampleCSPControls()
     ntwkControls_.Set(NTWK_CTRL_RIGHT, right);
     ntwkControls_.Set(NTWK_CTRL_ENTER, enter);
     ntwkControls_.Set(NTWK_CTRL_FIRE, fire);
+    ntwkControls_.Set(NTWK_CTRL_JUMP, jump);
 
     // Set controls to updated ntwkControls
     controls = ntwkControls_;

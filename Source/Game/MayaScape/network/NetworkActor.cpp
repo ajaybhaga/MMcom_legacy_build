@@ -664,6 +664,16 @@ void NetworkActor::FixedUpdate(float timeStep) {
         }
 
 
+
+    if (onGround_) {
+        if (controls_.buttons_ & NTWK_CTRL_JUMP) {
+            // Jump
+            Jump();
+            onGround_ = false;
+        }
+    }
+
+
     if (enableControls_) {
 
         if (!entered_) {
@@ -1173,6 +1183,10 @@ void NetworkActor::Run() {
 
 void NetworkActor::Walk() {
     acceleration_ = 2.0f;
+}
+
+void NetworkActor::Jump() {
+    doJump_ = true;
 }
 
 const Vector3 &NetworkActor::getMove() const {
