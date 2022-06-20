@@ -7,7 +7,13 @@
 #include <Urho3D/Audio/Sound.h>
 #include <Urho3D/Audio/SoundSource3D.h>
 #include <Urho3D/Scene/LogicComponent.h>
+
+#ifdef MAYASCAPE_SERVER
 #include <Urho3D/Database/Database.h>
+#else
+// Skip Urho3D database defs for client
+#endif
+
 #include "Beat.h"
 #include "BufferData.h"
 #include "Urho3D/Core/Context.h"
