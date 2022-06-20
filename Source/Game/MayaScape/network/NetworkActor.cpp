@@ -626,14 +626,11 @@ void NetworkActor::FixedUpdate(float timeStep) {
                 animCtrl_->SetStartBone(idleAniFile, "Ctrl_all");
             }
 
-            upThrust_ = 0;
         } else {
 
             animCtrl_->PlayExclusive(jumpAniFile, 1, false, 0.15f);
             animCtrl_->SetStartBone(jumpAniFile, "Ctrl_all");
             doJump_ = false;
-
-            upThrust_ = 10.0f;
         }
 
 
@@ -1190,6 +1187,7 @@ void NetworkActor::Walk() {
 
 void NetworkActor::Jump() {
     doJump_ = true;
+    upThrust_ = 400.0f;
 }
 
 const Vector3 &NetworkActor::getMove() const {
