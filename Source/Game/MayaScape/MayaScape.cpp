@@ -2397,6 +2397,8 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
 
                                     // On foot controls
                                     float z = controlYawAngle;
+
+                                    // Dependent on stick yaw movement
                                     if (abs(controlYawAngle) < 90.0f) {
                                         //URHO3D_LOGINFOF("z -> %f", z);
 
@@ -2408,6 +2410,8 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                         // Do not apply force
                                     }
 
+                                    // Apply vertical force
+                                    actor->ApplyThrust();
                                 }
 
                                 String clientName = actorMap_[connection]->GetUserName();

@@ -460,13 +460,6 @@ void NetworkActor::ApplyMovement(float timeStep) {
     }
 
 
-    if (upThrust_ > 0) {
-        body_->ApplyImpulse(Vector3::UP * upThrust_ * timeStep);
-        // Reset impulse accumulator
-        upThrust_ = 0;
-    }
-
-
 /*
     // Apply force to rigid body of actor
     bool run = false;
@@ -1196,7 +1189,7 @@ void NetworkActor::Walk() {
 
 void NetworkActor::Jump() {
     doJump_ = true;
-    upThrust_ = 400.0f;
+    upThrust_ = 800.0f;
 }
 
 const Vector3 &NetworkActor::getMove() const {
@@ -1228,4 +1221,12 @@ void NetworkActor::EnterVehicle() {
     // Submit updated attributes over network
     Urho3D::Component::MarkNetworkUpdate();
 
+}
+
+void NetworkActor::ApplyThrust(float timeStep) {
+    if (upThrust_ > 0) {
+        body_->ApplyImpulse(Vector3::UP * upThrust_ * timeStep);
+        // Reset impulse accumulator
+        upThrust_ = 0;
+    }
 }

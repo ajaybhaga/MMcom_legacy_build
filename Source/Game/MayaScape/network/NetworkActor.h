@@ -140,6 +140,7 @@ public:
     void Jump();
 
     void ApplyMovement(float timeStep);
+    void ApplyThrust(float timeStep);
 
     /// Grounded flag for movement.
     bool onGround_;
