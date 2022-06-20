@@ -2411,7 +2411,7 @@ void MayaScape::HandlePostUpdate(StringHash eventType, VariantMap &eventData) {
                                     }
 
                                     // Apply vertical force
-                                    actor->ApplyThrust();
+                                    actor->ApplyThrust(timeStep);
                                 }
 
                                 String clientName = actorMap_[connection]->GetUserName();
