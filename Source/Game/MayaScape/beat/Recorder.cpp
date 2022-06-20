@@ -3,8 +3,16 @@
 #include <Urho3D/IO/Log.h>
 #include <Urho3D/Core/Context.h>
 #include <Urho3D/Core/Object.h>
+
+//#define MAYASCAPE_SERVER
+
+#ifdef MAYASCAPE_SERVER
 #include <Urho3D/Database/Database.h>
 #include <Urho3D/Database/DatabaseEvents.h>
+#else
+// Skip Urho3D database defs for client
+#endif
+
 
 
 //=============================================================================
@@ -32,7 +40,9 @@ Recorder::Recorder(Context *context) : Object(context), currSeqId_(0) {
     id_ = "RECORDER-" + String(Random(10000,99999));
     sequence_ = false;
 
+#ifdef MAYASCAPE_SERVER
     SubscribeToEvent(E_DBCURSOR, URHO3D_HANDLER(Recorder, HandleDBCursor));
+#endif
 }
 
 Recorder::~Recorder() {
@@ -151,6 +161,7 @@ void Recorder::Persist() {
 
 }
 
+#ifdef MAYASCAPE_SERVER
 void Recorder::HandleDBCursor(StringHash eventType, VariantMap& eventData) {
 
     using namespace DbCursor;
@@ -171,6 +182,7 @@ void Recorder::HandleDBCursor(StringHash eventType, VariantMap& eventData) {
 
 
 }
+#endif
 
 void Recorder::CreateSequence(String name) {
     if (!cxn_)
