@@ -404,7 +404,7 @@ void NetworkActor::ApplyMovement(float timeStep) {
     Variant rStick = controls_.extraData_[VAR_AXIS_1];
     Vector2 rAxisVal = rStick.GetVector2();
 
-    setMove(Vector3(lStick.GetVector2().x_, upThrust_, lStick.GetVector2().y_));
+    setMove(Vector3(lStick.GetVector2().x_, 0, lStick.GetVector2().y_));
 
     // Next move
     move_ = move_.Normalized() * Pow(move_.Length() * 1.05f, 2.0f);
@@ -458,6 +458,15 @@ void NetworkActor::ApplyMovement(float timeStep) {
         // Slow down in opposite direction
         body_->ApplyImpulse(-body_->GetLinearVelocity()*timeStep);
     }
+
+
+    if (upThrust_ > 0) {
+        body_->ApplyImpulse(Vector3::UP * upThrust_ * timeStep);
+        // Reset impulse accumulator
+        upThrust_ = 0;
+    }
+
+
 /*
     // Apply force to rigid body of actor
     bool run = false;
